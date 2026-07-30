@@ -126,23 +126,17 @@
       align-items: baseline;
       justify-content: space-between;
       gap: 1rem;
-      margin-bottom: 0.75rem;
-      padding-bottom: 0.65rem;
-      border-bottom: 1px solid var(--line);
+      margin-bottom: 0.45rem;
     }
 
-    .detail-head h2,
     .detail-title-btn {
       margin: 0;
-      font-family: "IBM Plex Serif", Georgia, serif;
-      font-size: 1.2rem;
-      font-weight: 600;
-    }
-
-    .detail-title-btn {
       border: 0;
       background: transparent;
       padding: 0;
+      font-family: "IBM Plex Serif", Georgia, serif;
+      font-size: 1.2rem;
+      font-weight: 600;
       color: inherit;
       cursor: pointer;
       text-align: left;
@@ -164,7 +158,7 @@
     }
 
     .detail-head .title-hint {
-      margin-top: 0.2rem;
+      margin-top: 0.15rem;
       color: var(--muted);
       font-size: 0.78rem;
     }
@@ -184,7 +178,19 @@
       border-color: var(--ink);
     }
 
-    .metric-def {
+    .metric-summary {
+      display: none;
+      margin: 0 0 0.85rem;
+      padding: 0 0 0.75rem;
+      border-bottom: 1px solid var(--line);
+      color: var(--ink);
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .metric-summary.open { display: block; }
+
+    .metric-variants {
       display: none;
       margin: 0 0 0.85rem;
       padding: 0.75rem 0.85rem;
@@ -194,21 +200,16 @@
       line-height: 1.45;
     }
 
-    .metric-def.open { display: block; }
+    .metric-variants.open { display: block; }
 
-    .metric-def .def-lead strong {
-      font-family: "IBM Plex Serif", Georgia, serif;
-      font-weight: 600;
-    }
-
-    .metric-def .def-variants-title {
-      margin: 0.85rem 0 0.4rem;
+    .metric-variants .def-variants-title {
+      margin: 0 0 0.4rem;
       font-family: "IBM Plex Serif", Georgia, serif;
       font-size: 0.95rem;
       font-weight: 600;
     }
 
-    .metric-def .def-variants {
+    .metric-variants .def-variants {
       margin: 0;
       padding: 0;
       list-style: none;
@@ -216,36 +217,36 @@
       overflow: auto;
     }
 
-    .metric-def .def-variants > li {
+    .metric-variants .def-variants > li {
       margin: 0 0 0.65rem;
       padding: 0 0 0.55rem;
       border-bottom: 1px solid rgba(215, 208, 195, 0.85);
     }
 
-    .metric-def .def-variants > li:last-child {
+    .metric-variants .def-variants > li:last-child {
       margin-bottom: 0;
       padding-bottom: 0;
       border-bottom: none;
     }
 
-    .metric-def .def-bib {
+    .metric-variants .def-bib {
       font-family: ui-monospace, "SF Mono", Menlo, monospace;
       font-size: 0.78rem;
       color: var(--muted);
     }
 
-    .metric-def .def-paper-title {
+    .metric-variants .def-paper-title {
       font-size: 0.86rem;
       margin: 0.1rem 0 0.3rem;
       line-height: 1.3;
     }
 
-    .metric-def .def-ways {
+    .metric-variants .def-ways {
       margin: 0;
       padding-left: 1.05rem;
     }
 
-    .metric-def .def-ways li {
+    .metric-variants .def-ways li {
       margin: 0 0 0.25rem;
       font-size: 0.84rem;
       line-height: 1.35;
@@ -456,9 +457,9 @@
         <div class="empty" id="emptyState">Turn on at least one cohort to see the chart.</div>
       </div>
       <p class="hint">
-        Click a metric bar to list papers. Click the metric name above the list for what we mean
-        by that metric and how different papers report it. Click a paper for its metrics, then a
-        metric chip for that paper’s details. Use Open for the paper webpage.
+        Click a metric bar for its definition and paper list. Click the metric title for how
+        different papers report it. Click a paper for its metrics, then a metric chip for that
+        paper’s details. Use Open for the paper webpage.
       </p>
 
       <section class="detail" id="detail" aria-live="polite">
@@ -468,11 +469,12 @@
               Metric
             </button>
             <div class="count" id="detailCount"></div>
-            <div class="title-hint">Click the metric name for definition + reporting variants</div>
+            <div class="title-hint">Click the title for how papers report this metric</div>
           </div>
           <button type="button" class="close-btn" id="detailClose">Close</button>
         </div>
-        <div class="metric-def" id="metricDef"></div>
+        <div class="metric-summary" id="metricSummary"></div>
+        <div class="metric-variants" id="metricVariants"></div>
         <ul class="paper-list" id="paperList"></ul>
       </section>
     </div>
@@ -538,11 +540,12 @@
     const detail = document.getElementById("detail");
     const detailTitle = document.getElementById("detailTitle");
     const detailCount = document.getElementById("detailCount");
-    const metricDef = document.getElementById("metricDef");
+    const metricSummary = document.getElementById("metricSummary");
+    const metricVariants = document.getElementById("metricVariants");
     const paperList = document.getElementById("paperList");
     let papers = [];
     let selectedMetric = null;
-    let defOpen = false;
+    let variantsOpen = false;
     let currentOrder = [];
 
     function activeKeys() {
@@ -608,24 +611,16 @@
       });
     }
 
-    function setMetricDefinition(metricIndex, open) {
+    function buildVariantsList(metricIndex) {
       const key = metricKeys[metricIndex];
       const name = metrics[metricIndex];
-      const text = metricDefinitions[key] || "No definition available for this metric.";
       const variants = reportingVariants(key);
 
-      metricDef.replaceChildren();
-      const lead = document.createElement("p");
-      lead.className = "def-lead";
-      lead.innerHTML = `<strong></strong> — <span></span>`;
-      lead.querySelector("strong").textContent = name;
-      lead.querySelector("span").textContent = text;
-      metricDef.append(lead);
-
+      metricVariants.replaceChildren();
       const heading = document.createElement("h3");
       heading.className = "def-variants-title";
       heading.textContent = `How papers report ${name}`;
-      metricDef.append(heading);
+      metricVariants.append(heading);
 
       const list = document.createElement("ul");
       list.className = "def-variants";
@@ -664,10 +659,23 @@
         });
       }
 
-      metricDef.append(list);
-      defOpen = Boolean(open);
-      metricDef.classList.toggle("open", defOpen);
-      detailTitle.setAttribute("aria-expanded", String(defOpen));
+      metricVariants.append(list);
+    }
+
+    function setMetricSummary(metricIndex) {
+      const key = metricKeys[metricIndex];
+      const text = metricDefinitions[key] || "No definition available for this metric.";
+      metricSummary.textContent = text;
+      metricSummary.classList.add("open");
+    }
+
+    function setVariantsOpen(open) {
+      variantsOpen = Boolean(open);
+      metricVariants.classList.toggle("open", variantsOpen);
+      detailTitle.setAttribute("aria-expanded", String(variantsOpen));
+      if (variantsOpen && selectedMetric !== null) {
+        buildVariantsList(selectedMetric);
+      }
     }
 
     function showPapers(metricIndex) {
@@ -677,8 +685,9 @@
       const matches = papersForMetric(metricIndex);
       detailTitle.textContent = label;
       detailCount.textContent = `${matches.length} paper${matches.length === 1 ? "" : "s"} in visible cohorts`;
-      if (metricChanged) setMetricDefinition(metricIndex, false);
-      else setMetricDefinition(metricIndex, defOpen);
+      setMetricSummary(metricIndex);
+      if (metricChanged) setVariantsOpen(false);
+      else if (variantsOpen) buildVariantsList(metricIndex);
       paperList.replaceChildren(
         ...matches.map((p) => {
           const li = document.createElement("li");
@@ -786,9 +795,11 @@
 
     function hidePapers() {
       selectedMetric = null;
-      defOpen = false;
-      metricDef.classList.remove("open");
-      metricDef.replaceChildren();
+      variantsOpen = false;
+      metricSummary.classList.remove("open");
+      metricSummary.replaceChildren();
+      metricVariants.classList.remove("open");
+      metricVariants.replaceChildren();
       detailTitle.setAttribute("aria-expanded", "false");
       detail.classList.remove("open");
       paperList.replaceChildren();
@@ -867,7 +878,7 @@
     document.getElementById("detailClose").addEventListener("click", hidePapers);
     detailTitle.addEventListener("click", () => {
       if (selectedMetric === null) return;
-      setMetricDefinition(selectedMetric, !defOpen);
+      setVariantsOpen(!variantsOpen);
     });
 
     fetch("papers-data.json")
