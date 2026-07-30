@@ -10,8 +10,11 @@
 
 **Robustness and capability framing.** POLISH++ (2026) uses PSNR in PSF-warp robustness experiments (γ ∈ [0,30]); authors note PSNR is *more* sensitive to model mismatch than visual quality, flagging it as a limited fidelity proxy under calibration error. No head-to-head PSNR vs R2D2 on shared data in that paper—comparisons to R2D2 are qualitative via capability table (max image size, DR).
 
+**Framework-defined quality suite (classic).** astroCAMP (2025) lists PSNR/SSIM as a core Table 2 algorithmic-quality pair (`10 log₁₀(I_max²/MSE)` vs reference), alongside dirty-image RMS and dynamic range, inside a multi-objective co-design quality tuple. The WSClean+IDG experimental release measures system/energy metrics and intentionally skips computing these quality scores pending community tolerances—so PSNR is defined and formulated, not tabulated as a WSClean result in that paper.
+
 ## Popular measurement variants
 - **10·log₁₀(MAX/MSE) with MAX = 1:** DDRM on flux-normalized images; reported with MSE and alternate SNR definition.
+- **10·log₁₀(I_max² / MSE) vs reference:** astroCAMP Table 2 framework definition (scikit-image / OpenCV).
 - **10·log₁₀(NM² / squared L₂ error on magnitudes):** iR2D2 non-Cartesian MRI benchmark (M = max pixel, N = image size).
 - **20·log₁₀(max(I) / reconstruction error):** CG-CLEAN linear PSNR on synthetic interferometric images.
 - **20·log₁₀(max(log I) / log-domain error):** CG-CLEAN PSNR_log — faint-emission analogue, not classified under logSNR column.
@@ -19,9 +22,9 @@
 - **PSNR vs training/perturbation parameter:** POLISH PSF warp γ ablation; POLISH++ fine-tuning convergence tracked via peak PSNR epoch.
 
 ## Gaps and caveats
-- **Low prevalence:** Only five papers in the corpus report PSNR; SNR and logSNR dominate ML imaging benchmarks.
+- **Still uncommon as a measured score:** Most ML imaging papers prefer SNR/logSNR; PSNR appears in a minority of corpus papers.
 - **Inconsistent dB base and dynamic range:** Mix of 10·log₁₀ and 20·log₁₀ definitions; magnitude-only vs complex/real image; MAX from data vs fixed normalization.
 - **Astrometric sensitivity:** POLISH notes PSNR penalizes small shifts that may be visually acceptable.
 - **Model-mismatch paradox:** POLISH++ reports PSNR degrades under PSF perturbation faster than perceived image quality—caveat for using PSNR alone in calibration-error regimes.
 - **Real-data gap:** No PSNR on real interferometric fields with unknown truth in the extracted notes (VLA transfer is visual only).
-- **Some PSNR-flagged classifications** (e.g. POLISH++, DDRM) may lack full metric context beyond the cited experiments; classic cohort has no PSNR reports.
+- **Framework vs measured:** astroCAMP illustrates the opposite extreme—PSNR is a named core metric in the co-design backbone but not numerically evaluated in the published WSClean+IDG runs.

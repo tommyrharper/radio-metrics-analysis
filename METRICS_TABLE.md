@@ -21,7 +21,7 @@ Merged view of all three cohorts (63 papers): `classic` (23), `emerging-ml` (7),
 | r2d2-citing | 2026AJ....171..220Y | An Imaging Algorithm Based on Generaliz... | 1 | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | r2d2-citing | 2026AJ....171...44Y | A Radio-interferometric Imaging Method ... | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | r2d2-citing | 2026A&A...706A..77M | Accelerating the CLEAN algorithm of rad... | 0 | 0 | 1 | 0 | 1 | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 1 |
-| classic | 2025arXiv251213591C | astroCAMP: A Community Benchmark and Co... | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 21 |
+| classic | 2025arXiv251213591C | astroCAMP: A Community Benchmark and Co... | 0 | 0 | 1 | 1 | 1 | 1 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 21 |
 | r2d2-citing | 2025arXiv251208444H | Learned iterative networks: An operator... | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 4 |
 | r2d2-citing | 2025arXiv250915176M | To CLEAN or not to CLEAN: Data Processi... | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
 | r2d2-citing | 2025arXiv250721270M | Generative imaging for radio interferom... | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 |
@@ -75,7 +75,7 @@ Merged view of all three cohorts (63 papers): `classic` (23), `emerging-ml` (7),
 | classic | 1980A&A....89..377C | An Efficient Implementation of the Algo... | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 1 |
 | classic | 1974A&AS...15..417H | Aperture Synthesis with a Non-Regular D... | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 3 |
 | classic | SKA-MEMO-132 | Analysis of Convolutional Resampling Al... | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 7 |
-| **TOTAL** |  |  | **23** | **11** | **5** | **3** | **20** | **23** | **6** | **1** | **43** | **33** | **5** | **1** | **1** | **6** | **1** | **34** | **142** |
+| **TOTAL** |  |  | **23** | **11** | **6** | **4** | **21** | **24** | **6** | **1** | **43** | **33** | **5** | **1** | **1** | **6** | **1** | **34** | **142** |
 
 ## Column key
 

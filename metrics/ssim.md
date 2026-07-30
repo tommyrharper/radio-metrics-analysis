@@ -10,16 +10,19 @@
 
 **MRI-transfer iR2D2 (r2d2-citing).** Interlaced R2D2 paper reports SSIM on magnitude reconstructions: iR2D2(U-WDSR) 0.96±0.05 vs R2D2 0.93±0.06, NC-PDNet 0.90±0.08, DDS 0.85±0.13—consistent with PSNR rankings on the same non-Cartesian benchmark.
 
+**Framework-defined (classic).** astroCAMP lists SSIM with PSNR as a core Table 2 algorithmic-quality pair in the co-design quality space; the WSClean+IDG experimental release does not compute SSIM pending community tolerances.
+
 ## Popular measurement variants
 - **Standard SSIM (mean over image):** POLISH vs CLEAN on simulated DSA-2000 skies; EVIL-Deconv vs PnP vs CLEAN.
 - **SSIM on magnitude images:** iR2D2 MRI benchmark (|x⋆| vs |x̂|).
 - **Reported with PSNR and/or NMSE:** always as part of a small metric bundle, never alone in the corpus.
 - **Median vs mean aggregation:** EVIL-Deconv table uses medians; POLISH and iR2D2 use means ± std over validation sets.
+- **Named but unevaluated core metric:** astroCAMP Table 2 / quality-tuple formulation.
 
 ## Gaps and caveats
-- **Very sparse usage:** Only three papers report SSIM across all cohorts; most ML imaging papers prefer SNR/logSNR.
+- **Sparse measured usage:** Only a handful of papers report numerical SSIM; most ML imaging papers prefer SNR/logSNR.
 - **No real-sky SSIM:** All quantitative SSIM values are simulation-based (or MRI transfer); real VLA POLISH experiment lacks truth for SSIM.
 - **Normalization dependence:** POLISH normalizes to integer range before SSIM/PSNR; definitions may differ from default SSIM implementations.
 - **Limited dynamic-range stress:** SSIM values near 0.99 in POLISH runs may saturate discrimination among strong methods; EVIL-Deconv spread (0.3–0.97) shows wider separation.
 - **DDRM explicitly omits SSIM** despite using PSNR/SNR/MSE—authors note SSIM is common elsewhere but not used in that paper.
-- **Several SSIM=0 classifications** across the corpus reflect non-use; no papers beyond the three above contribute extracted SSIM bullets.
+- **Framework vs measured:** astroCAMP again defines SSIM as core without publishing a WSClean SSIM number.

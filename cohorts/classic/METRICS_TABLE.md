@@ -5,7 +5,7 @@ Extracted from the 23 paper summaries in `papers/*.md` by classifying against th
 | Bibcode | Title | SNR | logSNR | PSNR | SSIM | DR | RDR/Resid | NMSE | MAE | Runtime | Iters | CredInt | UncCorr | Wasser | Class | Text | Compute | #Other |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | SKA-MEMO-132 | Analysis of Convolutional Resampling Algorithm Performance | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 7 |
-| 2025arXiv251213591C | astroCAMP: A Community Benchmark and Co-Design Framework for Sustainable SKA-Scale Radio Imaging | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 21 |
+| 2025arXiv251213591C | astroCAMP: A Community Benchmark and Co-Design Framework for Sustainable SKA-Scale Radio Imaging | 0 | 0 | 1 | 1 | 1 | 1 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 21 |
 | 2023arXiv230606007K | HVOX: Scalable Interferometric Synthesis and Analysis of Spherical Sky Maps | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 3 |
 | 2018A&A...616A..27V | Image Domain Gridding: a fast method for convolutional resampling of visibilities | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 3 |
 | 2018A&A...611A..87T | Faceting for direction-dependent spectral deconvolution | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 4 |
@@ -27,7 +27,7 @@ Extracted from the 23 paper summaries in `papers/*.md` by classifying against th
 | 1984A&A...137..159S | Enhancements to the deconvolution algorithm "CLEAN" | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 1 |
 | 1980A&A....89..377C | An Efficient Implementation of the Algorithm "CLEAN" | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 1 |
 | 1974A&AS...15..417H | Aperture Synthesis with a Non-Regular Distribution of Interferometer Baselines | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 3 |
-| **TOTAL** |  | **4** | **0** | **0** | **0** | **6** | **8** | **3** | **0** | **13** | **12** | **0** | **0** | **0** | **0** | **0** | **12** | **78** |
+| **TOTAL** |  | **4** | **0** | **1** | **1** | **7** | **9** | **3** | **0** | **13** | **12** | **0** | **0** | **0** | **0** | **0** | **12** | **78** |
 
 ## Column key
 

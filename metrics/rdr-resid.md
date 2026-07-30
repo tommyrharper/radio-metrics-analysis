@@ -12,6 +12,8 @@
 
 **Flux and integrated-emission proxies (emerging real-data).** uSARA ASKAP validation uses source-boundary contours at multiples of measured residual RMS vs calculated image noise—evidence of low-surface-brightness recovery, not a normalized RDR score.
 
+**Framework residual RMS (classic).** astroCAMP defines dirty-image RMS `σ_dirty` and residual-based dynamic range `DR = I_max / σ_res` as core Table 2 fidelity metrics (and uses dirty-image RMS in the example quality tuple); Section 6 does not tabulate those RMS values for the WSClean+IDG matrix.
+
 ## Popular measurement variants
 - **Residual RMS or std (mJy/beam, μJy/PSF, Jy/beam):** WSClean, wideband MS-CLEAN, IDG, MWA real-data comparisons.
 - **RDR = ‖residual dirty‖₂ / ‖dirty image‖₂:** R2D2, robust R2D2, HyperAIRI (Frobenius on cubes), S-R2D2 on sphere; typical scale 10⁻³–10⁻².

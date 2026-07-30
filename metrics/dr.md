@@ -10,7 +10,7 @@
 
 **Qualitative and real-data DR claims.** Real-data papers often discuss DR without a scalar score: fast-resolve reports higher DR than classical resolve on VLA Cygnus A; R2D2 Cygnus A paper quotes ≈1.7×10⁵ target/achieved DR; CG-CLEAN claims higher DR in later major-loop iterations on narrowband real data; IRIS and SKA-era review papers frame DR qualitatively vs CLEAN/MPoL. POLISH++ capability table compares max DR (≈10⁶ for POLISH++ vs ≈5×10⁵ for R2D2) without shared-benchmark numbers. Deep wide-field imaging (2022ApJ) uses estimated dirty-peak/noise for regularization (≈10⁵–10⁶ nominal) but cautions reconstructed peaks are >10× lower—configuration estimates, not measured fidelity.
 
-**DR limits from system effects.** Classic papers tie DR ceilings to direction-dependent effects (≈10⁴–10⁵), polarization leakage (≈10³ threshold for full Mueller), missing short spacing (low residual despite wrong spectrum), and gridding error (IDG: ≈18× lower residual RMS when gridding-limited). Faceting paper links sparsification to 10× SNR reduction at DR ≈10⁴+.
+**Framework definitions.** astroCAMP defines `DR = I_max / σ_res` as a core Table 2 quality metric (peak over residual RMS) and pairs it with dirty-image RMS and PSNR/SSIM in the co-design quality set; the published WSClean+IDG runs do not tabulate achieved DR.
 
 ## Popular measurement variants
 - **Peak / off-source RMS:** Multiscale CLEAN noise and source-size sweeps.
