@@ -1,0 +1,24 @@
+{
+  "bibcode": "2024arXiv241023178C",
+  "title": "Uncertainty Quantification for Fast Reconstruction Methods Using Augmented Equivariant Bootstrap: Application to Radio Interferometry",
+  "snr": 0,
+  "logsnr": 0,
+  "psnr": 0,
+  "ssim": 1,
+  "dynamic_range": 0,
+  "rdr_residual": 0,
+  "nmse_nrmse": 1,
+  "mae": 0,
+  "runtime": 1,
+  "iterations": 0,
+  "credible_interval": 1,
+  "uncertainty_correlation": 0,
+  "wasserstein": 0,
+  "classification_metrics": 0,
+  "text_metrics": 0,
+  "compute_cost": 0,
+  "other_metrics": [
+    "interval length (ℓ2 norm ratio)",
+    "empirical coverage"
+  ]
+}

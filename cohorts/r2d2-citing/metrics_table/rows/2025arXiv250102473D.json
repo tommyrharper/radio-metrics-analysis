@@ -1,0 +1,21 @@
+{
+  "bibcode": "2025arXiv250102473D",
+  "title": "IRIS: A Bayesian Approach for Image Reconstruction in Radio Interferometry with expressive Score-Based priors",
+  "snr": 0,
+  "logsnr": 0,
+  "psnr": 0,
+  "ssim": 0,
+  "dynamic_range": 1,
+  "rdr_residual": 1,
+  "nmse_nrmse": 0,
+  "mae": 0,
+  "runtime": 1,
+  "iterations": 0,
+  "credible_interval": 1,
+  "uncertainty_correlation": 0,
+  "wasserstein": 0,
+  "classification_metrics": 0,
+  "text_metrics": 0,
+  "compute_cost": 1,
+  "other_metrics": []
+}
