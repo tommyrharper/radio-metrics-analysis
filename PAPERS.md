@@ -1,8 +1,8 @@
 # Candidate Bibliography
 
-**Status: pending captain approval.** Every entry below was identified using bibliographic/abstract-index metadata only — ADS, arXiv abstract pages, Crossref, and official software documentation. **No candidate PDF was opened or downloaded, and no methods/results/metrics were extracted from any candidate.** Direct PDF links are recorded only where they were exposed directly alongside the metadata (e.g. an arXiv `/pdf/` link next to the `/abs/` page); they were not followed.
+**Status: captain-approved extraction complete for all accessible remaining candidates.** The discovery-time PDF notes below are retained as provenance for the pre-approval bibliography. Full-text extraction outcomes are recorded in each entry's status.
 
-Per `AGENTS.md`, no link below may be opened and no candidate may be extracted into `cohorts/classic/` or `cohorts/emerging-ml/` until the captain approves it here.
+The remaining candidates were explicitly approved before extraction. One identifiable paper, SMURFIT, remains blocked by authoritative full-text access; Focused CLEAN remains unresolved because no paper was identified.
 
 Entries already preserved in the completed `cohorts/r2d2-citing/` corpus are cross-referenced by bibcode rather than duplicated.
 
@@ -102,7 +102,7 @@ Entries already preserved in the completed `cohorts/r2d2-citing/` corpus are cro
 - **Cohort / stage:** classic; gridding (3D-NUFFT-based synthesis/analysis, spherical/HEALPix-mesh compatible)
 - **Reason:** resolves the "HVOX" token — a specific 3D-NUFFT-based gridder/synthesis algorithm positioned as an alternative to w-gridding for SKA/LOFAR-scale imaging.
 - **Status:** captain approved; summary extracted to `cohorts/classic/papers/2023arXiv230606007K.md`
-- **General NUFFT reference (see ambiguity note — no single canonical radio-interferometry-specific NUFFT paper was identified):** "A Parallel Nonuniform Fast Fourier Transform Library" (FINUFFT), A. H. Barnett, J. F. Magland, L. af Klinteberg, 2019. Landing page: https://ui.adsabs.harvard.edu/abs/2019SJSC...41C.479B/abstract. PDF: arXiv abstract page https://arxiv.org/abs/1808.06736 (not opened). Cohort/stage: classic; gridding (general-purpose, not radio-interferometry-specific). Reason: widely-cited general NUFFT library, included as the representative reference per the brief's request; flagged as not RI-specific. Status: pending captain approval.
+- **General NUFFT reference (see ambiguity note - no single canonical radio-interferometry-specific NUFFT paper was identified):** "A Parallel Nonuniform Fast Fourier Transform Library" (FINUFFT), A. H. Barnett, J. F. Magland, L. af Klinteberg, 2019. Landing page: https://ui.adsabs.harvard.edu/abs/2019SJSC...41C.479B/abstract. PDF: arXiv abstract page https://arxiv.org/abs/1808.06736 (not opened). Cohort/stage: classic; gridding (general-purpose, not radio-interferometry-specific). Reason: widely-cited general NUFFT library, included as the representative reference per the brief's request; flagged as not RI-specific. Status: skipped by the approved extraction brief because this is the secondary general reference bundled with HVOX.
 
 ### A-projection
 - **Primary paper:** "Correcting direction-dependent gains in the deconvolution of radio interferometric images"
@@ -154,7 +154,7 @@ Evaluated against the widely-recognized core CLEAN family per the follow-up brie
 - **Variant type:** ALGORITHMIC — a data-domain major/minor-cycle CLEAN variant (subtracting components from the ungridded visibility data each major cycle rather than the image), described in this paper alongside its self-calibration content.
 - **Cohort / stage:** classic; deconvolution / CLEAN-family
 - **Reason:** verified as the correct primary reference via a standard NRAO deconvolution reference (Bridle, "Deconvolution Tutorial," cv.nrao.edu/~abridle/deconvol), which cites this exact 1984 AJ paper (as "Schwab 1984b") for the Cotton-Schwab algorithm. No separate, more specific Schwab paper describing Cotton-Schwab CLEAN was found.
-- **Status:** pending captain approval — **flagged tension, not silently resolved:** this is the identical bibcode already carried in this document as a citation-only entry for self-calibration (per the original captain decision: "Treat Schwab 1984 as a citation-only README entry rather than a full metrics row"). The same paper is now also the correct primary reference for an algorithmic CLEAN variant the captain has asked to evaluate. The captain needs to decide whether (a) the existing citation-only entry stays as-is and this Cotton-Schwab entry is approved separately for its own metric row from the same source paper, (b) the two are merged into a single entry serving both purposes, or (c) Cotton-Schwab CLEAN is deferred. No merge or resolution has been made here.
+- **Status:** captain approved; no separate summary created because the extraction brief explicitly excludes Schwab 1984 as a duplicate second file and retains its citation-only treatment
 
 #### Steer-Dewdney-Ito CLEAN (SDI CLEAN)
 - **Primary paper:** "Enhancements to the deconvolution algorithm 'CLEAN'"
@@ -232,7 +232,7 @@ No other genuinely distinct mainstream CLEAN variant was identified beyond the e
 ### MS-MFS (multi-scale multi-frequency synthesis, a.k.a. MT-MFS)
 - **Primary paper:** "A multi-scale multi-frequency deconvolution algorithm for synthesis imaging in radio interferometry"
 - **Authors/year:** U. Rau, T. J. Cornwell, 2011
-- **Landing page:** https://www.aanda.org/articles/aa/abs/2011/08/aa17104-11/aa17104-11.html (A&A 532, A71; ADS bibcode likely `2011A&A...532A..71R`, not independently re-verified — see ambiguity note)
+- **Landing page:** https://www.aanda.org/articles/aa/abs/2011/08/aa17104-11/aa17104-11.html (A&A 532, A71; ADS bibcode `2011A&A...532A..71R`, confirmed during extraction)
 - **PDF:** arXiv abstract page https://arxiv.org/abs/1106.2745 (PDF link present alongside abs, not opened)
 - **Naming note (follow-up):** this algorithm is referred to as both "MS-MFS" and "MT-MFS" interchangeably in CASA/WSClean documentation and the wider literature; see the "CLEAN-family algorithmic variants" subsection above for the distinct, earlier Sault & Wieringa 1994 multi-frequency-only precursor.
 - **Cohort / stage:** classic; deconvolution / CLEAN-family (wideband extension)
@@ -242,14 +242,14 @@ No other genuinely distinct mainstream CLEAN variant was identified beyond the e
 ### SARA / PURIFY
 - **SARA primary paper:** "Sparsity Averaging Reweighted Analysis (SARA): a novel algorithm for radio-interferometric imaging"
   - Authors/year: R. E. Carrillo, J. D. McEwen, Y. Wiaux, 2012
-  - Landing page: https://ui.adsabs.harvard.edu/abs/2012MNRAS.426.1223C/abstract (bibcode inferred from journal metadata, not independently re-verified — see ambiguity note)
+  - Landing page: https://ui.adsabs.harvard.edu/abs/2012MNRAS.426.1223C/abstract (bibcode confirmed during extraction)
   - PDF: arXiv abstract page https://arxiv.org/abs/1205.3123 (PDF link present alongside abs, not opened)
   - Cohort/stage: classic; imaging/inverse-problem (compressed-sensing / convex optimization)
   - Reason: the original SARA algorithm — sparsity-averaging regularization across multiple wavelet bases for radio-interferometric imaging.
   - Status: captain approved; summary extracted to `cohorts/classic/papers/2012MNRAS.426.1223C.md`
 - **PURIFY primary paper:** "PURIFY: a new approach to radio-interferometric imaging"
   - Authors/year: R. E. Carrillo, J. D. McEwen, Y. Wiaux, 2014
-  - Landing page: https://ui.adsabs.harvard.edu/abs/2014MNRAS.439.3591C/abstract (bibcode inferred from journal metadata, not independently re-verified — see ambiguity note)
+  - Landing page: https://ui.adsabs.harvard.edu/abs/2014MNRAS.439.3591C/abstract (bibcode confirmed during extraction)
   - PDF: arXiv abstract page https://arxiv.org/abs/1307.4370 (PDF link present alongside abs, not opened)
   - Cohort/stage: classic; imaging/inverse-problem (convex-optimization software implementing SARA-family priors)
   - Reason: the original PURIFY software/algorithm paper. A later companion, "Robust sparse image reconstruction of radio interferometric observations with PURIFY" (Pratley, McEwen, d'Avezac, Carrillo, Onose, Wiaux, 2018, MNRAS 473, 1038, arXiv:1610.02400), extends/validates it on real data — noted as a related follow-up, not proposed as a separate row.
@@ -276,7 +276,7 @@ No other genuinely distinct mainstream CLEAN variant was identified beyond the e
 - **PDF:** arXiv abstract page https://arxiv.org/abs/2302.14148 (PDF link present alongside abs, not opened)
 - **Cohort / stage:** ML/emerging; imaging/inverse-problem (optimization-based; precursor to the plug-and-play ML variant AIRI)
 - **Reason:** uSARA is "a pure optimization variant leveraging a... proximal denoiser," extending SARA to unconstrained minimization, validated on real ASKAP data and outperforming CLEAN.
-- **Status:** pending captain approval
+- **Status:** captain approved; summary extracted to `cohorts/emerging-ml/papers/2023MNRAS.522.5558W.md`
 
 ### SMURFIT
 - **Naming note:** resolved to "Spatial-frequency Multi-class Radio Fourier Imaging Technique," but this could not be corroborated on ADS or arXiv (see ambiguity note) — treat authors/year/abstract detail as low-confidence.
@@ -286,7 +286,7 @@ No other genuinely distinct mainstream CLEAN variant was identified beyond the e
 - **PDF:** not directly exposed (SSRN gates PDF access)
 - **Cohort / stage:** ML/emerging; imaging/inverse-problem, likely gridding/distributed-imaging ("transforms measured visibilities into images of the sky," extends a prior imaging framework "to multiple nodes" for scalability)
 - **Reason:** direct title match to "SMURFIT" in a radio-imaging context; likely related to the same authors' 2025 arXiv paper "A Decentralized Framework for Radio-interferometric Image Reconstruction" (already in the R2D2-citing cohort, bibcode `2025AJ....169..289W`) — relationship unconfirmed.
-- **Status:** pending captain approval
+- **Status:** captain approved; extraction blocked because the authoritative SSRN full text returned Cloudflare HTTP 403 through all allowed ordinary HTTP paths and no authoritative alternate full text was found
 
 ### HyperAIRI — already preserved
 - Already summarized and classified in the R2D2-citing cohort at bibcode `2026ApJS..283....9T` ("HyperAIRI: A Plug-and-play Algorithm for Precise Hyperspectral Image Reconstruction in Radio Interferometry," Tang, Dabbech, Jackson et al.). See `cohorts/r2d2-citing/papers/2026ApJS..283....9T.md`. Not proposed as a new candidate.
@@ -301,7 +301,7 @@ No other genuinely distinct mainstream CLEAN variant was identified beyond the e
 - **PDF:** not directly exposed
 - **Cohort / stage:** ML/emerging (per explicit captain decision); end-to-end ML reconstruction
 - **Reason:** the R2D2 method's own introduction paper. It is not itself among the 33 papers that cite it, so per the captain's decision it is a genuine new candidate here.
-- **Status:** pending captain approval
+- **Status:** captain approved; summary extracted to `cohorts/emerging-ml/papers/2024ApJS..273....3A.md`
 
 ### AIRI precursor
 - **Primary paper (see ambiguity note for an alternate candidate):** "First AI for Deep Super-resolution Wide-field Imaging in Radio Astronomy: Unveiling Structure in ESO 137-006"
@@ -310,7 +310,8 @@ No other genuinely distinct mainstream CLEAN variant was identified beyond the e
 - **PDF:** arXiv abstract page https://arxiv.org/abs/2207.11336 (PDF link present alongside abs, not opened)
 - **Cohort / stage:** ML/emerging; end-to-end ML reconstruction (plug-and-play DNN denoiser regularization — original AIRI, applied to real MeerKAT data)
 - **Reason:** "the first AI-based framework for deep, super-resolution, wide-field radio-interferometric imaging" — the foundational AIRI paper, predating the "AIRI plug-and-play" follow-up already in the R2D2-citing cohort (`2025MNRAS.537.1608T`).
-- **Status:** pending captain approval
+- **Status:** captain approved; summary extracted to `cohorts/emerging-ml/papers/2022ApJ...939L...4D.md`
+- **Alternate candidate outcome:** the distinct ASKAP validation paper by Wilber, Dabbech, Terris, Jackson & Wiaux (2023), MNRAS 522, 5576, was also approved and extracted to `cohorts/emerging-ml/papers/2023MNRAS.522.5576W.md`
 
 ### POLISH
 - **Primary paper:** "Deep radio-interferometric imaging with POLISH: DSA-2000 and weak lensing"
@@ -319,7 +320,7 @@ No other genuinely distinct mainstream CLEAN variant was identified beyond the e
 - **PDF:** arXiv abstract page https://arxiv.org/abs/2111.03249 (PDF link present alongside abs, not opened)
 - **Cohort / stage:** ML/emerging; end-to-end ML reconstruction (super-resolution/deconvolution CNN)
 - **Reason:** "trained a high-dynamic range residual neural network to learn the mapping between the dirty image and the true radio sky, calling this procedure POLISH, in contrast to... CLEAN" — the original method, distinct from and predating "POLISH'ing the Sky..." (Wu, Connor, McCarty et al.), already in the R2D2-citing cohort at `2026arXiv260309162W`.
-- **Status:** pending captain approval
+- **Status:** captain approved; summary extracted to `cohorts/emerging-ml/papers/2022MNRAS.514.2614C.md`
 
 ### PRIMO
 - **Primary paper:** "Principal-Component Interferometric Modeling (PRIMO), an Algorithm for EHT Data I: Reconstructing Images from Simulated EHT Observations"
@@ -328,16 +329,16 @@ No other genuinely distinct mainstream CLEAN variant was identified beyond the e
 - **PDF:** arXiv abstract page https://arxiv.org/abs/2208.01667 (PDF link present alongside abs, not opened)
 - **Cohort / stage:** ML/emerging; end-to-end ML/statistical reconstruction (PCA-based, trained on GRMHD simulations)
 - **Reason:** the original PRIMO algorithm-introduction paper, distinct from both "The Image of the M87 Black Hole Reconstructed with PRIMO" (Medeiros et al. 2023, ApJL 947, L7) and "Theoretical Foundation of Black Hole Image Reconstruction Using PRIMO," already in the R2D2-citing cohort at `2025ApJ...984...86P`.
-- **Status:** pending captain approval
+- **Status:** captain approved; summary extracted to `cohorts/emerging-ml/papers/2023ApJ...943..144M.md`
 
 ### Schmidt et al. direct-CNN paper
 - **Primary paper:** "Deep learning-based imaging in radio interferometry"
 - **Authors/year:** K. Schmidt, F. Geyer, S. Fröse, P.-S. Blomenkamp, M. Brüggen, F. de Gasperin, D. Elsässer, W. Rhode, 2022
-- **Landing page:** https://www.aanda.org/articles/aa/full_html/2022/08/aa42113-21/aa42113-21.html (A&A 664, A134; ADS bibcode likely `2022A&A...664A.134S`, not independently re-verified — see ambiguity note)
+- **Landing page:** https://www.aanda.org/articles/aa/full_html/2022/08/aa42113-21/aa42113-21.html (A&A 664, A134; ADS bibcode `2022A&A...664A.134S`, confirmed during extraction)
 - **PDF:** arXiv abstract page https://arxiv.org/abs/2203.11757 (PDF link present alongside abs, not opened)
 - **Cohort / stage:** ML/emerging; end-to-end ML reconstruction (direct CNN, Fourier-space inpainting rather than iterative deconvolution)
 - **Reason:** a CNN (SRResNet-derived) that "reconstructs missing information directly in Fourier space... no iterative source model is formed" — matches the "direct CNN" description; part of the radionets project.
-- **Status:** pending captain approval
+- **Status:** captain approved; summary extracted to `cohorts/emerging-ml/papers/2022A_and_A...664A.134S.md`
 
 ---
 
@@ -346,11 +347,11 @@ No other genuinely distinct mainstream CLEAN variant was identified beyond the e
 1. **GILDAS/GREG:** the brief's "GILDA/GREG" wording is almost certainly a typo for GILDAS. No dedicated peer-reviewed GREG paper exists — GREG is documented only as a GILDAS plotting sub-module in IRAM memos/manuals.
 2. **NUFFT/HVOX:** HVOX was clearly identified as a specific 3D-NUFFT-based radio-interferometric synthesis algorithm. No single canonical "NUFFT for radio interferometry" primary reference (distinct from general-purpose NUFFT papers) was confidently identified; several candidates exist (Duijndam & Schonewille 1997; Jackson et al. 1991; Fessler & Sutton 2003; Barnett, Magland & af Klinteberg 2019/FINUFFT). FINUFFT was used as the representative general reference and is flagged as not radio-interferometry-specific.
 3. **Focused CLEAN:** no paper or named algorithm variant called "focused CLEAN" could be identified. Recommend the captain clarify whether this refers to a specific named technique or to informal region-restricted ("boxed") CLEAN.
-4. **SMURFIT:** resolved to a specific SSRN working paper, but this could not be corroborated on ADS or arXiv, and the SSRN page itself could not be fetched (HTTP 403). Treat the entry's authors/year/relationship-to-other-papers as low-confidence pending direct verification.
-5. **w-stacking primary reference:** two candidate primary sources exist — Humphreys & Cornwell 2011 (SKA Memo 132, earliest dedicated analysis) and Offringa et al. 2014 (WSClean paper, most-cited description/implementation, also listed separately above). The captain should decide which is the primary citation for this row.
-6. **Bibcodes constructed rather than directly confirmed:** for SARA, PURIFY, MS-MFS, and the Schmidt et al. paper, the ADS bibcode was inferred from journal/volume/page metadata in search snippets rather than confirmed via a direct ADS abstract-page fetch. The DOI and arXiv links for each were independently confirmed and are reliable; the bibcode strings themselves should be spot-checked before use as stable identifiers.
-7. **AIRI precursor — two candidates:** (a) Dabbech et al. 2022, ApJL 939, L4 (the true first introduction of the AIRI concept, selected above), and (b) Wilber, Dabbech, Jackson & Wiaux 2023, MNRAS 522, 5576 ("AIRI validated on ASKAP data," arXiv:2302.14149, a companion/validation paper to the uSARA paper). The captain should confirm which paper is intended as "the" AIRI precursor.
-8. **Schwab 1984 / Cotton-Schwab CLEAN reuse (follow-up):** the paper already carried as a citation-only self-calibration reference (Schwab 1984, AJ 89, 1076) is also the verified correct primary reference for the algorithmic "Cotton-Schwab CLEAN" variant added in this follow-up. This is a single paper serving two distinct purposes in this document — the captain needs to decide whether to keep both framings as separate entries pointing at the same source (as currently recorded), merge them into one entry, or defer the Cotton-Schwab CLEAN row. Not resolved here.
-9. **MS-MFS vs. MT-MFS terminology (follow-up):** confirmed interchangeable names for the same Rau & Cornwell 2011 algorithm in current documentation/literature. A genuinely distinct, earlier multi-frequency-only precursor (Sault & Wieringa 1994, A&AS 108, 585) was identified and is recorded as an optional additional candidate in the "CLEAN-family algorithmic variants" subsection, not added as a required row — the captain should decide whether it's wanted.
-10. **Wakker & Schwarz 1988 (Multi-Resolution CLEAN) landing page not directly page-verified (follow-up):** WebFetch could not render the live ADS abstract page for this bibcode (ADS's JS single-page app returned no content to the fetch tool). The bibliographic details are corroborated by multiple independent secondary sources and the URL follows ADS's standard bibcode convention, but this one link should be spot-checked before treating it as confirmed.
-11. **Joined-channel CLEAN (Offringa & Smirnov 2017) vs. the existing WSClean entry (follow-up):** these are two distinct papers by overlapping authors — the 2014 paper introduces WSClean as software, the 2017 paper introduces the specific wideband/joined-channel deconvolution algorithm it later implements. Recorded as two separate entries; flagging in case the captain prefers to fold the 2017 reference into the existing WSClean row instead.
+4. **SMURFIT:** resolved to a specific SSRN working paper, but authoritative full text returned Cloudflare HTTP 403 through every allowed ordinary HTTP path, and no authoritative alternate copy was found. Metadata was corroborated through Crossref, but method and metric extraction remains blocked.
+5. **w-stacking primary reference:** both distinct sources are now covered without duplication. SKA Memo 132 is extracted as the dedicated analysis, while the already-landed Offringa et al. 2014 summary covers WSClean's implementation.
+6. **Previously constructed bibcodes:** SARA, PURIFY, MS-MFS, and Schmidt et al. identifiers were confirmed against authoritative full text and metadata during extraction.
+7. **AIRI precursor - two candidates:** (a) Dabbech et al. 2022, ApJL 939, L4 (the first introduction of the AIRI concept), and (b) Wilber, Dabbech, Terris, Jackson & Wiaux 2023, MNRAS 522, 5576 ("AIRI validated on ASKAP data," arXiv:2302.14149, a companion/validation paper to the uSARA paper). Both distinct approved papers were extracted; no further candidate choice is required for this task.
+8. **Schwab 1984 / Cotton-Schwab CLEAN reuse:** the paper remains citation-only and was not duplicated as a second summary, per the approved extraction brief.
+9. **MS-MFS vs. MT-MFS terminology:** the names refer to Rau & Cornwell 2011. The distinct Sault & Wieringa 1994 multi-frequency-only precursor was also approved and extracted.
+10. **Wakker & Schwarz 1988:** the ADS archival full text and metadata were verified during extraction.
+11. **Joined-channel CLEAN vs. WSClean:** the distinct Offringa & Smirnov 2017 algorithm paper and Offringa et al. 2014 software paper are both covered as separate summaries.

@@ -3,6 +3,7 @@
 **Bibcode:** 2017MNRAS.471..301O
 **Authors:** A. R. Offringa, O. Smirnov
 **ADS:** https://ui.adsabs.harvard.edu/abs/2017MNRAS.471..301O/abstract
+**Full text:** https://arxiv.org/pdf/1706.06786
 **arXiv:** https://arxiv.org/abs/1706.06786
 **DOI:** https://doi.org/10.1093/mnras/stx1547
 
