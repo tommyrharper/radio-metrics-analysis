@@ -164,7 +164,7 @@ Evaluated against the widely-recognized core CLEAN family per the follow-up brie
 - **Variant type:** ALGORITHMIC — removes components in threshold-selected groups rather than individually, reducing "striping"/corrugation artifacts on extended emission and improving speed.
 - **Cohort / stage:** classic; deconvolution / CLEAN-family
 - **Reason:** a recognized core CLEAN enhancement (e.g. AIPS `SDCLN`), distinct in mechanism from Clark and Cotton-Schwab.
-- **Status:** pending captain approval
+- **Status:** captain approved; summary extracted to `cohorts/classic/papers/1984A_and_A...137..159S.md`
 
 #### Multi-Scale CLEAN — already present, no new row
 Already covered below by the existing "Multiscale CLEAN" entry (Cornwell 2008). Confirmed via independent search hits as the correct standard reference; cross-referenced only.
@@ -180,7 +180,7 @@ A genuinely distinct, earlier precursor was found and is flagged as an optional 
 - **Variant type:** ALGORITHMIC — multi-frequency (Taylor-term) synthesis/deconvolution *without* the multi-scale component; a precursor that Rau & Cornwell 2011 explicitly extends.
 - **Cohort / stage:** classic; deconvolution / CLEAN-family
 - **Reason:** if the captain wants a citation for plain "multi-frequency synthesis" distinct from the combined multi-scale + multi-frequency algorithm, this is it. Not added as a required row — judgment call for the captain.
-- **Status:** pending captain approval (optional addition)
+- **Status:** captain approved; summary extracted to `cohorts/classic/papers/1994A_and_AS..108..585S.md`
 
 #### Multi-Scale Multi-Frequency Synthesis "where distinct from MS-MFS" — confirmed not distinct
 No separate paper under this exact name was found beyond Rau & Cornwell 2011 (the existing "MS-MFS" entry below). Confirmed same entry; no new row added, per the follow-up's instruction to avoid duplicating entries already present under another name.
@@ -193,7 +193,7 @@ No separate paper under this exact name was found beyond Rau & Cornwell 2011 (th
 - **Variant type:** ALGORITHMIC paper describing an IMAGING FEATURE — this is WSClean's own cited reference for its `-join-channels` joined-channel deconvolution mode; distinct from the base WSClean 2014 software paper already listed above, and explicitly distinguished by WSClean's documentation from CASA's MS-MFS/MT-MFS approach.
 - **Cohort / stage:** classic; deconvolution / CLEAN-family (wideband, multi-scale + multi-frequency joint minor-cycle optimization)
 - **Reason:** the specific algorithmic reference for wideband/joined-channel CLEAN as implemented in a current major imager (WSClean), as opposed to the general WSClean software paper. CASA's side of wideband/joined-channel CLEAN is already covered by the existing MS-MFS entry (Rau & Cornwell 2011) — no separate CASA-side row added.
-- **Status:** pending captain approval
+- **Status:** captain approved; summary extracted to `cohorts/classic/papers/2017MNRAS.471..301O.md`
 
 #### Adaptive Scale Pixel (Asp-Clean)
 - **Primary paper:** "Scale sensitive deconvolution of interferometric images. I. Adaptive Scale Pixel (Asp) decomposition"
@@ -203,7 +203,7 @@ No separate paper under this exact name was found beyond Rau & Cornwell 2011 (th
 - **Variant type:** ALGORITHMIC — models the sky as adaptive-scale pixels rather than a fixed set of Gaussian scales (contrast with multi-scale CLEAN), a distinct image-model approach in the CLEAN lineage.
 - **Cohort / stage:** classic; deconvolution / CLEAN-family
 - **Reason:** a recognized representative scale-sensitive CLEAN variant, structurally distinct from multi-scale CLEAN.
-- **Status:** pending captain approval
+- **Status:** captain approved; summary extracted to `cohorts/classic/papers/2004A_and_A...426..747B.md`
 
 #### Multi-Resolution CLEAN (MRC / M-CLEAN) — additional mainstream variant
 - **Primary paper:** "The Multi-Resolution CLEAN and its application to the short-spacing problem in interferometry"
@@ -213,7 +213,7 @@ No separate paper under this exact name was found beyond Rau & Cornwell 2011 (th
 - **Variant type:** ALGORITHMIC — builds a smoothed low-resolution map and a difference map, CLEANs each with a resolution-appropriate beam, then recombines; a historical precursor concept to multi-scale CLEAN.
 - **Cohort / stage:** classic; deconvolution / CLEAN-family
 - **Reason:** explicitly named as a core member of the CLEAN-algorithm family ("HOGBOM, CLARK, MX, SDI, MRC, MULTI") in IRAM/GILDAS map-processing documentation, and discussed as a precursor in later multi-scale CLEAN literature; mainstream enough to include per the follow-up's "any other genuinely mainstream CLEAN variant" instruction.
-- **Status:** pending captain approval
+- **Status:** captain approved; summary extracted to `cohorts/classic/papers/1988A_and_A...200..312W.md`
 
 No other genuinely distinct mainstream CLEAN variant was identified beyond the entries above; "MX" and "MULTI" (seen in the GILDAS family listing) correspond to the AIPS program name for Cotton-Schwab CLEAN and to generic multi-scale/multi-field CLEAN respectively, not additional distinct algorithms.
 
@@ -227,7 +227,7 @@ No other genuinely distinct mainstream CLEAN variant was identified beyond the e
 - **PDF:** arXiv:0806.2228 abstract page (PDF link exposed directly in search, not opened)
 - **Cohort / stage:** classic; deconvolution / CLEAN-family
 - **Reason:** the canonical multiscale CLEAN paper, improving CLEAN performance for extended objects.
-- **Status:** pending captain approval
+- **Status:** captain approved; summary extracted to `cohorts/classic/papers/2008ISTSP...2..793C.md`
 
 ### MS-MFS (multi-scale multi-frequency synthesis, a.k.a. MT-MFS)
 - **Primary paper:** "A multi-scale multi-frequency deconvolution algorithm for synthesis imaging in radio interferometry"
@@ -237,7 +237,7 @@ No other genuinely distinct mainstream CLEAN variant was identified beyond the e
 - **Naming note (follow-up):** this algorithm is referred to as both "MS-MFS" and "MT-MFS" interchangeably in CASA/WSClean documentation and the wider literature; see the "CLEAN-family algorithmic variants" subsection above for the distinct, earlier Sault & Wieringa 1994 multi-frequency-only precursor.
 - **Cohort / stage:** classic; deconvolution / CLEAN-family (wideband extension)
 - **Reason:** the canonical MS-MFS paper combining multi-scale and multi-frequency deconvolution.
-- **Status:** pending captain approval
+- **Status:** captain approved; summary extracted to `cohorts/classic/papers/2011A_and_A...532A..71R.md`
 
 ### SARA / PURIFY
 - **SARA primary paper:** "Sparsity Averaging Reweighted Analysis (SARA): a novel algorithm for radio-interferometric imaging"
@@ -246,14 +246,14 @@ No other genuinely distinct mainstream CLEAN variant was identified beyond the e
   - PDF: arXiv abstract page https://arxiv.org/abs/1205.3123 (PDF link present alongside abs, not opened)
   - Cohort/stage: classic; imaging/inverse-problem (compressed-sensing / convex optimization)
   - Reason: the original SARA algorithm — sparsity-averaging regularization across multiple wavelet bases for radio-interferometric imaging.
-  - Status: pending captain approval
+  - Status: captain approved; summary extracted to `cohorts/classic/papers/2012MNRAS.426.1223C.md`
 - **PURIFY primary paper:** "PURIFY: a new approach to radio-interferometric imaging"
   - Authors/year: R. E. Carrillo, J. D. McEwen, Y. Wiaux, 2014
   - Landing page: https://ui.adsabs.harvard.edu/abs/2014MNRAS.439.3591C/abstract (bibcode inferred from journal metadata, not independently re-verified — see ambiguity note)
   - PDF: arXiv abstract page https://arxiv.org/abs/1307.4370 (PDF link present alongside abs, not opened)
   - Cohort/stage: classic; imaging/inverse-problem (convex-optimization software implementing SARA-family priors)
   - Reason: the original PURIFY software/algorithm paper. A later companion, "Robust sparse image reconstruction of radio interferometric observations with PURIFY" (Pratley, McEwen, d'Avezac, Carrillo, Onose, Wiaux, 2018, MNRAS 473, 1038, arXiv:1610.02400), extends/validates it on real data — noted as a related follow-up, not proposed as a separate row.
-  - Status: pending captain approval
+  - Status: captain approved; summary extracted to `cohorts/classic/papers/2014MNRAS.439.3591C.md`
 
 ### Schwab 1984 (citation-only — no metric row)
 - **Reference:** "Relaxing the isoplanatism assumption in self-calibration; applications to low-frequency radio interferometry"
