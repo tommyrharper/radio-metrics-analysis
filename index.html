@@ -553,7 +553,7 @@
               Metric
             </button>
             <div class="count" id="detailCount"></div>
-            <div class="title-hint">Click the title for how papers report this · then By paper / Overview</div>
+            <div class="title-hint">Click the title for how papers report this · then Overview / By paper</div>
           </div>
           <button type="button" class="close-btn" id="detailClose">Close</button>
         </div>
@@ -597,7 +597,7 @@
     };
 
     const overviewCache = {};
-    let variantsView = "papers"; // "papers" | "overview"
+    let variantsView = "overview"; // "papers" | "overview"
 
     // What each canonical column means in this radio-interferometry imaging review.
     const metricDefinitions = {
@@ -834,7 +834,7 @@
         setVariantsView("overview");
         showOverviewPane(metricIndex);
       });
-      toggle.append(papersBtn, overviewBtn);
+      toggle.append(overviewBtn, papersBtn);
       metricVariants.append(toggle);
 
       const papersPane = document.createElement("div");
@@ -876,7 +876,7 @@
       detailCount.textContent = `${matches.length} paper${matches.length === 1 ? "" : "s"} in visible cohorts`;
       setMetricSummary(metricIndex);
       if (metricChanged) {
-        variantsView = "papers";
+        variantsView = "overview";
         setVariantsOpen(false);
       } else if (variantsOpen) {
         buildVariantsList(metricIndex);
