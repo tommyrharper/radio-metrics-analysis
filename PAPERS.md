@@ -19,7 +19,7 @@ Entries already preserved in the completed `cohorts/r2d2-citing/` corpus are cro
 - **PDF:** not directly exposed in search metadata
 - **Cohort / stage:** classic; gridding / imaging (wide-field imager; introduces w-stacking)
 - **Reason:** title/abstract explicitly describe it as "a fast, generic wide-field imager for radio astronomy"; the standard modern imager.
-- **Status:** pending captain approval
+- **Status:** captain approved; summary extracted to `cohorts/classic/papers/2014MNRAS.444..606O.md`
 
 ### IDG (Image Domain Gridding)
 - **Primary paper:** "Image Domain Gridding: a fast method for convolutional resampling of visibilities"
@@ -28,7 +28,7 @@ Entries already preserved in the completed `cohorts/r2d2-citing/` corpus are cro
 - **PDF:** arXiv abstract page https://arxiv.org/abs/1909.07226 (PDF link present alongside abs, not opened)
 - **Cohort / stage:** classic; gridding
 - **Reason:** abstract describes a new gridding/degridding method computing visibility contributions in image space, as an alternative to AW/W-projection gridding.
-- **Status:** pending captain approval
+- **Status:** captain approved; summary extracted to `cohorts/classic/papers/2018A_and_A...616A..27V.md`
 
 ### CASA (Common Astronomy Software Applications)
 - **Primary paper:** "CASA Architecture and Applications" (foundational citation; note a newer overview, "CASA, the Common Astronomy Software Applications for Radio Astronomy," PASP 2022, also exists)
@@ -37,7 +37,7 @@ Entries already preserved in the completed `cohorts/r2d2-citing/` corpus are cro
 - **PDF:** not directly exposed
 - **Cohort / stage:** classic; end-to-end calibration/imaging software package
 - **Reason:** canonical citation for CASA, the primary reduction/imaging package for ALMA/VLA.
-- **Status:** pending captain approval
+- **Status:** captain approved; summary extracted to `cohorts/classic/papers/2007ASPC..376..127M.md`
 
 ### AIPS (Astronomical Image Processing System)
 - **Primary paper:** "NRAO's Astronomical Image Processing System (AIPS)"
@@ -46,7 +46,7 @@ Entries already preserved in the completed `cohorts/r2d2-citing/` corpus are cro
 - **PDF:** not directly exposed
 - **Cohort / stage:** classic; end-to-end calibration/imaging software (deconvolution/analysis)
 - **Reason:** original description of AIPS as the main NRAO system for production, deconvolution and analysis of radio images.
-- **Status:** pending captain approval
+- **Status:** captain approved; extraction outcome recorded in `cohorts/classic/papers/1985daa..conf..195W.md` (full-text methods and metrics remain blocked by source access)
 
 ### MIRIAD
 - **Primary paper:** "A Retrospective View of Miriad"
@@ -55,7 +55,7 @@ Entries already preserved in the completed `cohorts/r2d2-citing/` corpus are cro
 - **PDF:** arXiv abstract page https://arxiv.org/abs/astro-ph/0612759 (PDF link present alongside abs, not opened)
 - **Cohort / stage:** classic; end-to-end reduction/imaging software
 - **Reason:** canonical citation for MIRIAD, "a radio interferometry data-reduction package, designed for taking raw data through to the image analysis stage."
-- **Status:** pending captain approval
+- **Status:** captain approved; summary extracted to `cohorts/classic/papers/1995ASPC...77..433S.md`
 
 ### GILDAS/GREG
 - **Naming note:** the brief's source wording "GILDA/GREG" is almost certainly a typo for **GILDAS** (Grenoble Image and Line Data Analysis Software), the umbrella package; **GREG** is GILDAS's plotting/graphics sub-tool, not a standalone citable package (see ambiguity note below).
