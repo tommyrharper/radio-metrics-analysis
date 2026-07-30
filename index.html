@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Radio imaging metrics by cohort</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f3efe6;
+      --ink: #1c2429;
+      --muted: #5a6670;
+      --panel: #fffdf8;
+      --line: #d7d0c3;
+      --classic: #0b6e6a;
+      --emerging: #c45c26;
+      --r2d2: #1f4e79;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "IBM Plex Sans", system-ui, sans-serif;
+      background:
+        radial-gradient(ellipse 80% 50% at 10% -10%, #dce8e4 0%, transparent 55%),
+        radial-gradient(ellipse 70% 45% at 100% 0%, #efe2d4 0%, transparent 50%),
+        var(--bg);
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 3rem;
+    }
+
+    h1 {
+      margin: 0 0 0.35rem;
+      font-family: "IBM Plex Serif", Georgia, serif;
+      font-weight: 600;
+      font-size: clamp(1.6rem, 3vw, 2.1rem);
+      letter-spacing: -0.02em;
+    }
+
+    .lede {
+      margin: 0 0 1.5rem;
+      color: var(--muted);
+      max-width: 42rem;
+      line-height: 1.45;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 1.1rem 1.2rem 1.3rem;
+    }
+
+    .toggles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem 1.25rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.9rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .toggles label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 0.95rem;
+      user-select: none;
+    }
+
+    .toggles input {
+      width: 1rem;
+      height: 1rem;
+      accent-color: var(--ink);
+      cursor: pointer;
+    }
+
+    .swatch {
+      width: 0.85rem;
+      height: 0.85rem;
+      display: inline-block;
+    }
+
+    .swatch.classic { background: var(--classic); }
+    .swatch.emerging { background: var(--emerging); }
+    .swatch.r2d2 { background: var(--r2d2); }
+
+    .chart-wrap {
+      position: relative;
+      height: min(70vh, 560px);
+    }
+
+    .empty {
+      display: none;
+      position: absolute;
+      inset: 0;
+      place-items: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .empty.show { display: grid; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Performance / fidelity metrics</h1>
+    <p class="lede">
+      Papers reporting each canonical metric, stacked by cohort. Bars are sorted highest to
+      lowest for the cohorts currently shown. Totals: classic 23, emerging-ml 7, r2d2-citing 33.
+      (#Other notes are omitted — different unit.)
+    </p>
+
+    <div class="panel">
+      <div class="toggles" role="group" aria-label="Cohort visibility">
+        <label>
+          <input type="checkbox" id="toggle-classic" checked />
+          <span class="swatch classic" aria-hidden="true"></span>
+          Classic
+        </label>
+        <label>
+          <input type="checkbox" id="toggle-emerging" checked />
+          <span class="swatch emerging" aria-hidden="true"></span>
+          Emerging-ML
+        </label>
+        <label>
+          <input type="checkbox" id="toggle-r2d2" checked />
+          <span class="swatch r2d2" aria-hidden="true"></span>
+          R2D2-citing
+        </label>
+      </div>
+
+      <div class="chart-wrap">
+        <canvas id="metricsChart" aria-label="Stacked bar chart of metrics by cohort"></canvas>
+        <div class="empty" id="emptyState">Turn on at least one cohort to see the chart.</div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Canonical metrics only (#Other omitted — different unit: note count, not papers).
+    const metrics = [
+      "SNR", "logSNR", "PSNR", "SSIM", "DR", "RDR/Resid", "NMSE", "MAE",
+      "Runtime", "Iters", "CredInt", "UncCorr", "Wasser", "Class", "Text", "Compute",
+    ];
+
+    // Column totals from each cohort METRICS_TABLE.md
+    const cohorts = {
+      classic: {
+        label: "Classic",
+        color: "#0b6e6a",
+        values: [4, 0, 0, 0, 6, 8, 3, 0, 13, 12, 0, 0, 0, 0, 0, 12],
+      },
+      emerging: {
+        label: "Emerging-ML",
+        color: "#c45c26",
+        values: [1, 1, 1, 1, 3, 3, 0, 0, 5, 5, 1, 0, 0, 1, 0, 6],
+      },
+      r2d2: {
+        label: "R2D2-citing",
+        color: "#1f4e79",
+        values: [18, 10, 4, 2, 11, 12, 3, 1, 25, 16, 4, 1, 1, 5, 1, 16],
+      },
+    };
+
+    const toggles = {
+      classic: document.getElementById("toggle-classic"),
+      emerging: document.getElementById("toggle-emerging"),
+      r2d2: document.getElementById("toggle-r2d2"),
+    };
+    const emptyState = document.getElementById("emptyState");
+
+    function activeKeys() {
+      return Object.keys(toggles).filter((k) => toggles[k].checked);
+    }
+
+    function orderedIndices(keys) {
+      const scores = metrics.map((_, i) =>
+        keys.reduce((sum, k) => sum + cohorts[k].values[i], 0)
+      );
+      return scores
+        .map((score, i) => ({ i, score }))
+        .sort((a, b) => b.score - a.score || a.i - b.i)
+        .map((x) => x.i);
+    }
+
+    function chartData() {
+      const keys = activeKeys();
+      const order = orderedIndices(keys);
+      return {
+        labels: order.map((i) => metrics[i]),
+        datasets: keys.map((k) => ({
+          label: cohorts[k].label,
+          data: order.map((i) => cohorts[k].values[i]),
+          backgroundColor: cohorts[k].color,
+          borderWidth: 0,
+          barPercentage: 0.72,
+          categoryPercentage: 0.85,
+        })),
+      };
+    }
+
+    const chart = new Chart(document.getElementById("metricsChart"), {
+      type: "bar",
+      data: chartData(),
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: { duration: 280 },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              footer(items) {
+                const total = items.reduce((s, it) => s + it.parsed.y, 0);
+                return `Total: ${total}`;
+              },
+            },
+          },
+        },
+        scales: {
+          x: {
+            stacked: true,
+            grid: { display: false },
+            ticks: {
+              color: "#5a6670",
+              maxRotation: 45,
+              minRotation: 45,
+              font: { family: "IBM Plex Sans", size: 11 },
+            },
+          },
+          y: {
+            stacked: true,
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: "Papers reporting metric",
+              color: "#5a6670",
+              font: { family: "IBM Plex Sans", size: 12 },
+            },
+            grid: { color: "rgba(28, 36, 41, 0.08)" },
+            ticks: {
+              color: "#5a6670",
+              precision: 0,
+              font: { family: "IBM Plex Sans", size: 11 },
+            },
+          },
+        },
+      },
+    });
+
+    function refresh() {
+      const keys = activeKeys();
+      emptyState.classList.toggle("show", keys.length === 0);
+      chart.canvas.style.opacity = keys.length ? "1" : "0";
+      chart.data = chartData();
+      chart.update();
+    }
+
+    Object.values(toggles).forEach((el) => el.addEventListener("change", refresh));
+  </script>
+</body>
+</html>
