@@ -44,7 +44,11 @@ python3 -m http.server 8765
 
 **Stop:** press `Ctrl+C` in the terminal running the server.
 
-Needs a local HTTP server (not `file://`) so the page can load `papers-data.json`. If port 8765 is taken, use another port and change the URL accordingly, e.g. `python3 -m http.server 8766` → `http://127.0.0.1:8766/`.
+Needs a local HTTP server (not `file://`) so the page can load `papers-data.json` and `metrics/*.md`. If port 8765 is taken, use another port and change the URL accordingly, e.g. `python3 -m http.server 8766` → `http://127.0.0.1:8766/`.
+
+### Metric overviews
+
+Cross-paper syntheses of how each canonical metric is used live in `metrics/` (e.g. `metrics/runtime.md`, `metrics/compute.md`). The webpage “How papers report …” panel can toggle between the per-paper note list and these overviews.
 
 ## Bibliography review before extraction (gate)
 

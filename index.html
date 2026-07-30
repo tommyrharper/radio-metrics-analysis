@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Radio interferometry imaging metrics</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@15.0.7/marked.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&display=swap" rel="stylesheet" />
@@ -207,6 +208,89 @@
       font-family: "IBM Plex Serif", Georgia, serif;
       font-size: 0.95rem;
       font-weight: 600;
+    }
+
+    .variants-toggle {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin: 0 0 0.7rem;
+    }
+
+    .variants-toggle button {
+      border: 1px solid var(--line);
+      background: #fffdf8;
+      color: var(--muted);
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 0.3rem 0.65rem;
+      cursor: pointer;
+    }
+
+    .variants-toggle button.active {
+      background: var(--r2d2);
+      border-color: var(--r2d2);
+      color: #fff;
+    }
+
+    .variants-toggle button:hover:not(.active) {
+      border-color: var(--ink);
+      color: var(--ink);
+    }
+
+    .variants-pane { display: none; }
+    .variants-pane.active { display: block; }
+
+    .overview-body {
+      max-height: 18rem;
+      overflow: auto;
+      font-size: 0.88rem;
+      line-height: 1.45;
+    }
+
+    .overview-body h1 {
+      display: none;
+    }
+
+    .overview-body h2 {
+      margin: 0.9rem 0 0.35rem;
+      font-family: "IBM Plex Serif", Georgia, serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .overview-body h2:first-child { margin-top: 0; }
+
+    .overview-body h3 {
+      margin: 0.7rem 0 0.3rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+
+    .overview-body p { margin: 0 0 0.5rem; }
+
+    .overview-body ul {
+      margin: 0 0 0.55rem;
+      padding-left: 1.1rem;
+    }
+
+    .overview-body li {
+      margin: 0 0 0.28rem;
+      border: 0;
+      padding: 0;
+    }
+
+    .overview-body strong { font-weight: 600; }
+
+    .overview-body code {
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 0.84em;
+    }
+
+    .overview-status {
+      color: var(--muted);
+      font-size: 0.85rem;
     }
 
     .metric-variants .def-variants {
@@ -458,8 +542,8 @@
       </div>
       <p class="hint">
         Click a metric bar for its definition and paper list. Click the metric title for how
-        different papers report it. Click a paper for its metrics, then a metric chip for that
-        paper’s details. Use Open for the paper webpage.
+        papers report it (toggle paper-by-paper notes vs a cross-paper overview). Click a paper
+        for its metrics, then a metric chip for that paper’s details. Use Open for the paper webpage.
       </p>
 
       <section class="detail" id="detail" aria-live="polite">
@@ -469,7 +553,7 @@
               Metric
             </button>
             <div class="count" id="detailCount"></div>
-            <div class="title-hint">Click the title for how papers report this metric</div>
+            <div class="title-hint">Click the title for how papers report this · then By paper / Overview</div>
           </div>
           <button type="button" class="close-btn" id="detailClose">Close</button>
         </div>
@@ -492,6 +576,28 @@
       "uncertainty_correlation", "wasserstein", "classification_metrics",
       "text_metrics", "compute_cost",
     ];
+
+    const metricOverviewFiles = {
+      snr: "snr.md",
+      logsnr: "logsnr.md",
+      psnr: "psnr.md",
+      ssim: "ssim.md",
+      dynamic_range: "dr.md",
+      rdr_residual: "rdr-resid.md",
+      nmse_nrmse: "nmse.md",
+      mae: "mae.md",
+      runtime: "runtime.md",
+      iterations: "iters.md",
+      credible_interval: "credint.md",
+      uncertainty_correlation: "unccorr.md",
+      wasserstein: "wasser.md",
+      classification_metrics: "class.md",
+      text_metrics: "text.md",
+      compute_cost: "compute.md",
+    };
+
+    const overviewCache = {};
+    let variantsView = "papers"; // "papers" | "overview"
 
     // What each canonical column means in this radio-interferometry imaging review.
     const metricDefinitions = {
@@ -611,17 +717,9 @@
       });
     }
 
-    function buildVariantsList(metricIndex) {
+    function buildPapersPane(metricIndex) {
       const key = metricKeys[metricIndex];
-      const name = metrics[metricIndex];
       const variants = reportingVariants(key);
-
-      metricVariants.replaceChildren();
-      const heading = document.createElement("h3");
-      heading.className = "def-variants-title";
-      heading.textContent = `How papers report ${name}`;
-      metricVariants.append(heading);
-
       const list = document.createElement("ul");
       list.className = "def-variants";
 
@@ -629,37 +727,128 @@
         const empty = document.createElement("li");
         empty.textContent = "No papers in the visible cohorts use this metric.";
         list.append(empty);
-      } else {
-        variants.forEach(({ paper, ways }) => {
-          const li = document.createElement("li");
-          const bib = document.createElement("div");
-          bib.className = "def-bib";
-          bib.textContent = `${paper.bibcode} · ${cohorts[paper.cohort].label}`;
-          const title = document.createElement("div");
-          title.className = "def-paper-title";
-          title.textContent = paper.title;
-          li.append(bib, title);
-
-          const waysList = document.createElement("ul");
-          waysList.className = "def-ways";
-          if (!ways.length) {
-            const item = document.createElement("li");
-            item.textContent = "Classified as using this metric, but no dedicated summary bullet was auto-matched.";
-            waysList.append(item);
-          } else {
-            ways.forEach(({ title: wayTitle, body }) => {
-              const item = document.createElement("li");
-              const preview = body.length > 180 ? `${body.slice(0, 177)}…` : body;
-              item.textContent = wayTitle ? `${wayTitle}: ${preview}` : preview;
-              waysList.append(item);
-            });
-          }
-          li.append(waysList);
-          list.append(li);
-        });
+        return list;
       }
 
-      metricVariants.append(list);
+      variants.forEach(({ paper, ways }) => {
+        const li = document.createElement("li");
+        const bib = document.createElement("div");
+        bib.className = "def-bib";
+        bib.textContent = `${paper.bibcode} · ${cohorts[paper.cohort].label}`;
+        const title = document.createElement("div");
+        title.className = "def-paper-title";
+        title.textContent = paper.title;
+        li.append(bib, title);
+
+        const waysList = document.createElement("ul");
+        waysList.className = "def-ways";
+        if (!ways.length) {
+          const item = document.createElement("li");
+          item.textContent = "Classified as using this metric, but no dedicated summary bullet was auto-matched.";
+          waysList.append(item);
+        } else {
+          ways.forEach(({ title: wayTitle, body }) => {
+            const item = document.createElement("li");
+            const preview = body.length > 180 ? `${body.slice(0, 177)}…` : body;
+            item.textContent = wayTitle ? `${wayTitle}: ${preview}` : preview;
+            waysList.append(item);
+          });
+        }
+        li.append(waysList);
+        list.append(li);
+      });
+      return list;
+    }
+
+    async function loadOverviewMarkdown(metricIndex) {
+      const key = metricKeys[metricIndex];
+      const file = metricOverviewFiles[key];
+      if (!file) throw new Error(`No overview file mapped for ${key}`);
+      if (overviewCache[key]) return overviewCache[key];
+      const res = await fetch(`metrics/${file}`);
+      if (!res.ok) throw new Error(`Failed to load metrics/${file} (${res.status})`);
+      const md = await res.text();
+      overviewCache[key] = md;
+      return md;
+    }
+
+    function setVariantsView(view) {
+      variantsView = view;
+      const papersBtn = metricVariants.querySelector('[data-view="papers"]');
+      const overviewBtn = metricVariants.querySelector('[data-view="overview"]');
+      const papersPane = metricVariants.querySelector('[data-pane="papers"]');
+      const overviewPane = metricVariants.querySelector('[data-pane="overview"]');
+      if (!papersBtn) return;
+      papersBtn.classList.toggle("active", view === "papers");
+      overviewBtn.classList.toggle("active", view === "overview");
+      papersPane.classList.toggle("active", view === "papers");
+      overviewPane.classList.toggle("active", view === "overview");
+    }
+
+    async function showOverviewPane(metricIndex) {
+      const overviewPane = metricVariants.querySelector('[data-pane="overview"]');
+      if (!overviewPane) return;
+      overviewPane.innerHTML = `<p class="overview-status">Loading overview…</p>`;
+      try {
+        const md = await loadOverviewMarkdown(metricIndex);
+        // Skip the leading "# Title" — the panel already labels the metric.
+        const trimmed = md.replace(/^#\s+[^\n]+\n+/, "");
+        overviewPane.innerHTML = `<div class="overview-body">${marked.parse(trimmed)}</div>`;
+      } catch (err) {
+        overviewPane.innerHTML = "";
+        const status = document.createElement("p");
+        status.className = "overview-status";
+        status.textContent = String(err.message || err);
+        overviewPane.append(status);
+      }
+    }
+
+    function buildVariantsList(metricIndex) {
+      const name = metrics[metricIndex];
+      metricVariants.replaceChildren();
+
+      const heading = document.createElement("h3");
+      heading.className = "def-variants-title";
+      heading.textContent = `How papers report ${name}`;
+      metricVariants.append(heading);
+
+      const toggle = document.createElement("div");
+      toggle.className = "variants-toggle";
+      toggle.setAttribute("role", "tablist");
+      toggle.setAttribute("aria-label", "Reporting view");
+
+      const papersBtn = document.createElement("button");
+      papersBtn.type = "button";
+      papersBtn.dataset.view = "papers";
+      papersBtn.textContent = "By paper";
+      papersBtn.setAttribute("role", "tab");
+
+      const overviewBtn = document.createElement("button");
+      overviewBtn.type = "button";
+      overviewBtn.dataset.view = "overview";
+      overviewBtn.textContent = "Overview";
+      overviewBtn.setAttribute("role", "tab");
+
+      papersBtn.addEventListener("click", () => setVariantsView("papers"));
+      overviewBtn.addEventListener("click", () => {
+        setVariantsView("overview");
+        showOverviewPane(metricIndex);
+      });
+      toggle.append(papersBtn, overviewBtn);
+      metricVariants.append(toggle);
+
+      const papersPane = document.createElement("div");
+      papersPane.className = "variants-pane";
+      papersPane.dataset.pane = "papers";
+      papersPane.append(buildPapersPane(metricIndex));
+
+      const overviewPane = document.createElement("div");
+      overviewPane.className = "variants-pane";
+      overviewPane.dataset.pane = "overview";
+
+      metricVariants.append(papersPane, overviewPane);
+      setVariantsView(variantsView);
+      if (variantsView === "overview") showOverviewPane(metricIndex);
     }
 
     function setMetricSummary(metricIndex) {
@@ -686,8 +875,12 @@
       detailTitle.textContent = label;
       detailCount.textContent = `${matches.length} paper${matches.length === 1 ? "" : "s"} in visible cohorts`;
       setMetricSummary(metricIndex);
-      if (metricChanged) setVariantsOpen(false);
-      else if (variantsOpen) buildVariantsList(metricIndex);
+      if (metricChanged) {
+        variantsView = "papers";
+        setVariantsOpen(false);
+      } else if (variantsOpen) {
+        buildVariantsList(metricIndex);
+      }
       paperList.replaceChildren(
         ...matches.map((p) => {
           const li = document.createElement("li");
