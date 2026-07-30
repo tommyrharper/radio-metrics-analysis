@@ -90,6 +90,7 @@
       width: 0.85rem;
       height: 0.85rem;
       display: inline-block;
+      flex-shrink: 0;
     }
 
     .swatch.classic { background: var(--classic); }
@@ -98,7 +99,8 @@
 
     .chart-wrap {
       position: relative;
-      height: min(70vh, 560px);
+      height: min(58vh, 480px);
+      cursor: pointer;
     }
 
     .empty {
@@ -111,6 +113,97 @@
     }
 
     .empty.show { display: grid; }
+
+    .detail {
+      margin-top: 1rem;
+      display: none;
+    }
+
+    .detail.open { display: block; }
+
+    .detail-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.65rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .detail-head h2 {
+      margin: 0;
+      font-family: "IBM Plex Serif", Georgia, serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .detail-head .count {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .detail-head button {
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--muted);
+      font: inherit;
+      font-size: 0.85rem;
+      padding: 0.25rem 0.55rem;
+      cursor: pointer;
+    }
+
+    .detail-head button:hover {
+      color: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .paper-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      max-height: 22rem;
+      overflow: auto;
+    }
+
+    .paper-list li {
+      display: grid;
+      grid-template-columns: 5.5rem 1fr;
+      gap: 0.55rem 0.85rem;
+      padding: 0.55rem 0.15rem;
+      border-bottom: 1px solid rgba(215, 208, 195, 0.7);
+      align-items: start;
+    }
+
+    .paper-list li:last-child { border-bottom: none; }
+
+    .cohort-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+
+    .paper-meta .bib {
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .paper-meta .title {
+      margin-top: 0.15rem;
+      font-size: 0.95rem;
+      line-height: 1.35;
+    }
+
+    .hint {
+      margin: 0.65rem 0 0;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
   </style>
 </head>
 <body>
@@ -119,7 +212,7 @@
     <p class="lede">
       Papers reporting each canonical metric, stacked by cohort. Bars are sorted highest to
       lowest for the cohorts currently shown. Totals: classic 23, emerging-ml 7, r2d2-citing 33.
-      (#Other notes are omitted — different unit.)
+      Click a bar to list the papers that report that metric.
     </p>
 
     <div class="panel">
@@ -145,17 +238,34 @@
         <canvas id="metricsChart" aria-label="Stacked bar chart of metrics by cohort"></canvas>
         <div class="empty" id="emptyState">Turn on at least one cohort to see the chart.</div>
       </div>
+      <p class="hint">Click a metric bar to see matching papers (respects the cohort toggles above).</p>
+
+      <section class="detail" id="detail" aria-live="polite">
+        <div class="detail-head">
+          <div>
+            <h2 id="detailTitle">Metric</h2>
+            <div class="count" id="detailCount"></div>
+          </div>
+          <button type="button" id="detailClose">Close</button>
+        </div>
+        <ul class="paper-list" id="paperList"></ul>
+      </section>
     </div>
   </main>
 
   <script>
-    // Canonical metrics only (#Other omitted — different unit: note count, not papers).
     const metrics = [
       "SNR", "logSNR", "PSNR", "SSIM", "DR", "RDR/Resid", "NMSE", "MAE",
       "Runtime", "Iters", "CredInt", "UncCorr", "Wasser", "Class", "Text", "Compute",
     ];
 
-    // Column totals from each cohort METRICS_TABLE.md
+    const metricKeys = [
+      "snr", "logsnr", "psnr", "ssim", "dynamic_range", "rdr_residual",
+      "nmse_nrmse", "mae", "runtime", "iterations", "credible_interval",
+      "uncertainty_correlation", "wasserstein", "classification_metrics",
+      "text_metrics", "compute_cost",
+    ];
+
     const cohorts = {
       classic: {
         label: "Classic",
@@ -180,6 +290,13 @@
       r2d2: document.getElementById("toggle-r2d2"),
     };
     const emptyState = document.getElementById("emptyState");
+    const detail = document.getElementById("detail");
+    const detailTitle = document.getElementById("detailTitle");
+    const detailCount = document.getElementById("detailCount");
+    const paperList = document.getElementById("paperList");
+    let papers = [];
+    let selectedMetric = null;
+    let currentOrder = [];
 
     function activeKeys() {
       return Object.keys(toggles).filter((k) => toggles[k].checked);
@@ -195,20 +312,60 @@
         .map((x) => x.i);
     }
 
+    currentOrder = orderedIndices(Object.keys(toggles));
+
     function chartData() {
       const keys = activeKeys();
-      const order = orderedIndices(keys);
+      currentOrder = orderedIndices(keys);
       return {
-        labels: order.map((i) => metrics[i]),
+        labels: currentOrder.map((i) => metrics[i]),
         datasets: keys.map((k) => ({
           label: cohorts[k].label,
-          data: order.map((i) => cohorts[k].values[i]),
+          data: currentOrder.map((i) => cohorts[k].values[i]),
           backgroundColor: cohorts[k].color,
           borderWidth: 0,
           barPercentage: 0.72,
           categoryPercentage: 0.85,
         })),
       };
+    }
+
+    function papersForMetric(metricIndex) {
+      const key = metricKeys[metricIndex];
+      const active = new Set(activeKeys());
+      return papers
+        .filter((p) => active.has(p.cohort) && p.metrics[key] === 1)
+        .sort((a, b) => a.bibcode < b.bibcode ? 1 : a.bibcode > b.bibcode ? -1 : 0);
+    }
+
+    function showPapers(metricIndex) {
+      selectedMetric = metricIndex;
+      const label = metrics[metricIndex];
+      const matches = papersForMetric(metricIndex);
+      detailTitle.textContent = label;
+      detailCount.textContent = `${matches.length} paper${matches.length === 1 ? "" : "s"} in visible cohorts`;
+      paperList.replaceChildren(
+        ...matches.map((p) => {
+          const li = document.createElement("li");
+          const tag = document.createElement("div");
+          tag.className = "cohort-tag";
+          tag.innerHTML = `<span class="swatch ${p.cohort}" aria-hidden="true"></span>${cohorts[p.cohort].label}`;
+          const meta = document.createElement("div");
+          meta.className = "paper-meta";
+          meta.innerHTML = `<div class="bib">${p.bibcode}</div><div class="title"></div>`;
+          meta.querySelector(".title").textContent = p.title;
+          li.append(tag, meta);
+          return li;
+        })
+      );
+      detail.classList.add("open");
+      detail.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    function hidePapers() {
+      selectedMetric = null;
+      detail.classList.remove("open");
+      paperList.replaceChildren();
     }
 
     const chart = new Chart(document.getElementById("metricsChart"), {
@@ -218,13 +375,21 @@
         responsive: true,
         maintainAspectRatio: false,
         animation: { duration: 280 },
+        onClick(_evt, elements) {
+          if (!elements.length) return;
+          const metricIndex = currentOrder[elements[0].index];
+          showPapers(metricIndex);
+        },
+        onHover(evt, elements) {
+          evt.native.target.style.cursor = elements.length ? "pointer" : "default";
+        },
         plugins: {
           legend: { display: false },
           tooltip: {
             callbacks: {
               footer(items) {
                 const total = items.reduce((s, it) => s + it.parsed.y, 0);
-                return `Total: ${total}`;
+                return `Total: ${total} · click for paper list`;
               },
             },
           },
@@ -266,9 +431,28 @@
       chart.canvas.style.opacity = keys.length ? "1" : "0";
       chart.data = chartData();
       chart.update();
+      if (selectedMetric !== null) {
+        if (!keys.length) hidePapers();
+        else showPapers(selectedMetric);
+      }
     }
 
     Object.values(toggles).forEach((el) => el.addEventListener("change", refresh));
+    document.getElementById("detailClose").addEventListener("click", hidePapers);
+
+    fetch("papers-data.json")
+      .then((r) => {
+        if (!r.ok) throw new Error(`Failed to load papers-data.json (${r.status})`);
+        return r.json();
+      })
+      .then((data) => {
+        papers = data.papers || [];
+      })
+      .catch((err) => {
+        detailTitle.textContent = "Could not load paper list";
+        detailCount.textContent = String(err.message || err);
+        detail.classList.add("open");
+      });
   </script>
 </body>
 </html>
