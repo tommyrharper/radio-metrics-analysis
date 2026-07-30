@@ -4,6 +4,7 @@
       "cohort": "classic",
       "bibcode": "1974A&AS...15..417H",
       "title": "Aperture Synthesis with a Non-Regular Distribution of Interferometer Baselines",
+      "url": "https://ui.adsabs.harvard.edu/abs/1974A%26AS...15..417H/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -27,6 +28,7 @@
       "cohort": "classic",
       "bibcode": "1980A&A....89..377C",
       "title": "An Efficient Implementation of the Algorithm \"CLEAN\"",
+      "url": "https://ui.adsabs.harvard.edu/abs/1980A&A....89..377C/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -50,6 +52,7 @@
       "cohort": "classic",
       "bibcode": "1984A&A...137..159S",
       "title": "Enhancements to the deconvolution algorithm \"CLEAN\"",
+      "url": "https://ui.adsabs.harvard.edu/abs/1984A%26A...137..159S/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -73,6 +76,7 @@
       "cohort": "classic",
       "bibcode": "1985daa..conf..195W",
       "title": "NRAO's Astronomical Image Processing System (AIPS)",
+      "url": "https://ui.adsabs.harvard.edu/abs/1985daa..conf..195W/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -96,6 +100,7 @@
       "cohort": "classic",
       "bibcode": "1988A&A...200..312W",
       "title": "The Multi-Resolution Clean and its application to the short-spacing problem in interferometry",
+      "url": "https://ui.adsabs.harvard.edu/abs/1988A%26A...200..312W/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -119,6 +124,7 @@
       "cohort": "classic",
       "bibcode": "1994A&AS..108..585S",
       "title": "Multi-frequency synthesis techniques in radio interferometric imaging",
+      "url": "https://ui.adsabs.harvard.edu/abs/1994A%26AS..108..585S/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -142,6 +148,7 @@
       "cohort": "classic",
       "bibcode": "1995ASPC...77..433S",
       "title": "A Retrospective View of Miriad",
+      "url": "https://ui.adsabs.harvard.edu/abs/1995ASPC...77..433S/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -165,6 +172,7 @@
       "cohort": "classic",
       "bibcode": "2004A&A...426..747B",
       "title": "Scale sensitive deconvolution of interferometric images. I. Adaptive Scale Pixel (Asp) decomposition",
+      "url": "https://ui.adsabs.harvard.edu/abs/2004A%26A...426..747B/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -188,6 +196,7 @@
       "cohort": "classic",
       "bibcode": "2005sf2a.conf..721P",
       "title": "Successes of and Challenges to GILDAS, a State-of-the-Art Radioastronomy Toolkit",
+      "url": "https://ui.adsabs.harvard.edu/abs/2005sf2a.conf..721P/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -211,6 +220,7 @@
       "cohort": "classic",
       "bibcode": "2007ASPC..376..127M",
       "title": "CASA Architecture and Applications",
+      "url": "https://ui.adsabs.harvard.edu/abs/2007ASPC..376..127M/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -234,6 +244,7 @@
       "cohort": "classic",
       "bibcode": "2008A&A...487..419B",
       "title": "Correcting direction-dependent gains in the deconvolution of radio interferometric images",
+      "url": "https://ui.adsabs.harvard.edu/abs/2008A%26A...487..419B/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -257,6 +268,7 @@
       "cohort": "classic",
       "bibcode": "2008ISTSP...2..647C",
       "title": "The Noncoplanar Baselines Effect in Radio Interferometry: The W-Projection Algorithm",
+      "url": "https://ui.adsabs.harvard.edu/abs/2008ISTSP...2..647C/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -280,6 +292,7 @@
       "cohort": "classic",
       "bibcode": "2008ISTSP...2..793C",
       "title": "Multiscale CLEAN Deconvolution of Radio Synthesis Images",
+      "url": "https://ui.adsabs.harvard.edu/abs/2008ISTSP...2..793C/abstract",
       "metrics": {
         "snr": 1,
         "logsnr": 0,
@@ -303,6 +316,7 @@
       "cohort": "classic",
       "bibcode": "2011A&A...532A..71R",
       "title": "A multi-scale multi-frequency deconvolution algorithm for synthesis imaging in radio interferometry",
+      "url": "https://ui.adsabs.harvard.edu/abs/2011A%26A...532A..71R/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -326,6 +340,7 @@
       "cohort": "classic",
       "bibcode": "2012MNRAS.426.1223C",
       "title": "Sparsity Averaging Reweighted Analysis (SARA): a novel algorithm for radio-interferometric imaging",
+      "url": "https://ui.adsabs.harvard.edu/abs/2012MNRAS.426.1223C/abstract",
       "metrics": {
         "snr": 1,
         "logsnr": 0,
@@ -349,6 +364,7 @@
       "cohort": "classic",
       "bibcode": "2014MNRAS.439.3591C",
       "title": "PURIFY: a new approach to radio-interferometric imaging",
+      "url": "https://ui.adsabs.harvard.edu/abs/2014MNRAS.439.3591C/abstract",
       "metrics": {
         "snr": 1,
         "logsnr": 0,
@@ -372,6 +388,7 @@
       "cohort": "classic",
       "bibcode": "2014MNRAS.444..606O",
       "title": "WSClean: an implementation of a fast, generic wide-field imager for radio astronomy",
+      "url": "https://ui.adsabs.harvard.edu/abs/2014MNRAS.444..606O/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -395,6 +412,7 @@
       "cohort": "classic",
       "bibcode": "2017MNRAS.471..301O",
       "title": "An optimized algorithm for multi-scale wideband deconvolution of radio astronomical images",
+      "url": "https://ui.adsabs.harvard.edu/abs/2017MNRAS.471..301O/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -418,6 +436,7 @@
       "cohort": "classic",
       "bibcode": "2018A&A...611A..87T",
       "title": "Faceting for direction-dependent spectral deconvolution",
+      "url": "https://ui.adsabs.harvard.edu/abs/2018A%26A...611A..87T/abstract",
       "metrics": {
         "snr": 1,
         "logsnr": 0,
@@ -441,6 +460,7 @@
       "cohort": "classic",
       "bibcode": "2018A&A...616A..27V",
       "title": "Image Domain Gridding: a fast method for convolutional resampling of visibilities",
+      "url": "https://ui.adsabs.harvard.edu/abs/2018A%26A...616A..27V/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -464,6 +484,7 @@
       "cohort": "classic",
       "bibcode": "2023arXiv230606007K",
       "title": "HVOX: Scalable Interferometric Synthesis and Analysis of Spherical Sky Maps",
+      "url": "https://ui.adsabs.harvard.edu/abs/2023arXiv230606007K/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -487,6 +508,7 @@
       "cohort": "classic",
       "bibcode": "2025arXiv251213591C",
       "title": "astroCAMP: A Community Benchmark and Co-Design Framework for Sustainable SKA-Scale Radio Imaging",
+      "url": "https://ui.adsabs.harvard.edu/abs/2025arXiv251213591C/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -510,6 +532,7 @@
       "cohort": "classic",
       "bibcode": "SKA-MEMO-132",
       "title": "Analysis of Convolutional Resampling Algorithm Performance",
+      "url": "https://openparallel.com/wp-content/uploads/2013/01/tim-cornwell-ben-humphreys-memo132.pdf",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -533,6 +556,7 @@
       "cohort": "emerging",
       "bibcode": "2022A&A...664A.134S",
       "title": "Deep learning-based imaging in radio interferometry",
+      "url": "https://ui.adsabs.harvard.edu/abs/2022A%26A...664A.134S/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -556,6 +580,7 @@
       "cohort": "emerging",
       "bibcode": "2022ApJ...939L...4D",
       "title": "First AI for Deep Super-resolution Wide-field Imaging in Radio Astronomy: Unveiling Structure in ESO 137-006",
+      "url": "https://ui.adsabs.harvard.edu/abs/2022ApJ...939L...4D/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -579,6 +604,7 @@
       "cohort": "emerging",
       "bibcode": "2022MNRAS.514.2614C",
       "title": "Deep radio-interferometric imaging with POLISH: DSA-2000 and weak lensing",
+      "url": "https://ui.adsabs.harvard.edu/abs/2022MNRAS.514.2614C/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -602,6 +628,7 @@
       "cohort": "emerging",
       "bibcode": "2023ApJ...943..144M",
       "title": "Principal-Component Interferometric Modeling (PRIMO), an Algorithm for EHT Data I: Reconstructing Images from Simulated EHT Observations",
+      "url": "https://ui.adsabs.harvard.edu/abs/2023ApJ...943..144M/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -625,6 +652,7 @@
       "cohort": "emerging",
       "bibcode": "2023MNRAS.522.5558W",
       "title": "Scalable precision wide-field imaging in radio interferometry: I. uSARA validated on ASKAP data",
+      "url": "https://ui.adsabs.harvard.edu/abs/2023MNRAS.522.5558W/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -648,6 +676,7 @@
       "cohort": "emerging",
       "bibcode": "2023MNRAS.522.5576W",
       "title": "Scalable precision wide-field imaging in radio interferometry: II. AIRI validated on ASKAP data",
+      "url": "https://ui.adsabs.harvard.edu/abs/2023MNRAS.522.5576W/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -671,6 +700,7 @@
       "cohort": "emerging",
       "bibcode": "2024ApJS..273....3A",
       "title": "The R2D2 Deep Neural Network Series Paradigm for Fast Precision Imaging in Radio Astronomy",
+      "url": "https://ui.adsabs.harvard.edu/abs/2024ApJS..273....3A/abstract",
       "metrics": {
         "snr": 1,
         "logsnr": 1,
@@ -694,6 +724,7 @@
       "cohort": "r2d2",
       "bibcode": "2024A&A...690A.387R",
       "title": "fast-resolve: Fast Bayesian Radio Interferometric Imaging",
+      "url": "https://ui.adsabs.harvard.edu/abs/2024A%26A...690A.387R/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -717,6 +748,7 @@
       "cohort": "r2d2",
       "bibcode": "2024ApJ...966L..34D",
       "title": "CLEANing Cygnus A Deep and Fast with R2D2",
+      "url": "https://ui.adsabs.harvard.edu/abs/2024ApJ...966L..34D/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -740,6 +772,7 @@
       "cohort": "r2d2",
       "bibcode": "2024RASTI...3..505L",
       "title": "Scalable Bayesian uncertainty quantification with data-driven priors for radio interferometric imaging",
+      "url": "https://ui.adsabs.harvard.edu/abs/2024RASTI...3..505L/abstract",
       "metrics": {
         "snr": 1,
         "logsnr": 0,
@@ -763,6 +796,7 @@
       "cohort": "r2d2",
       "bibcode": "2024arXiv240317905C",
       "title": "Scalable Non-Cartesian Magnetic Resonance Imaging with R2D2",
+      "url": "https://ui.adsabs.harvard.edu/abs/2024arXiv240317905C/abstract",
       "metrics": {
         "snr": 1,
         "logsnr": 1,
@@ -786,6 +820,7 @@
       "cohort": "r2d2",
       "bibcode": "2024arXiv240318052A",
       "title": "R2D2 Image Reconstruction with Model Uncertainty Quantification in Radio Astronomy",
+      "url": "https://ui.adsabs.harvard.edu/abs/2024arXiv240318052A/abstract",
       "metrics": {
         "snr": 1,
         "logsnr": 1,
@@ -809,6 +844,7 @@
       "cohort": "r2d2",
       "bibcode": "2024arXiv241023178C",
       "title": "Uncertainty Quantification for Fast Reconstruction Methods Using Augmented Equivariant Bootstrap: Application to Radio Interferometry",
+      "url": "https://ui.adsabs.harvard.edu/abs/2024arXiv241023178C/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -832,6 +868,7 @@
       "cohort": "r2d2",
       "bibcode": "2025AJ....169..289W",
       "title": "A Decentralized Framework for Radio-interferometric Image Reconstruction",
+      "url": "https://ui.adsabs.harvard.edu/abs/2025AJ....169..289W/abstract",
       "metrics": {
         "snr": 1,
         "logsnr": 0,
@@ -855,6 +892,7 @@
       "cohort": "r2d2",
       "bibcode": "2025A&A...698A..61J",
       "title": "Deep learning inference with the Event Horizon Telescope: II. The ZINGULARITY framework for Bayesian artificial neural networks",
+      "url": "https://ui.adsabs.harvard.edu/abs/2025A%26A...698A..61J/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -878,6 +916,7 @@
       "cohort": "r2d2",
       "bibcode": "2025A&A...698A.176M",
       "title": "How to make CLEAN variants faster using clustered components informed by the autocorrelation function",
+      "url": "https://ui.adsabs.harvard.edu/abs/2025A%26A...698A.176M/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -901,6 +940,7 @@
       "cohort": "r2d2",
       "bibcode": "2025A&A...704A..43Y",
       "title": "Non-convex sparse regularisation for radio interferometric imaging via smoothly clipped absolute deviation",
+      "url": "https://ui.adsabs.harvard.edu/abs/2025A%26A...704A..43Y/abstract",
       "metrics": {
         "snr": 1,
         "logsnr": 1,
@@ -924,6 +964,7 @@
       "cohort": "r2d2",
       "bibcode": "2025ApJ...984...86P",
       "title": "Theoretical Foundation of Black Hole Image Reconstruction Using PRIMO",
+      "url": "https://ui.adsabs.harvard.edu/abs/2025ApJ...984...86P/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -947,6 +988,7 @@
       "cohort": "r2d2",
       "bibcode": "2025ApJS..280...63A",
       "title": "Toward a Robust R2D2 Paradigm for Radio-interferometric Imaging: Revisiting Deep Neural Network Training and Architecture",
+      "url": "https://ui.adsabs.harvard.edu/abs/2025ApJS..280...63A/abstract",
       "metrics": {
         "snr": 1,
         "logsnr": 1,
@@ -970,6 +1012,7 @@
       "cohort": "r2d2",
       "bibcode": "2025ChJSS..45.1597F",
       "title": "Imaging Method of Synthetic Aperture Radio Telescope Based on Minimax Concave Penalty",
+      "url": "https://ui.adsabs.harvard.edu/abs/2025ChJSS..45.1597F/abstract",
       "metrics": {
         "snr": 1,
         "logsnr": 0,
@@ -993,6 +1036,7 @@
       "cohort": "r2d2",
       "bibcode": "2025MLS&T...6d5005Z",
       "title": "Unveiling the power of multimodal large language models for radio astronomical image understanding and question answering",
+      "url": "https://ui.adsabs.harvard.edu/abs/2025MLS%26T...6d5005Z/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -1016,6 +1060,7 @@
       "cohort": "r2d2",
       "bibcode": "2025MNRAS.537.1608T",
       "title": "The AIRI plug-and-play algorithm for image reconstruction in radio-interferometry: variations and robustness",
+      "url": "https://ui.adsabs.harvard.edu/abs/2025MNRAS.537.1608T/abstract",
       "metrics": {
         "snr": 1,
         "logsnr": 1,
@@ -1039,6 +1084,7 @@
       "cohort": "r2d2",
       "bibcode": "2025MNRAS.542..426T",
       "title": "S-R2D2: a spherical extension of the R2D2 deep neural network series paradigm for wide-field radio-interferometric imaging",
+      "url": "https://ui.adsabs.harvard.edu/abs/2025MNRAS.542..426T/abstract",
       "metrics": {
         "snr": 1,
         "logsnr": 1,
@@ -1062,6 +1108,7 @@
       "cohort": "r2d2",
       "bibcode": "2025MNRAS.542.2494M",
       "title": "Strong gravitational lensing with upcoming wide-field radio surveys",
+      "url": "https://ui.adsabs.harvard.edu/abs/2025MNRAS.542.2494M/abstract",
       "metrics": {
         "snr": 1,
         "logsnr": 0,
@@ -1085,6 +1132,7 @@
       "cohort": "r2d2",
       "bibcode": "2025MNRAS.543.1727L",
       "title": "MROP: modulated rank-one projections for compressive radio interferometric imaging",
+      "url": "https://ui.adsabs.harvard.edu/abs/2025MNRAS.543.1727L/abstract",
       "metrics": {
         "snr": 1,
         "logsnr": 1,
@@ -1108,6 +1156,7 @@
       "cohort": "r2d2",
       "bibcode": "2025RASTI...4..25M",
       "title": "Learned Radio Interferometric Imaging for Varying Visibility Coverage",
+      "url": "https://ui.adsabs.harvard.edu/abs/2025RASTI...4..25M/abstract",
       "metrics": {
         "snr": 1,
         "logsnr": 1,
@@ -1131,6 +1180,7 @@
       "cohort": "r2d2",
       "bibcode": "2025arXiv250102473D",
       "title": "IRIS: A Bayesian Approach for Image Reconstruction in Radio Interferometry with expressive Score-Based priors",
+      "url": "https://ui.adsabs.harvard.edu/abs/2025arXiv250102473D/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -1154,6 +1204,7 @@
       "cohort": "r2d2",
       "bibcode": "2025arXiv250309559C",
       "title": "Interlaced R2D2 DNN Series for Scalable Non-Cartesian MRI with Sensitivity Self-calibration",
+      "url": "https://ui.adsabs.harvard.edu/abs/2025arXiv250309559C/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -1177,6 +1228,7 @@
       "cohort": "r2d2",
       "bibcode": "2025arXiv250721270M",
       "title": "Generative imaging for radio interferometry with fast uncertainty quantification",
+      "url": "https://ui.adsabs.harvard.edu/abs/2025arXiv250721270M/abstract",
       "metrics": {
         "snr": 1,
         "logsnr": 0,
@@ -1200,6 +1252,7 @@
       "cohort": "r2d2",
       "bibcode": "2025arXiv250915176M",
       "title": "To CLEAN or not to CLEAN: Data Processing in the ngVLA era",
+      "url": "https://ui.adsabs.harvard.edu/abs/2025arXiv250915176M/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -1223,6 +1276,7 @@
       "cohort": "r2d2",
       "bibcode": "2025arXiv251208444H",
       "title": "Learned iterative networks: An operator learning perspective",
+      "url": "https://ui.adsabs.harvard.edu/abs/2025arXiv251208444H/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -1246,6 +1300,7 @@
       "cohort": "r2d2",
       "bibcode": "2026AJ....171...44Y",
       "title": "A Radio-interferometric Imaging Method Based on Adaptively Learned Sparsifying Basis",
+      "url": "https://ui.adsabs.harvard.edu/abs/2026AJ....171...44Y/abstract",
       "metrics": {
         "snr": 1,
         "logsnr": 0,
@@ -1269,6 +1324,7 @@
       "cohort": "r2d2",
       "bibcode": "2026AJ....171..220Y",
       "title": "An Imaging Algorithm Based on Generalized Minimax-concave Penalty in Radio Interferometry",
+      "url": "https://ui.adsabs.harvard.edu/abs/2026AJ....171..220Y/abstract",
       "metrics": {
         "snr": 1,
         "logsnr": 1,
@@ -1292,6 +1348,7 @@
       "cohort": "r2d2",
       "bibcode": "2026A&A...706A..77M",
       "title": "Accelerating the CLEAN algorithm of radio interferometry with convex optimization",
+      "url": "https://ui.adsabs.harvard.edu/abs/2026A%26A...706A..77M/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -1315,6 +1372,7 @@
       "cohort": "r2d2",
       "bibcode": "2026ApJS..283....9T",
       "title": "HyperAIRI: A Plug-and-play Algorithm for Precise Hyperspectral Image Reconstruction in Radio Interferometry",
+      "url": "https://ui.adsabs.harvard.edu/abs/2026ApJS..283....9T/abstract",
       "metrics": {
         "snr": 1,
         "logsnr": 1,
@@ -1338,6 +1396,7 @@
       "cohort": "r2d2",
       "bibcode": "2026arXiv260115844M",
       "title": "Radio-Interferometric Image Reconstruction with Denoising Diffusion Restoration Models",
+      "url": "https://ui.adsabs.harvard.edu/abs/2026arXiv260115844M/abstract",
       "metrics": {
         "snr": 1,
         "logsnr": 0,
@@ -1361,6 +1420,7 @@
       "cohort": "r2d2",
       "bibcode": "2026arXiv260309162W",
       "title": "POLISH'ing the Sky: Wide-Field and High-Dynamic Range Interferometric Image Reconstruction with Application to Strong Lens Discovery",
+      "url": "https://ui.adsabs.harvard.edu/abs/2026arXiv260309162W/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -1384,6 +1444,7 @@
       "cohort": "r2d2",
       "bibcode": "2026arXiv260526347D",
       "title": "A distributed resource-adaptive implementation of the widefield radio-interferometric measurement model for scalable image formation",
+      "url": "https://ui.adsabs.harvard.edu/abs/2026arXiv260526347D/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,
@@ -1407,6 +1468,7 @@
       "cohort": "r2d2",
       "bibcode": "2026arXiv260628493D",
       "title": "The Role of Artificial Intelligence in the SKA Era",
+      "url": "https://ui.adsabs.harvard.edu/abs/2026arXiv260628493D/abstract",
       "metrics": {
         "snr": 1,
         "logsnr": 0,
@@ -1430,6 +1492,7 @@
       "cohort": "r2d2",
       "bibcode": "2026arXiv260702110D",
       "title": "Black Boxes in Black Hole Imaging",
+      "url": "https://ui.adsabs.harvard.edu/abs/2026arXiv260702110D/abstract",
       "metrics": {
         "snr": 0,
         "logsnr": 0,

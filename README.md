@@ -30,6 +30,22 @@ Each cohort has its own `METRICS_TABLE.md`, plus one root aggregate:
 3. `cohorts/classic/METRICS_TABLE.md` — classic / current-practice extraction.
 4. `cohorts/emerging-ml/METRICS_TABLE.md` — ML / emerging extraction.
 
+## Metrics webpage
+
+Interactive stacked bar chart of metric usage by cohort (`index.html` + `papers-data.json`).
+
+**Start** (from the repo root):
+
+```bash
+python3 -m http.server 8765
+```
+
+**Open:** [http://127.0.0.1:8765/](http://127.0.0.1:8765/) or [http://127.0.0.1:8765/index.html](http://127.0.0.1:8765/index.html)
+
+**Stop:** press `Ctrl+C` in the terminal running the server.
+
+Needs a local HTTP server (not `file://`) so the page can load `papers-data.json`. If port 8765 is taken, use another port and change the URL accordingly, e.g. `python3 -m http.server 8766` → `http://127.0.0.1:8766/`.
+
 ## Bibliography review before extraction (gate)
 
 `PAPERS.md` lists candidate papers per method family with stable landing-page links (ADS/DOI/arXiv/publisher), status `pending captain approval`.

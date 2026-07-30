@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Radio imaging metrics by cohort</title>
+  <title>Radio interferometry imaging metrics</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -162,20 +162,45 @@
       list-style: none;
       margin: 0;
       padding: 0;
-      max-height: 22rem;
+      max-height: 28rem;
       overflow: auto;
     }
 
     .paper-list li {
-      display: grid;
-      grid-template-columns: 5.5rem 1fr;
-      gap: 0.55rem 0.85rem;
-      padding: 0.55rem 0.15rem;
       border-bottom: 1px solid rgba(215, 208, 195, 0.7);
-      align-items: start;
     }
 
     .paper-list li:last-child { border-bottom: none; }
+
+    .paper-row {
+      display: grid;
+      grid-template-columns: 5.5rem 1fr auto;
+      gap: 0.55rem 0.85rem;
+      padding: 0.55rem 0.15rem;
+      align-items: start;
+    }
+
+    .paper-main {
+      border: 0;
+      background: transparent;
+      padding: 0;
+      margin: 0;
+      text-align: left;
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+      min-width: 0;
+    }
+
+    .paper-main:hover .title {
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .paper-main:focus-visible {
+      outline: 2px solid var(--r2d2);
+      outline-offset: 2px;
+    }
 
     .cohort-tag {
       display: inline-flex;
@@ -199,6 +224,57 @@
       line-height: 1.35;
     }
 
+    .open-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      align-self: center;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--ink);
+      font: inherit;
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.35rem 0.6rem;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .open-link:hover {
+      border-color: var(--ink);
+    }
+
+    .paper-metrics {
+      display: none;
+      grid-column: 1 / -1;
+      padding: 0 0.15rem 0.7rem 6.35rem;
+    }
+
+    .paper-list li.open .paper-metrics {
+      display: block;
+    }
+
+    .metric-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .metric-chips span {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--ink);
+      background: #ebe4d8;
+      padding: 0.2rem 0.45rem;
+    }
+
+    .metric-chips .none {
+      color: var(--muted);
+      background: transparent;
+      padding: 0;
+      font-weight: 400;
+    }
+
     .hint {
       margin: 0.65rem 0 0;
       color: var(--muted);
@@ -208,11 +284,13 @@
 </head>
 <body>
   <main>
-    <h1>Performance / fidelity metrics</h1>
+    <h1>Radio interferometry imaging metrics</h1>
     <p class="lede">
-      Papers reporting each canonical metric, stacked by cohort. Bars are sorted highest to
-      lowest for the cohorts currently shown. Totals: classic 23, emerging-ml 7, r2d2-citing 33.
-      Click a bar to list the papers that report that metric.
+      How papers evaluate the radio interferometry imaging pipeline — visibility data through
+      gridding, inverse FFT, and deconvolution — using performance and fidelity metrics.
+      Bars show papers reporting each metric, stacked by cohort (classic pipelines, emerging ML,
+      and R2D2-citing work), sorted highest to lowest for the cohorts currently shown.
+      Totals: classic 23, emerging-ml 7, r2d2-citing 33. Click a bar to list matching papers.
     </p>
 
     <div class="panel">
@@ -235,10 +313,13 @@
       </div>
 
       <div class="chart-wrap">
-        <canvas id="metricsChart" aria-label="Stacked bar chart of metrics by cohort"></canvas>
+        <canvas id="metricsChart" aria-label="Stacked bar chart of radio interferometry imaging metrics by cohort"></canvas>
         <div class="empty" id="emptyState">Turn on at least one cohort to see the chart.</div>
       </div>
-      <p class="hint">Click a metric bar to see matching papers (respects the cohort toggles above).</p>
+      <p class="hint">
+        Click a metric bar to list papers. Click a paper row to see all metrics it reports;
+        use Open to view the paper page.
+      </p>
 
       <section class="detail" id="detail" aria-live="polite">
         <div class="detail-head">
@@ -338,6 +419,10 @@
         .sort((a, b) => a.bibcode < b.bibcode ? 1 : a.bibcode > b.bibcode ? -1 : 0);
     }
 
+    function usedMetricLabels(paper) {
+      return metrics.filter((_, i) => paper.metrics[metricKeys[i]] === 1);
+    }
+
     function showPapers(metricIndex) {
       selectedMetric = metricIndex;
       const label = metrics[metricIndex];
@@ -347,14 +432,59 @@
       paperList.replaceChildren(
         ...matches.map((p) => {
           const li = document.createElement("li");
+
+          const row = document.createElement("div");
+          row.className = "paper-row";
+
           const tag = document.createElement("div");
           tag.className = "cohort-tag";
           tag.innerHTML = `<span class="swatch ${p.cohort}" aria-hidden="true"></span>${cohorts[p.cohort].label}`;
+
+          const main = document.createElement("button");
+          main.type = "button";
+          main.className = "paper-main";
+          main.setAttribute("aria-expanded", "false");
           const meta = document.createElement("div");
           meta.className = "paper-meta";
-          meta.innerHTML = `<div class="bib">${p.bibcode}</div><div class="title"></div>`;
+          meta.innerHTML = `<div class="bib"></div><div class="title"></div>`;
+          meta.querySelector(".bib").textContent = p.bibcode;
           meta.querySelector(".title").textContent = p.title;
-          li.append(tag, meta);
+          main.append(meta);
+
+          const open = document.createElement("a");
+          open.className = "open-link";
+          open.href = p.url;
+          open.target = "_blank";
+          open.rel = "noopener noreferrer";
+          open.textContent = "Open";
+          open.title = "Open paper webpage";
+
+          const metricsWrap = document.createElement("div");
+          metricsWrap.className = "paper-metrics";
+          const chips = document.createElement("div");
+          chips.className = "metric-chips";
+          const used = usedMetricLabels(p);
+          if (used.length) {
+            used.forEach((name) => {
+              const chip = document.createElement("span");
+              chip.textContent = name;
+              chips.append(chip);
+            });
+          } else {
+            const none = document.createElement("span");
+            none.className = "none";
+            none.textContent = "No canonical metrics flagged for this paper.";
+            chips.append(none);
+          }
+          metricsWrap.append(chips);
+
+          main.addEventListener("click", () => {
+            const isOpen = li.classList.toggle("open");
+            main.setAttribute("aria-expanded", String(isOpen));
+          });
+
+          row.append(tag, main, open);
+          li.append(row, metricsWrap);
           return li;
         })
       );

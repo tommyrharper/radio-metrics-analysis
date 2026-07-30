@@ -10,7 +10,7 @@ This file is the project's committed home for project-intrinsic agent knowledge:
 
 ## Repo structure
 
-- Three cohorts under `cohorts/`: `r2d2-citing` (complete), `classic`, `emerging-ml` (both extracted). Root `METRICS_TABLE.md` merges all three. See `README.md` for the four-`METRICS_TABLE.md` model and `PLAN.md` for staged milestones.
+- Three cohorts under `cohorts/`: `r2d2-citing` (complete), `classic`, `emerging-ml` (both extracted). Root `METRICS_TABLE.md` merges all three. Metrics webpage: see README “Metrics webpage” (`python3 -m http.server 8765` → http://127.0.0.1:8765/).
 - This repo has no dependency on the separate PDF-extractor project.
 - When a candidate is approved and extracted, follow the existing `cohorts/r2d2-citing/` layout as the template: `papers/<id>.md` summary + `metrics_table/rows/<id>.json` classification row, then regenerate that cohort's `METRICS_TABLE.md` and the root aggregate.
 
