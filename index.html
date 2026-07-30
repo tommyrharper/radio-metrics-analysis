@@ -131,11 +131,31 @@
       border-bottom: 1px solid var(--line);
     }
 
-    .detail-head h2 {
+    .detail-head h2,
+    .detail-title-btn {
       margin: 0;
       font-family: "IBM Plex Serif", Georgia, serif;
       font-size: 1.2rem;
       font-weight: 600;
+    }
+
+    .detail-title-btn {
+      border: 0;
+      background: transparent;
+      padding: 0;
+      color: inherit;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .detail-title-btn:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .detail-title-btn:focus-visible {
+      outline: 2px solid var(--r2d2);
+      outline-offset: 2px;
     }
 
     .detail-head .count {
@@ -143,7 +163,13 @@
       font-size: 0.9rem;
     }
 
-    .detail-head button {
+    .detail-head .title-hint {
+      margin-top: 0.2rem;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    .detail-head button.close-btn {
       border: 1px solid var(--line);
       background: transparent;
       color: var(--muted);
@@ -153,9 +179,78 @@
       cursor: pointer;
     }
 
-    .detail-head button:hover {
+    .detail-head button.close-btn:hover {
       color: var(--ink);
       border-color: var(--ink);
+    }
+
+    .metric-def {
+      display: none;
+      margin: 0 0 0.85rem;
+      padding: 0.75rem 0.85rem;
+      background: #eef4f2;
+      border: 1px solid var(--line);
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .metric-def.open { display: block; }
+
+    .metric-def .def-lead strong {
+      font-family: "IBM Plex Serif", Georgia, serif;
+      font-weight: 600;
+    }
+
+    .metric-def .def-variants-title {
+      margin: 0.85rem 0 0.4rem;
+      font-family: "IBM Plex Serif", Georgia, serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .metric-def .def-variants {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      max-height: 14rem;
+      overflow: auto;
+    }
+
+    .metric-def .def-variants > li {
+      margin: 0 0 0.65rem;
+      padding: 0 0 0.55rem;
+      border-bottom: 1px solid rgba(215, 208, 195, 0.85);
+    }
+
+    .metric-def .def-variants > li:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .metric-def .def-bib {
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .metric-def .def-paper-title {
+      font-size: 0.86rem;
+      margin: 0.1rem 0 0.3rem;
+      line-height: 1.3;
+    }
+
+    .metric-def .def-ways {
+      margin: 0;
+      padding-left: 1.05rem;
+    }
+
+    .metric-def .def-ways li {
+      margin: 0 0 0.25rem;
+      font-size: 0.84rem;
+      line-height: 1.35;
+      border: 0;
+      padding: 0;
     }
 
     .paper-list {
@@ -361,18 +456,23 @@
         <div class="empty" id="emptyState">Turn on at least one cohort to see the chart.</div>
       </div>
       <p class="hint">
-        Click a metric bar to list papers. Click a paper to see its metrics, then click a metric
-        chip for how that paper uses it. Use Open for the paper webpage.
+        Click a metric bar to list papers. Click the metric name above the list for what we mean
+        by that metric and how different papers report it. Click a paper for its metrics, then a
+        metric chip for that paper’s details. Use Open for the paper webpage.
       </p>
 
       <section class="detail" id="detail" aria-live="polite">
         <div class="detail-head">
           <div>
-            <h2 id="detailTitle">Metric</h2>
+            <button type="button" class="detail-title-btn" id="detailTitle" aria-expanded="false">
+              Metric
+            </button>
             <div class="count" id="detailCount"></div>
+            <div class="title-hint">Click the metric name for definition + reporting variants</div>
           </div>
-          <button type="button" id="detailClose">Close</button>
+          <button type="button" class="close-btn" id="detailClose">Close</button>
         </div>
+        <div class="metric-def" id="metricDef"></div>
         <ul class="paper-list" id="paperList"></ul>
       </section>
     </div>
@@ -390,6 +490,26 @@
       "uncertainty_correlation", "wasserstein", "classification_metrics",
       "text_metrics", "compute_cost",
     ];
+
+    // What each canonical column means in this radio-interferometry imaging review.
+    const metricDefinitions = {
+      snr: "Signal-to-noise ratio of a reconstructed image versus ground truth or a reference, typically in dB. Used to score how faithfully an imaging or deconvolution method recovers the sky model after the visibility → gridding → iFFT → clean/solve path.",
+      logsnr: "Log-domain or faint-structure SNR: SNR recomputed after a logarithmic image transform (or an equivalent emphasis on low-brightness emission). Captures recovery of diffuse/faint structure that linear SNR can under-weight.",
+      psnr: "Peak signal-to-noise ratio versus a reference image. A standard image-fidelity score when a known true or high-quality reference map is available.",
+      ssim: "Structural Similarity Index versus a reference image. Emphasizes perceptual/structural agreement (edges, morphology) rather than pure pixel error.",
+      dynamic_range: "Dynamic range of the reconstruction, commonly peak intensity divided by residual or noise RMS (e.g. I_max / σ_res). Measures how well bright and faint emission can coexist in the same image.",
+      rdr_residual: "Residual / data-fidelity measures: residual RMS, residual-to-dirty ratios, RDR-style residual norms, or similar checks that the model explains the measured visibilities after imaging/deconvolution.",
+      nmse_nrmse: "Normalised mean (or root-mean) squared error between reconstruction and truth/reference. A scale-aware pixel error metric for simulation studies with known ground truth.",
+      mae: "Mean absolute error between reconstruction and truth/reference (or an analogous absolute deviation score).",
+      runtime: "Wall-clock or end-to-end elapsed time for imaging / reconstruction (time-to-solution). Distinct from abstract FLOP counts: how long the pipeline actually took on the reported hardware.",
+      iterations: "Iteration or cycle counts — major/minor CLEAN cycles, optimisation iterations, or outer residual-series steps — used as a convergence or work measure alongside or instead of wall time.",
+      credible_interval: "Bayesian credible intervals or related posterior uncertainty intervals on image pixels/regions (e.g. HPD / local credible intervals), reporting calibrated uncertainty not just a point estimate.",
+      uncertainty_correlation: "Metrics that assess how well predicted uncertainty tracks true error (uncertainty calibration / correlation), beyond merely reporting an uncertainty map.",
+      wasserstein: "Wasserstein (earth-mover) distance between distributions — used when comparing image or posterior sample distributions rather than a single pixelwise error.",
+      classification_metrics: "Detection / classification scores used around imaging (true/false positive rates, completeness, purity, etc.), e.g. source finding on the reconstructed image.",
+      text_metrics: "Text or language-model evaluation scores when papers assess captions, reports, or multimodal outputs about images rather than the image pixels themselves.",
+      compute_cost: "Compute and resource cost beyond plain wall time: CPU/GPU-hours, energy, memory, throughput, FLOPs, carbon, or hardware utilisation for the imaging workflow.",
+    };
 
     const cohorts = {
       classic: {
@@ -418,9 +538,11 @@
     const detail = document.getElementById("detail");
     const detailTitle = document.getElementById("detailTitle");
     const detailCount = document.getElementById("detailCount");
+    const metricDef = document.getElementById("metricDef");
     const paperList = document.getElementById("paperList");
     let papers = [];
     let selectedMetric = null;
+    let defOpen = false;
     let currentOrder = [];
 
     function activeKeys() {
@@ -469,12 +591,94 @@
         .filter((m) => paper.metrics[m.key] === 1);
     }
 
+    function noteHeadline(note) {
+      if (!note || note.startsWith("No dedicated summary bullet")) return null;
+      const cut = note.indexOf(": ");
+      if (cut > 0 && cut < 120) {
+        return { title: note.slice(0, cut).trim(), body: note.slice(cut + 2).trim() };
+      }
+      return { title: "", body: note };
+    }
+
+    function reportingVariants(metricKey) {
+      return papersForMetric(metricKeys.indexOf(metricKey)).map((p) => {
+        const notes = (p.metric_details && p.metric_details[metricKey]) || [];
+        const ways = notes.map(noteHeadline).filter(Boolean);
+        return { paper: p, ways };
+      });
+    }
+
+    function setMetricDefinition(metricIndex, open) {
+      const key = metricKeys[metricIndex];
+      const name = metrics[metricIndex];
+      const text = metricDefinitions[key] || "No definition available for this metric.";
+      const variants = reportingVariants(key);
+
+      metricDef.replaceChildren();
+      const lead = document.createElement("p");
+      lead.className = "def-lead";
+      lead.innerHTML = `<strong></strong> — <span></span>`;
+      lead.querySelector("strong").textContent = name;
+      lead.querySelector("span").textContent = text;
+      metricDef.append(lead);
+
+      const heading = document.createElement("h3");
+      heading.className = "def-variants-title";
+      heading.textContent = `How papers report ${name}`;
+      metricDef.append(heading);
+
+      const list = document.createElement("ul");
+      list.className = "def-variants";
+
+      if (!variants.length) {
+        const empty = document.createElement("li");
+        empty.textContent = "No papers in the visible cohorts use this metric.";
+        list.append(empty);
+      } else {
+        variants.forEach(({ paper, ways }) => {
+          const li = document.createElement("li");
+          const bib = document.createElement("div");
+          bib.className = "def-bib";
+          bib.textContent = `${paper.bibcode} · ${cohorts[paper.cohort].label}`;
+          const title = document.createElement("div");
+          title.className = "def-paper-title";
+          title.textContent = paper.title;
+          li.append(bib, title);
+
+          const waysList = document.createElement("ul");
+          waysList.className = "def-ways";
+          if (!ways.length) {
+            const item = document.createElement("li");
+            item.textContent = "Classified as using this metric, but no dedicated summary bullet was auto-matched.";
+            waysList.append(item);
+          } else {
+            ways.forEach(({ title: wayTitle, body }) => {
+              const item = document.createElement("li");
+              const preview = body.length > 180 ? `${body.slice(0, 177)}…` : body;
+              item.textContent = wayTitle ? `${wayTitle}: ${preview}` : preview;
+              waysList.append(item);
+            });
+          }
+          li.append(waysList);
+          list.append(li);
+        });
+      }
+
+      metricDef.append(list);
+      defOpen = Boolean(open);
+      metricDef.classList.toggle("open", defOpen);
+      detailTitle.setAttribute("aria-expanded", String(defOpen));
+    }
+
     function showPapers(metricIndex) {
+      const metricChanged = selectedMetric !== metricIndex;
       selectedMetric = metricIndex;
       const label = metrics[metricIndex];
       const matches = papersForMetric(metricIndex);
       detailTitle.textContent = label;
       detailCount.textContent = `${matches.length} paper${matches.length === 1 ? "" : "s"} in visible cohorts`;
+      if (metricChanged) setMetricDefinition(metricIndex, false);
+      else setMetricDefinition(metricIndex, defOpen);
       paperList.replaceChildren(
         ...matches.map((p) => {
           const li = document.createElement("li");
@@ -582,6 +786,10 @@
 
     function hidePapers() {
       selectedMetric = null;
+      defOpen = false;
+      metricDef.classList.remove("open");
+      metricDef.replaceChildren();
+      detailTitle.setAttribute("aria-expanded", "false");
       detail.classList.remove("open");
       paperList.replaceChildren();
     }
@@ -657,6 +865,10 @@
 
     Object.values(toggles).forEach((el) => el.addEventListener("change", refresh));
     document.getElementById("detailClose").addEventListener("click", hidePapers);
+    detailTitle.addEventListener("click", () => {
+      if (selectedMetric === null) return;
+      setMetricDefinition(selectedMetric, !defOpen);
+    });
 
     fetch("papers-data.json")
       .then((r) => {
