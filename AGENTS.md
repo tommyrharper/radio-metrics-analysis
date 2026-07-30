@@ -14,6 +14,10 @@ This file is the project's committed home for project-intrinsic agent knowledge:
 - This repo has no dependency on the separate PDF-extractor project.
 - When a candidate is approved and extracted, follow the existing `cohorts/r2d2-citing/` layout as the template: `papers/<id>.md` summary + `metrics_table/rows/<id>.json` classification row, then regenerate that cohort's `METRICS_TABLE.md` and the root aggregate.
 
+## RMS / RDR schema (in progress)
+
+Former combined column `RDR/Resid` (`rdr_residual`) is splitting into **RMS** (`rms`) and **RDR** (`rdr`). **Classic is done** (see `cohorts/classic/METRICS_TABLE.md`). Emerging-ml and r2d2-citing row JSONs / cohort tables still use `rdr_residual`. Site data (`papers-data.json`, `index.html`) already uses `rms`/`rdr`; non-classic entries are temporary placeholders (`rms:0`, `rdr:<old rdr_residual>`). Do not regenerate the root aggregate until those cohorts are split. Classification: RMS = absolute residual/dirty/off-source RMS as a reported score (not merely DR’s denominator); RDR = residual-to-dirty ratio only; qualitative residuals alone → both 0.
+
 ## Maintaining this file
 
 Keep this file for knowledge useful to almost every future agent session in this project.

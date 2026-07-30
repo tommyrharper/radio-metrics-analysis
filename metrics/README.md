@@ -9,7 +9,8 @@ Cross-paper syntheses of how each canonical performance/fidelity metric is used 
 | `psnr.md` | PSNR |
 | `ssim.md` | SSIM |
 | `dr.md` | DR |
-| `rdr-resid.md` | RDR/Resid |
+| `rms.md` | RMS |
+| `rdr.md` | RDR |
 | `nmse.md` | NMSE |
 | `mae.md` | MAE |
 | `runtime.md` | Runtime |

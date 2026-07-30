@@ -618,12 +618,12 @@
 
   <script>
     const metrics = [
-      "SNR", "logSNR", "PSNR", "SSIM", "DR", "RDR/Resid", "NMSE", "MAE",
+      "SNR", "logSNR", "PSNR", "SSIM", "DR", "RMS", "RDR", "NMSE", "MAE",
       "Runtime", "Iters", "CredInt", "UncCorr", "Wasser", "Class", "Text", "Compute",
     ];
 
     const metricKeys = [
-      "snr", "logsnr", "psnr", "ssim", "dynamic_range", "rdr_residual",
+      "snr", "logsnr", "psnr", "ssim", "dynamic_range", "rms", "rdr",
       "nmse_nrmse", "mae", "runtime", "iterations", "credible_interval",
       "uncertainty_correlation", "wasserstein", "classification_metrics",
       "text_metrics", "compute_cost",
@@ -635,7 +635,8 @@
       psnr: "psnr.md",
       ssim: "ssim.md",
       dynamic_range: "dr.md",
-      rdr_residual: "rdr-resid.md",
+      rms: "rms.md",
+      rdr: "rdr.md",
       nmse_nrmse: "nmse.md",
       mae: "mae.md",
       runtime: "runtime.md",
@@ -658,7 +659,8 @@
       psnr: "Peak signal-to-noise ratio versus a reference image. A standard image-fidelity score when a known true or high-quality reference map is available.",
       ssim: "Structural Similarity Index versus a reference image. Emphasizes perceptual/structural agreement (edges, morphology) rather than pure pixel error.",
       dynamic_range: "Dynamic range of the reconstruction, commonly peak intensity divided by residual or noise RMS (e.g. I_max / σ_res). Measures how well bright and faint emission can coexist in the same image.",
-      rdr_residual: "Residual / data-fidelity measures: residual RMS, residual-to-dirty ratios, RDR-style residual norms, or similar checks that the model explains the measured visibilities after imaging/deconvolution.",
+      rms: "Absolute residual, dirty-image, or off-source RMS (or equivalent std) reported as a fidelity/noise score in physical units (Jy/beam, mJy/beam, μJy/PSF, etc.), or defined as a core framework quality metric.",
+      rdr: "Residual-to-dirty ratio ‖r̂‖₂ / ‖x_dirty‖₂ (or Frobenius analogue) as used in the R2D2 family — a normalised data-fidelity score (lower = cleaner fit). Emerging-ml/r2d2 RMS vs RDR split is still a temporary placeholder in site data.",
       nmse_nrmse: "Normalised mean (or root-mean) squared error between reconstruction and truth/reference. A scale-aware pixel error metric for simulation studies with known ground truth.",
       mae: "Mean absolute error between reconstruction and truth/reference (or an analogous absolute deviation score).",
       runtime: "Wall-clock or end-to-end elapsed time for imaging / reconstruction (time-to-solution). Distinct from abstract FLOP counts: how long the pipeline actually took on the reported hardware.",
@@ -675,17 +677,18 @@
       classic: {
         label: "Classic",
         color: "#0b6e6a",
-        values: [4, 0, 1, 1, 7, 9, 3, 0, 13, 12, 0, 0, 0, 0, 0, 12],
+        // DR | RMS | RDR | NMSE ... — classic RMS/RDR split done; emerging/r2d2 still placeholder (rms=0, rdr=old combined)
+        values: [4, 0, 1, 1, 7, 8, 0, 3, 0, 13, 12, 0, 0, 0, 0, 0, 12],
       },
       emerging: {
         label: "Emerging-ML",
         color: "#c45c26",
-        values: [1, 1, 1, 1, 3, 3, 0, 0, 5, 5, 1, 0, 0, 1, 0, 6],
+        values: [1, 1, 1, 1, 3, 0, 3, 0, 0, 5, 5, 1, 0, 0, 1, 0, 6],
       },
       r2d2: {
         label: "R2D2-citing",
         color: "#1f4e79",
-        values: [18, 10, 4, 2, 11, 12, 3, 1, 25, 16, 4, 1, 1, 5, 1, 16],
+        values: [18, 10, 4, 2, 11, 0, 12, 3, 1, 25, 16, 4, 1, 1, 5, 1, 16],
       },
     };
 
