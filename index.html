@@ -508,6 +508,46 @@
       color: var(--muted);
       font-size: 0.85rem;
     }
+
+    .paper-search {
+      display: none;
+      margin: 0 0 0.75rem;
+    }
+
+    .paper-search.open { display: block; }
+
+    .paper-search input {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      font-size: 0.92rem;
+      padding: 0.55rem 0.7rem;
+    }
+
+    .paper-search input:focus {
+      outline: 2px solid var(--r2d2);
+      outline-offset: 1px;
+    }
+
+    .paper-search input::placeholder {
+      color: var(--muted);
+    }
+
+    .detail.browse-mode .title-hint,
+    .detail.browse-mode .close-btn {
+      display: none;
+    }
+
+    .detail.browse-mode .detail-title-btn {
+      cursor: default;
+      text-decoration: none;
+    }
+
+    .detail.browse-mode .detail-title-btn:hover {
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
@@ -518,7 +558,8 @@
       gridding, inverse FFT, and deconvolution — using performance and fidelity metrics.
       Bars show papers reporting each metric, stacked by cohort (classic pipelines, emerging ML,
       and R2D2-citing work), sorted highest to lowest for the cohorts currently shown.
-      Totals: classic 23, emerging-ml 7, r2d2-citing 33. Click a bar to list matching papers.
+      Totals: classic 23, emerging-ml 7, r2d2-citing 33. Browse all papers below, or click a
+      bar to focus one metric.
     </p>
 
     <div class="panel">
@@ -545,21 +586,28 @@
         <div class="empty" id="emptyState">Turn on at least one cohort to see the chart.</div>
       </div>
       <p class="hint">
-        Click a metric bar for its definition and paper list. Click the metric title for how
-        papers report it (toggle paper-by-paper notes vs a cross-paper overview). Click a paper
-        for its metrics, then a metric chip for that paper’s details. Use Open for the paper webpage.
+        Browse all papers below, or click a metric bar to focus that metric. Click a paper for its
+        metrics, then a metric chip for details. Use Open for the paper webpage.
       </p>
 
-      <section class="detail" id="detail" aria-live="polite">
+      <section class="detail open browse-mode" id="detail" aria-live="polite">
         <div class="detail-head">
           <div>
             <button type="button" class="detail-title-btn" id="detailTitle" aria-expanded="false">
-              Metric
+              All papers
             </button>
             <div class="count" id="detailCount"></div>
             <div class="title-hint">Click the title for how papers report this · then Overview / By paper</div>
           </div>
-          <button type="button" class="close-btn" id="detailClose">Close</button>
+          <button type="button" class="close-btn" id="detailClose">All papers</button>
+        </div>
+        <div class="paper-search open" id="paperSearchWrap">
+          <input
+            type="search"
+            id="paperSearch"
+            placeholder="Search by title, bibcode, or cohort…"
+            autocomplete="off"
+          />
         </div>
         <div class="metric-summary" id="metricSummary"></div>
         <div class="metric-variants" id="metricVariants"></div>
@@ -653,13 +701,198 @@
     const metricSummary = document.getElementById("metricSummary");
     const metricVariants = document.getElementById("metricVariants");
     const paperList = document.getElementById("paperList");
+    const paperSearch = document.getElementById("paperSearch");
+    const paperSearchWrap = document.getElementById("paperSearchWrap");
     let papers = [];
     let selectedMetric = null;
     let variantsOpen = false;
+    let listedPapers = [];
     let currentOrder = [];
 
     function activeKeys() {
       return Object.keys(toggles).filter((k) => toggles[k].checked);
+    }
+
+    function visiblePapers() {
+      const active = new Set(activeKeys());
+      return papers
+        .filter((p) => active.has(p.cohort))
+        .sort((a, b) => (a.bibcode < b.bibcode ? 1 : a.bibcode > b.bibcode ? -1 : 0));
+    }
+
+    function papersForMetric(metricIndex) {
+      const key = metricKeys[metricIndex];
+      return visiblePapers().filter((p) => p.metrics[key] === 1);
+    }
+
+    function searchQuery() {
+      return (paperSearch.value || "").trim().toLowerCase();
+    }
+
+    function paperMatchesSearch(p, q) {
+      if (!q) return true;
+      const hay = [
+        p.bibcode,
+        p.title,
+        cohorts[p.cohort].label,
+        p.cohort,
+        ...usedMetricIndices(p).map((m) => m.label),
+      ]
+        .join(" ")
+        .toLowerCase();
+      return hay.includes(q);
+    }
+
+    function filteredListedPapers() {
+      const q = searchQuery();
+      return listedPapers.filter((p) => paperMatchesSearch(p, q));
+    }
+
+    function createPaperListItem(p) {
+      const li = document.createElement("li");
+
+      const row = document.createElement("div");
+      row.className = "paper-row";
+
+      const tag = document.createElement("div");
+      tag.className = "cohort-tag";
+      tag.innerHTML = `<span class="swatch ${p.cohort}" aria-hidden="true"></span>${cohorts[p.cohort].label}`;
+
+      const main = document.createElement("button");
+      main.type = "button";
+      main.className = "paper-main";
+      main.setAttribute("aria-expanded", "false");
+      const meta = document.createElement("div");
+      meta.className = "paper-meta";
+      meta.innerHTML = `<div class="bib"></div><div class="title"></div>`;
+      meta.querySelector(".bib").textContent = p.bibcode;
+      meta.querySelector(".title").textContent = p.title;
+      main.append(meta);
+
+      const open = document.createElement("a");
+      open.className = "open-link";
+      open.href = p.url;
+      open.target = "_blank";
+      open.rel = "noopener noreferrer";
+      open.textContent = "Open";
+      open.title = "Open paper webpage";
+
+      const metricsWrap = document.createElement("div");
+      metricsWrap.className = "paper-metrics";
+      const chips = document.createElement("div");
+      chips.className = "metric-chips";
+      const detailBox = document.createElement("div");
+      detailBox.className = "metric-detail";
+      detailBox.innerHTML = `<h3></h3><ul></ul>`;
+      const detailHeading = detailBox.querySelector("h3");
+      const detailUl = detailBox.querySelector("ul");
+
+      const used = usedMetricIndices(p);
+      let activeKey = null;
+
+      function showMetricDetail(key, name, chipBtn) {
+        if (activeKey === key) {
+          activeKey = null;
+          chipBtn.classList.remove("active");
+          detailBox.classList.remove("open");
+          return;
+        }
+        chips.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
+        chipBtn.classList.add("active");
+        activeKey = key;
+        const notes = (p.metric_details && p.metric_details[key]) || [];
+        detailHeading.textContent = `How this paper uses ${name}`;
+        detailUl.replaceChildren(
+          ...notes.map((note) => {
+            const item = document.createElement("li");
+            item.textContent = note;
+            return item;
+          })
+        );
+        detailBox.classList.add("open");
+      }
+
+      if (used.length) {
+        used.forEach(({ label: name, key }) => {
+          const chip = document.createElement("button");
+          chip.type = "button";
+          chip.className = "chip";
+          chip.textContent = name;
+          chip.title = `Details for ${name}`;
+          chip.addEventListener("click", (evt) => {
+            evt.stopPropagation();
+            showMetricDetail(key, name, chip);
+          });
+          chips.append(chip);
+        });
+      } else {
+        const none = document.createElement("span");
+        none.className = "none";
+        none.textContent = "No canonical metrics flagged for this paper.";
+        chips.append(none);
+      }
+      metricsWrap.append(chips, detailBox);
+
+      main.addEventListener("click", () => {
+        const isOpen = li.classList.toggle("open");
+        main.setAttribute("aria-expanded", String(isOpen));
+        if (!isOpen) {
+          activeKey = null;
+          chips.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
+          detailBox.classList.remove("open");
+        }
+      });
+
+      row.append(tag, main, open);
+      li.append(row, metricsWrap);
+      return li;
+    }
+
+    function renderPaperList() {
+      const matches = filteredListedPapers();
+      const total = listedPapers.length;
+      const q = searchQuery();
+      if (selectedMetric === null) {
+        detailCount.textContent = q
+          ? `${matches.length} of ${total} paper${total === 1 ? "" : "s"} in visible cohorts`
+          : `${total} paper${total === 1 ? "" : "s"} in visible cohorts`;
+      } else {
+        detailCount.textContent = q
+          ? `${matches.length} of ${total} matching paper${total === 1 ? "" : "s"}`
+          : `${total} paper${total === 1 ? "" : "s"} in visible cohorts`;
+      }
+      if (!matches.length) {
+        const empty = document.createElement("li");
+        empty.style.padding = "0.55rem 0.15rem";
+        empty.style.color = "var(--muted)";
+        empty.textContent = q
+          ? "No papers match this search."
+          : "No papers in the visible cohorts.";
+        paperList.replaceChildren(empty);
+        return;
+      }
+      paperList.replaceChildren(...matches.map(createPaperListItem));
+    }
+
+    function showAllPapers() {
+      selectedMetric = null;
+      variantsOpen = false;
+      listedPapers = visiblePapers();
+      detail.classList.add("open", "browse-mode");
+      detailTitle.textContent = "All papers";
+      detailTitle.setAttribute("aria-expanded", "false");
+      metricSummary.classList.remove("open");
+      metricSummary.replaceChildren();
+      metricVariants.classList.remove("open");
+      metricVariants.replaceChildren();
+      paperSearchWrap.classList.add("open");
+      renderPaperList();
+    }
+
+    function usedMetricIndices(paper) {
+      return metrics
+        .map((label, i) => ({ label, key: metricKeys[i], i }))
+        .filter((m) => paper.metrics[m.key] === 1);
     }
 
     function orderedIndices(keys) {
@@ -688,20 +921,6 @@
           categoryPercentage: 0.85,
         })),
       };
-    }
-
-    function papersForMetric(metricIndex) {
-      const key = metricKeys[metricIndex];
-      const active = new Set(activeKeys());
-      return papers
-        .filter((p) => active.has(p.cohort) && p.metrics[key] === 1)
-        .sort((a, b) => a.bibcode < b.bibcode ? 1 : a.bibcode > b.bibcode ? -1 : 0);
-    }
-
-    function usedMetricIndices(paper) {
-      return metrics
-        .map((label, i) => ({ label, key: metricKeys[i], i }))
-        .filter((m) => paper.metrics[m.key] === 1);
     }
 
     function noteHeadline(note) {
@@ -875,131 +1094,24 @@
       const metricChanged = selectedMetric !== metricIndex;
       selectedMetric = metricIndex;
       const label = metrics[metricIndex];
-      const matches = papersForMetric(metricIndex);
+      listedPapers = papersForMetric(metricIndex);
+      detail.classList.add("open");
+      detail.classList.remove("browse-mode");
       detailTitle.textContent = label;
-      detailCount.textContent = `${matches.length} paper${matches.length === 1 ? "" : "s"} in visible cohorts`;
       setMetricSummary(metricIndex);
+      paperSearchWrap.classList.add("open");
       if (metricChanged) {
         variantsView = "overview";
         setVariantsOpen(false);
       } else if (variantsOpen) {
         buildVariantsList(metricIndex);
       }
-      paperList.replaceChildren(
-        ...matches.map((p) => {
-          const li = document.createElement("li");
-
-          const row = document.createElement("div");
-          row.className = "paper-row";
-
-          const tag = document.createElement("div");
-          tag.className = "cohort-tag";
-          tag.innerHTML = `<span class="swatch ${p.cohort}" aria-hidden="true"></span>${cohorts[p.cohort].label}`;
-
-          const main = document.createElement("button");
-          main.type = "button";
-          main.className = "paper-main";
-          main.setAttribute("aria-expanded", "false");
-          const meta = document.createElement("div");
-          meta.className = "paper-meta";
-          meta.innerHTML = `<div class="bib"></div><div class="title"></div>`;
-          meta.querySelector(".bib").textContent = p.bibcode;
-          meta.querySelector(".title").textContent = p.title;
-          main.append(meta);
-
-          const open = document.createElement("a");
-          open.className = "open-link";
-          open.href = p.url;
-          open.target = "_blank";
-          open.rel = "noopener noreferrer";
-          open.textContent = "Open";
-          open.title = "Open paper webpage";
-
-          const metricsWrap = document.createElement("div");
-          metricsWrap.className = "paper-metrics";
-          const chips = document.createElement("div");
-          chips.className = "metric-chips";
-          const detailBox = document.createElement("div");
-          detailBox.className = "metric-detail";
-          detailBox.innerHTML = `<h3></h3><ul></ul>`;
-          const detailHeading = detailBox.querySelector("h3");
-          const detailUl = detailBox.querySelector("ul");
-
-          const used = usedMetricIndices(p);
-          let activeKey = null;
-
-          function showMetricDetail(key, name, chipBtn) {
-            if (activeKey === key) {
-              activeKey = null;
-              chipBtn.classList.remove("active");
-              detailBox.classList.remove("open");
-              return;
-            }
-            chips.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
-            chipBtn.classList.add("active");
-            activeKey = key;
-            const notes = (p.metric_details && p.metric_details[key]) || [];
-            detailHeading.textContent = `How this paper uses ${name}`;
-            detailUl.replaceChildren(
-              ...notes.map((note) => {
-                const item = document.createElement("li");
-                item.textContent = note;
-                return item;
-              })
-            );
-            detailBox.classList.add("open");
-          }
-
-          if (used.length) {
-            used.forEach(({ label: name, key }) => {
-              const chip = document.createElement("button");
-              chip.type = "button";
-              chip.className = "chip";
-              chip.textContent = name;
-              chip.title = `Details for ${name}`;
-              chip.addEventListener("click", (evt) => {
-                evt.stopPropagation();
-                showMetricDetail(key, name, chip);
-              });
-              chips.append(chip);
-            });
-          } else {
-            const none = document.createElement("span");
-            none.className = "none";
-            none.textContent = "No canonical metrics flagged for this paper.";
-            chips.append(none);
-          }
-          metricsWrap.append(chips, detailBox);
-
-          main.addEventListener("click", () => {
-            const isOpen = li.classList.toggle("open");
-            main.setAttribute("aria-expanded", String(isOpen));
-            if (!isOpen) {
-              activeKey = null;
-              chips.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
-              detailBox.classList.remove("open");
-            }
-          });
-
-          row.append(tag, main, open);
-          li.append(row, metricsWrap);
-          return li;
-        })
-      );
-      detail.classList.add("open");
+      renderPaperList();
       detail.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
 
     function hidePapers() {
-      selectedMetric = null;
-      variantsOpen = false;
-      metricSummary.classList.remove("open");
-      metricSummary.replaceChildren();
-      metricVariants.classList.remove("open");
-      metricVariants.replaceChildren();
-      detailTitle.setAttribute("aria-expanded", "false");
-      detail.classList.remove("open");
-      paperList.replaceChildren();
+      showAllPapers();
     }
 
     const chart = new Chart(document.getElementById("metricsChart"), {
@@ -1010,7 +1122,10 @@
         maintainAspectRatio: false,
         animation: { duration: 280 },
         onClick(_evt, elements) {
-          if (!elements.length) return;
+          if (!elements.length) {
+            showAllPapers();
+            return;
+          }
           const metricIndex = currentOrder[elements[0].index];
           showPapers(metricIndex);
         },
@@ -1066,8 +1181,10 @@
       chart.data = chartData();
       chart.update();
       if (selectedMetric !== null) {
-        if (!keys.length) hidePapers();
+        if (!keys.length) showAllPapers();
         else showPapers(selectedMetric);
+      } else {
+        showAllPapers();
       }
     }
 
@@ -1077,6 +1194,7 @@
       if (selectedMetric === null) return;
       setVariantsOpen(!variantsOpen);
     });
+    paperSearch.addEventListener("input", renderPaperList);
 
     fetch("papers-data.json")
       .then((r) => {
@@ -1085,11 +1203,13 @@
       })
       .then((data) => {
         papers = data.papers || [];
+        showAllPapers();
       })
       .catch((err) => {
+        detail.classList.add("open");
+        detail.classList.remove("browse-mode");
         detailTitle.textContent = "Could not load paper list";
         detailCount.textContent = String(err.message || err);
-        detail.classList.add("open");
       });
   </script>
 </body>
