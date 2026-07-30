@@ -6,6 +6,8 @@ Per `AGENTS.md`, no link below may be opened and no candidate may be extracted i
 
 Entries already preserved in the completed `cohorts/r2d2-citing/` corpus are cross-referenced by bibcode rather than duplicated.
 
+**2026-07-30 follow-up:** added a "CLEAN-family algorithmic variants" subsection (Högbom, Clark, Cotton-Schwab, Steer-Dewdney-Ito, Asp-Clean, Multi-Resolution CLEAN, joined-channel/wideband CLEAN, plus MS-MFS/MT-MFS naming clarification) per captain-approved scope extension. Same bibliography-only rules applied; see ambiguity notes 8–11.
+
 ---
 
 ## Classic / current-practice
@@ -120,8 +122,103 @@ Entries already preserved in the completed `cohorts/r2d2-citing/` corpus are cro
 - **Reason:** contributes "a unified metric suite spanning performance, utilisation, memory/data-movement, sustainability, economics, and scientific fidelity" for SKA-scale imaging pipelines — directly matches "metrics used in the astroCAMP paper."
 - **Status:** pending captain approval
 
+### CLEAN-family algorithmic variants (added per captain-approved follow-up, 2026-07-30)
+
+Evaluated against the widely-recognized core CLEAN family per the follow-up brief. Each entry states explicitly whether it is an ALGORITHMIC variant, IMPLEMENTATION SOFTWARE, or an IMAGING FEATURE of existing software, per the follow-up's instruction to distinguish these.
+
+#### Högbom CLEAN
+- **Primary paper:** "Aperture Synthesis with a Non-Regular Distribution of Interferometer Baselines"
+- **Authors/year:** J. A. Högbom, 1974
+- **Landing page:** https://ui.adsabs.harvard.edu/abs/1974A&AS...15..417H/abstract
+- **PDF:** not directly exposed
+- **Variant type:** ALGORITHMIC — the original, foundational CLEAN deconvolution algorithm (image-domain, iterative point-source subtraction).
+- **Cohort / stage:** classic; deconvolution / CLEAN-family
+- **Reason:** the canonical original CLEAN paper; every other entry in this section is a variant of it.
+- **Status:** pending captain approval
+
+#### Clark CLEAN
+- **Primary paper:** "An efficient implementation of the algorithm 'CLEAN'"
+- **Authors/year:** B. G. Clark, 1980
+- **Landing page:** https://ui.adsabs.harvard.edu/abs/1980A&A....89..377C/abstract
+- **PDF:** not directly exposed
+- **Variant type:** ALGORITHMIC — FFT-accelerated, patch/beam-based minor-cycle variant of Högbom CLEAN that subtracts many components per major-cycle pass.
+- **Cohort / stage:** classic; deconvolution / CLEAN-family
+- **Reason:** canonical, widely-implemented speed-oriented CLEAN variant (e.g. AIPS `APCLN`, CASA's Clark-based minor cycle).
+- **Status:** pending captain approval
+
+#### Cotton-Schwab CLEAN
+- **Primary paper:** "Relaxing the isoplanatism assumption in self-calibration; applications to low-frequency radio interferometry" — **the same paper already listed above as the citation-only Schwab 1984 entry.**
+- **Authors/year:** F. R. Schwab, 1984
+- **Landing page:** https://ui.adsabs.harvard.edu/abs/1984AJ.....89.1076S/abstract (DOI 10.1086/113605)
+- **PDF:** not directly exposed
+- **Variant type:** ALGORITHMIC — a data-domain major/minor-cycle CLEAN variant (subtracting components from the ungridded visibility data each major cycle rather than the image), described in this paper alongside its self-calibration content.
+- **Cohort / stage:** classic; deconvolution / CLEAN-family
+- **Reason:** verified as the correct primary reference via a standard NRAO deconvolution reference (Bridle, "Deconvolution Tutorial," cv.nrao.edu/~abridle/deconvol), which cites this exact 1984 AJ paper (as "Schwab 1984b") for the Cotton-Schwab algorithm. No separate, more specific Schwab paper describing Cotton-Schwab CLEAN was found.
+- **Status:** pending captain approval — **flagged tension, not silently resolved:** this is the identical bibcode already carried in this document as a citation-only entry for self-calibration (per the original captain decision: "Treat Schwab 1984 as a citation-only README entry rather than a full metrics row"). The same paper is now also the correct primary reference for an algorithmic CLEAN variant the captain has asked to evaluate. The captain needs to decide whether (a) the existing citation-only entry stays as-is and this Cotton-Schwab entry is approved separately for its own metric row from the same source paper, (b) the two are merged into a single entry serving both purposes, or (c) Cotton-Schwab CLEAN is deferred. No merge or resolution has been made here.
+
+#### Steer-Dewdney-Ito CLEAN (SDI CLEAN)
+- **Primary paper:** "Enhancements to the deconvolution algorithm 'CLEAN'"
+- **Authors/year:** D. G. Steer, P. E. Dewdney, M. R. Ito, 1984
+- **Landing page:** https://ui.adsabs.harvard.edu/abs/1984A&A...137..159S/abstract
+- **PDF:** not directly exposed
+- **Variant type:** ALGORITHMIC — removes components in threshold-selected groups rather than individually, reducing "striping"/corrugation artifacts on extended emission and improving speed.
+- **Cohort / stage:** classic; deconvolution / CLEAN-family
+- **Reason:** a recognized core CLEAN enhancement (e.g. AIPS `SDCLN`), distinct in mechanism from Clark and Cotton-Schwab.
+- **Status:** pending captain approval
+
+#### Multi-Scale CLEAN — already present, no new row
+Already covered below by the existing "Multiscale CLEAN" entry (Cornwell 2008). Confirmed via independent search hits as the correct standard reference; cross-referenced only.
+
+#### Multi-Term Multi-Frequency Synthesis (MT-MFS) — same algorithm as the existing MS-MFS entry
+"MT-MFS" and "MS-MFS" are used interchangeably in current literature and software documentation (CASA `tclean`'s `mtmfs` deconvolver, WSClean docs) for the **same algorithm**: Rau & Cornwell 2011 (already listed below as "MS-MFS"). No new row is added for "MT-MFS" — it is the same entry under a different common name.
+
+A genuinely distinct, earlier precursor was found and is flagged as an optional additional candidate rather than added outright:
+- **Candidate primary paper:** "Multi-frequency synthesis techniques for radio interferometric imaging"
+- **Authors/year:** R. J. Sault, M. H. Wieringa, 1994
+- **Landing page:** https://ui.adsabs.harvard.edu/abs/1994A&AS..108..585S/abstract
+- **PDF:** not directly exposed
+- **Variant type:** ALGORITHMIC — multi-frequency (Taylor-term) synthesis/deconvolution *without* the multi-scale component; a precursor that Rau & Cornwell 2011 explicitly extends.
+- **Cohort / stage:** classic; deconvolution / CLEAN-family
+- **Reason:** if the captain wants a citation for plain "multi-frequency synthesis" distinct from the combined multi-scale + multi-frequency algorithm, this is it. Not added as a required row — judgment call for the captain.
+- **Status:** pending captain approval (optional addition)
+
+#### Multi-Scale Multi-Frequency Synthesis "where distinct from MS-MFS" — confirmed not distinct
+No separate paper under this exact name was found beyond Rau & Cornwell 2011 (the existing "MS-MFS" entry below). Confirmed same entry; no new row added, per the follow-up's instruction to avoid duplicating entries already present under another name.
+
+#### Joined-channel / wideband CLEAN (WSClean)
+- **Primary paper:** "An optimized algorithm for multi-scale wideband deconvolution of radio astronomical images"
+- **Authors/year:** A. R. Offringa, O. Smirnov, 2017
+- **Landing page:** https://ui.adsabs.harvard.edu/abs/2017MNRAS.471..301O/abstract (DOI 10.1093/mnras/stx1547)
+- **PDF:** arXiv abstract page https://arxiv.org/abs/1706.06786 (PDF link present alongside abs, not opened)
+- **Variant type:** ALGORITHMIC paper describing an IMAGING FEATURE — this is WSClean's own cited reference for its `-join-channels` joined-channel deconvolution mode; distinct from the base WSClean 2014 software paper already listed above, and explicitly distinguished by WSClean's documentation from CASA's MS-MFS/MT-MFS approach.
+- **Cohort / stage:** classic; deconvolution / CLEAN-family (wideband, multi-scale + multi-frequency joint minor-cycle optimization)
+- **Reason:** the specific algorithmic reference for wideband/joined-channel CLEAN as implemented in a current major imager (WSClean), as opposed to the general WSClean software paper. CASA's side of wideband/joined-channel CLEAN is already covered by the existing MS-MFS entry (Rau & Cornwell 2011) — no separate CASA-side row added.
+- **Status:** pending captain approval
+
+#### Adaptive Scale Pixel (Asp-Clean)
+- **Primary paper:** "Scale sensitive deconvolution of interferometric images. I. Adaptive Scale Pixel (Asp) decomposition"
+- **Authors/year:** S. Bhatnagar, T. J. Cornwell, 2004
+- **Landing page:** https://www.aanda.org/articles/aa/abs/2004/41/aa0354-04/aa0354-04.html (A&A 426, 747; DOI 10.1051/0004-6361:20040354; also arXiv:astro-ph/0407225)
+- **PDF:** publisher PDF exposed directly alongside the abstract in search results (aanda.org/articles/aa/pdf/2004/41/aa0354-04.pdf), not opened
+- **Variant type:** ALGORITHMIC — models the sky as adaptive-scale pixels rather than a fixed set of Gaussian scales (contrast with multi-scale CLEAN), a distinct image-model approach in the CLEAN lineage.
+- **Cohort / stage:** classic; deconvolution / CLEAN-family
+- **Reason:** a recognized representative scale-sensitive CLEAN variant, structurally distinct from multi-scale CLEAN.
+- **Status:** pending captain approval
+
+#### Multi-Resolution CLEAN (MRC / M-CLEAN) — additional mainstream variant
+- **Primary paper:** "The Multi-Resolution CLEAN and its application to the short-spacing problem in interferometry"
+- **Authors/year:** B. P. Wakker, U. J. Schwarz, 1988
+- **Landing page:** https://ui.adsabs.harvard.edu/abs/1988A&A...200..312W/abstract (bibcode constructed from consistent secondary-source citations — WebFetch could not directly render the ADS page for this entry; see ambiguity note)
+- **PDF:** not directly exposed
+- **Variant type:** ALGORITHMIC — builds a smoothed low-resolution map and a difference map, CLEANs each with a resolution-appropriate beam, then recombines; a historical precursor concept to multi-scale CLEAN.
+- **Cohort / stage:** classic; deconvolution / CLEAN-family
+- **Reason:** explicitly named as a core member of the CLEAN-algorithm family ("HOGBOM, CLARK, MX, SDI, MRC, MULTI") in IRAM/GILDAS map-processing documentation, and discussed as a precursor in later multi-scale CLEAN literature; mainstream enough to include per the follow-up's "any other genuinely mainstream CLEAN variant" instruction.
+- **Status:** pending captain approval
+
+No other genuinely distinct mainstream CLEAN variant was identified beyond the entries above; "MX" and "MULTI" (seen in the GILDAS family listing) correspond to the AIPS program name for Cotton-Schwab CLEAN and to generic multi-scale/multi-field CLEAN respectively, not additional distinct algorithms.
+
 ### Focused CLEAN
-- Could not confidently identify a specific paper or named algorithm variant called "focused CLEAN." Candidates considered and rejected: Clark CLEAN, Cotton-Schwab CLEAN, informal "boxed"/region-restricted CLEAN, DoB-CLEAN/DoG-HiT. **Status:** unresolved — pending captain clarification (see ambiguity note).
+- Could not confidently identify a specific paper or named algorithm variant called "focused CLEAN." Candidates considered and rejected as non-matches for this specific name: Clark CLEAN, Cotton-Schwab CLEAN (both now listed above as their own distinct entries), informal "boxed"/region-restricted CLEAN, DoB-CLEAN/DoG-HiT. **Status:** unresolved — pending captain clarification (see ambiguity note).
 
 ### Multiscale CLEAN
 - **Primary paper:** "Multiscale CLEAN Deconvolution of Radio Synthesis Images"
@@ -132,11 +229,12 @@ Entries already preserved in the completed `cohorts/r2d2-citing/` corpus are cro
 - **Reason:** the canonical multiscale CLEAN paper, improving CLEAN performance for extended objects.
 - **Status:** pending captain approval
 
-### MS-MFS (multi-scale multi-frequency synthesis)
+### MS-MFS (multi-scale multi-frequency synthesis, a.k.a. MT-MFS)
 - **Primary paper:** "A multi-scale multi-frequency deconvolution algorithm for synthesis imaging in radio interferometry"
 - **Authors/year:** U. Rau, T. J. Cornwell, 2011
 - **Landing page:** https://www.aanda.org/articles/aa/abs/2011/08/aa17104-11/aa17104-11.html (A&A 532, A71; ADS bibcode likely `2011A&A...532A..71R`, not independently re-verified — see ambiguity note)
 - **PDF:** arXiv abstract page https://arxiv.org/abs/1106.2745 (PDF link present alongside abs, not opened)
+- **Naming note (follow-up):** this algorithm is referred to as both "MS-MFS" and "MT-MFS" interchangeably in CASA/WSClean documentation and the wider literature; see the "CLEAN-family algorithmic variants" subsection above for the distinct, earlier Sault & Wieringa 1994 multi-frequency-only precursor.
 - **Cohort / stage:** classic; deconvolution / CLEAN-family (wideband extension)
 - **Reason:** the canonical MS-MFS paper combining multi-scale and multi-frequency deconvolution.
 - **Status:** pending captain approval
@@ -165,6 +263,7 @@ Entries already preserved in the completed `cohorts/r2d2-citing/` corpus are cro
 - **Cohort / stage:** classic; calibration / CLEAN-family. **Citation-only per captain decision — no metrics-table row will be created for this entry.**
 - **Reason:** canonical Schwab 1984 self-calibration/gridding reference cited throughout the literature.
 - **Status:** citation-only, no extraction planned
+- **Follow-up note (2026-07-30):** this same paper is also the verified primary reference for the algorithmic "Cotton-Schwab CLEAN" variant, added separately above in "CLEAN-family algorithmic variants." See ambiguity note 8 — the reuse is flagged, not resolved.
 
 ---
 
@@ -251,3 +350,7 @@ Entries already preserved in the completed `cohorts/r2d2-citing/` corpus are cro
 5. **w-stacking primary reference:** two candidate primary sources exist — Humphreys & Cornwell 2011 (SKA Memo 132, earliest dedicated analysis) and Offringa et al. 2014 (WSClean paper, most-cited description/implementation, also listed separately above). The captain should decide which is the primary citation for this row.
 6. **Bibcodes constructed rather than directly confirmed:** for SARA, PURIFY, MS-MFS, and the Schmidt et al. paper, the ADS bibcode was inferred from journal/volume/page metadata in search snippets rather than confirmed via a direct ADS abstract-page fetch. The DOI and arXiv links for each were independently confirmed and are reliable; the bibcode strings themselves should be spot-checked before use as stable identifiers.
 7. **AIRI precursor — two candidates:** (a) Dabbech et al. 2022, ApJL 939, L4 (the true first introduction of the AIRI concept, selected above), and (b) Wilber, Dabbech, Jackson & Wiaux 2023, MNRAS 522, 5576 ("AIRI validated on ASKAP data," arXiv:2302.14149, a companion/validation paper to the uSARA paper). The captain should confirm which paper is intended as "the" AIRI precursor.
+8. **Schwab 1984 / Cotton-Schwab CLEAN reuse (follow-up):** the paper already carried as a citation-only self-calibration reference (Schwab 1984, AJ 89, 1076) is also the verified correct primary reference for the algorithmic "Cotton-Schwab CLEAN" variant added in this follow-up. This is a single paper serving two distinct purposes in this document — the captain needs to decide whether to keep both framings as separate entries pointing at the same source (as currently recorded), merge them into one entry, or defer the Cotton-Schwab CLEAN row. Not resolved here.
+9. **MS-MFS vs. MT-MFS terminology (follow-up):** confirmed interchangeable names for the same Rau & Cornwell 2011 algorithm in current documentation/literature. A genuinely distinct, earlier multi-frequency-only precursor (Sault & Wieringa 1994, A&AS 108, 585) was identified and is recorded as an optional additional candidate in the "CLEAN-family algorithmic variants" subsection, not added as a required row — the captain should decide whether it's wanted.
+10. **Wakker & Schwarz 1988 (Multi-Resolution CLEAN) landing page not directly page-verified (follow-up):** WebFetch could not render the live ADS abstract page for this bibcode (ADS's JS single-page app returned no content to the fetch tool). The bibliographic details are corroborated by multiple independent secondary sources and the URL follows ADS's standard bibcode convention, but this one link should be spot-checked before treating it as confirmed.
+11. **Joined-channel CLEAN (Offringa & Smirnov 2017) vs. the existing WSClean entry (follow-up):** these are two distinct papers by overlapping authors — the 2014 paper introduces WSClean as software, the 2017 paper introduces the specific wideband/joined-channel deconvolution algorithm it later implements. Recorded as two separate entries; flagging in case the captain prefers to fold the 2017 reference into the existing WSClean row instead.
