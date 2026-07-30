@@ -260,20 +260,64 @@
       gap: 0.35rem;
     }
 
-    .metric-chips span {
+    .metric-chips .chip {
+      border: 1px solid transparent;
+      font: inherit;
       font-size: 0.78rem;
       font-weight: 500;
       color: var(--ink);
       background: #ebe4d8;
-      padding: 0.2rem 0.45rem;
+      padding: 0.25rem 0.5rem;
+      cursor: pointer;
+    }
+
+    .metric-chips .chip:hover {
+      border-color: var(--ink);
+    }
+
+    .metric-chips .chip.active {
+      background: var(--r2d2);
+      color: #fff;
+      border-color: var(--r2d2);
     }
 
     .metric-chips .none {
       color: var(--muted);
-      background: transparent;
-      padding: 0;
-      font-weight: 400;
+      font-size: 0.78rem;
     }
+
+    .metric-detail {
+      display: none;
+      margin-top: 0.65rem;
+      padding: 0.7rem 0.8rem;
+      background: #f7f2e9;
+      border: 1px solid var(--line);
+    }
+
+    .metric-detail.open { display: block; }
+
+    .metric-detail h3 {
+      margin: 0 0 0.45rem;
+      font-family: "IBM Plex Serif", Georgia, serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .metric-detail ul {
+      margin: 0;
+      padding-left: 1.1rem;
+    }
+
+    .metric-detail li {
+      margin: 0 0 0.45rem;
+      font-size: 0.88rem;
+      line-height: 1.4;
+      color: var(--ink);
+      border: 0;
+      padding: 0;
+    }
+
+    .metric-detail li:last-child { margin-bottom: 0; }
 
     .hint {
       margin: 0.65rem 0 0;
@@ -317,8 +361,8 @@
         <div class="empty" id="emptyState">Turn on at least one cohort to see the chart.</div>
       </div>
       <p class="hint">
-        Click a metric bar to list papers. Click a paper row to see all metrics it reports;
-        use Open to view the paper page.
+        Click a metric bar to list papers. Click a paper to see its metrics, then click a metric
+        chip for how that paper uses it. Use Open for the paper webpage.
       </p>
 
       <section class="detail" id="detail" aria-live="polite">
@@ -419,8 +463,10 @@
         .sort((a, b) => a.bibcode < b.bibcode ? 1 : a.bibcode > b.bibcode ? -1 : 0);
     }
 
-    function usedMetricLabels(paper) {
-      return metrics.filter((_, i) => paper.metrics[metricKeys[i]] === 1);
+    function usedMetricIndices(paper) {
+      return metrics
+        .map((label, i) => ({ label, key: metricKeys[i], i }))
+        .filter((m) => paper.metrics[m.key] === 1);
     }
 
     function showPapers(metricIndex) {
@@ -463,11 +509,48 @@
           metricsWrap.className = "paper-metrics";
           const chips = document.createElement("div");
           chips.className = "metric-chips";
-          const used = usedMetricLabels(p);
+          const detailBox = document.createElement("div");
+          detailBox.className = "metric-detail";
+          detailBox.innerHTML = `<h3></h3><ul></ul>`;
+          const detailHeading = detailBox.querySelector("h3");
+          const detailUl = detailBox.querySelector("ul");
+
+          const used = usedMetricIndices(p);
+          let activeKey = null;
+
+          function showMetricDetail(key, name, chipBtn) {
+            if (activeKey === key) {
+              activeKey = null;
+              chipBtn.classList.remove("active");
+              detailBox.classList.remove("open");
+              return;
+            }
+            chips.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
+            chipBtn.classList.add("active");
+            activeKey = key;
+            const notes = (p.metric_details && p.metric_details[key]) || [];
+            detailHeading.textContent = `How this paper uses ${name}`;
+            detailUl.replaceChildren(
+              ...notes.map((note) => {
+                const item = document.createElement("li");
+                item.textContent = note;
+                return item;
+              })
+            );
+            detailBox.classList.add("open");
+          }
+
           if (used.length) {
-            used.forEach((name) => {
-              const chip = document.createElement("span");
+            used.forEach(({ label: name, key }) => {
+              const chip = document.createElement("button");
+              chip.type = "button";
+              chip.className = "chip";
               chip.textContent = name;
+              chip.title = `Details for ${name}`;
+              chip.addEventListener("click", (evt) => {
+                evt.stopPropagation();
+                showMetricDetail(key, name, chip);
+              });
               chips.append(chip);
             });
           } else {
@@ -476,11 +559,16 @@
             none.textContent = "No canonical metrics flagged for this paper.";
             chips.append(none);
           }
-          metricsWrap.append(chips);
+          metricsWrap.append(chips, detailBox);
 
           main.addEventListener("click", () => {
             const isOpen = li.classList.toggle("open");
             main.setAttribute("aria-expanded", String(isOpen));
+            if (!isOpen) {
+              activeKey = null;
+              chips.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
+              detailBox.classList.remove("open");
+            }
           });
 
           row.append(tag, main, open);
