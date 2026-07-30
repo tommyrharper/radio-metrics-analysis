@@ -2,7 +2,7 @@
 
 Extracted from the 23 paper summaries in `papers/*.md` by classifying against the fixed canonical metric list used by the R2D2-citing cohort. 1 = metric used or reported in that paper's summary, 0 = not used. See `other_metrics` notes below the table for metrics outside this canonical set.
 
-> Note: Classic has split former `RDR/Resid` (`rdr_residual`) into **RMS** and **RDR**. Emerging-ml and r2d2-citing cohort tables (and root aggregate) still use the combined column; their RMS/RDR split is pending.
+> Note: Former `RDR/Resid` (`rdr_residual`) is split into **RMS** and **RDR** across all cohorts and the root aggregate.
 
 | Bibcode | Title | SNR | logSNR | PSNR | SSIM | DR | RMS | RDR | NMSE | MAE | Runtime | Iters | CredInt | UncCorr | Wasser | Class | Text | Compute | #Other |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
