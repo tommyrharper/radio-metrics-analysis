@@ -65,7 +65,7 @@ Entries already preserved in the completed `cohorts/r2d2-citing/` corpus are cro
 - **PDF:** not directly exposed
 - **Cohort / stage:** classic; calibration/imaging/analysis software suite (single-dish + interferometer)
 - **Reason:** conventional citation for GILDAS in the literature; no dedicated standalone GREG paper exists.
-- **Status:** pending captain approval
+- **Status:** captain approved; summary extracted to `cohorts/classic/papers/2005sf2a.conf..721P.md`
 
 ### DDFacet
 - **Primary paper:** "Faceting for direction-dependent spectral deconvolution"
@@ -74,16 +74,16 @@ Entries already preserved in the completed `cohorts/r2d2-citing/` corpus are cro
 - **PDF:** arXiv abstract page https://arxiv.org/abs/1712.02078 (PDF link present alongside abs, not opened)
 - **Cohort / stage:** classic; imaging/deconvolution (direction-dependent, wideband faceted deconvolution)
 - **Reason:** the DDFacet method paper: "wideband wide-field spectral deconvolution framework... based on image plane faceting."
-- **Status:** pending captain approval
+- **Status:** captain approved; summary extracted to `cohorts/classic/papers/2018A_and_A...611A..87T.md`
 
 ### w-stacking
 - **Primary paper (two candidates, see ambiguity note):** "Analysis of Convolutional Resampling Algorithm Performance" (SKA Memo 132) — earliest dedicated treatment; also embedded/described in the WSClean paper above (Offringa et al. 2014).
-- **Authors/year:** R. A. Humphreys, T. J. Cornwell, 2011
+- **Authors/year:** B. Humphreys, T. J. Cornwell, 2011
 - **Landing page:** SKA Memo 132 landing (no ADS bibcode confirmed — see ambiguity note)
 - **PDF:** SKA memo PDF exposed directly in search results (https://www.skatelescope.org/uploaded/59116_132_Memo_Humphreys.pdf) — recorded per instructions, not opened
 - **Cohort / stage:** classic; gridding / wide-field imaging (non-coplanar-baseline correction)
 - **Reason:** introduces/analyzes w-stacking as an alternative to w-projection for handling non-coplanar baselines.
-- **Status:** pending captain approval
+- **Status:** captain approved; summary extracted to `cohorts/classic/papers/SKA-MEMO-132.md`
 
 ### w-projection
 - **Primary paper:** "The Noncoplanar Baselines Effect in Radio Interferometry: The W-Projection Algorithm"
@@ -92,7 +92,7 @@ Entries already preserved in the completed `cohorts/r2d2-citing/` corpus are cro
 - **PDF:** arXiv abstract page https://arxiv.org/abs/0807.4161 (PDF link present alongside abs, not opened)
 - **Cohort / stage:** classic; gridding / wide-field imaging
 - **Reason:** the original W-projection algorithm paper, reinterpreting the non-coplanar-baselines effect via Fresnel diffraction.
-- **Status:** pending captain approval
+- **Status:** captain approved; summary extracted to `cohorts/classic/papers/2008ISTSP...2..647C.md`
 
 ### NUFFT / HVOX
 - **HVOX primary paper:** "HVOX: Scalable Interferometric Synthesis and Analysis of Spherical Sky Maps"
@@ -101,7 +101,7 @@ Entries already preserved in the completed `cohorts/r2d2-citing/` corpus are cro
 - **PDF:** not confirmed exposed in snippet, omitted
 - **Cohort / stage:** classic; gridding (3D-NUFFT-based synthesis/analysis, spherical/HEALPix-mesh compatible)
 - **Reason:** resolves the "HVOX" token — a specific 3D-NUFFT-based gridder/synthesis algorithm positioned as an alternative to w-gridding for SKA/LOFAR-scale imaging.
-- **Status:** pending captain approval
+- **Status:** captain approved; summary extracted to `cohorts/classic/papers/2023arXiv230606007K.md`
 - **General NUFFT reference (see ambiguity note — no single canonical radio-interferometry-specific NUFFT paper was identified):** "A Parallel Nonuniform Fast Fourier Transform Library" (FINUFFT), A. H. Barnett, J. F. Magland, L. af Klinteberg, 2019. Landing page: https://ui.adsabs.harvard.edu/abs/2019SJSC...41C.479B/abstract. PDF: arXiv abstract page https://arxiv.org/abs/1808.06736 (not opened). Cohort/stage: classic; gridding (general-purpose, not radio-interferometry-specific). Reason: widely-cited general NUFFT library, included as the representative reference per the brief's request; flagged as not RI-specific. Status: pending captain approval.
 
 ### A-projection
@@ -111,7 +111,7 @@ Entries already preserved in the completed `cohorts/r2d2-citing/` corpus are cro
 - **PDF:** arXiv abstract page https://arxiv.org/abs/0805.0834 (PDF link present alongside abs, not opened)
 - **Cohort / stage:** classic; calibration / imaging (direction-dependent primary-beam/antenna-aperture correction during deconvolution)
 - **Reason:** the original A-projection paper — "an iterative deconvolution algorithm that corrects known direction-dependent errors due to antenna power patterns."
-- **Status:** pending captain approval
+- **Status:** captain approved; summary extracted to `cohorts/classic/papers/2008A_and_A...487..419B.md`
 
 ### Metrics used in the astroCAMP paper
 - **Primary paper:** "astroCAMP: A Community Benchmark and Co-Design Framework for Sustainable SKA-Scale Radio Imaging"
@@ -120,7 +120,7 @@ Entries already preserved in the completed `cohorts/r2d2-citing/` corpus are cro
 - **PDF:** not directly exposed
 - **Cohort / stage:** classic (benchmarking/methodology paper spanning classic pipelines); metrics/benchmarking framework, not a single pipeline stage
 - **Reason:** contributes "a unified metric suite spanning performance, utilisation, memory/data-movement, sustainability, economics, and scientific fidelity" for SKA-scale imaging pipelines — directly matches "metrics used in the astroCAMP paper."
-- **Status:** pending captain approval
+- **Status:** captain approved; summary extracted to `cohorts/classic/papers/2025arXiv251213591C.md`
 
 ### CLEAN-family algorithmic variants (added per captain-approved follow-up, 2026-07-30)
 
@@ -134,7 +134,7 @@ Evaluated against the widely-recognized core CLEAN family per the follow-up brie
 - **Variant type:** ALGORITHMIC — the original, foundational CLEAN deconvolution algorithm (image-domain, iterative point-source subtraction).
 - **Cohort / stage:** classic; deconvolution / CLEAN-family
 - **Reason:** the canonical original CLEAN paper; every other entry in this section is a variant of it.
-- **Status:** pending captain approval
+- **Status:** captain approved; summary extracted to `cohorts/classic/papers/1974A_and_AS...15..417H.md`
 
 #### Clark CLEAN
 - **Primary paper:** "An efficient implementation of the algorithm 'CLEAN'"
@@ -144,7 +144,7 @@ Evaluated against the widely-recognized core CLEAN family per the follow-up brie
 - **Variant type:** ALGORITHMIC — FFT-accelerated, patch/beam-based minor-cycle variant of Högbom CLEAN that subtracts many components per major-cycle pass.
 - **Cohort / stage:** classic; deconvolution / CLEAN-family
 - **Reason:** canonical, widely-implemented speed-oriented CLEAN variant (e.g. AIPS `APCLN`, CASA's Clark-based minor cycle).
-- **Status:** pending captain approval
+- **Status:** captain approved; summary extracted to `cohorts/classic/papers/1980A_and_A....89..377C.md`
 
 #### Cotton-Schwab CLEAN
 - **Primary paper:** "Relaxing the isoplanatism assumption in self-calibration; applications to low-frequency radio interferometry" — **the same paper already listed above as the citation-only Schwab 1984 entry.**
