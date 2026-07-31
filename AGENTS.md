@@ -14,6 +14,10 @@ This file is the project's committed home for project-intrinsic agent knowledge:
 - This repo has no dependency on the separate PDF-extractor project.
 - When a candidate is approved and extracted, follow the existing `cohorts/r2d2-citing/` layout as the template: `papers/<id>.md` summary + `metrics_table/rows/<id>.json` classification row, then regenerate that cohort's `METRICS_TABLE.md` and the root aggregate.
 
+## Metric detail pages
+
+Second-level drill-downs (Runtime, Compute, Iterations, DR, RMS, …) share `metric-detail.css` + `metric-detail.js`. Each `*.html` stub only sets `window.METRIC_DETAIL` (taxonomy globals from `*-taxonomy.js`, binary/details keys, page copy) then loads the shared script. Do not copy-paste a full detail page for new metrics — add taxonomy + stub + `*_details` data + one Explore link in `index.html`.
+
 ## RMS / RDR schema
 
 Former combined column `RDR/Resid` (`rdr_residual`) is split into **RMS** (`rms`) and **RDR** (`rdr`). **All three cohorts and the root aggregate** use this schema (see each `METRICS_TABLE.md` and the website). Classification: RMS = absolute residual/dirty/off-source RMS as a reported score (not merely DR’s denominator); RDR = residual-to-dirty ratio only; qualitative residuals alone → both 0.
