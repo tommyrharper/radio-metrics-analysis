@@ -389,7 +389,7 @@
 
     .metric-summary.open { display: block; }
 
-    /* Second-level metric drill-down (Runtime now; pattern reusable for other metrics). */
+    /* Second-level metric drill-down (Runtime, Compute; pattern reusable for other metrics). */
     .metric-drilldown {
       display: none;
       margin: 0 0 0.85rem;
@@ -858,7 +858,8 @@
         </div>
         <div class="metric-summary" id="metricSummary"></div>
         <div class="metric-drilldown" id="metricDrilldown">
-          <a href="runtime.html" id="runtimeDrilldownLink">Explore Runtime Details</a>
+          <a href="runtime.html" id="runtimeDrilldownLink" hidden>Explore Runtime Details</a>
+          <a href="compute.html" id="computeDrilldownLink" hidden>Explore Compute Details</a>
         </div>
         <div class="metric-variants" id="metricVariants"></div>
         <ul class="paper-list" id="paperList"></ul>
@@ -1323,11 +1324,16 @@
     }
 
     function updateMetricDrilldown(metricIndex) {
-      // Only Runtime has a detail page for now. To add another metric page later:
-      // map metricKeys[i] → "<metric>.html" and reuse this show/hide hook.
+      // Detail pages: Runtime → runtime.html; Compute → compute.html.
+      // To add another metric page later: map metricKeys[i] → "<metric>.html" and toggle the matching link.
       const key = metricIndex === null || metricIndex === undefined ? null : metricKeys[metricIndex];
-      const show = key === "runtime";
-      metricDrilldown.classList.toggle("open", show);
+      const runtimeLink = document.getElementById("runtimeDrilldownLink");
+      const computeLink = document.getElementById("computeDrilldownLink");
+      const showRuntime = key === "runtime";
+      const showCompute = key === "compute_cost";
+      runtimeLink.hidden = !showRuntime;
+      computeLink.hidden = !showCompute;
+      metricDrilldown.classList.toggle("open", showRuntime || showCompute);
     }
 
     function showAllPapers() {

@@ -64,4 +64,22 @@ AIRI variations (2025): GPU denoiser 0.05±0.02 s vs CPU 7.92±0.52 s vs SARA pr
 - **Carbon/cost metrics** depend strongly on grid intensity, tariff, and capex assumptions (Western Australia vs South Africa in astroCAMP).
 - **Utilisation and roofline claims** are diagnostic: low CPU utilisation with high gridding kernel scaling indicates pipeline orchestration bottlenecks, not necessarily fixable by faster kernels alone.
 - **Classic papers** often lack any absolute compute measurement (1984 Clark enhancements, 1994 multi-frequency synthesis give ratios or operation models only).
-- **Classification overlap with Runtime**: many r2d2 papers report both seconds and GPU-hours; compute column emphasizes resource accounting beyond elapsed time.
+- **Classification overlap with Runtime**: many r2d2 papers report both seconds and GPU-hours; compute column emphasizes resource accounting beyond elapsed time. Pure wall-clock labelled as “computational cost” is kept on Runtime and typed **Unspecified Compute** on the detail page rather than silently remapped.
+
+## Second-level Compute page
+
+The main metrics graph keeps a single binary **Compute** column. Drill-down lives at [`compute.html`](../compute.html) (linked as **Explore Compute Details** when Compute is selected on `index.html`).
+
+Reporting categories (a paper may appear in more than one — category totals can exceed Compute-positive paper counts):
+
+| Category | Sub-metrics |
+|---|---|
+| Resource Usage (Absolute) | cpu_gpu_hours, energy, peak_memory, flops, other_absolute |
+| Efficiency / Intensity | energy_efficiency, performance_per_watt, memory_efficiency, other_efficiency |
+| Relative Compute | resource_speedup, resource_reduction_pct, cost_ratio |
+| Scaling / Complexity | problem_size_scaling, asymptotic_complexity, hardware_scaling |
+| Unspecified Compute | unspecified (extraction limitation; not silently overclassified) |
+
+**Compute Measurement Context** (separate panel): Hardware, Parallelism, Software, Numerical Configuration, Workload — reporting-completeness counts only. Context is not itself a Compute sub-metric.
+
+Structured data: `compute_details` arrays on Compute-positive papers in `papers-data.json` (optional mirror `data/compute-details.json`). Taxonomy: `compute-taxonomy.js`. Injector: `scripts/inject_compute_details.py`.

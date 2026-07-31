@@ -109,6 +109,25 @@
           },
           "evidence": "Saved a factor of 2 to 10 relative to conventional CLEAN; ratio depends on map size, gain, complexity, and sidelobe level. No individual timing tables."
         }
+      ],
+      "compute_details": [
+        {
+          "category": "resource_usage",
+          "submetric": "peak_memory",
+          "value": null,
+          "unit": null,
+          "scope": "Main memory and CLEAN beam-patch dimensions",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "PDP-11/70 with FPS AP-120B; 32 kwords main memory",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": "Beam patch constrained between 21×41 and 64×127 elements"
+          },
+          "evidence": "Machine had 32 kwords of main memory; beam patch constrained between 21×41 and 64×127 elements. Implementation memory footprint, not a reconstruction-quality score."
+        }
       ]
     },
     {
@@ -152,7 +171,26 @@
           "Finite-precision error analysis: for a dirty-beam sidelobe at 1% of the peak, loop gain 0.1, and arithmetic with five significant figures, the paper states that each subtraction loses one significant figure of the beam. Because truncation proceeds in the same direction, after about \\(10^3\\) subtractions the accumulated error can be as large as the sidelobe. This is an illustrative numerical analysis, not a measured machine experiment; no hardware or arithmetic implementation is named."
         ],
         "astrometric_accuracy": []
-      }
+      },
+      "compute_details": [
+        {
+          "category": "scaling_complexity",
+          "submetric": "asymptotic_complexity",
+          "value": null,
+          "unit": null,
+          "scope": "Analytic operation-count models for standard vs modified CLEAN",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": "Standard CLEAN ≈2QsM ops; modified CLEAN ≈QmM(4log(M)/2+4) with FFTs",
+            "workload": null
+          },
+          "evidence": "Analytical work estimates compare standard CLEAN, modified (SDI) CLEAN, and Clark CLEAN via operation-count formulae in image size M and iteration counts. Algorithmic models, not measured hardware timings."
+        }
+      ]
     },
     {
       "cohort": "classic",
@@ -264,6 +302,42 @@
           },
           "evidence": "Caption implies ~6x timing ratio (90 vs 15 min); body text says 'one third' of CLEAN's time — internal inconsistency."
         }
+      ],
+      "compute_details": [
+        {
+          "category": "relative_compute",
+          "submetric": "cost_ratio",
+          "value": 0.25,
+          "unit": "MRC/CLEAN ops",
+          "scope": "MRC-to-CLEAN operation ratios in PNR=20 tests",
+          "baseline": "CLEAN operation count",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": "In-core image-domain cost model; f=2–4, 3–6 search-mask iterations",
+            "workload": "2 arcmin model ≈0.6 ratio; 5 arcmin model ≈0.25 ratio"
+          },
+          "evidence": "Under an in-core cost model, reported MRC-to-CLEAN operation ratios are about 0.6 (2 arcmin) and 0.25 (5 arcmin). Analytic/relative compute, distinct from the paper's wall-clock caption."
+        },
+        {
+          "category": "scaling_complexity",
+          "submetric": "asymptotic_complexity",
+          "value": null,
+          "unit": null,
+          "scope": "MRC vs CLEAN convolution/masking/recombination operation model",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Authors count convolutions, masking, decimation, component subtraction, and map recombination to predict when MRC has lower operation count for extended sources vs overhead for compact sources."
+        }
       ]
     },
     {
@@ -304,7 +378,26 @@
           "Computational cost and model limits: the authors estimate the method to be about 2-3 times more computationally expensive than corresponding conventional Hogbom or Clark CLEAN, plus guard-band overhead, but provide no runtime, processor, memory, or other hardware benchmark. They state that higher-order spectral terms become essential for high-dynamic-range imaging when the fractional frequency spread exceeds about 20-30%. Values quoted from Conway et al. rather than newly measured here include less than 1% flux-density bias from the linear approximation and residual errors of order \\(5 \\times 10^{-4}\\) of the second-brightest feature for a +/-12.5% frequency spread after flattening the dominant component's spectrum."
         ],
         "astrometric_accuracy": []
-      }
+      },
+      "compute_details": [
+        {
+          "category": "relative_compute",
+          "submetric": "cost_ratio",
+          "value": null,
+          "unit": null,
+          "scope": "Multi-frequency synthesis vs Hogbom/Clark CLEAN",
+          "baseline": "conventional Hogbom or Clark CLEAN",
+          "empirical": false,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Authors estimate the method to be about 2–3 times more computationally expensive than corresponding conventional Hogbom or Clark CLEAN, plus guard-band overhead. No runtime, processor, or memory benchmark."
+        }
+      ]
     },
     {
       "cohort": "classic",
@@ -409,6 +502,25 @@
             "workload": null
           },
           "evidence": "Complete Asp-Clean implementation still takes about three times as long as MS-Clean; no absolute timings or CPU model."
+        }
+      ],
+      "compute_details": [
+        {
+          "category": "unspecified",
+          "submetric": "unspecified",
+          "value": null,
+          "unit": null,
+          "scope": "Asp-Clean performance claims without absolute resource metrics",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Active-set heuristic and Asp vs MS-Clean comparisons are framed as wall-clock performance ('takes about three times as long'). No CPU-hours, memory, FLOPs, or energy. Left Unspecified for Compute; Runtime covers the ratios."
         }
       ]
     },
@@ -609,6 +721,25 @@
             "workload": null
           },
           "evidence": "Representative higher-DR w-projection run took about one tenth the total time of the 9x9 facet run."
+        }
+      ],
+      "compute_details": [
+        {
+          "category": "resource_usage",
+          "submetric": "peak_memory",
+          "value": 2,
+          "unit": "MB per w-plane kernel",
+          "scope": "W-projection kernel storage; host RAM context",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "Dual 3.06 GHz Xeon, 512 kB cache/processor, 3 GB memory",
+            "parallelism": null,
+            "software": "AIPS++ GNU O2",
+            "numerical_configuration": "Max kernel support 220 px FWHM; 512×512 complex kernels",
+            "workload": "1536×1536 @ 60 arcsec/pix; 20,000 CLEAN iterations"
+          },
+          "evidence": "Each w-plane used a 512×512 complex-pixel kernel requiring 2 MB; greater convolution support raises memory demand. Host machine had 3 GB RAM. Absolute memory footprint for w-projection kernels."
         }
       ]
     },
@@ -1028,6 +1159,42 @@
           },
           "evidence": "Reducing 3072-pixel inversion to ~1500 pixels saved ~2× at 10°; at 10,000 output pixels reduced cost by ~order of magnitude; real field 41→24 min."
         }
+      ],
+      "compute_details": [
+        {
+          "category": "resource_usage",
+          "submetric": "flops",
+          "value": null,
+          "unit": "PFLOPS",
+          "scope": "SKA1 real-time processing estimate from fitted timing model",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "hardware": "Desktop i7-3930K rated 138 GFLOPS; 32 GB RAM",
+            "parallelism": null,
+            "software": "WSClean 1.0 vs CASA 42.0",
+            "numerical_configuration": null,
+            "workload": "Extrapolated 1 h SKA1-low data at 20° zenith, 5 major iterations"
+          },
+          "evidence": "Full SKA1 aperture-array case extrapolated to ~48.8 yr (WSClean) vs ~643 yr (CASA) on the test desktop, corresponding to about 59–60 PFLOPS for real-time processing with modeled techniques. Facility-scale FLOP budget, not a measured job FLOP count."
+        },
+        {
+          "category": "relative_compute",
+          "submetric": "cost_ratio",
+          "value": null,
+          "unit": null,
+          "scope": "Reduced-resolution inversion cost vs full-resolution",
+          "baseline": "full-resolution inversion",
+          "empirical": true,
+          "execution_context": {
+            "hardware": "Six-core 3.20 GHz i7-3930K, 32 GB RAM",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": "3072-pixel → ~1500 pixels; also 10,000 output pixels case"
+          },
+          "evidence": "Reducing a 3072-pixel inversion to ~1500 pixels saved roughly a factor of 2 at 10° zenith; at 10,000 output pixels cost fell by about an order of magnitude. Framed as computational cost reduction for reduced-resolution inversion."
+        }
       ]
     },
     {
@@ -1147,6 +1314,25 @@
           },
           "evidence": "WSClean joined-channel multi-scale: 265, 349, and 600 s for 100,000 iterations with 2, 4, and 8 output channels."
         }
+      ],
+      "compute_details": [
+        {
+          "category": "unspecified",
+          "submetric": "unspecified",
+          "value": null,
+          "unit": null,
+          "scope": "Minor-loop wall-clock and iterations/s only",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "hardware": "40-core Xeon E5-2660 v2, 128 GB RAM (benchmark context)",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": "2048×2048 multi-scale deconvolution minor loop"
+          },
+          "evidence": "Quantitative compute claims are wall-clock seconds and minor iterations/s versus CASA/MORESANE/IUWT. No CPU-hours, energy, FLOPs, or memory scores. Left Unspecified for Compute; Runtime covers throughput/wall-clock."
+        }
       ]
     },
     {
@@ -1249,6 +1435,25 @@
             "workload": null
           },
           "evidence": "Approximately linear scaling through 16 physical cores; 12× speedup at 16 cores."
+        }
+      ],
+      "compute_details": [
+        {
+          "category": "relative_compute",
+          "submetric": "cost_ratio",
+          "value": null,
+          "unit": null,
+          "scope": "BDA per-facet gridding speedup vs no averaging",
+          "baseline": "gridding without BDA",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": "VLA B-configuration test; decorrelation limits 0.001–0.04"
+          },
+          "evidence": "Baseline-dependent averaging yields per-facet gridding speedup rising to roughly 4–5× then flattening at about 4× because memory access becomes limiting. Computational savings test, not fidelity."
         }
       ]
     },
@@ -1354,6 +1559,25 @@
             "workload": "LOFAR observed-data scaling run (identity DD corrections)"
           },
           "evidence": "Four major cycles of about 20 min each on LOFAR job; measures runtime scaling feasibility, not calibrated DD fidelity."
+        }
+      ],
+      "compute_details": [
+        {
+          "category": "unspecified",
+          "submetric": "unspecified",
+          "value": null,
+          "unit": null,
+          "scope": "IDG GPU Tflop rating and kernel-storage claims without absolute resource scores",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "hardware": "Tesla K40c rated 4.29 Tflop/s SP (context); GeForce 840M laptop GPU",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Primary measured scores are visibility/s throughput and wall-clock (Runtime). Avoiding oversampled kernel storage is qualitative; GPU Tflop rating is hardware context, not a reported compute cost. Left Unspecified for Compute."
         }
       ]
     },
@@ -1567,6 +1791,127 @@
           },
           "evidence": "Example strong-scaling wall times 3:13:10 → 1:08:06 on 16,384²; GPU IDG ≈flat ~1:09; I/O ≈1% of wall time."
         }
+      ],
+      "compute_details": [
+        {
+          "category": "resource_usage",
+          "submetric": "energy",
+          "value": null,
+          "unit": "J",
+          "scope": "Energy-to-solution Ec=∫P(t)dt on heterogeneous WSClean+IDG runs",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "Heterogeneous node with CPU/GPU/IDG device layers; PDU/RAPL/NVML",
+            "parallelism": null,
+            "software": "WSClean+IDG",
+            "numerical_configuration": null,
+            "workload": "Including 16,384² and 32,768² imaging cases"
+          },
+          "evidence": "Core metric energy-to-solution from integrated system power. GPU/IDG layers ≈60–90% of active-compute energy at 32,768²; static (idle) energy ≈80–85% of total."
+        },
+        {
+          "category": "efficiency_intensity",
+          "submetric": "energy_efficiency",
+          "value": null,
+          "unit": "visibilities/J",
+          "scope": "η_E = N/Ec and location-dependent Mvis/kgCO₂",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "Scenario carbon factors: South Africa 0.672 vs WA 0.321 kgCO₂/kWh",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Energy efficiency η_E = N/Ec (visibilities/J) is a core derived metric; carbon efficiency and Mvis/kgCO₂ reported for location-dependent SDP scenarios."
+        },
+        {
+          "category": "resource_usage",
+          "submetric": "peak_memory",
+          "value": null,
+          "unit": "GB",
+          "scope": "Peak memory M_peak diagnostic",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Table 2 includes peak memory M_peak among diagnostic hardware metrics for the co-design suite."
+        },
+        {
+          "category": "efficiency_intensity",
+          "submetric": "memory_efficiency",
+          "value": null,
+          "unit": "GB/J",
+          "scope": "Memory efficiency η_mem = Bytes/Ec",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Memory efficiency η_mem and memory bandwidth B_mem are diagnostic Table 2 metrics alongside peak memory."
+        },
+        {
+          "category": "resource_usage",
+          "submetric": "other_absolute",
+          "value": null,
+          "unit": null,
+          "scope": "Device utilisation U and carbon-to-solution",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": "CPU end-to-end utilisation ≈2–18% from 1–64 threads",
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Device utilisation U = t_active/t_total; carbon-to-solution Cc = Ec·κ(t,r). CPU utilisation rises only ≈2% (1 thread) to ≈18% (64 threads) end-to-end."
+        },
+        {
+          "category": "scaling_complexity",
+          "submetric": "hardware_scaling",
+          "value": null,
+          "unit": null,
+          "scope": "CPU strong-scaling and PREESM CPU/FPGA energy–latency Pareto",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "CPU thread scaling; KRIA KR260 FPGA DSE",
+            "parallelism": "1–64 CPU threads; GPU IDG ≈flat wall time",
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Strong-scaling wall times accompany utilisation/energy analysis; PREESM DSE shows latency vs energy and occupancy Pareto fronts. Hardware scaling framed with energy/cost co-design, not Runtime alone."
+        },
+        {
+          "category": "relative_compute",
+          "submetric": "resource_reduction_pct",
+          "value": null,
+          "unit": null,
+          "scope": "Modeled co-design energy/carbon reduction scenarios",
+          "baseline": "baseline utilisation scenarios",
+          "empirical": false,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Scenario claims of up to ~81% energy and ~97% carbon reduction under improved-utilisation models — modeled co-design savings, not shipped optimisations."
+        }
       ]
     },
     {
@@ -1607,7 +1952,77 @@
           "Image fidelity: no reconstruction SNR, PSNR, RMSE, dynamic range, residual-image statistic, or deconvolution comparison is reported. The quantitative study concerns computational throughput, power, kernel support and truncation, hardware efficiency, and modeled capacity; image quality is not benchmarked."
         ],
         "astrometric_accuracy": []
-      }
+      },
+      "compute_details": [
+        {
+          "category": "resource_usage",
+          "submetric": "flops",
+          "value": 0.3,
+          "unit": "SP flop/byte",
+          "scope": "Arithmetic intensity and achieved Gflop/s vs peak",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "Tesla C2070; dual-socket Xeon X5570 / E5462; Opteron 2218; BG/P",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": "8 FLOPs and 24 bytes traffic per grid point (complex SP model)",
+            "workload": "4096×4096 grid, 129-pixel support benchmark"
+          },
+          "evidence": "Inner loop modeled at ≈0.3 SP flop/byte. Xeon X5570 achieves 11.3 SP Gflop/s (6% of 187 Gflop/s peak); C2070 achieves 27.3 SP Gflop/s (~2.7% of 1.03 Tflop/s peak). Arithmetic intensity and sustained FLOPs as compute cost."
+        },
+        {
+          "category": "resource_usage",
+          "submetric": "other_absolute",
+          "value": null,
+          "unit": null,
+          "scope": "Hardware utilisation vs memory-bandwidth roofline",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "Xeon X5570 ~64 GB/s nominal BW; C2070 115.2 GB/s effective with ECC",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Xeon reaches just over 50% of bandwidth-implied Mpoints/s bound; C2070 ~71%. Utilisation vs roofline treated as hardware-efficiency diagnostics alongside power/capacity modeling."
+        },
+        {
+          "category": "scaling_complexity",
+          "submetric": "hardware_scaling",
+          "value": null,
+          "unit": null,
+          "scope": "ASKAP pipeline node/capacity estimates from measured throughput",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "hardware": "Capacity scaled from dual-socket Xeon X5570 throughput",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": "ASKAP 30-arcsec / 10-arcsec spectral-line and continuum pipelines"
+          },
+          "evidence": "Measured throughput extrapolated to ~820–3404 nodes and 76–319 DP Tflop/s peak for stated ASKAP configurations. Model-based capacity (hardware scaling), not end-to-end runtimes."
+        },
+        {
+          "category": "relative_compute",
+          "submetric": "resource_reduction_pct",
+          "value": null,
+          "unit": null,
+          "scope": "W-stacking vs W-projection operation-count estimate",
+          "baseline": "ASKAP W-projection supports (>100 px)",
+          "empirical": false,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Memo estimates W-stacking with ~15-pixel support can reduce gridding operations by one to two orders of magnitude vs large W-projection supports. Operation-count relative compute, not a measured implementation."
+        }
+      ]
     },
     {
       "cohort": "emerging",
@@ -1705,6 +2120,25 @@
           },
           "evidence": "Both pure inference and WSClean wall times increase with image size; tabulated at 64, 128, 256, 512, 1024 pixels."
         }
+      ],
+      "compute_details": [
+        {
+          "category": "resource_usage",
+          "submetric": "cpu_gpu_hours",
+          "value": 14,
+          "unit": "h training",
+          "scope": "Radionets training wall duration on stated GPU (training budget)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "NVIDIA GeForce RTX 2080 8 GB; 12-core i7-8700K; 512 GB SSD",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": "~170 s/epoch; 300 epochs; fine-tune 20 epochs ~30 min",
+            "workload": "Training maps 64×64 then fine-tune to 128×128"
+          },
+          "evidence": "Training takes about 170 s per epoch and just over 14 h for 300 epochs on an RTX 2080. Training compute budget (GPU time), not inference wall-clock alone. CPU/GPU utilisation and energy not separated."
+        }
       ]
     },
     {
@@ -1750,7 +2184,60 @@
           "AGN flux cross-check (MeerKAT): at 1053 MHz, uSARA/AIRI/CLEAN recover 143, 143, and 146 mJy; at 1399 MHz 124, 125, and 123 mJy — comparative integrated-flux consistency across methods (no known-truth flux error)."
         ],
         "astrometric_accuracy": []
-      }
+      },
+      "compute_details": [
+        {
+          "category": "resource_usage",
+          "submetric": "cpu_gpu_hours",
+          "value": null,
+          "unit": "CPU-h / GPU-h",
+          "scope": "Operator construction and imaging on Cirrus for ESO 137-006",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "Cirrus UK Tier-2 (CPU/GPU models not named)",
+            "parallelism": "Construction 240–280 CPUs; forward 99–180 CPUs; AIRI 1 GPU faceting",
+            "software": null,
+            "numerical_configuration": null,
+            "workload": "Low band 1053 MHz and high band 1399 MHz ASKAP fields"
+          },
+          "evidence": "Low band: construction 427 CPU-h; imaging 1120 CPU-h (uSARA), 480 CPU-h+5 GPU-h (AIRI), 132 CPU-h (CLEAN). High band: construction 652 CPU-h; imaging 2377 / 1028+6 / 236 correspondingly. Reports CPU/GPU hours rather than wall time."
+        },
+        {
+          "category": "resource_usage",
+          "submetric": "peak_memory",
+          "value": null,
+          "unit": "GB",
+          "scope": "Holographic normal-operator storage vs de-gridding matrices",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": "12–14 w-stacks (holographic) vs WSClean 72",
+            "workload": null
+          },
+          "evidence": "Holographic encoding reduces reported storage from 470→81 GB (1053 MHz) and 645→159 GB (1399 MHz)."
+        },
+        {
+          "category": "relative_compute",
+          "submetric": "cost_ratio",
+          "value": null,
+          "unit": null,
+          "scope": "AIRI vs uSARA vs WSClean imaging CPU-hours",
+          "baseline": "uSARA / WSClean imaging CPU-hours",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "AIRI imaging uses about 2.3× fewer CPU-hours than uSARA but about 4× the imaging compute of WSClean; including operator construction makes AIRI about 7× as costly as WSClean."
+        }
+      ]
     },
     {
       "cohort": "emerging",
@@ -1821,6 +2308,25 @@
             "workload": "2000×2000 dirty image; no exact timing protocol"
           },
           "evidence": "States a 2000×2000 dirty image can be reconstructed in a few seconds on a laptop; neither exact timing protocol nor laptop hardware given. CLEAN runtime not reported."
+        }
+      ],
+      "compute_details": [
+        {
+          "category": "resource_usage",
+          "submetric": "cpu_gpu_hours",
+          "value": 300,
+          "unit": "GPU-h",
+          "scope": "POLISH training on TITAN RTX",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "24 GB TITAN RTX",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": "~20 GPU-h per model; ~300 GPU-h total training"
+          },
+          "evidence": "Training takes about 20 GPU-h per model and about 300 GPU-h in total. Inference 'few seconds on a laptop' is wall-clock without protocol — Compute subtype is the GPU-hour training budget."
         }
       ]
     },
@@ -1945,6 +2451,59 @@
           },
           "evidence": "Paper characterizes uSARA prototype as about 20× more costly on average; WSClean roughly an order of magnitude cheaper in wall time on same fields."
         }
+      ],
+      "compute_details": [
+        {
+          "category": "resource_usage",
+          "submetric": "cpu_gpu_hours",
+          "value": 770,
+          "unit": "CPU-h",
+          "scope": "uSARA operator precomputation and deconvolution on ASKAP full-band",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "Cirrus UK Tier-2: 36 physical cores, 72 threads, 256 GB/node",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": "467 M visibilities, SB9442 full-band, 19 w-stacks, 64 facets"
+          },
+          "evidence": "Operator precomputation 281 CPU core-hours; deconvolution 770 CPU core-hours (4.3 h wall). WSClean same field 58 CPU core-hours. Core-hour resource accounting."
+        },
+        {
+          "category": "resource_usage",
+          "submetric": "peak_memory",
+          "value": 80,
+          "unit": "GB",
+          "scope": "Holographic normal-operator storage",
+          "baseline": "de-gridding matrices (~5× larger)",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Holographic encoding reduces normal-operator storage to 80 GB, nearly a factor-of-five reduction relative to de-gridding matrices."
+        },
+        {
+          "category": "relative_compute",
+          "submetric": "cost_ratio",
+          "value": 20,
+          "unit": "x",
+          "scope": "uSARA MATLAB prototype vs WSClean average cost",
+          "baseline": "WSClean",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Paper characterizes uSARA's MATLAB prototype as about 20× more costly on average and WSClean as roughly an order of magnitude faster (resource/cost framing alongside wall time)."
+        }
       ]
     },
     {
@@ -2007,6 +2566,42 @@
             "workload": "ASKAP SB8275/9351/9442 sub-bands and full-band"
           },
           "evidence": "Sub-bands 1.0–2.9 h wall time; SB9442 full-band 1.1 h (Table 6). GPU model and training cost not reported."
+        }
+      ],
+      "compute_details": [
+        {
+          "category": "resource_usage",
+          "submetric": "cpu_gpu_hours",
+          "value": 203,
+          "unit": "CPU-h",
+          "scope": "AIRI sub-band and full-band CPU core-hours on Cirrus GPU nodes",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "Cirrus GPU nodes: 4 GPUs, 40 CPU cores, 384 GB shared memory",
+            "parallelism": "1–5 nodes; CPUs for measurement operator, 4 GPUs for denoiser facets",
+            "software": null,
+            "numerical_configuration": null,
+            "workload": "ASKAP SB8275/SB9351/SB9442 sub-bands and SB9442 full-band"
+          },
+          "evidence": "Sub-bands 45–144 CPU core-hours; SB9442 full-band 203 CPU core-hours (Table 6). GPU model and training cost not reported."
+        },
+        {
+          "category": "relative_compute",
+          "submetric": "cost_ratio",
+          "value": null,
+          "unit": null,
+          "scope": "AIRI vs uSARA vs WSClean deconvolution cost",
+          "baseline": "uSARA / WSClean",
+          "empirical": true,
+          "execution_context": {
+            "hardware": "Not hardware-matched: uSARA on CPU nodes, AIRI on newer mixed nodes",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "DNN backward step 10–30× faster than uSARA denoiser; total AIRI deconvolution on average 4× lower than uSARA and 5× higher than WSClean."
         }
       ]
     },
@@ -2122,6 +2717,25 @@
           },
           "evidence": "Authors describe contrast as seconds versus about an hour for uSARA/AIRI while noting exact timing caveats."
         }
+      ],
+      "compute_details": [
+        {
+          "category": "resource_usage",
+          "submetric": "cpu_gpu_hours",
+          "value": null,
+          "unit": "GPU-h / CPU-h",
+          "scope": "R2D2 / R3D3 series training on Cirrus",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "Cirrus: Xeon E5-2695 CPU nodes; Xeon Gold 6148 + 4×V100-SXM2 GPU nodes",
+            "parallelism": "R2D2: 4 GPUs+6 CPUs; R3D3: 12 GPUs+6 CPUs",
+            "software": null,
+            "numerical_configuration": null,
+            "workload": "398–605 cumulative epochs depending on series"
+          },
+          "evidence": "R2D2: 160 GPU-h + 4757 CPU-h. R3D3-3L: 1291 GPU-h + 2165 CPU-h; R3D3-6L: 1276 GPU-h + 2244 CPU-h. R2D2 uses ~80% fewer training GPU-hours than R3D3 but about twice the CPU-hours."
+        }
       ]
     },
     {
@@ -2207,6 +2821,42 @@
           },
           "evidence": "144× (A100), 72× (RTX 3090), 7.2× (8-core Xeon) speedup vs resolve."
         }
+      ],
+      "compute_details": [
+        {
+          "category": "resource_usage",
+          "submetric": "cpu_gpu_hours",
+          "value": 24,
+          "unit": "GPU-h",
+          "scope": "MeerKAT ESO 137-006 fast-resolve scalability run",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": "~400× larger than VLA case; 25–28 major cycles; +~2 CPU-h kernel precomputation"
+          },
+          "evidence": "fast-resolve completes in ~24 GPU-hours plus ~2 CPU-hours kernel precomputation — dataset described as out of reach for resolve; prior convex/CLEAN-family work cited at 900–3000 CPU-hours per band."
+        },
+        {
+          "category": "relative_compute",
+          "submetric": "cost_ratio",
+          "value": null,
+          "unit": null,
+          "scope": "fast-resolve GPU/CPU-hours vs prior convex/CLEAN-family CPU-hours",
+          "baseline": "Dabbech et al. 2022 (~900–3000 CPU-h/band)",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Scalability demonstration contrasts ~24 GPU-h (+2 CPU-h precompute) against 900–3000 CPU-hours per band for prior methods on the large MeerKAT field."
+        }
       ]
     },
     {
@@ -2290,6 +2940,42 @@
             "workload": null
           },
           "evidence": "R2D2 variants deliver roughly an order-of-magnitude speed-up over Högbom CLEAN and 10–20×+ over uSARA/AIRI."
+        }
+      ],
+      "compute_details": [
+        {
+          "category": "resource_usage",
+          "submetric": "cpu_gpu_hours",
+          "value": null,
+          "unit": null,
+          "scope": "DNN series upfront training described as thousands of CPU-core and GPU hours",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": "One-off training amortized across future VLA observations"
+          },
+          "evidence": "Training is a one-off cost of thousands of CPU-core and GPU hours (amortized). Reconstruction seconds are Runtime; Compute subtype is the stated training resource budget."
+        },
+        {
+          "category": "relative_compute",
+          "submetric": "cost_ratio",
+          "value": null,
+          "unit": null,
+          "scope": "R2D2 variants vs AIRI/uSARA reconstruction cost (fraction)",
+          "baseline": "AIRI / uSARA optimization methods",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Paper concludes R2D2 variants incur only a fraction of the reconstruction cost of optimization-based methods. Numeric seconds remain Runtime; the cross-method cost framing supports a relative Compute entry."
         }
       ]
     },
@@ -2487,6 +3173,42 @@
             "workload": null
           },
           "evidence": "Headline: R2D2's inference is roughly four orders of magnitude faster than AIRI."
+        }
+      ],
+      "compute_details": [
+        {
+          "category": "resource_usage",
+          "submetric": "cpu_gpu_hours",
+          "value": null,
+          "unit": "h training",
+          "scope": "Table II training time (TT) across architectures",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": "Averaged over 160 test inverse problems for IT; TT hours per model"
+          },
+          "evidence": "Training times: AIRI 48 h, U-Net 52 h, R2D2-Net (FFT) 152 h, R2D2 140 h, NC-PDNet 230 h, R2D2-Net (NUFFT) 315 h. NUFFT backend adds ~163 extra training hours vs FFT."
+        },
+        {
+          "category": "resource_usage",
+          "submetric": "other_absolute",
+          "value": 248,
+          "unit": "M parameters",
+          "scope": "Trainable parameter counts (Table II)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Parameter counts reported alongside training/inference cost: AIRI 0.6M, U-Net 31M, R2D2/R2D2-Net 248M, NC-PDNet 1.6M — model size as resource footprint."
         }
       ]
     },
@@ -2752,6 +3474,25 @@
           },
           "evidence": "Speedup close to theoretical 2× for larger datasets (HL Tau, Cygnus A); smaller datasets show little gain."
         }
+      ],
+      "compute_details": [
+        {
+          "category": "unspecified",
+          "submetric": "unspecified",
+          "value": null,
+          "unit": null,
+          "scope": "Distributed stage timings and resolution scaling are wall-clock",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Profiling covers degridding/gridding/deconvolution/I/O/idle wall-clock and resolution-scaling time factors. No CPU-hours, energy, FLOPs, or memory scores. Left Unspecified for Compute; Runtime Scaling covers image-size timing."
+        }
       ]
     },
     {
@@ -2814,6 +3555,59 @@
             "workload": "600,000 training samples; 21,956 visibility points each"
           },
           "evidence": "Forward pass only a few seconds; obtaining 100 posterior samples from 100 bootstrapped datasets takes ~20 s; post-training inference 'practically instantaneous'. One training epoch ~30 s."
+        }
+      ],
+      "compute_details": [
+        {
+          "category": "resource_usage",
+          "submetric": "cpu_gpu_hours",
+          "value": 30,
+          "unit": "s/epoch",
+          "scope": "ZINGULARITY/EHT training epoch cost on A100",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "NVIDIA A100; Horovod distributed training",
+            "parallelism": "Scales efficiently to 128 GPUs",
+            "software": null,
+            "numerical_configuration": null,
+            "workload": "600,000 samples × 21,956 visibility points per epoch"
+          },
+          "evidence": "One training epoch over 600k samples takes ~30 s on a single A100; obtaining 100 posterior samples from 100 bootstrapped datasets takes ~20 s. Training/inference compute on stated GPU."
+        },
+        {
+          "category": "resource_usage",
+          "submetric": "other_absolute",
+          "value": 12,
+          "unit": "M parameters",
+          "scope": "Representative BANN model size",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Representative BANN has ~12M trainable parameters, reported with training/inference compute context."
+        },
+        {
+          "category": "scaling_complexity",
+          "submetric": "hardware_scaling",
+          "value": 128,
+          "unit": "GPUs",
+          "scope": "Horovod distributed training scaling",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": "Up to 128 GPUs",
+            "software": "Horovod over native TensorFlow",
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Distributed training via Horovod scales efficiently over native TensorFlow up to 128 GPUs — hardware scaling of training compute."
         }
       ]
     },
@@ -2909,6 +3703,25 @@
             "workload": null
           },
           "evidence": "Derived scaling m·N·(8l/k) used to argue the method avoids super-linear complexity growth relative to CLEAN."
+        }
+      ],
+      "compute_details": [
+        {
+          "category": "scaling_complexity",
+          "submetric": "asymptotic_complexity",
+          "value": null,
+          "unit": null,
+          "scope": "Autocorr-CLEAN theoretical complexity m·N·(8l/k)",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": "m iterations, N pixels, l subminor loops, k autocorrelation basis components",
+            "workload": null
+          },
+          "evidence": "Derived scaling m·N·(8l/k) used to argue the method avoids super-linear complexity growth relative to CLEAN. Analytic compute complexity; wall-clock residual curves are Runtime."
         }
       ]
     },
@@ -3139,6 +3952,25 @@
             "workload": null
           },
           "evidence": "Large speed advantage while matching or beating fidelity/data-fidelity metrics."
+        }
+      ],
+      "compute_details": [
+        {
+          "category": "resource_usage",
+          "submetric": "cpu_gpu_hours",
+          "value": null,
+          "unit": "GPU·hr",
+          "scope": "Robust R2D2 series and standalone network training (Table 2)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": "R2D2_A1,T2: 25 iters, 31M U-Net; R2D2_A2,T2: 25 iters, 20.9M U-WDSR",
+            "workload": null
+          },
+          "evidence": "Full series training: R2D2_A1,T2 231.6 GPU·hr; R2D2_A2,T2 420.9 GPU·hr. Standalone single-network training 85.6 GPU·hr (U-Net) and 165.7 GPU·hr (U-WDSR). Reconstruction seconds remain Runtime."
         }
       ]
     },
@@ -3457,6 +4289,25 @@
           },
           "evidence": "Reports metrics at Np=400², 600², 800²; best overall operating point SR=2.25 (Np=600²)."
         }
+      ],
+      "compute_details": [
+        {
+          "category": "unspecified",
+          "submetric": "unspecified",
+          "value": null,
+          "unit": null,
+          "scope": "t_tot on A40 is wall-clock reconstruction time",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "hardware": "Nvidia A40 48 GB (context)",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Reported 'Runtime / compute cost' values are total reconstruction seconds (t_tot≈2–3.3 s) and a <1.5× slowdown vs planar R2D2. No CPU/GPU-hours, energy, or memory scores. Left Unspecified for Compute; Runtime covers the timings."
+        }
       ]
     },
     {
@@ -3649,6 +4500,25 @@
           },
           "evidence": "MeerKAT larger coverage reconstruction ~2.3× longer (194.6±3.1 ms) than Gaussian-coverage setting."
         }
+      ],
+      "compute_details": [
+        {
+          "category": "unspecified",
+          "submetric": "unspecified",
+          "value": null,
+          "unit": null,
+          "scope": "CLEAN/MS-CLEAN described as computationally costly without numbers",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "CLEAN and multi-scale CLEAN are described only qualitatively as computationally costly. No CPU-hours, memory, FLOPs, energy, or numeric cost ratios. Unspecified Compute."
+        }
       ]
     },
     {
@@ -3727,6 +4597,25 @@
             "workload": null
           },
           "evidence": "Explicitly noted to be much slower than CLEAN/MPoL; no numeric CLEAN/MPoL timings given."
+        }
+      ],
+      "compute_details": [
+        {
+          "category": "resource_usage",
+          "submetric": "cpu_gpu_hours",
+          "value": 0.72,
+          "unit": "A100 GPU-years",
+          "scope": "IRIS calibration/simulation testing and posterior sampling cost",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "10× V100 for sampling; A100 GPU-years for full testing",
+            "parallelism": "10 V100 GPUs",
+            "software": null,
+            "numerical_configuration": null,
+            "workload": "250 posterior samples per disk"
+          },
+          "evidence": "0.72 A100 GPU-years for full calibration/simulation testing; 250 posterior samples in ~2.5 h on 10 V100s. Explicitly slower than CLEAN/MPoL. GPU-year resource budget is the Compute subtype (sampling duration also noted as Runtime)."
         }
       ]
     },
@@ -3817,6 +4706,42 @@
             "workload": null
           },
           "evidence": "iR2D2 is ~14× faster than the diffusion baseline (DDS) despite added self-calibration cost."
+        }
+      ],
+      "compute_details": [
+        {
+          "category": "resource_usage",
+          "submetric": "other_absolute",
+          "value": 315.7,
+          "unit": "M parameters",
+          "scope": "iR2D2(U-WDSR) model size",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "iR2D2(U-WDSR) reported at 315.7M parameters — model size as resource footprint alongside reconstruction runtime (Runtime)."
+        },
+        {
+          "category": "scaling_complexity",
+          "submetric": "problem_size_scaling",
+          "value": null,
+          "unit": null,
+          "scope": "Training-time growth with coil count L vs unrolled baselines",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": "Coil count scaling; example ~4× faster training than R2D2-Net at L=64"
+          },
+          "evidence": "iR2D2 shows shallower (near-linear) training-time growth with number of coils than unrolled architectures, attributed to avoiding NUFFT inside backprop. Problem-size scaling of training compute."
         }
       ]
     },
@@ -3934,6 +4859,25 @@
             "workload": null
           },
           "evidence": "Autocorr-CLEAN and Asp-CLEAN reduce minor-loop iteration counts and wall-clock time needed for convergence by up to an order of magnitude relative to Högbom CLEAN."
+        }
+      ],
+      "compute_details": [
+        {
+          "category": "resource_usage",
+          "submetric": "flops",
+          "value": null,
+          "unit": "Tflop/s–Pflop/s",
+          "scope": "Cited ALMA WSU and ngVLA computational budgets",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": "Facility-scale imaging; gridding identified as dominant cost"
+          },
+          "evidence": "Cites ~100 Tflop/s for ALMA WSU and ~50 Pflop/s for ngVLA, with gridding as dominant computational cost (NRAO/ALMA memos). Facility FLOP/s budgets framed as compute cost; fidelity comparisons remain qualitative."
         }
       ]
     },
@@ -4186,7 +5130,43 @@
           "Computational cost / complexity: Momentum-CLEAN's overhead is just an image-sum with the numerical cost of one minor-loop iteration (no added gridding/FFT); gains come purely from needing fewer major loops. The authors describe the combined (CG + Asp-CLEAN) approach as reaching close to **an order-of-magnitude improvement in convergence speed and dynamic range**, at lower numerical cost than upgrading the minor loop (advanced deconvolution algorithm) alone."
         ],
         "astrometric_accuracy": []
-      }
+      },
+      "compute_details": [
+        {
+          "category": "relative_compute",
+          "submetric": "cost_ratio",
+          "value": null,
+          "unit": null,
+          "scope": "Major-loop iteration reduction as numerical/compute cost vs CLEAN",
+          "baseline": "standard Cotton–Schwab CLEAN major loops",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": "Momentum overhead ≈ one minor-loop image-sum; no added gridding/FFT",
+            "workload": null
+          },
+          "evidence": "CG-CLEAN reaches same accuracy in ~1/5 major-loop iterations (synthetic) and 3–5× fewer on real data. Gains framed as lower numerical cost via fewer major loops (gridding/FFT dominated), not measured wall-clock tables."
+        },
+        {
+          "category": "scaling_complexity",
+          "submetric": "asymptotic_complexity",
+          "value": null,
+          "unit": null,
+          "scope": "Momentum-CLEAN overhead vs minor-loop numerical cost",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Momentum-CLEAN overhead is an image-sum with the numerical cost of one minor-loop iteration; combined CG+Asp approach claimed near order-of-magnitude improvement at lower numerical cost than upgrading the minor loop alone."
+        }
+      ]
     },
     {
       "cohort": "r2d2",
@@ -4300,6 +5280,25 @@
             "workload": null
           },
           "evidence": "HyperAIRI still reports hours (~1.9 hr) vs WSClean ≈0.56 hr on the VLA benchmark."
+        }
+      ],
+      "compute_details": [
+        {
+          "category": "unspecified",
+          "submetric": "unspecified",
+          "value": null,
+          "unit": null,
+          "scope": "HyperAIRI 'computational cost' table is wall-clock hours",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Table reports iterations and wall-clock reconstruction hours (e.g. HyperAIRI 1.90±0.14 hr). No CPU/GPU-hours, energy, or memory scores. Left Unspecified for Compute; Runtime covers the timings."
         }
       ]
     },
@@ -4536,6 +5535,93 @@
           },
           "evidence": "Proposed high-precision measurement operator achieves imaging cost within one order of magnitude of CLEAN."
         }
+      ],
+      "compute_details": [
+        {
+          "category": "resource_usage",
+          "submetric": "peak_memory",
+          "value": null,
+          "unit": null,
+          "scope": "Holographic H vs explicit G measurement-matrix memory",
+          "baseline": "explicit de-gridding matrix G",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": "m_G(P)=24K(P)+4N′; asymptotic m_G*≈24MQ",
+            "workload": null
+          },
+          "evidence": "Holographic H formulation gives a reported 7-fold reduction in memory to store the operator vs explicit G, at roughly 30% higher precomputation cost."
+        },
+        {
+          "category": "relative_compute",
+          "submetric": "resource_reduction_pct",
+          "value": null,
+          "unit": null,
+          "scope": "~7× operator memory reduction (H vs G)",
+          "baseline": "explicit G matrix",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Seven-fold memory reduction for holographic operator storage; paired with ~30% higher precomputation cost and amortization within tens to hundreds of iterations."
+        },
+        {
+          "category": "relative_compute",
+          "submetric": "cost_ratio",
+          "value": null,
+          "unit": null,
+          "scope": "Imaging cost vs CLEAN; precomputation vs apply amortization",
+          "baseline": "CLEAN; on-the-fly vs precomputed operator",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": "MeerKAT ESO 137-006 among test cases"
+          },
+          "evidence": "High-precision measurement operator imaging cost 'within one order of magnitude of CLEAN'. Precomputation matched by application within tens of iterations and exceeded ~10× within a few hundred."
+        },
+        {
+          "category": "scaling_complexity",
+          "submetric": "hardware_scaling",
+          "value": null,
+          "unit": null,
+          "scope": "1–10 CPU-node distributed planning and worker adaptation",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": "1–10 CPU nodes; workers adapted to available cores",
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Distributed runs from 1 to 10 CPU nodes; planning adapts workers to cores (e.g. switch to on-the-fly when workers exceed cores). Communication overhead tracked as part of total cost."
+        },
+        {
+          "category": "relative_compute",
+          "submetric": "cost_ratio",
+          "value": null,
+          "unit": null,
+          "scope": "Fewer w-layers vs WSClean as efficiency proxy",
+          "baseline": "WSClean recommended w-layer counts",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": "e.g. 23 vs 126; 14 vs 40; 12 vs 48–73 w-layers",
+            "workload": null
+          },
+          "evidence": "Number of w-layers used as computational-efficiency proxy: fewer layers at comparable/better efficiency vs WSClean recommendations across test configurations."
+        }
       ]
     },
     {
@@ -4600,6 +5686,25 @@
             "workload": null
           },
           "evidence": "SKA-era AI review cites R2D2/AIRI/U-Net speed qualitatively ('CLEAN-like speeds', 'extreme inference speed') but does not report dedicated own wall-clock or throughput measurements. Left as Unspecified Runtime rather than silently typed as end-to-end."
+        }
+      ],
+      "compute_details": [
+        {
+          "category": "unspecified",
+          "submetric": "unspecified",
+          "value": null,
+          "unit": null,
+          "scope": "SKA-era AI review qualitative compute/speed claims",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Review cites R2D2/AIRI/U-Net computational cost and inference speed qualitatively ('CLEAN-like speeds', 'significantly reduced computational cost') without primary resource measurements. Unspecified Compute."
         }
       ]
     },
