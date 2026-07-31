@@ -110,15 +110,34 @@
     if (notes.length) {
       const box = document.createElement("div");
       box.className = "notes";
-      const nh = document.createElement("h3");
-      nh.textContent = "How this paper uses " + meta.shortLabel;
+
+      const toggle = document.createElement("button");
+      toggle.type = "button";
+      toggle.className = "notes-toggle";
+      toggle.setAttribute("aria-expanded", "false");
+      toggle.innerHTML =
+        '<span class="notes-toggle-label">Summary</span>' +
+        `<span class="notes-toggle-meta">How this paper uses ${meta.shortLabel}</span>`;
+
+      const body = document.createElement("div");
+      body.className = "notes-body";
+      body.hidden = true;
       const ul = document.createElement("ul");
       notes.forEach((note) => {
         const li = document.createElement("li");
         li.textContent = note;
         ul.append(li);
       });
-      box.append(nh, ul);
+      body.append(ul);
+
+      toggle.addEventListener("click", () => {
+        const open = toggle.getAttribute("aria-expanded") === "true";
+        toggle.setAttribute("aria-expanded", String(!open));
+        body.hidden = open;
+        box.classList.toggle("open", !open);
+      });
+
+      box.append(toggle, body);
       panel.append(box);
     }
 
