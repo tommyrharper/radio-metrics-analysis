@@ -46,7 +46,7 @@ Metrics are grouped by a four-category taxonomy (plus **Uncategorised** when sch
 
 **Visuals:** cohort colours fill the stacked bar segments; category is shown with a coloured outline, x-tick colour, and short badge (`Obs` / `Cmp` / `Fid` / `Sci` / `Unc`). Category membership lives in `metricCategories` inside `index.html`.
 
-**Filters:** cohort and category toggles combine. Metrics with zero total for the visible cohorts stay hidden. Clearing all categories shows “No metric categories selected.” Chart order is descending paper count for the visible cohorts (taxonomy tags visuals/filters only).
+**Filters:** cohort checkboxes and a category dropdown (**All categories**, or one taxonomy at a time) combine. Metrics with zero total for the visible cohorts stay hidden. Chart order is descending paper count for the visible cohorts (taxonomy tags visuals/filters only).
 
 **Start** (from the repo root):
 

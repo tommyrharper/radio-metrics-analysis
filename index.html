@@ -131,29 +131,34 @@
       outline: none;
     }
 
-    .filter-actions {
-      display: inline-flex;
-      gap: 0.35rem;
-      margin-left: auto;
+    .category-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem 1rem;
+      align-items: center;
     }
 
-    .filter-actions button {
-      border: 1px solid var(--line);
-      background: transparent;
-      color: var(--muted);
-      font: inherit;
-      font-size: 0.78rem;
+    .category-filter label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
       font-weight: 500;
-      padding: 0.2rem 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .category-filter select {
+      font: inherit;
+      font-size: 0.95rem;
+      color: var(--ink);
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      padding: 0.35rem 0.55rem;
+      min-width: 11rem;
       cursor: pointer;
     }
 
-    .filter-actions button:hover {
-      color: var(--ink);
-      border-color: var(--ink);
-    }
-
-    .filter-actions button:focus-visible {
+    .category-filter select:focus-visible {
       outline: 2px solid var(--r2d2);
       outline-offset: 2px;
     }
@@ -254,6 +259,18 @@
     }
 
     .empty.show { display: grid; }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
 
     .detail {
       margin-top: 1rem;
@@ -694,7 +711,7 @@
       gridding, inverse FFT, and deconvolution — using performance and fidelity metrics.
       Bars show papers reporting each metric, stacked by cohort (classic pipelines, emerging ML,
       and R2D2-citing work), sorted highest to lowest for the cohorts currently shown.
-      Category colours and badges tag each metric; use the category toggles to show or hide groups.
+      Category colours and badges tag each metric; use the category menu to show all groups or one.
       Metrics with no papers in the visible cohorts are omitted from the chart.
       Totals: classic 23, emerging-ml 7, r2d2-citing 33. Browse all papers below, or click a
       bar to focus one metric.
@@ -721,13 +738,14 @@
           </label>
         </div>
 
-        <div class="toggles" role="group" aria-label="Metric category visibility" id="categoryToggles">
-          <span class="toggles-label" id="category-filters-label">Categories</span>
-          <!-- Category checkboxes filled by script -->
-          <div class="filter-actions" role="group" aria-label="Category selection shortcuts">
-            <button type="button" id="categoriesSelectAll">Select all</button>
-            <button type="button" id="categoriesClearAll">Clear all</button>
-          </div>
+        <div class="category-filter">
+          <span class="toggles-label" id="category-filters-label">Category</span>
+          <label>
+            <span class="visually-hidden">Metric category</span>
+            <select id="categorySelect" aria-labelledby="category-filters-label">
+              <!-- Options filled by script -->
+            </select>
+          </label>
         </div>
 
         <div class="category-legend" id="categoryLegend" aria-label="Metric category legend">
@@ -938,8 +956,7 @@
       emerging: document.getElementById("toggle-emerging"),
       r2d2: document.getElementById("toggle-r2d2"),
     };
-    const categoryToggleEls = {};
-    const categoryTogglesEl = document.getElementById("categoryToggles");
+    const categorySelect = document.getElementById("categorySelect");
     const categoryLegendEl = document.getElementById("categoryLegend");
     const emptyState = document.getElementById("emptyState");
     const detail = document.getElementById("detail");
@@ -957,22 +974,17 @@
     let currentOrder = [];
 
     function buildCategoryControls() {
-      const actions = categoryTogglesEl.querySelector(".filter-actions");
+      const allOpt = document.createElement("option");
+      allOpt.value = "all";
+      allOpt.textContent = "All categories";
+      categorySelect.append(allOpt);
+
       filterableCategories.forEach((cid) => {
         const cat = metricCategories[cid];
-        const label = document.createElement("label");
-        const input = document.createElement("input");
-        input.type = "checkbox";
-        input.id = `toggle-cat-${cid}`;
-        input.checked = true;
-        input.setAttribute("aria-describedby", "category-filters-label");
-        const swatch = document.createElement("span");
-        swatch.className = `cat-swatch ${cid}`;
-        swatch.setAttribute("aria-hidden", "true");
-        swatch.textContent = cat.short;
-        label.append(input, swatch, document.createTextNode(` ${cat.label}`));
-        categoryTogglesEl.insertBefore(label, actions);
-        categoryToggleEls[cid] = input;
+        const opt = document.createElement("option");
+        opt.value = cid;
+        opt.textContent = cat.label;
+        categorySelect.append(opt);
 
         const leg = document.createElement("span");
         leg.className = "leg-item";
@@ -983,6 +995,8 @@
         leg.append(legSwatch, document.createTextNode(` ${cat.label}`));
         categoryLegendEl.append(leg);
       });
+      categorySelect.value = "all";
+
       const note = document.createElement("span");
       note.className = "leg-note";
       note.textContent =
@@ -997,7 +1011,9 @@
     }
 
     function activeCategories() {
-      return filterableCategories.filter((cid) => categoryToggleEls[cid].checked);
+      const v = categorySelect.value;
+      if (v === "all") return filterableCategories.slice();
+      return filterableCategories.includes(v) ? [v] : [];
     }
 
     function visiblePapers() {
@@ -1553,13 +1569,8 @@
       const cats = activeCategories();
       chart.data = chartData();
       const nothingToPlot = keys.length === 0 || cats.length === 0 || currentOrder.length === 0;
-      if (keys.length === 0 && cats.length === 0) {
-        emptyState.textContent =
-          "Turn on at least one cohort and one metric category to see the chart.";
-      } else if (keys.length === 0) {
+      if (keys.length === 0) {
         emptyState.textContent = "Turn on at least one cohort to see the chart.";
-      } else if (cats.length === 0) {
-        emptyState.textContent = "No metric categories selected.";
       } else {
         emptyState.textContent = "No metrics to show for the current filters.";
       }
@@ -1575,15 +1586,7 @@
     }
 
     Object.values(toggles).forEach((el) => el.addEventListener("change", refresh));
-    Object.values(categoryToggleEls).forEach((el) => el.addEventListener("change", refresh));
-    document.getElementById("categoriesSelectAll").addEventListener("click", () => {
-      Object.values(categoryToggleEls).forEach((el) => { el.checked = true; });
-      refresh();
-    });
-    document.getElementById("categoriesClearAll").addEventListener("click", () => {
-      Object.values(categoryToggleEls).forEach((el) => { el.checked = false; });
-      refresh();
-    });
+    categorySelect.addEventListener("change", refresh);
     document.getElementById("detailClose").addEventListener("click", hidePapers);
     detailTitle.addEventListener("click", () => {
       if (selectedMetric === null) return;

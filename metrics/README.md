@@ -12,7 +12,7 @@ Canonical keys are grouped on the metrics webpage (`index.html` → `metricCateg
 4. **Scientific** — `flux_recovery`, `astrometric_accuracy`, `classification_metrics` (`spectral_accuracy` is listed in the taxonomy config for future use but is absent from the schema, so it is not plotted)
 5. **Uncategorised** (fallback, only when present) — `logsnr`, `credible_interval`, `uncertainty_correlation`, `text_metrics`
 
-Category and cohort filters combine; zero-total metrics for visible cohorts remain hidden. Chart order is descending paper count (taxonomy is for visuals and filters only).
+Category dropdown (all, or one taxonomy) and cohort filters combine; zero-total metrics for visible cohorts remain hidden. Chart order is descending paper count (taxonomy is for visuals and filters only).
 
 ## Overview files
 
