@@ -1,6 +1,7 @@
 /**
- * Paper-centric detail page: all structured *_details for one paper.
- * Expects METRIC_REGISTRY + all taxonomy globals loaded; URL ?bib=<bibcode>.
+ * Paper-centric detail page: structured *_details for one paper.
+ * Expects METRIC_REGISTRY + taxonomy globals; URL ?bib=<bibcode>[&metric=<binaryKey>].
+ * Metric chips filter which section is shown (no page jump).
  */
 (function () {
   const cohorts = {
@@ -10,6 +11,9 @@
     r2d2: { label: "R2D2-citing" },
     "r2d2-citing": { label: "R2D2-citing" },
   };
+
+  const EXTERNAL_LINK_SVG =
+    '<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6.5 2.5a.75.75 0 0 0 0 1.5h4.19L3.22 11.47a.75.75 0 1 0 1.06 1.06L11.75 5.06v4.19a.75.75 0 0 0 1.5 0v-6a.75.75 0 0 0-.75-.75h-6Z"/><path fill="currentColor" d="M3.5 4.25a.75.75 0 0 0-1.5 0v8c0 .966.784 1.75 1.75 1.75h8a.75.75 0 0 0 0-1.5h-8a.25.25 0 0 1-.25-.25v-8Z"/></svg>';
 
   const params = new URLSearchParams(window.location.search);
   const bibParam = params.get("bib") || params.get("bibcode") || "";
@@ -86,7 +90,7 @@
 
     const panel = document.createElement("section");
     panel.className = "panel";
-    panel.id = meta.binaryKey;
+    panel.dataset.metric = meta.binaryKey;
 
     const h2 = document.createElement("h2");
     h2.textContent = meta.shortLabel;
@@ -134,6 +138,22 @@
     return panel;
   }
 
+  function initialSelectedMetric(used) {
+    const fromQuery = params.get("metric");
+    if (fromQuery && used.some((m) => m.binaryKey === fromQuery)) return fromQuery;
+    const hash = (location.hash || "").replace(/^#/, "");
+    if (hash && used.some((m) => m.binaryKey === hash)) return hash;
+    return null;
+  }
+
+  function setMetricQuery(binaryKey) {
+    const url = new URL(window.location.href);
+    if (binaryKey) url.searchParams.set("metric", binaryKey);
+    else url.searchParams.delete("metric");
+    url.hash = "";
+    history.replaceState(null, "", url);
+  }
+
   function renderPaper(paper) {
     root.replaceChildren();
 
@@ -156,62 +176,125 @@
 
     const actions = document.createElement("div");
     actions.className = "actions";
-    if (paper.url) {
-      const open = document.createElement("a");
-      open.href = paper.url;
-      open.target = "_blank";
-      open.rel = "noopener noreferrer";
-      open.textContent = "Open paper webpage";
-      actions.append(open);
-    }
+
     const back = document.createElement("a");
     back.href = "../index.html";
     back.className = "primary";
     back.textContent = "← Back to all metrics";
     actions.append(back);
 
+    if (paper.url) {
+      const open = document.createElement("a");
+      open.className = "external";
+      open.href = paper.url;
+      open.target = "_blank";
+      open.rel = "noopener noreferrer";
+      open.title = "Open paper webpage";
+      open.setAttribute("aria-label", "Open paper webpage");
+      open.innerHTML = `${EXTERNAL_LINK_SVG}<span>Open paper webpage</span>`;
+      actions.append(open);
+    }
+
     const used = (globalThis.METRIC_REGISTRY || []).filter(
       (m) => paper.metrics && paper.metrics[m.binaryKey] === 1
     );
 
+    let selectedMetric = initialSelectedMetric(used);
+
     const lede = document.createElement("p");
     lede.className = "lede";
-    if (!used.length) {
-      lede.textContent = "No canonical metrics are flagged for this paper.";
-    } else {
+
+    function updateLede() {
+      if (!used.length) {
+        lede.textContent = "No canonical metrics are flagged for this paper.";
+        return;
+      }
+      if (selectedMetric) {
+        const meta = used.find((m) => m.binaryKey === selectedMetric);
+        const n = (paper[meta.detailsKey] || []).length;
+        lede.textContent = `Showing ${meta.shortLabel} detail` +
+          (n ? ` (${n} subtype entr${n === 1 ? "y" : "ies"}).` : ".");
+        return;
+      }
       const withDetails = used.filter((m) => (paper[m.detailsKey] || []).length).length;
       lede.textContent =
         `${used.length} metric${used.length === 1 ? "" : "s"} flagged` +
         (withDetails
-          ? ` · ${withDetails} with structured subtype detail below.`
+          ? ` · ${withDetails} with structured subtype detail. Select a metric to focus.`
           : " · no structured subtype entries yet (overview notes shown when available).");
     }
 
     header.append(tag, bib, h1, actions, lede);
     root.append(header);
 
-    if (used.length) {
-      const nav = document.createElement("nav");
-      nav.className = "metric-nav";
-      nav.setAttribute("aria-label", "Metrics used by this paper");
-      used.forEach((m) => {
-        const a = document.createElement("a");
-        a.href = `#${m.binaryKey}`;
-        const n = (paper[m.detailsKey] || []).length;
-        a.append(document.createTextNode(m.shortLabel));
-        if (n) {
-          const span = document.createElement("span");
-          span.className = "n";
-          span.textContent = `(${n})`;
-          a.append(span);
-        }
-        nav.append(a);
-      });
-      root.append(nav);
-
-      used.forEach((m) => root.append(renderMetricSection(paper, m)));
+    if (!used.length) {
+      updateLede();
+      document.title = `${paper.bibcode} — paper metric details`;
+      return;
     }
 
+    const sectionsHost = document.createElement("div");
+    sectionsHost.id = "metricSections";
+
+    const nav = document.createElement("nav");
+    nav.className = "metric-nav";
+    nav.setAttribute("aria-label", "Metrics used by this paper");
+
+    const allBtn = document.createElement("button");
+    allBtn.type = "button";
+    allBtn.className = "metric-chip";
+    allBtn.textContent = "All";
+    allBtn.dataset.metric = "";
+    nav.append(allBtn);
+
+    used.forEach((m) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "metric-chip";
+      btn.dataset.metric = m.binaryKey;
+      const n = (paper[m.detailsKey] || []).length;
+      btn.append(document.createTextNode(m.shortLabel));
+      if (n) {
+        const span = document.createElement("span");
+        span.className = "n";
+        span.textContent = `(${n})`;
+        btn.append(span);
+      }
+      nav.append(btn);
+    });
+
+    function applyFilter() {
+      nav.querySelectorAll(".metric-chip").forEach((btn) => {
+        const key = btn.dataset.metric || null;
+        const active = selectedMetric ? key === selectedMetric : key === null || key === "";
+        btn.classList.toggle("active", active);
+        btn.setAttribute("aria-pressed", String(active));
+      });
+      sectionsHost.replaceChildren();
+      const toShow = selectedMetric
+        ? used.filter((m) => m.binaryKey === selectedMetric)
+        : used;
+      toShow.forEach((m) => sectionsHost.append(renderMetricSection(paper, m)));
+      updateLede();
+      setMetricQuery(selectedMetric);
+    }
+
+    nav.addEventListener("click", (evt) => {
+      const btn = evt.target.closest(".metric-chip");
+      if (!btn || !nav.contains(btn)) return;
+      const key = btn.dataset.metric || null;
+      if (!key) {
+        selectedMetric = null;
+      } else if (selectedMetric === key) {
+        selectedMetric = null;
+      } else {
+        selectedMetric = key;
+      }
+      applyFilter();
+    });
+
+    root.append(nav, sectionsHost);
+    applyFilter();
     document.title = `${paper.bibcode} — paper metric details`;
   }
 
@@ -224,7 +307,7 @@
   }
 
   if (!bibParam) {
-    showError("Missing paper id. Open this page from the main metrics list (Explore Paper Details).");
+    showError("Missing paper id. Open this page from the main metrics list (Details).");
     return;
   }
 
@@ -244,10 +327,6 @@
         return;
       }
       renderPaper(paper);
-      if (location.hash) {
-        const el = document.querySelector(location.hash);
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
     })
     .catch((err) => showError(err.message || String(err)));
 })();

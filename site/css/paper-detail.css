@@ -96,6 +96,7 @@ main {
 .paper-header .actions a {
   display: inline-flex;
   align-items: center;
+  gap: 0.35rem;
   border: 1px solid var(--line);
   background: transparent;
   color: var(--ink);
@@ -114,6 +115,13 @@ main {
   font-weight: 600;
 }
 
+.paper-header .actions a.external svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  display: block;
+  flex-shrink: 0;
+}
+
 .lede {
   margin: 0;
   color: var(--muted);
@@ -129,21 +137,34 @@ main {
   margin: 0 0 1.5rem;
 }
 
-.metric-nav a {
+.metric-nav .metric-chip {
   display: inline-flex;
   align-items: center;
   border: 1px solid var(--line);
   background: var(--panel);
   color: var(--ink);
+  font: inherit;
   font-size: 0.8rem;
   font-weight: 500;
   padding: 0.3rem 0.55rem;
-  text-decoration: none;
+  cursor: pointer;
 }
 
-.metric-nav a:hover { border-color: var(--ink); }
+.metric-nav .metric-chip:hover { border-color: var(--ink); }
 
-.metric-nav a .n {
+.metric-nav .metric-chip.active {
+  border-color: var(--r2d2);
+  color: var(--r2d2);
+  font-weight: 600;
+  background: rgba(31, 78, 121, 0.06);
+}
+
+.metric-nav .metric-chip:focus-visible {
+  outline: 2px solid var(--r2d2);
+  outline-offset: 2px;
+}
+
+.metric-nav .metric-chip .n {
   margin-left: 0.35rem;
   color: var(--muted);
   font-weight: 400;
