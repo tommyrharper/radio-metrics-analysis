@@ -866,6 +866,7 @@
           <a href="runtime.html" id="runtimeDrilldownLink" hidden>Explore Runtime Details</a>
           <a href="compute.html" id="computeDrilldownLink" hidden>Explore Compute Details</a>
           <a href="iterations.html" id="iterationsDrilldownLink" hidden>Explore Iterations Details</a>
+          <a href="dr.html" id="drDrilldownLink" hidden>Explore DR Details</a>
         </div>
         <div class="metric-variants" id="metricVariants"></div>
         <ul class="paper-list" id="paperList"></ul>
@@ -1330,19 +1331,22 @@
     }
 
     function updateMetricDrilldown(metricIndex) {
-      // Detail pages: Runtime → runtime.html; Compute → compute.html; Iterations → iterations.html.
+      // Detail pages: Runtime → runtime.html; Compute → compute.html; Iterations → iterations.html; DR → dr.html.
       // Mutually exclusive: only the link for the selected metric is shown (a[hidden]{display:none}).
       const key = metricIndex === null || metricIndex === undefined ? null : metricKeys[metricIndex];
       const runtimeLink = document.getElementById("runtimeDrilldownLink");
       const computeLink = document.getElementById("computeDrilldownLink");
       const iterationsLink = document.getElementById("iterationsDrilldownLink");
+      const drLink = document.getElementById("drDrilldownLink");
       const showRuntime = key === "runtime";
       const showCompute = key === "compute_cost";
       const showIterations = key === "iterations";
+      const showDr = key === "dynamic_range";
       runtimeLink.hidden = !showRuntime;
       computeLink.hidden = !showCompute;
       iterationsLink.hidden = !showIterations;
-      metricDrilldown.classList.toggle("open", showRuntime || showCompute || showIterations);
+      drLink.hidden = !showDr;
+      metricDrilldown.classList.toggle("open", showRuntime || showCompute || showIterations || showDr);
     }
 
     function showAllPapers() {

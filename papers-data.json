@@ -789,7 +789,27 @@
           "Primary-beam error model: for a 1 Jy source in the 1.4 GHz VLA C-array data, a measured 40% instantaneous PSF sidelobe and peak primary-beam mismatch of 0.005 predict about 2 mJy peak Stokes I residual and about 10 mJy Stokes V residual. With a piecewise-constant beam approximation sampled every 10 degrees in parallactic angle, predicted peaks are about 1 mJy in Stokes I and 5 mJy in Stokes V. Requiring approximation error to remain several times below a roughly 0.1 mJy/beam thermal sensitivity led to a 1 degree sampling requirement for this data set. These values are analytic estimates tied to the measured PSF and modeled beam, not separate end-to-end timing or fidelity benchmarks."
         ],
         "astrometric_accuracy": []
-      }
+      },
+      "dr_details": [
+        {
+          "category": "dr_limits",
+          "submetric": "dd_calibration_leakage_ceilings",
+          "value": 100000.0,
+          "unit": "pointing-error DR limit (approx.)",
+          "scope": "Full-beam imaging DR ceilings from DD effects / pointing",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "definition_used": "Imaging dynamic-range limit from direction-dependent and pointing systematics",
+            "noise_estimator": null,
+            "image_region": null,
+            "simulation_vs_real": "Simulated 1.4 GHz EVLA field (pointing-error limit)",
+            "frequency": "1.4 GHz",
+            "array": "EVLA"
+          },
+          "evidence": "First-/second-order polarization leakage (~1e-2 / ~1e-4) motivates full-Mueller treatment above DR of a few thousand; DD effects and pixelized sky models limit full-beam DR to ~1e4–1e5; conclusion quotes ~1e5:1 pointing-error limit. No tabulated achieved reconstruction DR."
+        }
+      ]
     },
     {
       "cohort": "classic",
@@ -932,6 +952,62 @@
             "regularisation_parameters": "Loop gain 0.1"
           },
           "evidence": "Every image CLEANed for 20,000 iterations (gain 0.1) on 1536×1536. Fixed iteration budget, not wall-clock."
+        }
+      ],
+      "dr_details": [
+        {
+          "category": "reported_achieved",
+          "submetric": "peak_mad_dr",
+          "value": 50888,
+          "unit": "DR1 (peak / MAD)",
+          "scope": "W-projection 256 w-planes (best table entry)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "definition_used": "DR1 = peak brightness / median absolute deviation from image median",
+            "noise_estimator": "MAD from image median",
+            "image_region": null,
+            "simulation_vs_real": "Simulated / controlled w-term benchmark field",
+            "frequency": null,
+            "array": "VLA-class (benchmark setup)"
+          },
+          "evidence": "Reports DR1 across methods: 2D FFT 1,570; 9×9 facets 12,580; w-projection 64 planes 18,198; 256 planes 50,888."
+        },
+        {
+          "category": "reported_achieved",
+          "submetric": "other_measured_dr_formula",
+          "value": 984,
+          "unit": "DR2 (peak / strongest nearby negative)",
+          "scope": "W-projection 256 w-planes (best table entry)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "definition_used": "DR2 = peak / |strongest nearby negative feature| around a bright source",
+            "noise_estimator": null,
+            "image_region": "Source-local (nearby negative feature)",
+            "simulation_vs_real": "Simulated / controlled w-term benchmark field",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "DR2 rises from 2.8 (2D FFT) and 40 (facets) to 524 (64 planes) and 984 (256 planes)."
+        },
+        {
+          "category": "comparative_dr",
+          "submetric": "dr_improvement_factor",
+          "value": 3,
+          "unit": "× error-performance advantage (approx.)",
+          "scope": "W-projection vs uvw-space faceting at comparable DR",
+          "baseline": "uvw-space faceting",
+          "empirical": true,
+          "execution_context": {
+            "definition_used": null,
+            "noise_estimator": null,
+            "image_region": null,
+            "simulation_vs_real": "Same controlled benchmark as DR1/DR2 table",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Authors report about a factor of 3 in error performance over facets in favor of w-projection, alongside order-of-magnitude residual-time advantages at comparable dynamic range."
         }
       ]
     },
@@ -1088,6 +1164,26 @@
           },
           "evidence": "Clark CLEAN diverged beyond ~300,000 components while still ~7% low in flux vs truth."
         }
+      ],
+      "dr_details": [
+        {
+          "category": "reported_achieved",
+          "submetric": "peak_rms_dr",
+          "value": 4,
+          "unit": "peak / off-source RMS (low-SNR floor)",
+          "scope": "M51 noise-sweep simulations",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "definition_used": "Reconstructed-image peak / off-source RMS",
+            "noise_estimator": "Off-source RMS",
+            "image_region": "Off-source",
+            "simulation_vs_real": "Simulation (M31/M51 models; VLA C array X-band)",
+            "frequency": "X band",
+            "array": "VLA C array"
+          },
+          "evidence": "Source-size and noise sweeps report dynamic range as peak / off-source RMS; at low input SNR, reconstructed DR flattens near 4 as thermal noise dominates."
+        }
       ]
     },
     {
@@ -1155,6 +1251,44 @@
             "regularisation_parameters": "Loop gain 1"
           },
           "evidence": "Noise-free EVLA simulations used at most ten iterations (gain 1, 1 μJy stop)."
+        }
+      ],
+      "dr_details": [
+        {
+          "category": "reported_achieved",
+          "submetric": "peak_peak_residual_dr",
+          "value": 110000,
+          "unit": "peak-to-peak-residual DR",
+          "scope": "3C286 EVLA wideband test (4 Taylor terms)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "definition_used": "Peak-to-peak-residual dynamic range",
+            "noise_estimator": "Peak residual (also reports nearby/off-source RMS)",
+            "image_region": "Near 3C286 / 1° away RMS reported separately",
+            "simulation_vs_real": "Real EVLA snapshots (1.02–2.1 GHz)",
+            "frequency": "1.02–2.1 GHz (≈1.5 GHz reference)",
+            "array": "EVLA"
+          },
+          "evidence": "Peak-to-peak-residual DR rose from 1,600 (ignore spectral structure) to 110,000 with four Taylor terms; noise-free Taylor-order tests also quote DR ≈100,000."
+        },
+        {
+          "category": "dr_limits",
+          "submetric": "dd_calibration_leakage_ceilings",
+          "value": 1000,
+          "unit": "primary-beam uncorrected DR limit (approx.)",
+          "scope": "2:1 EVLA band primary-beam spectral effect",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "definition_used": "DR limit if primary-beam spectral variation ignored",
+            "noise_estimator": null,
+            "image_region": null,
+            "simulation_vs_real": "Simulated primary-beam effect across 2:1 EVLA band",
+            "frequency": "EVLA 2:1 band around ~2 GHz",
+            "array": "EVLA"
+          },
+          "evidence": "Simulated primary beam can impose a dynamic-range limit near 1,000 if ignored (apparent spectral index ≈ −1.4 at half-power)."
         }
       ]
     },
@@ -1493,6 +1627,26 @@
           },
           "evidence": "Accuracy tests and SKA-era projections fix five major iterations (Cotton–Schwab outer loops)."
         }
+      ],
+      "dr_details": [
+        {
+          "category": "reported_achieved",
+          "submetric": "tabulated_scalar_dr",
+          "value": 1000,
+          "unit": "operating DR (approx. 1:1000)",
+          "scope": "Reduced-resolution inversion accuracy simulations",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "definition_used": "Operating/simulation dynamic range quoted as ~1:1000",
+            "noise_estimator": null,
+            "image_region": null,
+            "simulation_vs_real": "Simulations (plus real-field residual check)",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Conclusion reports no noticeable accuracy loss in simulations reaching about 1:1000 dynamic range (and in a real field with 10.3 Jy/beam peak vs 67 mJy/beam residual noise)."
+        }
       ]
     },
     {
@@ -1816,6 +1970,26 @@
             "regularisation_parameters": null
           },
           "evidence": "Five HMP major cycles clean the 5100×5100 / 529-facet 3C147 image to 0.4 mJy."
+        }
+      ],
+      "dr_details": [
+        {
+          "category": "comparative_dr",
+          "submetric": "higher_lower_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "SSDGA / HMP vs uncorrected faceting imaging",
+          "baseline": "No beam / wideband correction",
+          "empirical": true,
+          "execution_context": {
+            "definition_used": null,
+            "noise_estimator": null,
+            "image_region": null,
+            "simulation_vs_real": "Real VLA/MeerKAT-style faceting demonstrations",
+            "frequency": null,
+            "array": "VLA / MeerKAT (representative L-band)"
+          },
+          "evidence": "Authors state HMP or SSD increases dynamic range and reduces flux-density/spectral-index error; residual images improve after DD/wideband correction, but achieved DR is not tabulated."
         }
       ]
     },
@@ -2296,6 +2470,26 @@
           },
           "evidence": "Scenario claims of up to ~81% energy and ~97% carbon reduction under improved-utilisation models — modeled co-design savings, not shipped optimisations."
         }
+      ],
+      "dr_details": [
+        {
+          "category": "reported_achieved",
+          "submetric": "peak_rms_dr",
+          "value": null,
+          "unit": null,
+          "scope": "astroCAMP Table 2 quality-metric definition",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "definition_used": "DR = I_max / σ_res (peak over residual-image RMS)",
+            "noise_estimator": "Residual-image RMS",
+            "image_region": null,
+            "simulation_vs_real": "Framework definition; Section 6 runs do not tabulate achieved DR",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Defines DR = I_max / σ_res as a core quality metric for faint-emission detectability. Named in the algorithmic-quality set with dirty RMS and PSNR/SSIM; not tabulated as a measured Section 6 result."
+        }
       ]
     },
     {
@@ -2684,6 +2878,26 @@
             "regularisation_parameters": null
           },
           "evidence": "Method uses forward-backward PnP iterations, but this paper does not report countable iteration totals, epochs, or convergence iteration results. Left Unspecified."
+        }
+      ],
+      "dr_details": [
+        {
+          "category": "target_configured",
+          "submetric": "dirty_peak_noise_estimate",
+          "value": 500000.0,
+          "unit": "nominal target DR (1053 MHz)",
+          "scope": "MeerKAT ESO 137-006 regularization settings",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "definition_used": "Nominal target DR from normalized dirty-image peak / estimated image-domain noise",
+            "noise_estimator": "Estimated image-domain noise (~0.0014–0.0017 mJy)",
+            "image_region": null,
+            "simulation_vs_real": "Real MeerKAT data (configuration estimate, not calibrated achieved DR)",
+            "frequency": "1053 and 1399 MHz",
+            "array": "MeerKAT"
+          },
+          "evidence": "Dirty peaks 0.69/0.37 Jy imply nominal target DR ≈5×10⁵ and 2.2×10⁵; authors caution reconstructed peaks (~0.05 Jy) are >10× lower — regularization estimates, not measured fidelity."
         }
       ]
     },
@@ -3095,6 +3309,26 @@
           },
           "evidence": "DNN backward step 10–30× faster than uSARA denoiser; total AIRI deconvolution on average 4× lower than uSARA and 5× higher than WSClean."
         }
+      ],
+      "dr_details": [
+        {
+          "category": "target_configured",
+          "submetric": "dirty_peak_noise_estimate",
+          "value": null,
+          "unit": "inverse target DR / denoiser noise levels",
+          "scope": "ASKAP AIRI denoiser selection (shelf vs universal)",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "definition_used": "Training noise σ interpreted as inverse target image dynamic range; dirty peak as sky-peak upper bound",
+            "noise_estimator": "Image-domain noise from visibility noise, spectral norm, weighting",
+            "image_region": null,
+            "simulation_vs_real": "Real ASKAP (no calibrated DR benchmark reported)",
+            "frequency": null,
+            "array": "ASKAP"
+          },
+          "evidence": "Denoiser noise levels (2e-5, 4e-5, 8e-5) are inverse target DR; dirty-image peak used to rescale when true sky peak is unavailable. Paper explicitly does not report a calibrated achieved DR score."
+        }
       ]
     },
     {
@@ -3330,6 +3564,26 @@
           },
           "evidence": "R2D2-family needs far fewer iterations than uSARA (~1100) and AIRI (5000) while matching morphology."
         }
+      ],
+      "dr_details": [
+        {
+          "category": "target_configured",
+          "submetric": "simulation_draw_parameter",
+          "value": null,
+          "unit": "ground-truth DR range 1e3–5e5",
+          "scope": "R2D2 VLA simulation training and generic tests",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "definition_used": "Ground-truth dynamic range randomized for synthetic problems; also parameterizes log S/N transform",
+            "noise_estimator": null,
+            "image_region": null,
+            "simulation_vs_real": "Simulation only (VLA A/C)",
+            "frequency": null,
+            "array": "VLA"
+          },
+          "evidence": "Ground-truth DR randomized from 1e3 to 5e5; targeted experiments isolate low vs high DR (e.g. 5e3 vs 1e5) where residual ratios diverge. High-DR cases show residual structure around bright emission — DR is a configured test axis, not a tabulated achieved reconstruction DR."
+        }
       ]
     },
     {
@@ -3492,6 +3746,26 @@
             "regularisation_parameters": null
           },
           "evidence": "Convergence diagnostic tracks mean-squared residual between successive iterations over wall-clock/hardware — convergence behaviour, not Runtime."
+        }
+      ],
+      "dr_details": [
+        {
+          "category": "comparative_dr",
+          "submetric": "higher_lower_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "VLA Cygnus A multi-frequency imaging",
+          "baseline": "classical resolve",
+          "empirical": true,
+          "execution_context": {
+            "definition_used": null,
+            "noise_estimator": null,
+            "image_region": null,
+            "simulation_vs_real": "Real VLA Cygnus A",
+            "frequency": "2052 / 4811 / 8427 / 13,360 MHz",
+            "array": "VLA"
+          },
+          "evidence": "fast-resolve achieves higher dynamic range than classical resolve with improved low-surface-brightness detail; no explicit scalar DR formula tabulated."
         }
       ]
     },
@@ -3694,6 +3968,26 @@
             "regularisation_parameters": null
           },
           "evidence": "Direct iteration-count comparison across CLEAN variants, R2D2-family, uSARA, and AIRI."
+        }
+      ],
+      "dr_details": [
+        {
+          "category": "reported_achieved",
+          "submetric": "tabulated_scalar_dr",
+          "value": 170000.0,
+          "unit": "target/achieved DR (approx.)",
+          "scope": "Real Cygnus A S-band VLA reconstruction",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "definition_used": "Quoted target/achieved dynamic range for the Cygnus A field",
+            "noise_estimator": null,
+            "image_region": null,
+            "simulation_vs_real": "Real VLA Cygnus A S-band",
+            "frequency": null,
+            "array": "VLA"
+          },
+          "evidence": "Target/achieved dynamic range for the Cygnus A reconstruction quoted as ~1.7×10⁵."
         }
       ]
     },
@@ -4071,6 +4365,26 @@
             "regularisation_parameters": null
           },
           "evidence": "R2D2 needs only ~8 networks versus AIRI's hundreds of PnP iterations."
+        }
+      ],
+      "dr_details": [
+        {
+          "category": "target_configured",
+          "submetric": "simulation_draw_parameter",
+          "value": null,
+          "unit": "DR span 10–10⁴",
+          "scope": "Non-Cartesian MRI R2D2 simulated test set",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "definition_used": "DR = max / faintest recoverable intensity (reciprocal of background noise std σ)",
+            "noise_estimator": "Background noise std σ",
+            "image_region": null,
+            "simulation_vs_real": "Simulation (MRI analogue)",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "DR defined as max/faintest intensity (1/σ); test set spans DR 10–10⁴ to stress high-DR performance; logSNR uses a = image DR."
         }
       ]
     },
@@ -5401,6 +5715,26 @@
           },
           "evidence": "On GPU, AIRI denoisers give roughly a 20-fold speed-up over proximity operators used in SARA/uSARA."
         }
+      ],
+      "dr_details": [
+        {
+          "category": "target_configured",
+          "submetric": "simulation_draw_parameter",
+          "value": null,
+          "unit": "observation DR ~2.9×10³–1.1×10⁴",
+          "scope": "AIRI robustness simulations vs integration time",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "definition_used": "Ratio between brightest and faintest image features",
+            "noise_estimator": null,
+            "image_region": null,
+            "simulation_vs_real": "Simulation",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Ground-truth images had DR slightly above 10⁴; simulated observations averaged 2.9×10³ (1 h) to 1.1×10⁴ (8 h). logSNR transform uses a = 2.5×10³ (lowest DR)."
+        }
       ]
     },
     {
@@ -5538,6 +5872,26 @@
           },
           "evidence": "Reported 'Runtime / compute cost' values are total reconstruction seconds (t_tot≈2–3.3 s) and a <1.5× slowdown vs planar R2D2. No CPU/GPU-hours, energy, or memory scores. Left Unspecified for Compute; Runtime covers the timings."
         }
+      ],
+      "dr_details": [
+        {
+          "category": "target_configured",
+          "submetric": "simulation_draw_parameter",
+          "value": null,
+          "unit": "DR ∈ [10³, 5×10⁵]",
+          "scope": "S-R2D2 spherical wide-field test suite",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "definition_used": "Target dynamic range for simulated problems; also sets logSNR rlog parameter a",
+            "noise_estimator": null,
+            "image_region": null,
+            "simulation_vs_real": "Simulation (sphere vs planar)",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Table 1 aggregates 60 test problems with DR ∈ [10³, 5×10⁵]; per-image examples span ≈8.9×10⁴–2.3×10⁵. DR is the configured test axis for SNR/logSNR/RDR comparisons."
+        }
       ]
     },
     {
@@ -5645,6 +5999,26 @@
           },
           "evidence": "Uses average per-iteration runtime on a single Nvidia A40 to compare computational cost across sensing models; no numeric values captured in the summary."
         }
+      ],
+      "dr_details": [
+        {
+          "category": "target_configured",
+          "submetric": "simulation_draw_parameter",
+          "value": null,
+          "unit": "d ∈ [10³, 10⁵] (low/high splits)",
+          "scope": "MROP compressive RI simulations",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "definition_used": "d = reciprocal of faintest ground-truth intensity",
+            "noise_estimator": null,
+            "image_region": null,
+            "simulation_vs_real": "Simulation (VLA/MeerKAT model coverage); real 3C 273 check without scalar DR",
+            "frequency": null,
+            "array": "VLA / MeerKAT (simulated); VLA real 3C 273"
+          },
+          "evidence": "Images span d ∈ [10³,10⁵], split into low [10³,10⁴] and high [10⁴,10⁵] for SNR/logSNR reporting. Real-data note recovers features across 4 orders of magnitude without a calibrated DR score."
+        }
       ]
     },
     {
@@ -5749,6 +6123,44 @@
           },
           "evidence": "CLEAN and multi-scale CLEAN are described only qualitatively as computationally costly. No CPU-hours, memory, FLOPs, energy, or numeric cost ratios. Unspecified Compute."
         }
+      ],
+      "dr_details": [
+        {
+          "category": "reported_achieved",
+          "submetric": "tabulated_scalar_dr",
+          "value": 600,
+          "unit": "image DR (approx.)",
+          "scope": "30 Doradus reconstruction stress case",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "definition_used": "Quoted ~600 dynamic-range image",
+            "noise_estimator": null,
+            "image_region": null,
+            "simulation_vs_real": "Real/test 30 Doradus image used as high-DR stress case",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "GU-Net successfully reconstructed the ~600 dynamic-range 30 Doradus image."
+        },
+        {
+          "category": "comparative_dr",
+          "submetric": "higher_lower_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "GU-Net vs U-Net on high-DR 30 Doradus",
+          "baseline": "U-Net",
+          "empirical": true,
+          "execution_context": {
+            "definition_used": null,
+            "noise_estimator": null,
+            "image_region": null,
+            "simulation_vs_real": "Same ~600 DR 30 Doradus case",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Qualitative DR robustness: GU-Net succeeds on the ~600 DR image despite lower-DR training; U-Net struggled."
+        }
       ]
     },
     {
@@ -5846,6 +6258,26 @@
             "workload": "250 posterior samples per disk"
           },
           "evidence": "0.72 A100 GPU-years for full calibration/simulation testing; 250 posterior samples in ~2.5 h on 10 V100s. Explicitly slower than CLEAN/MPoL. GPU-year resource budget is the Compute subtype (sampling duration also noted as Runtime)."
+        }
+      ],
+      "dr_details": [
+        {
+          "category": "unspecified",
+          "submetric": "unspecified",
+          "value": null,
+          "unit": null,
+          "scope": "IRIS vs CLEAN/MPoL qualitative DR claim",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "definition_used": null,
+            "noise_estimator": null,
+            "image_region": null,
+            "simulation_vs_real": "Figure 7 baseline comparison (no scalar DR)",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Reports 'competitive resolution and dynamic range performance' vs CLEAN and MPoL without a measured DR formula, configured target, or numeric improvement. Left Unspecified."
         }
       ]
     },
@@ -6744,6 +7176,44 @@
           },
           "evidence": "Combining CG-CLEAN with Asp-CLEAN reaches the noise floor after just a few major-loop iterations."
         }
+      ],
+      "dr_details": [
+        {
+          "category": "comparative_dr",
+          "submetric": "higher_lower_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "Real narrowband CG-CLEAN vs CLEAN",
+          "baseline": "Cotton–Schwab / CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "definition_used": null,
+            "noise_estimator": null,
+            "image_region": null,
+            "simulation_vs_real": "Real narrowband (M31, Cygnus A, G055.7+3.4); also synthetic Cygnus A",
+            "frequency": null,
+            "array": "VLA / VLBA regimes discussed"
+          },
+          "evidence": "On real narrowband data, CG-CLEAN 'continues to attain higher dynamic ranges in later iterations' than CLEAN."
+        },
+        {
+          "category": "comparative_dr",
+          "submetric": "dr_improvement_factor",
+          "value": 10,
+          "unit": "× order-of-magnitude DR/convergence claim (approx.)",
+          "scope": "Combined CG-CLEAN + Asp-CLEAN",
+          "baseline": "Upgrading minor loop alone / standard CLEAN path",
+          "empirical": true,
+          "execution_context": {
+            "definition_used": null,
+            "noise_estimator": null,
+            "image_region": null,
+            "simulation_vs_real": "Real + synthetic CLEAN acceleration study",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Combined CG + Asp-CLEAN described as reaching close to an order-of-magnitude improvement in convergence speed and dynamic range."
+        }
       ]
     },
     {
@@ -7243,6 +7713,62 @@
           },
           "evidence": "Authors state >5× speedup in epochs to peak PSNR for fine-tuning vs scratch."
         }
+      ],
+      "dr_details": [
+        {
+          "category": "target_configured",
+          "submetric": "simulation_draw_parameter",
+          "value": null,
+          "unit": "T-RECS test DR 10⁴–10⁶",
+          "scope": "POLISH++ strong-lens / wide-field test data",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "definition_used": "Ratio of brightest to dimmest recoverable pixel",
+            "noise_estimator": null,
+            "image_region": null,
+            "simulation_vs_real": "Simulation (T-RECS)",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "T-RECS test data characterized with DR 10⁴–10⁶."
+        },
+        {
+          "category": "target_configured",
+          "submetric": "capability_table_max_dr",
+          "value": 1000000.0,
+          "unit": "max DR (capability table)",
+          "scope": "Table 1 method capability comparison",
+          "baseline": "R2D2 ~5×10⁵; CLEAN several hundred; others lower",
+          "empirical": false,
+          "execution_context": {
+            "definition_used": "Capability-table max dynamic range (not shared-benchmark measured DR)",
+            "noise_estimator": null,
+            "image_region": null,
+            "simulation_vs_real": "Literature capability claims",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Table 1 lists max DR: POLISH ~10², Radionets ~5, Deflation Net ~10², R2D2 ~5×10⁵, GU-Net/RI-GAN ~6×10², POLISH++ ~10⁶ (highest reported). Not a head-to-head measured score."
+        },
+        {
+          "category": "dr_limits",
+          "submetric": "algorithm_divergence_limits",
+          "value": null,
+          "unit": "CLEAN practical DR 'several hundred'",
+          "scope": "Högbom loop divergence note in capability discussion",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "definition_used": "Practical CLEAN DR before Högbom loop diverges",
+            "noise_estimator": null,
+            "image_region": null,
+            "simulation_vs_real": null,
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "CLEAN's practical dynamic range noted as 'several hundred' before the Högbom loop diverges."
+        }
       ]
     },
     {
@@ -7531,6 +8057,26 @@
             "workload": null
           },
           "evidence": "Review cites R2D2/AIRI/U-Net computational cost and inference speed qualitatively ('CLEAN-like speeds', 'significantly reduced computational cost') without primary resource measurements. Unspecified Compute."
+        }
+      ],
+      "dr_details": [
+        {
+          "category": "unspecified",
+          "submetric": "unspecified",
+          "value": null,
+          "unit": null,
+          "scope": "SKA-era AI review qualitative DR phrasing",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "definition_used": null,
+            "noise_estimator": null,
+            "image_region": null,
+            "simulation_vs_real": "Review narrative (no new DR measurement)",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "R2D2 described as delivering 'high-dynamic-range imaging at CLEAN-like speeds' without a scalar DR, configured target, comparative number, or limit. Left Unspecified."
         }
       ]
     },

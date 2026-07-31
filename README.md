@@ -40,6 +40,8 @@ Interactive stacked bar chart of metric usage by cohort (`index.html` + `papers-
 
 **Iterations second-level page:** same shell for Iters (`iterations`). **Explore Iterations Details** → [`iterations.html`](iterations.html). Categories: Iteration Count, Convergence Behaviour, Comparative Iteration Performance, Iteration Scaling, plus **Unspecified Iterations** when evidence is too vague to subtype. A separate **Iteration Context** panel counts reporting completeness for stopping criterion, tolerance, max iterations, optimiser, learning rate, batch size, initialisation, and regularisation — context is not itself an Iterations metric. Taxonomy: `iterations-taxonomy.js`; data: `iterations_details` in `papers-data.json` (mirror: `data/iterations-details.json`; injector `scripts/inject_iterations_details.py`). Top-level `iterations: 0|1` flags are unchanged.
 
+**DR second-level page:** same shell for DR (`dynamic_range`). **Explore DR Details** → [`dr.html`](dr.html) (short route matching the chart label). Categories: Reported / Achieved DR, Target / Configured DR, Comparative DR, DR Limits / System Effects, plus **Unspecified DR** when evidence is too vague to subtype. A separate **DR Context** panel counts reporting completeness for definition used, noise estimator, image region, simulation vs real, frequency, and array — context is not itself a DR metric. Residual RMS alone is not DR; SNR is not DR. Taxonomy: `dr-taxonomy.js`; data: `dr_details` in `papers-data.json` (mirror: `data/dr-details.json`; injector `scripts/inject_dr_details.py`). Top-level `dynamic_range: 0|1` flags are unchanged.
+
 Metrics are grouped by a five-category taxonomy:
 
 | Category | Metrics |
