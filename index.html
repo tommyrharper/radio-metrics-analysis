@@ -412,6 +412,11 @@
       border-radius: 2px;
     }
 
+    /* `display: inline-flex` above would otherwise override the [hidden] attribute. */
+    .metric-drilldown a[hidden] {
+      display: none;
+    }
+
     .metric-drilldown a:hover {
       background: #163a5c;
       border-color: #163a5c;
