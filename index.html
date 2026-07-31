@@ -558,6 +558,7 @@
       gridding, inverse FFT, and deconvolution — using performance and fidelity metrics.
       Bars show papers reporting each metric, stacked by cohort (classic pipelines, emerging ML,
       and R2D2-citing work), sorted highest to lowest for the cohorts currently shown.
+      Metrics with no papers in the visible cohorts are omitted from the chart.
       Totals: classic 23, emerging-ml 7, r2d2-citing 33. Browse all papers below, or click a
       bar to focus one metric.
     </p>
@@ -908,6 +909,7 @@
       );
       return scores
         .map((score, i) => ({ i, score }))
+        .filter((x) => x.score > 0)
         .sort((a, b) => b.score - a.score || a.i - b.i)
         .map((x) => x.i);
     }
@@ -1188,7 +1190,7 @@
       chart.data = chartData();
       chart.update();
       if (selectedMetric !== null) {
-        if (!keys.length) showAllPapers();
+        if (!keys.length || !currentOrder.includes(selectedMetric)) showAllPapers();
         else showPapers(selectedMetric);
       } else {
         showAllPapers();
