@@ -6,7 +6,7 @@
   const KEYS = ["classic", "emerging", "r2d2"];
 
   function defaults() {
-    return { classic: true, emerging: true, r2d2: true };
+    return { classic: true, emerging: true, r2d2: false };
   }
 
   function load() {
