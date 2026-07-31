@@ -34,6 +34,8 @@ Each cohort has its own `METRICS_TABLE.md`, plus one root aggregate:
 
 Interactive stacked bar chart of metric usage by cohort (`index.html` + `papers-data.json`).
 
+**Runtime second-level page:** when Runtime is selected on the main graph, an accessible **Explore Runtime Details** link opens [`runtime.html`](runtime.html) (bookmarkable; ← Back to all metrics). That page subtypes Runtime-positive papers into four reporting categories (Wall-clock, Throughput, Relative Performance, Runtime Scaling) plus **Unspecified Runtime** when evidence is too vague to subtype. Papers may contribute to more than one category, so category totals may exceed the number of Runtime-positive papers. A separate **Runtime Measurement Context** panel counts reporting completeness for Hardware / Parallelism / Software / Numerical Configuration / Workload — execution context is not itself a Runtime metric. Taxonomy config lives in `runtime-taxonomy.js`; structured entries are `runtime_details` on each paper in `papers-data.json` (mirror: `data/runtime-details.json`). Top-level `runtime: 0|1` flags are unchanged. The same shell (filters → category graph → sub-metrics → papers → context) can be copied for other metrics later.
+
 Metrics are grouped by a five-category taxonomy:
 
 | Category | Metrics |

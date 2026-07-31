@@ -1,0 +1,1431 @@
+#!/usr/bin/env python3
+"""Inject runtime_details into papers-data.json for Runtime-positive papers.
+
+Run from repo root: python3 scripts/inject_runtime_details.py
+Does not change top-level metrics.runtime flags.
+"""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+PAPERS_DATA = ROOT / "papers-data.json"
+MIRROR = ROOT / "data" / "runtime-details.json"
+
+
+def ctx(hardware=None, parallelism=None, software=None, numerical_configuration=None, workload=None):
+    return {
+        "hardware": hardware,
+        "parallelism": parallelism,
+        "software": software,
+        "numerical_configuration": numerical_configuration,
+        "workload": workload,
+    }
+
+
+def entry(
+    category,
+    submetric,
+    *,
+    value=None,
+    unit=None,
+    scope=None,
+    baseline=None,
+    empirical=True,
+    execution_context=None,
+    evidence=None,
+):
+    return {
+        "category": category,
+        "submetric": submetric,
+        "value": value,
+        "unit": unit,
+        "scope": scope,
+        "baseline": baseline,
+        "empirical": empirical,
+        "execution_context": execution_context or ctx(),
+        "evidence": evidence,
+    }
+
+
+# bibcode -> list of runtime_details entries
+CLASSIFICATIONS: dict[str, list[dict]] = {
+    # --- classic ---
+    "1980A&A....89..377C": [
+        entry(
+            "throughput",
+            "components_per_second",
+            value=15,
+            unit="components/s",
+            scope="CLEAN minor cycle throughput",
+            empirical=True,
+            execution_context=ctx(
+                hardware="PDP-11/70 with FPS AP-120B array processor",
+                workload="Typical VLA CLEAN minor-cycle component placement",
+            ),
+            evidence="Minor cycle processed about 15 components per second on a PDP-11/70 with FPS AP-120B; implementation throughput, not end-to-end image runtime.",
+        ),
+        entry(
+            "relative_performance",
+            "speedup_factor",
+            value=None,
+            unit=None,
+            scope="Typical VLA use vs conventional CLEAN",
+            baseline="conventional CLEAN implementation",
+            empirical=True,
+            execution_context=ctx(
+                hardware="PDP-11/70 with FPS AP-120B array processor",
+                workload="Map size, CLEAN gain, map complexity, and sidelobe level dependent",
+            ),
+            evidence="Saved a factor of 2 to 10 relative to conventional CLEAN; ratio depends on map size, gain, complexity, and sidelobe level. No individual timing tables.",
+        ),
+    ],
+    "1988A&A...200..312W": [
+        entry(
+            "wall_clock",
+            "deconvolution",
+            value=15,
+            unit="min",
+            scope="MRC component recovery at 1-sigma cutoff (Fig. 5 caption)",
+            baseline="CLEAN ~90 min for ~15,000 components",
+            empirical=True,
+            execution_context=ctx(
+                workload="CLEAN ~15,000 components vs MRC equivalent of ~50,000 components",
+            ),
+            evidence="Figure 5 caption: 90 minutes for CLEAN vs 15 minutes for MRC; body text inconsistently says MRC needed 'one third' of CLEAN's time. Hardware for this timing not restated.",
+        ),
+        entry(
+            "relative_performance",
+            "speedup_factor",
+            value=6,
+            unit="x",
+            scope="MRC vs CLEAN wall-clock (Fig. 5 caption)",
+            baseline="CLEAN",
+            empirical=True,
+            execution_context=ctx(),
+            evidence="Caption implies ~6x timing ratio (90 vs 15 min); body text says 'one third' of CLEAN's time — internal inconsistency.",
+        ),
+    ],
+    "2004A&A...426..747B": [
+        entry(
+            "relative_performance",
+            "speedup_factor",
+            value=None,
+            unit=None,
+            scope="Active-set heuristic vs prior Asp approach",
+            baseline="prior Asp / conventional approach",
+            empirical=True,
+            execution_context=ctx(),
+            evidence="Active-set heuristic reported to improve performance by an order of magnitude or more; no absolute wall-clock times or hardware.",
+        ),
+        entry(
+            "relative_performance",
+            "runtime_ratio",
+            value=3,
+            unit="x slower",
+            scope="Complete Asp-Clean vs MS-Clean",
+            baseline="MS-Clean",
+            empirical=True,
+            execution_context=ctx(),
+            evidence="Complete Asp-Clean implementation still takes about three times as long as MS-Clean; no absolute timings or CPU model.",
+        ),
+    ],
+    "2008ISTSP...2..647C": [
+        entry(
+            "wall_clock",
+            "deconvolution",
+            value=3161,
+            unit="s",
+            scope="Total deconvolution time, w-projection 64 w-planes",
+            baseline="2D transform 216 s; 9x9 facet 30,488 s",
+            empirical=True,
+            execution_context=ctx(
+                hardware="Dual 3.06 GHz Xeon, 512 kB cache/processor, 3 GB memory",
+                software="AIPS++ compiled with GNU O2",
+                numerical_configuration="20,000 CLEAN iterations, loop gain 0.1; 1536x1536 @ 60 arcsec/pix",
+                workload="74 MHz VLA C-config simulation; 505,440 visibilities x 8 channels; 66 WENSS sources",
+            ),
+            evidence="W-projection 64 planes: 607 s/residual and 3,161 s total deconvolution; 2D transform 27 s/residual and 216 s total; 9x9 facet 1,348 s/residual and 30,488 s total.",
+        ),
+        entry(
+            "wall_clock",
+            "other_stage_specific",
+            value=607,
+            unit="s",
+            scope="Per residual calculation, w-projection 64 planes",
+            empirical=True,
+            execution_context=ctx(
+                hardware="Dual 3.06 GHz Xeon",
+                software="AIPS++",
+                workload="Same controlled VLA C-config simulation",
+            ),
+            evidence="Per-residual-calculation times tabulated (e.g. 27 s for 2D, 607 s for 64 w-planes, 507 s for 256 planes) plus kernel initialization (83–231 s).",
+        ),
+        entry(
+            "relative_performance",
+            "runtime_ratio",
+            value=0.1,
+            unit="fraction of facet time",
+            scope="W-projection 64-plane total vs 9x9 facet total",
+            baseline="9x9 uvw-facet run (30,488 s)",
+            empirical=True,
+            execution_context=ctx(hardware="Dual 3.06 GHz Xeon"),
+            evidence="Representative higher-DR w-projection run took about one tenth the total time of the 9x9 facet run.",
+        ),
+    ],
+    "2008ISTSP...2..793C": [
+        entry(
+            "wall_clock",
+            "deconvolution",
+            value=614,
+            unit="s",
+            scope="M31 simulation Table II deconvolution time (Multiscale CLEAN)",
+            baseline="Högbom 204 s; Clark 50 s; MRC 147 s; MEM 13 s",
+            empirical=True,
+            execution_context=ctx(
+                hardware="3.06 GHz Xeon (core count / memory not stated)",
+                software="AIPS++/CASA simulation pipeline",
+                workload="Simulated VLA C-config M31 test image; Multiscale CLEAN 5,000 iterations",
+            ),
+            evidence="Table II: Multiscale CLEAN deconvolution time 614 s (vs Högbom 204 s, Clark 50 s, MRC 147 s, MEM 13 s) with recovered flux and RMS error.",
+        ),
+        entry(
+            "relative_performance",
+            "runtime_ratio",
+            value=None,
+            unit=None,
+            scope="Multiscale CLEAN slower than all CLEAN-family comparators in Table II",
+            baseline="Högbom / Clark / MRC / MEM",
+            empirical=True,
+            execution_context=ctx(hardware="3.06 GHz Xeon"),
+            evidence="Multiscale CLEAN was slower than every comparator in this measured M31 run despite lowest CLEAN-family RMS error.",
+        ),
+    ],
+    "2012MNRAS.426.1223C": [
+        entry(
+            "wall_clock",
+            "reconstruction_per_image",
+            value=None,
+            unit="s (log10 plotted)",
+            scope="MATLAB wall-clock over coverage sweep (means ±1σ over 100 sims)",
+            empirical=True,
+            execution_context=ctx(
+                hardware="2.4 GHz Xeon quad-core",
+                software="MATLAB",
+                workload="Synthetic on-grid DFT samples; coverage sweep; order of minutes, similar to TV",
+            ),
+            evidence="Wall-clock times plotted in log10 seconds over coverage; SARA of order of minutes, similar to TV and published MS-CLEAN times. Exact times not tabulated.",
+        ),
+        entry(
+            "runtime_scaling",
+            "visibility_count",
+            value=None,
+            unit=None,
+            scope="Runtime vs coverage fraction (visibility sampling density)",
+            empirical=True,
+            execution_context=ctx(hardware="2.4 GHz Xeon quad-core", software="MATLAB"),
+            evidence="Runtime plotted across coverage sweep; MS-CLEAN comparison is cross-paper rather than same-hardware.",
+        ),
+    ],
+    "2014MNRAS.439.3591C": [
+        entry(
+            "wall_clock",
+            "reconstruction_per_image",
+            value=None,
+            unit="min–h",
+            scope="Figure 2 mean wall-clock vs coverage (non-optimized beta)",
+            empirical=True,
+            execution_context=ctx(
+                hardware="2.4 GHz quad-core Xeon",
+                software="PURIFY beta (MATLAB/SDMM); nine SARA bases parallelized",
+                parallelism="SARA basis decompositions parallelized; proximity operators otherwise serial",
+                workload="M31 and 30 Doradus; M/N = 0.2–2; 30 noise/coverage realizations",
+            ),
+            evidence="Reweighted methods tens of minutes at 0.2N to ~1 h at 2N; non-reweighted mostly <10 min except TV on 30 Doradus.",
+        ),
+        entry(
+            "runtime_scaling",
+            "visibility_count",
+            value=None,
+            unit=None,
+            scope="Time scales approximately linearly with visibility count",
+            empirical=True,
+            execution_context=ctx(hardware="2.4 GHz quad-core Xeon"),
+            evidence="Reweighted method time scales approximately linearly with visibility count because CG repeatedly applies Φ and Φ†.",
+        ),
+    ],
+    "2014MNRAS.444..606O": [
+        entry(
+            "wall_clock",
+            "end_to_end",
+            value=8.5,
+            unit="min",
+            scope="Accuracy tests with five major iterations (WSClean vs CASA)",
+            baseline="CASA 19.3 min (zenith, 12 planes)",
+            empirical=True,
+            execution_context=ctx(
+                software="WSClean vs CASA",
+                numerical_configuration="Five major iterations; 12–195 w-layers/planes",
+                workload="Accuracy-test configurations at zenith and 10° zenith angle",
+            ),
+            evidence="WSClean vs CASA: 8.5 vs 19.3 min (zenith, 12 layers), 10.3 vs 19.6 min (128), 15.3 vs 178.2 min (10°, 195); recentered WSClean 6.6 min in 10° case.",
+        ),
+        entry(
+            "wall_clock",
+            "other_stage_specific",
+            value=None,
+            unit="min",
+            scope="Imaging-only wall time (PSF + image; excludes cleaning/prediction)",
+            empirical=True,
+            execution_context=ctx(software="WSClean vs CASA", workload="Five repeats per configuration; Fig. 7"),
+            evidence="Imaging-only benchmarks exclude cleaning, prediction, and reduced-resolution optimization; WSClean 7.9× faster than CASA at 10° for large visibility sets.",
+        ),
+        entry(
+            "relative_performance",
+            "speedup_factor",
+            value=7.9,
+            unit="x",
+            scope="Large visibility sets, 10° zenith (imaging-only)",
+            baseline="CASA",
+            empirical=True,
+            execution_context=ctx(software="WSClean vs CASA"),
+            evidence="WSClean 7.9× faster than CASA at 10° zenith and 2.6× at zenith for large sets; ~3× for small sets; conclusion cites 2–10× speedup.",
+        ),
+        entry(
+            "runtime_scaling",
+            "image_size",
+            value=None,
+            unit=None,
+            scope="Reduced-resolution inversion cost savings",
+            empirical=True,
+            execution_context=ctx(software="WSClean"),
+            evidence="Reducing 3072-pixel inversion to ~1500 pixels saved ~2× at 10°; at 10,000 output pixels reduced cost by ~order of magnitude; real field 41→24 min.",
+        ),
+    ],
+    "2017MNRAS.471..301O": [
+        entry(
+            "wall_clock",
+            "deconvolution",
+            value=223,
+            unit="s",
+            scope="WSClean multi-scale single-frequency minor-loop (100,000 iterations)",
+            baseline="CASA extrapolated 3480 s; CPU MORESANE 256 min",
+            empirical=True,
+            execution_context=ctx(
+                hardware="40-core Intel Xeon E5-2660 v2 @ 2.20 GHz, 128 GB RAM",
+                software="WSClean vs CASA / MORESANE / IUWT",
+                numerical_configuration="2048×2048, six scales; excludes inversion, prediction, gridding",
+                workload="Single-frequency and multi-frequency joined cleaning (2–8 channels)",
+            ),
+            evidence="WSClean 223 s for 100,000 iterations (~15.6× vs CASA extrapolation); 8-channel joined cleaning 600 s; MORESANE 256 min; IUWT 44–179 min.",
+        ),
+        entry(
+            "throughput",
+            "components_per_second",
+            value=748,
+            unit="iterations/s",
+            scope="WSClean final major-cycle minor iterations/s (single-frequency)",
+            baseline="CASA 29 iterations/s",
+            empirical=True,
+            execution_context=ctx(
+                hardware="40-core Intel Xeon E5-2660 v2",
+                workload="2048×2048 six-scale deconvolution",
+            ),
+            evidence="CASA 29 iterations/s; WSClean major cycles average 5, 44, and 748 iterations/s. Multi-frequency: CASA MSMFS 0.42 iter/s; WSClean final cycle 323–771 iter/s.",
+        ),
+        entry(
+            "relative_performance",
+            "speedup_factor",
+            value=15.6,
+            unit="x",
+            scope="Minor-loop only vs CASA extrapolation",
+            baseline="CASA multi-scale CLEAN",
+            empirical=True,
+            execution_context=ctx(hardware="40-core Intel Xeon E5-2660 v2"),
+            evidence="About 15.6× faster than CASA extrapolation for 100,000 iterations; multi-frequency roughly 400–900× faster (minor loop only).",
+        ),
+        entry(
+            "runtime_scaling",
+            "channel_count",
+            value=None,
+            unit=None,
+            scope="Joined-channel cleaning time vs output channel count",
+            empirical=True,
+            execution_context=ctx(hardware="40-core Intel Xeon E5-2660 v2"),
+            evidence="WSClean joined-channel multi-scale: 265, 349, and 600 s for 100,000 iterations with 2, 4, and 8 output channels.",
+        ),
+    ],
+    "2018A&A...611A..87T": [
+        entry(
+            "wall_clock",
+            "end_to_end",
+            value=12,
+            unit="h",
+            scope="Single-core wall time for 3C147 faceted imaging run",
+            empirical=True,
+            execution_context=ctx(
+                hardware="Two Sandy Bridge Intel Xeon E5 (8 physical / 16 virtual cores each)",
+                parallelism="Scales through 16 physical cores; degrades with hyperthreads",
+                numerical_configuration="5100×5100, 529 facets, five HMP major cycles to 0.4 mJy",
+                workload="14 h VLA C+D L-band 3C147; 2,350,127 samples; 64 channels / 256 MHz",
+            ),
+            evidence="Single-core wall time ~12 h with 94% in gridding; reaches 12× speedup at 16 physical cores.",
+        ),
+        entry(
+            "wall_clock",
+            "gridding",
+            value=None,
+            unit=None,
+            scope="Gridding share of end-to-end run (~94%)",
+            empirical=True,
+            execution_context=ctx(hardware="Sandy Bridge Xeon E5 pair"),
+            evidence="94% of the ~12 h single-core wall time spent in gridding.",
+        ),
+        entry(
+            "relative_performance",
+            "speedup_factor",
+            value=12,
+            unit="x",
+            scope="16 physical cores vs single core",
+            baseline="single-core wall time",
+            empirical=True,
+            execution_context=ctx(
+                hardware="Two Sandy Bridge Intel Xeon E5",
+                parallelism="16 physical cores (~98% parallelized interpretation)",
+            ),
+            evidence="Approximately linear scaling through 16 physical cores; 12× speedup at 16 cores.",
+        ),
+    ],
+    "2018A&A...616A..27V": [
+        entry(
+            "throughput",
+            "visibilities_per_second",
+            value=4.3e6,
+            unit="visibilities/s",
+            scope="Low-level IDG routine on laptop GPU",
+            empirical=True,
+            execution_context=ctx(
+                hardware="NVIDIA GeForce 840M; dual-core hyperthreaded 2.60 GHz Intel i7 host",
+                software="IDG vs classical gridding / WSClean",
+                workload="~93 million visibilities",
+            ),
+            evidence="Low-level IDG processes 4.3 M visibilities/s, taking 22 s for ~93 M visibilities; WSClean reports 72 s including FFTs/I/O.",
+        ),
+        entry(
+            "wall_clock",
+            "gridding",
+            value=22,
+            unit="s",
+            scope="IDG low-level gridding for ~93 M visibilities",
+            baseline="Classical gridding 52 s (Stokes I) / 192 s (4 pol); WSClean 72 s",
+            empirical=True,
+            execution_context=ctx(
+                hardware="GeForce 840M + Intel i7 host",
+                software="IDG",
+            ),
+            evidence="IDG 22 s for ~93 M visibilities; classical gridding 52 s Stokes I / 192 s all four polarizations.",
+        ),
+        entry(
+            "wall_clock",
+            "other_stage_specific",
+            value=20,
+            unit="min",
+            scope="LOFAR major cycle duration (~4 cycles)",
+            empirical=True,
+            execution_context=ctx(
+                hardware="Two 8-core Xeon E5-2630 v3 + four Tesla K40c GPUs",
+                parallelism="32 hardware threads; 4 GPUs",
+                numerical_configuration="Briggs robust 0; 100 mJy cleaning threshold",
+                workload="LOFAR observed-data scaling run (identity DD corrections)",
+            ),
+            evidence="Four major cycles of about 20 min each on LOFAR job; measures runtime scaling feasibility, not calibrated DD fidelity.",
+        ),
+    ],
+    "2023arXiv230606007K": [
+        entry(
+            "wall_clock",
+            "end_to_end",
+            value=38,
+            unit="s",
+            scope="LOFAR-HBA Boötes dirty-image synthesis + FITS write (HVOX-500MB)",
+            empirical=True,
+            execution_context=ctx(
+                hardware="Intel Core i9-10900X 10-core, 128 GB DDR4",
+                parallelism="20 threads monolithic / 5 per chunk; 500 MB max partition",
+                software="HVOX vs W-gridder",
+                workload="8 h LOFAR-HBA; ~1.5 Mpix HEALPix; 5×5° dirty image",
+            ),
+            evidence="Real-data demonstration writes FITS output in 38 s on the benchmark workstation; no matched W-gridder timing for this observation.",
+        ),
+        entry(
+            "relative_performance",
+            "runtime_ratio",
+            value=None,
+            unit=None,
+            scope="Sparse-domain HVOX vs W-gridder (~order of magnitude)",
+            baseline="W-gridder (full regular image)",
+            empirical=True,
+            execution_context=ctx(hardware="i9-10900X workstation"),
+            evidence="When only 500 sky pixels requested, HVOX-500MB ~one order of magnitude faster than W-gridder for analysis and synthesis.",
+        ),
+        entry(
+            "runtime_scaling",
+            "image_size",
+            value=None,
+            unit=None,
+            scope="Dense-grid runtime vs telescope radius / image megapixels",
+            empirical=True,
+            execution_context=ctx(hardware="i9-10900X", workload="SKA-Low simulation defaults; up to 182.25 Mpix"),
+            evidence="Dense-grid timings vs telescope radius; monolithic HVOX OOMs at largest configs while HVOX-500MB continues to 100 km / 182.25 Mpix case.",
+        ),
+    ],
+    "2025arXiv251213591C": [
+        entry(
+            "wall_clock",
+            "end_to_end",
+            value=None,
+            unit="s",
+            scope="Time-to-solution T_c (POSIX / logs / scheduler)",
+            empirical=True,
+            execution_context=ctx(
+                software="WSClean+IDG under astroCAMP",
+                parallelism="Strong scaling 1–64 CPU threads; GPU/IDG device layers",
+                workload="e.g. 16,384² image strong-scaling example 3:13:10 → 1:08:06",
+            ),
+            evidence="Defines T_c as full-system end-to-end wall-clock; measured extensively on WSClean+IDG including strong-scaling wall times.",
+        ),
+        entry(
+            "throughput",
+            "visibilities_per_second",
+            value=None,
+            unit="visibilities/s",
+            scope="Derived throughput Θ = N/T_c",
+            empirical=True,
+            execution_context=ctx(software="astroCAMP / WSClean+IDG"),
+            evidence="Framework defines throughput Θ = N/T_c (visibilities/s) alongside energy and cost metrics.",
+        ),
+        entry(
+            "relative_performance",
+            "speedup_factor",
+            value=None,
+            unit=None,
+            scope="CPU strong scaling 1→64 cores (wall-time reduction)",
+            baseline="1-core / 1-thread wall time",
+            empirical=True,
+            execution_context=ctx(parallelism="1–64 CPU threads", software="WSClean+IDG"),
+            evidence="Example strong-scaling wall times 3:13:10 → 1:08:06 on 16,384²; GPU IDG ≈flat ~1:09; I/O ≈1% of wall time.",
+        ),
+    ],
+    # --- emerging-ml ---
+    "2022A&A...664A.134S": [
+        entry(
+            "wall_clock",
+            "reconstruction_per_image",
+            value=0.0031,
+            unit="s",
+            scope="Pure network evaluation at 64 pixels (mean ± std over 100 runs)",
+            baseline="WSClean 0.43±0.02 s at 64 px",
+            empirical=True,
+            execution_context=ctx(
+                software="radionets vs WSClean",
+                workload="Averaged over 100 runs on one image; sizes 64–1024",
+            ),
+            evidence="Pure network 0.0031–0.4070 s (64–1024 px); end-to-end radionets framework 2.29–3.20 s; WSClean 0.43–9.00 s. Framework faster than WSClean only above 512 px.",
+        ),
+        entry(
+            "wall_clock",
+            "end_to_end",
+            value=2.29,
+            unit="s",
+            scope="Radionets framework including load/save (64 px)",
+            baseline="WSClean",
+            empirical=True,
+            execution_context=ctx(software="radionets"),
+            evidence="Complete framework times 2.29±0.04 to 3.20±0.06 s across sizes; not raw telescope-data end-to-end.",
+        ),
+        entry(
+            "runtime_scaling",
+            "image_size",
+            value=None,
+            unit=None,
+            scope="Runtime vs image side length 64–1024",
+            empirical=True,
+            execution_context=ctx(software="radionets vs WSClean"),
+            evidence="Both pure inference and WSClean wall times increase with image size; tabulated at 64, 128, 256, 512, 1024 pixels.",
+        ),
+    ],
+    "2022MNRAS.514.2614C": [
+        entry(
+            "wall_clock",
+            "reconstruction_per_image",
+            value=None,
+            unit="s",
+            scope="2000×2000 dirty-image reconstruction ('a few seconds')",
+            empirical=True,
+            execution_context=ctx(
+                hardware="Unspecified laptop",
+                workload="2000×2000 dirty image; no exact timing protocol",
+            ),
+            evidence="States a 2000×2000 dirty image can be reconstructed in a few seconds on a laptop; neither exact timing protocol nor laptop hardware given. CLEAN runtime not reported.",
+        ),
+    ],
+    "2023MNRAS.522.5558W": [
+        entry(
+            "wall_clock",
+            "deconvolution",
+            value=4.3,
+            unit="h",
+            scope="uSARA full-band SB9442 deconvolution wall time",
+            baseline="WSClean 0.8 h on one node",
+            empirical=True,
+            execution_context=ctx(
+                hardware="Cirrus UK Tier-2; 36 physical cores / 72 threads / 256 GB per node",
+                software="uSARA MATLAB prototype vs WSClean",
+                workload="467 M visibilities; 19 w-stacks; 64 facets; SB9442 full-band",
+            ),
+            evidence="Deconvolution 4.3 h wall time (770 CPU core-hours) vs WSClean 0.8 h; sub-band uSARA 5.2–8.8 h vs WSClean 0.2–0.7 h.",
+        ),
+        entry(
+            "relative_performance",
+            "runtime_ratio",
+            value=20,
+            unit="x more costly (avg)",
+            scope="uSARA MATLAB prototype vs WSClean",
+            baseline="WSClean",
+            empirical=True,
+            execution_context=ctx(hardware="Cirrus", software="MATLAB uSARA"),
+            evidence="Paper characterizes uSARA prototype as about 20× more costly on average; WSClean roughly an order of magnitude cheaper in wall time on same fields.",
+        ),
+    ],
+    "2023MNRAS.522.5576W": [
+        entry(
+            "wall_clock",
+            "reconstruction_per_image",
+            value=1.1,
+            unit="h",
+            scope="AIRI SB9442 full-band reconstruction wall time",
+            empirical=True,
+            execution_context=ctx(
+                hardware="Cirrus GPU nodes; four GPUs, 40 CPU cores, 384 GB shared; 1–5 nodes",
+                parallelism="CPU measurement operator; four GPUs for four denoiser facets",
+                software="AIRI",
+                workload="ASKAP SB8275/9351/9442 sub-bands and full-band",
+            ),
+            evidence="Sub-bands 1.0–2.9 h wall time; SB9442 full-band 1.1 h (Table 6). GPU model and training cost not reported.",
+        ),
+    ],
+    "2024ApJS..273....3A": [
+        entry(
+            "wall_clock",
+            "reconstruction_per_image",
+            value=2.9,
+            unit="s",
+            scope="R2D2 fully-on-GPU Python generic-test mean",
+            baseline="CLEAN 65.9±18.8 s; uSARA 4184±1549 s; AIRI 3479±1531 s",
+            empirical=True,
+            execution_context=ctx(
+                hardware="1 CPU core (CLEAN/uSARA); 1 CPU+1 GPU (AIRI/MATLAB R2D2); hybrid or full GPU (Python)",
+                software="MATLAB and Python R2D2-family backends",
+                numerical_configuration="R2D2 I=15; R3D3-3L I=7; R3D3-6L I=8",
+                workload="Generic-test averages",
+            ),
+            evidence="CLEAN ~66 s, uSARA ~4184 s, AIRI ~3479 s vs R2D2 12.2/18.6/2.9 s (MATLAB/hybrid/GPU) and R3D3 variants ~1.9–15 s. Authors warn exact timing comparisons are cautious.",
+        ),
+        entry(
+            "wall_clock",
+            "other_stage_specific",
+            value=0.05,
+            unit="s",
+            scope="Per-iteration data-fidelity time (GPU Python R2D2)",
+            empirical=True,
+            execution_context=ctx(software="Python R2D2 on GPU"),
+            evidence="Table 2: MATLAB R2D2 averages 0.4±0.2 s data-fidelity and 0.2±0.07 s DNN/step; GPU Python 0.05±0.01 s and 0.1±0.2 s.",
+        ),
+        entry(
+            "relative_performance",
+            "runtime_ratio",
+            value=None,
+            unit=None,
+            scope="Seconds (R2D2) vs ~hour (uSARA/AIRI)",
+            baseline="uSARA / AIRI",
+            empirical=True,
+            execution_context=ctx(),
+            evidence="Authors describe contrast as seconds versus about an hour for uSARA/AIRI while noting exact timing caveats.",
+        ),
+    ],
+    # --- r2d2-citing ---
+    "2024A&A...690A.387R": [
+        entry(
+            "wall_clock",
+            "reconstruction_per_image",
+            value=10,
+            unit="min",
+            scope="fast-resolve to residual ~1e-3 on A100 (VLA Cygnus A, S-band, 1 channel)",
+            baseline="resolve 1416 min",
+            empirical=True,
+            execution_context=ctx(
+                hardware="NVIDIA A100; also RTX 3090; Intel Xeon 8-core",
+                workload="VLA Cygnus A single channel S-band; residual ~10⁻³",
+            ),
+            evidence="Time-to-residual ~10⁻³: ~10 min (A100), ~20 min (3090), ~200 min (8-core Xeon) vs resolve 1416 min.",
+        ),
+        entry(
+            "relative_performance",
+            "speedup_factor",
+            value=144,
+            unit="x",
+            scope="fast-resolve on A100 vs resolve",
+            baseline="resolve (CPU)",
+            empirical=True,
+            execution_context=ctx(hardware="NVIDIA A100 vs resolve CPU baseline"),
+            evidence="144× (A100), 72× (RTX 3090), 7.2× (8-core Xeon) speedup vs resolve.",
+        ),
+    ],
+    "2024ApJ...966L..34D": [
+        entry(
+            "wall_clock",
+            "reconstruction_per_image",
+            value=3.31,
+            unit="s",
+            scope="R2D2 Cygnus A reconstruction",
+            baseline="Hö-CLEAN 21.87 s; uSARA 1197 s; AIRI 672 s",
+            empirical=True,
+            execution_context=ctx(
+                hardware="1 CPU core for CLEAN/uSARA; 1 GPU for DNN methods and AIRI",
+                software="R2D2 / R2D2-Net / R3D3 vs CLEAN variants, uSARA, AIRI",
+                workload="Cygnus A deep imaging comparison",
+            ),
+            evidence="Hö-CLEAN 21.87s; CS-CLEAN 33.69s; MS-CLEAN 39.01s; R2D2 3.31s; R2D2-Net 0.97s; R3D3 1.83s; uSARA 1197s; AIRI 672s.",
+        ),
+        entry(
+            "relative_performance",
+            "speedup_factor",
+            value=None,
+            unit=None,
+            scope="R2D2 family vs Högbom CLEAN and uSARA/AIRI",
+            baseline="Högbom CLEAN / uSARA / AIRI",
+            empirical=True,
+            execution_context=ctx(),
+            evidence="R2D2 variants deliver roughly an order-of-magnitude speed-up over Högbom CLEAN and 10–20×+ over uSARA/AIRI.",
+        ),
+    ],
+    "2024RASTI...3..505L": [
+        entry(
+            "wall_clock",
+            "reconstruction_per_image",
+            value=0.64,
+            unit="s",
+            scope="QuantifAI MAP optimisation (W28, A100)",
+            baseline="Wavelet-based MAP 0.94 s",
+            empirical=True,
+            execution_context=ctx(
+                hardware="NVIDIA A100",
+                software="QuantifAI vs wavelet-based UQ",
+                workload="W28 image Table 4; also MeerKAT M31 visibility sweep",
+            ),
+            evidence="MAP: wavelet 0.94 s vs QuantifAI 0.64 s; MCMC 36.0×10³ vs 6.44×10³ s; LCIs 149.7 vs 108.2 s; fast pixel UQ 0.17 s.",
+        ),
+        entry(
+            "relative_performance",
+            "speedup_factor",
+            value=60,
+            unit="x",
+            scope="8×8 LCIs vs MCMC sampling (order-of-magnitude statements also for fast UQ)",
+            baseline="MCMC posterior sampling",
+            empirical=True,
+            execution_context=ctx(hardware="NVIDIA A100"),
+            evidence="MCMC ~60× slower than 8×8 LCIs and >37,500× slower than fast pixel UQ; fast pixel UQ >630× faster than 8×8 LCIs.",
+        ),
+        entry(
+            "runtime_scaling",
+            "visibility_count",
+            value=None,
+            unit=None,
+            scope="MAP/UQ wall time vs synthesis duration (3e4–2.4e5 visibilities)",
+            empirical=True,
+            execution_context=ctx(hardware="A100", workload="MeerKAT M31 1/2/4/8 h syntheses"),
+            evidence="As synthesis time increases (1/2/4/8 h; 3×10⁴–2.4×10⁵ visibilities), reconstruction wall-clock 17.0–105.3 s and fast-pixel UQ 0.28–1.26 s.",
+        ),
+    ],
+    "2024arXiv240317905C": [
+        entry(
+            "wall_clock",
+            "reconstruction_per_image",
+            value=0.237,
+            unit="s",
+            scope="R2D2 mean inference time (Table II, 160 test problems)",
+            baseline="AIRI 1857±387 s",
+            empirical=True,
+            execution_context=ctx(
+                software="R2D2 / R2D2-Net vs AIRI, U-Net, NC-PDNet",
+                workload="Non-Cartesian MRI inverse problems (R2D2 paradigm transfer)",
+            ),
+            evidence="AIRI IT 1857±387 s vs R2D2 0.237±0.005 s and R2D2-Net (FFT) 0.129±0.004 s; R2D2 inference ~four orders of magnitude faster than AIRI.",
+        ),
+        entry(
+            "relative_performance",
+            "speedup_factor",
+            value=None,
+            unit=None,
+            scope="R2D2 inference vs AIRI (~10^4)",
+            baseline="AIRI",
+            empirical=True,
+            execution_context=ctx(),
+            evidence="Headline: R2D2's inference is roughly four orders of magnitude faster than AIRI.",
+        ),
+    ],
+    "2024arXiv240318052A": [
+        entry(
+            "wall_clock",
+            "reconstruction_per_image",
+            value=2.0,
+            unit="s",
+            scope="R2D2 mean total reconstruction time",
+            baseline="CLEAN 93.2±26.7 s; AIRI 3430±1461 s; uSARA 4016±1471 s",
+            empirical=True,
+            execution_context=ctx(
+                software="R2D2 vs U-Net, CLEAN, AIRI, uSARA",
+                numerical_configuration="R2D2 12 iterations; U-Net 1; CLEAN 8±1; AIRI ~4995; uSARA ~1107",
+            ),
+            evidence="U-Net 0.1±0.1 s; R2D2 2.0±0.4 s; CLEAN 93.2±26.7 s; AIRI 3430±1461 s; uSARA 4015.9±1471.2 s.",
+        ),
+        entry(
+            "relative_performance",
+            "runtime_ratio",
+            value=None,
+            unit=None,
+            scope="R2D2 orders of magnitude faster than CLEAN/uSARA/AIRI",
+            baseline="CLEAN / uSARA / AIRI",
+            empirical=True,
+            execution_context=ctx(),
+            evidence="R2D2 is orders of magnitude faster than CLEAN, uSARA and AIRI, enabling multiple reconstructions for UQ.",
+        ),
+    ],
+    "2024arXiv241023178C": [
+        entry(
+            "wall_clock",
+            "reconstruction_per_image",
+            value=51,
+            unit="ms",
+            scope="EVIL-Deconv median reconstruction time (Table 2)",
+            baseline="CLEAN 794 ms; PnP DnCNN 1110 ms",
+            empirical=True,
+            execution_context=ctx(software="EVIL-Deconv vs CLEAN / PnP"),
+            evidence="CLEAN 794 ms; PnP 1110 ms; EVIL-Deconv 51 ms median reconstruction time.",
+        ),
+        entry(
+            "wall_clock",
+            "other_stage_specific",
+            value=735,
+            unit="ms",
+            scope="Bootstrap confidence-region construction per image (500 samples)",
+            baseline="Direct quantile-regression inference ~153 ms",
+            empirical=True,
+            execution_context=ctx(
+                parallelism="Bootstrap parallelized 128 samples at a time",
+            ),
+            evidence="~735 ms/image for bootstrap-based confidence regions vs ~153 ms for quantile-regression inference.",
+        ),
+    ],
+    "2025AJ....169..289W": [
+        entry(
+            "wall_clock",
+            "end_to_end",
+            value=None,
+            unit="s",
+            scope="Total processing time per method/dataset (Fig. 6)",
+            empirical=True,
+            execution_context=ctx(
+                parallelism="Two-node parallel vs serial",
+                software="Decentralized framework (p-L1, p-msc vs serial)",
+                workload="HL Tau, Cygnus A, Sgr B2, Sgr C",
+            ),
+            evidence="Serial L1 ~637–919 s; parallel p-L1 ~540–867 s across datasets.",
+        ),
+        entry(
+            "wall_clock",
+            "other_stage_specific",
+            value=None,
+            unit=None,
+            scope="Stage breakdown: degridding, gridding, deconvolution, I/O, idle, other",
+            empirical=True,
+            execution_context=ctx(parallelism="Multi-node"),
+            evidence="Timing breakdown by pipeline stage; deconvolution and disk I/O overhead dominate; idle when partitions unbalanced.",
+        ),
+        entry(
+            "relative_performance",
+            "speedup_factor",
+            value=2,
+            unit="x",
+            scope="Serial-to-parallel ratio on larger datasets",
+            baseline="serial L1 / msc",
+            empirical=True,
+            execution_context=ctx(parallelism="Two nodes"),
+            evidence="Speedup close to theoretical 2× for larger datasets (HL Tau, Cygnus A); smaller datasets show little gain.",
+        ),
+    ],
+    "2025A&A...698A..61J": [
+        entry(
+            "wall_clock",
+            "reconstruction_per_image",
+            value=None,
+            unit="s",
+            scope="Forward pass 'a few seconds'; ~20 s for 100×100 bootstrap posterior procedure",
+            empirical=True,
+            execution_context=ctx(
+                hardware="NVIDIA A100",
+                parallelism="Horovod distributed training up to 128 GPUs",
+                software="ZINGULARITY BANN (~12M parameters)",
+                workload="600,000 training samples; 21,956 visibility points each",
+            ),
+            evidence="Forward pass only a few seconds; obtaining 100 posterior samples from 100 bootstrapped datasets takes ~20 s; post-training inference 'practically instantaneous'. One training epoch ~30 s.",
+        ),
+    ],
+    "2025A&A...698A.176M": [
+        entry(
+            "wall_clock",
+            "deconvolution",
+            value=None,
+            unit=None,
+            scope="Wall-clock vs residual level (Fig. 5)",
+            baseline="Classical CLEAN / Asp-CLEAN",
+            empirical=True,
+            execution_context=ctx(software="Autocorr-CLEAN vs CLEAN / Asp-CLEAN"),
+            evidence="Autocorr-CLEAN reaches a given residual level significantly faster than classical CLEAN and faster than Asp-CLEAN in nearly all cases.",
+        ),
+        entry(
+            "relative_performance",
+            "speedup_factor",
+            value=None,
+            unit=None,
+            scope="Up to an order of magnitude faster than classical CLEAN",
+            baseline="classical CLEAN",
+            empirical=True,
+            execution_context=ctx(),
+            evidence="Claims up to an order of magnitude faster than classical CLEAN with fidelity comparable to or better than Asp-CLEAN.",
+        ),
+        entry(
+            "runtime_scaling",
+            "asymptotic_complexity",
+            value=None,
+            unit=None,
+            scope="Theoretical complexity m·N·(8l/k)",
+            empirical=False,
+            execution_context=ctx(),
+            evidence="Derived scaling m·N·(8l/k) used to argue the method avoids super-linear complexity growth relative to CLEAN.",
+        ),
+    ],
+    "2025A&A...704A..43Y": [
+        entry(
+            "wall_clock",
+            "reconstruction_per_image",
+            value=107.11,
+            unit="s",
+            scope="ISCAD Messier 106 (SKA, 512×512) runtime",
+            baseline="SARA 321.06 s; AIRI 127.34 s; LPG 156.78 s",
+            empirical=True,
+            execution_context=ctx(
+                workload="Messier 106 SKA 512×512 test case among three reported cases",
+            ),
+            evidence="ISCAD 107.11 s vs SARA 321.06 / AIRI 127.34 / LPG 156.78; lowest runtime of the four methods across reported cases.",
+        ),
+        entry(
+            "relative_performance",
+            "runtime_ratio",
+            value=None,
+            unit=None,
+            scope="ISCAD lowest runtime among SARA/AIRI/LPG/ISCAD",
+            baseline="SARA / AIRI / LPG",
+            empirical=True,
+            execution_context=ctx(),
+            evidence="Across all three test cases ISCAD attains the lowest runtime of the four methods.",
+        ),
+    ],
+    "2025ApJS..280...63A": [
+        entry(
+            "wall_clock",
+            "reconstruction_per_image",
+            value=None,
+            unit="s",
+            scope="R2D2 total reconstruction time t_tot (~5.6–9.0 s for R2D2_A2,T2)",
+            baseline="AIRI/uSARA several minutes",
+            empirical=True,
+            execution_context=ctx(
+                software="R2D2 with TorchKbNufft / PyNUFFT / FINUFFT / PSF backends",
+                workload="Mean ± std over 200 inverse problems",
+            ),
+            evidence="R2D2 total reconstruction a few seconds (e.g. R2D2_A2,T2 ~5.6–9.0 s depending on NUFFT backend) vs several minutes for AIRI/uSARA.",
+        ),
+        entry(
+            "wall_clock",
+            "other_stage_specific",
+            value=None,
+            unit="s",
+            scope="Per-iteration t_dat and t_reg across Φ†Φ implementations",
+            empirical=True,
+            execution_context=ctx(software="R2D2 backends"),
+            evidence="Reports average per-iteration data-fidelity and regularization/DNN times for four measurement-operator implementations.",
+        ),
+        entry(
+            "relative_performance",
+            "runtime_ratio",
+            value=None,
+            unit=None,
+            scope="R2D2 seconds vs AIRI/uSARA minutes",
+            baseline="AIRI / uSARA",
+            empirical=True,
+            execution_context=ctx(),
+            evidence="Large speed advantage while matching or beating fidelity/data-fidelity metrics.",
+        ),
+    ],
+    "2025ChJSS..45.1597F": [
+        entry(
+            "wall_clock",
+            "reconstruction_per_image",
+            value=25.07,
+            unit="s",
+            scope="MCP proposed method at 10% undersampling",
+            baseline="SARA 43.27 s; AIRI 21.76 s",
+            empirical=True,
+            execution_context=ctx(
+                software="MCP vs SARA / AIRI",
+                workload="10%/50% undersampling and simulated SKA array tables",
+            ),
+            evidence="10%: MCP 25.07 s (SARA 43.27, AIRI 21.76); 50%: MCP 26.11 s; SKA: MCP 189.62 s (SARA 342.75, AIRI 175.32). Faster than SARA, marginally slower than AIRI.",
+        ),
+        entry(
+            "relative_performance",
+            "runtime_ratio",
+            value=None,
+            unit=None,
+            scope="MCP vs SARA/AIRI wall-clock",
+            baseline="SARA / AIRI",
+            empirical=True,
+            execution_context=ctx(),
+            evidence="Substantially faster than SARA and only marginally slower than AIRI while improving SNR/fidelity.",
+        ),
+    ],
+    "2025MNRAS.537.1608T": [
+        entry(
+            "wall_clock",
+            "other_stage_specific",
+            value=0.05,
+            unit="s",
+            scope="AIRI per denoising step on GPU",
+            baseline="SARA proximal 1.31±1.12 s; BM3D 15.08±0.40 s; AIRI CPU 7.92±0.52 s",
+            empirical=True,
+            execution_context=ctx(
+                hardware="GPU vs CPU for AIRI denoisers",
+                software="AIRI vs SARA proximal / BM3D",
+            ),
+            evidence="AIRI GPU 0.05±0.02 s/step; AIRI CPU 7.92±0.52 s; SARA 1.31±1.12 s; BM3D 15.08±0.40 s.",
+        ),
+        entry(
+            "relative_performance",
+            "speedup_factor",
+            value=20,
+            unit="x",
+            scope="GPU AIRI denoisers vs SARA/uSARA proximity operators",
+            baseline="SARA/uSARA proximity operators",
+            empirical=True,
+            execution_context=ctx(hardware="GPU"),
+            evidence="On GPU, AIRI denoisers give roughly a 20-fold speed-up over proximity operators used in SARA/uSARA.",
+        ),
+    ],
+    "2025MNRAS.542..426T": [
+        entry(
+            "wall_clock",
+            "reconstruction_per_image",
+            value=3.0,
+            unit="s",
+            scope="S-R2D2 t_tot at I=10 (~3.0–3.3 s)",
+            baseline="R2D2 ~2.1–2.5 s",
+            empirical=True,
+            execution_context=ctx(
+                hardware="NVIDIA A40 48GB",
+                software="S-R2D2 vs R2D2",
+                numerical_configuration="Fixed I=10; t_tot = I×(t_reg + t_dat)",
+                workload="60 test problems; Np=400²–800²; DR ∈ [10^3,5×10^5]",
+            ),
+            evidence="S-R2D2 t_tot ≈ 3.0–3.3 s vs R2D2 ≈ 2.1–2.5 s; less than 1.5× slower while much higher SNR/logSNR.",
+        ),
+        entry(
+            "relative_performance",
+            "runtime_ratio",
+            value=1.5,
+            unit="x slower (upper)",
+            scope="S-R2D2 vs R2D2 total reconstruction time",
+            baseline="R2D2",
+            empirical=True,
+            execution_context=ctx(hardware="NVIDIA A40"),
+            evidence="S-R2D2 less than 1.5× slower (~3 s vs ~2–2.5 s) than planar R2D2.",
+        ),
+        entry(
+            "runtime_scaling",
+            "image_size",
+            value=None,
+            unit=None,
+            scope="t_tot and fidelity vs Np = 400²–800²",
+            empirical=True,
+            execution_context=ctx(hardware="A40"),
+            evidence="Reports metrics at Np=400², 600², 800²; best overall operating point SR=2.25 (Np=600²).",
+        ),
+    ],
+    "2025MNRAS.543.1727L": [
+        entry(
+            "wall_clock",
+            "other_stage_specific",
+            value=None,
+            unit=None,
+            scope="Average per-iteration runtime (uSARA) across sensing models",
+            empirical=True,
+            execution_context=ctx(
+                hardware="Single NVIDIA A40",
+                software="uSARA",
+                workload="MROP compressive sensing model comparison",
+            ),
+            evidence="Uses average per-iteration runtime on a single Nvidia A40 to compare computational cost across sensing models; no numeric values captured in the summary.",
+        ),
+    ],
+    "2025RASTI...4..25M": [
+        entry(
+            "wall_clock",
+            "reconstruction_per_image",
+            value=54.9,
+            unit="ms",
+            scope="U-Net reconstruction time (Table 1)",
+            baseline="Pseudo-inverse 13.0±0.4 ms; GU-Net 85.7±1.5 ms",
+            empirical=True,
+            execution_context=ctx(
+                software="Pseudo-inverse / U-Net / GU-Net",
+                workload="Varying visibility coverage; MeerKAT larger coverage case",
+            ),
+            evidence="Pseudo-inverse 13.0±0.4 ms; U-Net 54.9±1.6 ms; GU-Net 85.7±1.5 ms. On MeerKAT larger coverage, time rose to 194.6±3.1 ms (~2.3× longer).",
+        ),
+        entry(
+            "runtime_scaling",
+            "visibility_count",
+            value=None,
+            unit=None,
+            scope="Reconstruction time vs coverage regime (Gaussian vs MeerKAT)",
+            empirical=True,
+            execution_context=ctx(),
+            evidence="MeerKAT larger coverage reconstruction ~2.3× longer (194.6±3.1 ms) than Gaussian-coverage setting.",
+        ),
+    ],
+    "2025arXiv250102473D": [
+        entry(
+            "wall_clock",
+            "reconstruction_per_image",
+            value=2.5,
+            unit="h",
+            scope="250 posterior samples per disk",
+            baseline="CLEAN/MPoL described as much faster",
+            empirical=True,
+            execution_context=ctx(
+                hardware="10 V100 GPUs (sampling); also notes 0.72 A100 GPU-years for calibration/simulation testing",
+                parallelism="10 V100 GPUs",
+                software="IRIS (diffusion SDE sampling)",
+                workload="250 posterior samples per disk",
+            ),
+            evidence="250 posterior samples per disk generated in ~2.5 hours on 10 V100 GPUs; explicitly noted much slower than CLEAN/MPoL. Metric-details lacked a dedicated Runtime bullet but Performance section reports this timing.",
+        ),
+        entry(
+            "relative_performance",
+            "runtime_ratio",
+            value=None,
+            unit=None,
+            scope="IRIS sampling vs CLEAN/MPoL (qualitative: much slower)",
+            baseline="CLEAN / MPoL",
+            empirical=True,
+            execution_context=ctx(hardware="10 V100 GPUs"),
+            evidence="Explicitly noted to be much slower than CLEAN/MPoL; no numeric CLEAN/MPoL timings given.",
+        ),
+    ],
+    "2025arXiv250309559C": [
+        entry(
+            "wall_clock",
+            "reconstruction_per_image",
+            value=5.92,
+            unit="s",
+            scope="iR2D2(U-WDSR) reconstruction runtime",
+            baseline="DDS 82.39±6.62 s; R2D2(U-WDSR) 0.68±0.22 s",
+            empirical=True,
+            execution_context=ctx(software="iR2D2 vs R2D2 / U-WDSR / NC-PDNet / DDS"),
+            evidence="iR2D2 5.92±0.38 s vs R2D2 0.68±0.22 s, U-WDSR 0.10±0.03 s, NC-PDNet 0.32±0.01 s, DDS 82.39±6.62 s.",
+        ),
+        entry(
+            "relative_performance",
+            "speedup_factor",
+            value=14,
+            unit="x",
+            scope="iR2D2 vs diffusion baseline DDS",
+            baseline="DDS",
+            empirical=True,
+            execution_context=ctx(),
+            evidence="iR2D2 is ~14× faster than the diffusion baseline (DDS) despite added self-calibration cost.",
+        ),
+    ],
+    "2025arXiv250915176M": [
+        entry(
+            "wall_clock",
+            "deconvolution",
+            value=227,
+            unit="s",
+            scope="Högbom CLEAN to a residual level on Cygnus A (~4000 iterations)",
+            baseline="Autocorr-CLEAN / Asp-CLEAN faster to same residual",
+            empirical=True,
+            execution_context=ctx(
+                software="Högbom / Autocorr-CLEAN / Asp-CLEAN / CG-CLEAN / Momentum-CLEAN",
+                workload="Cygnus A ngVLA-era test case",
+            ),
+            evidence="Högbom needs ~4000 iterations/227 s to reach a residual level Autocorr-CLEAN reaches with far fewer/faster iterations; Asp-CLEAN much slower per iteration.",
+        ),
+        entry(
+            "relative_performance",
+            "speedup_factor",
+            value=None,
+            unit=None,
+            scope="Autocorr-CLEAN / Asp-CLEAN wall-clock reduction vs Högbom",
+            baseline="Högbom CLEAN",
+            empirical=True,
+            execution_context=ctx(),
+            evidence="Autocorr-CLEAN and Asp-CLEAN reduce minor-loop iteration counts and wall-clock time needed for convergence by up to an order of magnitude relative to Högbom CLEAN.",
+        ),
+    ],
+    "2026AJ....171...44Y": [
+        entry(
+            "wall_clock",
+            "reconstruction_per_image",
+            value=301,
+            unit="s",
+            scope="ALSB on VLA/W28 1024×1024",
+            baseline="SARA 494 s; AIRI 285 s; WTF 297 s",
+            empirical=True,
+            execution_context=ctx(
+                workload="VLA/W28 SNR remnant; 1024×1024; 894,240 baselines; iSNR=35 dB",
+            ),
+            evidence="SARA 494s; AIRI 285s; WTF 297s; ALSB 301s — ALSB best SNR/fidelity with runtime comparable to AIRI/WTF and much faster than SARA.",
+        ),
+        entry(
+            "relative_performance",
+            "runtime_ratio",
+            value=None,
+            unit=None,
+            scope="ALSB vs SARA/AIRI/WTF",
+            baseline="SARA / AIRI / WTF",
+            empirical=True,
+            execution_context=ctx(),
+            evidence="Runtime comparable to AIRI/WTF and much faster than SARA.",
+        ),
+    ],
+    "2026AJ....171..220Y": [
+        entry(
+            "wall_clock",
+            "reconstruction_per_image",
+            value=69.1,
+            unit="s",
+            scope="GMCP VLA/3c353 mean over 100 sims",
+            baseline="R2D2 5.3 s; AIRI 55.2 s; SARA 113.0 s",
+            empirical=True,
+            execution_context=ctx(
+                hardware="Intel i9-13900HX, 64 GB RAM; AIRI/R2D2 on RTX 4060 8GB",
+                software="MATLAB R2021a",
+                workload="VLA/3c353 and DART/Sun; avg of 100 sims; iSNR=35 dB",
+            ),
+            evidence="VLA/3c353: GMCP 69.1 s (best fidelity) vs R2D2 5.3 s / AIRI 55.2 s / SARA 113.0 s. DART/Sun: GMCP 20.2 s.",
+        ),
+        entry(
+            "relative_performance",
+            "runtime_ratio",
+            value=None,
+            unit=None,
+            scope="GMCP slower than R2D2/AIRI/LPG on VLA case despite best fidelity",
+            baseline="R2D2 / AIRI / LPG",
+            empirical=True,
+            execution_context=ctx(hardware="i9-13900HX / RTX 4060"),
+            evidence="GMCP best SNR/SNRlog/fidelity on VLA case but slower than AIRI/LPG/R2D2.",
+        ),
+    ],
+    "2026ApJS..283....9T": [
+        entry(
+            "wall_clock",
+            "reconstruction_per_image",
+            value=1.9,
+            unit="h",
+            scope="HyperAIRI simulated VLA benchmark mean wall time",
+            baseline="WSClean 0.56±0.24 h; AIRI 1.84±0.14 h; uSARA 2.60±0.55 h",
+            empirical=True,
+            execution_context=ctx(
+                software="HyperAIRI vs WSClean / uSARA / AIRI / Hyper-uSARA",
+                workload="Simulated VLA hyperspectral benchmark (Table 1)",
+            ),
+            evidence="HyperAIRI 1.90±0.14 h vs WSClean 0.56±0.24 h, AIRI 1.84±0.14 h, uSARA 2.60±0.55 h, Hyper-uSARA 2.42±0.87 h.",
+        ),
+        entry(
+            "wall_clock",
+            "other_stage_specific",
+            value=1.61,
+            unit="s",
+            scope="HyperAIRI per-step gradient timing",
+            empirical=True,
+            execution_context=ctx(software="HyperAIRI"),
+            evidence="Per-step timing: gradient step ≈1.61±0.23 s, denoising step ≈0.52±0.25 s.",
+        ),
+        entry(
+            "relative_performance",
+            "runtime_ratio",
+            value=None,
+            unit=None,
+            scope="HyperAIRI hours vs WSClean ~0.56 h",
+            baseline="WSClean",
+            empirical=True,
+            execution_context=ctx(),
+            evidence="HyperAIRI still reports hours (~1.9 hr) vs WSClean ≈0.56 hr on the VLA benchmark.",
+        ),
+    ],
+    "2026arXiv260115844M": [
+        entry(
+            "wall_clock",
+            "reconstruction_per_image",
+            value=45.47,
+            unit="s",
+            scope="DDRM sampling at K=1000 (VLA, batch 128)",
+            empirical=True,
+            execution_context=ctx(
+                hardware="Single NVIDIA GH200",
+                numerical_configuration="Sampling steps K=10…1000; batch size 128",
+                workload="VLA (also EHT/ALMA at K=1000)",
+            ),
+            evidence="K=10: 0.44 s … K=1000: 45.47 s on GH200; used K=1000 for subsequent results.",
+        ),
+        entry(
+            "runtime_scaling",
+            "iteration_count",
+            value=None,
+            unit=None,
+            scope="Sampling time scales linearly with steps K",
+            empirical=True,
+            execution_context=ctx(hardware="NVIDIA GH200"),
+            evidence="Sampling time grows roughly linearly with K from 0.44 s (K=10) to 45.47 s (K=1000).",
+        ),
+    ],
+    "2026arXiv260526347D": [
+        entry(
+            "wall_clock",
+            "fft_ifft",
+            value=None,
+            unit=None,
+            scope="FFT dominates total application runtime (Fig. 8)",
+            empirical=True,
+            execution_context=ctx(
+                parallelism="Distributed 1–10 CPU nodes; adaptive workers vs available cores",
+                software="Distributed widefield measurement-model implementation",
+                workload="e.g. MeerKAT ESO 137-006; runtime grows with w-layers (23→126)",
+            ),
+            evidence="FFT computations dominate total application runtime; de-gridding/gridding matvecs almost negligible; total time grows with number of w-layers.",
+        ),
+        entry(
+            "wall_clock",
+            "gridding",
+            value=None,
+            unit=None,
+            scope="De-gridding/gridding matvecs nearly negligible vs FFT",
+            empirical=True,
+            execution_context=ctx(parallelism="1–10 CPU nodes"),
+            evidence="De-gridding/gridding matrix-vector products are almost negligible compared with FFT cost.",
+        ),
+        entry(
+            "relative_performance",
+            "runtime_ratio",
+            value=None,
+            unit=None,
+            scope="High-precision measurement operator vs CLEAN (within one order of magnitude)",
+            baseline="CLEAN",
+            empirical=True,
+            execution_context=ctx(workload="MeerKAT ESO 137-006"),
+            evidence="Proposed high-precision measurement operator achieves imaging cost within one order of magnitude of CLEAN.",
+        ),
+    ],
+    "2026arXiv260628493D": [
+        entry(
+            "unspecified",
+            "unspecified",
+            value=None,
+            unit=None,
+            scope="Review discusses inference speed / computational cost qualitatively without primary timing measurements",
+            empirical=False,
+            execution_context=ctx(),
+            evidence="SKA-era AI review cites R2D2/AIRI/U-Net speed qualitatively ('CLEAN-like speeds', 'extreme inference speed') but does not report dedicated own wall-clock or throughput measurements. Left as Unspecified Runtime rather than silently typed as end-to-end.",
+        ),
+    ],
+}
+
+
+def main():
+    data = json.loads(PAPERS_DATA.read_text())
+    papers = data["papers"]
+    runtime_papers = [p for p in papers if p["metrics"].get("runtime") == 1]
+    missing = [p["bibcode"] for p in runtime_papers if p["bibcode"] not in CLASSIFICATIONS]
+    extra = sorted(set(CLASSIFICATIONS) - {p["bibcode"] for p in runtime_papers})
+    if missing:
+        raise SystemExit(f"Missing classifications for: {missing}")
+    if extra:
+        raise SystemExit(f"Extra classifications not runtime=1: {extra}")
+
+    # Clear prior runtime_details then inject
+    for p in papers:
+        p.pop("runtime_details", None)
+
+    mirror = {"schema_note": (
+        "runtime_details live primarily on each paper in papers-data.json. "
+        "This mirror is bibcode -> entries for inspection/tools. "
+        "Top-level metrics.runtime binary flags are unchanged."
+    ), "papers": {}}
+
+    for p in runtime_papers:
+        details = CLASSIFICATIONS[p["bibcode"]]
+        p["runtime_details"] = details
+        mirror["papers"][p["bibcode"]] = {
+            "cohort": p["cohort"],
+            "title": p["title"],
+            "runtime_details": details,
+        }
+
+    PAPERS_DATA.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n")
+    MIRROR.parent.mkdir(parents=True, exist_ok=True)
+    MIRROR.write_text(json.dumps(mirror, indent=2, ensure_ascii=False) + "\n")
+
+    # Summary stats
+    from collections import Counter, defaultdict
+
+    cat_papers = defaultdict(set)
+    sub_papers = defaultdict(set)
+    cat_counts = Counter()
+    sub_counts = Counter()
+    for p in runtime_papers:
+        seen_cats = set()
+        seen_subs = set()
+        for d in p["runtime_details"]:
+            cat_counts[d["category"]] += 1
+            sub_counts[(d["category"], d["submetric"])] += 1
+            seen_cats.add(d["category"])
+            seen_subs.add((d["category"], d["submetric"]))
+        for c in seen_cats:
+            cat_papers[c].add(p["bibcode"])
+        for s in seen_subs:
+            sub_papers[s].add(p["bibcode"])
+
+    print(f"Injected runtime_details for {len(runtime_papers)} papers.")
+    print("Unique papers per category:")
+    for c, bibs in sorted(cat_papers.items(), key=lambda x: -len(x[1])):
+        print(f"  {c}: {len(bibs)}")
+    print("Unique papers per submetric:")
+    for s, bibs in sorted(sub_papers.items(), key=lambda x: (-len(x[1]), x[0])):
+        print(f"  {s[0]}/{s[1]}: {len(bibs)}")
+    print(f"Wrote {PAPERS_DATA.relative_to(ROOT)} and {MIRROR.relative_to(ROOT)}")
+
+
+if __name__ == "__main__":
+    main()

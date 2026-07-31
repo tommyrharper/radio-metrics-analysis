@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Runtime details — radio interferometry imaging metrics</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="runtime-taxonomy.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&display=swap" rel="stylesheet" />
+  <style>
+    /*
+     * Runtime detail page shell.
+     * Conceptual layout (reuse for other metric pages):
+     *   [back link] → [filters] → [category graph] → [sub-metric list] → [papers] → [context panel]
+     * Keep styles close to index.html; avoid a shared CSS build step for now.
+     */
+    :root {
+      --bg: #f3efe6;
+      --ink: #1c2429;
+      --muted: #5a6670;
+      --panel: #fffdf8;
+      --line: #d7d0c3;
+      --classic: #0b6e6a;
+      --emerging: #c45c26;
+      --r2d2: #1f4e79;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "IBM Plex Sans", system-ui, sans-serif;
+      background:
+        radial-gradient(ellipse 80% 50% at 10% -10%, #dce8e4 0%, transparent 55%),
+        radial-gradient(ellipse 70% 45% at 100% 0%, #efe2d4 0%, transparent 50%),
+        var(--bg);
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 3rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin: 0 0 1rem;
+      color: var(--r2d2);
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      border-radius: 2px;
+    }
+
+    .back-link:hover { text-decoration: underline; text-underline-offset: 2px; }
+    .back-link:focus-visible {
+      outline: 2px solid var(--r2d2);
+      outline-offset: 3px;
+    }
+
+    h1 {
+      margin: 0 0 0.35rem;
+      font-family: "IBM Plex Serif", Georgia, serif;
+      font-weight: 600;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      letter-spacing: -0.02em;
+    }
+
+    .lede {
+      margin: 0 0 1.25rem;
+      color: var(--muted);
+      max-width: 46rem;
+      line-height: 1.45;
+    }
+
+    .multi-note {
+      margin: 0 0 1.25rem;
+      padding: 0.65rem 0.8rem;
+      background: rgba(31, 78, 121, 0.06);
+      border-left: 3px solid var(--r2d2);
+      color: var(--ink);
+      font-size: 0.9rem;
+      line-height: 1.4;
+      max-width: 46rem;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 1.1rem 1.2rem 1.3rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .panel h2 {
+      margin: 0 0 0.55rem;
+      font-family: "IBM Plex Serif", Georgia, serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .panel-note {
+      margin: 0 0 0.9rem;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.4;
+    }
+
+    .filter-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.9rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .toggles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem 1.25rem;
+      align-items: center;
+    }
+
+    .toggles-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-right: 0.15rem;
+      flex-basis: 100%;
+    }
+
+    @media (min-width: 640px) {
+      .toggles-label {
+        flex-basis: auto;
+        min-width: 4.5rem;
+      }
+    }
+
+    .toggles label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 0.95rem;
+      user-select: none;
+      border-radius: 2px;
+    }
+
+    .toggles label:focus-within {
+      outline: 2px solid var(--r2d2);
+      outline-offset: 2px;
+    }
+
+    .toggles input {
+      width: 1rem;
+      height: 1rem;
+      accent-color: var(--ink);
+      cursor: pointer;
+    }
+
+    .category-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem 1rem;
+      align-items: center;
+    }
+
+    .category-filter label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .category-filter select {
+      font: inherit;
+      font-size: 0.95rem;
+      color: var(--ink);
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      padding: 0.35rem 0.55rem;
+      min-width: 14rem;
+      cursor: pointer;
+    }
+
+    .category-filter select:focus-visible {
+      outline: 2px solid var(--r2d2);
+      outline-offset: 2px;
+    }
+
+    .swatch {
+      width: 0.85rem;
+      height: 0.85rem;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    .swatch.classic { background: var(--classic); }
+    .swatch.emerging { background: var(--emerging); }
+    .swatch.r2d2 { background: var(--r2d2); }
+
+    .category-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem 0.9rem;
+      align-items: center;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .category-legend .leg-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .cat-swatch {
+      width: 0.95rem;
+      height: 0.95rem;
+      display: inline-block;
+      flex-shrink: 0;
+      border: 2px solid transparent;
+    }
+
+    .chart-wrap {
+      position: relative;
+      height: min(48vh, 380px);
+      cursor: pointer;
+    }
+
+    .empty {
+      display: none;
+      position: absolute;
+      inset: 0;
+      place-items: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+      text-align: center;
+      padding: 1rem;
+    }
+    .empty.show { display: grid; }
+
+    .hint {
+      margin: 0.65rem 0 0;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .submetric-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .submetric-list li {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.35rem 0.75rem;
+      padding: 0.45rem 0.15rem;
+      border-bottom: 1px solid rgba(215, 208, 195, 0.7);
+      font-size: 0.92rem;
+    }
+
+    .submetric-list li:last-child { border-bottom: none; }
+
+    .submetric-list button {
+      border: 0;
+      background: transparent;
+      padding: 0;
+      margin: 0;
+      font: inherit;
+      color: inherit;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .submetric-list button:hover { text-decoration: underline; text-underline-offset: 2px; }
+    .submetric-list button:focus-visible {
+      outline: 2px solid var(--r2d2);
+      outline-offset: 2px;
+    }
+
+    .submetric-list button.active { font-weight: 600; color: var(--r2d2); }
+
+    .sub-count {
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .sub-meta {
+      grid-column: 1 / -1;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .detail-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: start;
+      margin-bottom: 0.75rem;
+    }
+
+    .detail-title {
+      margin: 0;
+      font-family: "IBM Plex Serif", Georgia, serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .count { color: var(--muted); font-size: 0.88rem; margin-top: 0.2rem; }
+
+    .clear-btn {
+      border: 1px solid var(--line);
+      background: #fffdf8;
+      color: var(--muted);
+      font: inherit;
+      font-size: 0.85rem;
+      padding: 0.35rem 0.65rem;
+      cursor: pointer;
+    }
+
+    .clear-btn:hover { border-color: var(--ink); color: var(--ink); }
+    .clear-btn:focus-visible {
+      outline: 2px solid var(--r2d2);
+      outline-offset: 2px;
+    }
+
+    .paper-search {
+      margin: 0 0 0.75rem;
+    }
+
+    .paper-search input {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      font-size: 0.92rem;
+      padding: 0.55rem 0.7rem;
+    }
+
+    .paper-search input:focus {
+      outline: 2px solid var(--r2d2);
+      outline-offset: 1px;
+    }
+
+    .paper-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      max-height: 36rem;
+      overflow: auto;
+    }
+
+    .paper-list > li {
+      border-bottom: 1px solid rgba(215, 208, 195, 0.7);
+      padding: 0.7rem 0.15rem 0.85rem;
+    }
+
+    .paper-list > li:last-child { border-bottom: none; }
+
+    .paper-row {
+      display: grid;
+      grid-template-columns: 5.5rem 1fr auto;
+      gap: 0.55rem 0.85rem;
+      align-items: start;
+    }
+
+    .cohort-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+
+    .paper-meta .bib {
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .paper-meta .title {
+      font-size: 0.92rem;
+      line-height: 1.3;
+      margin-top: 0.1rem;
+    }
+
+    .open-link {
+      color: var(--r2d2);
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-decoration: none;
+      margin-top: 0.15rem;
+    }
+    .open-link:hover { text-decoration: underline; }
+
+    .entry-cards {
+      margin: 0.55rem 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .entry-card {
+      border: 1px solid var(--line);
+      padding: 0.55rem 0.7rem;
+      background: #fff;
+      font-size: 0.86rem;
+      line-height: 1.4;
+    }
+
+    .entry-card.unspecified {
+      border-style: dashed;
+      background: repeating-linear-gradient(
+        -45deg,
+        #fff,
+        #fff 6px,
+        rgba(71, 85, 105, 0.05) 6px,
+        rgba(71, 85, 105, 0.05) 12px
+      );
+    }
+
+    .entry-card .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.12rem 0.4rem;
+      border: 1px solid currentColor;
+      border-radius: 2px;
+    }
+
+    .entry-card .kv {
+      margin: 0.15rem 0;
+      color: var(--muted);
+    }
+
+    .entry-card .kv strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .entry-card .evidence {
+      margin: 0.35rem 0 0;
+      color: var(--ink);
+    }
+
+    .context-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+      gap: 0.65rem;
+    }
+
+    .context-stat {
+      border: 1px solid var(--line);
+      padding: 0.65rem 0.75rem;
+      background: #fff;
+    }
+
+    .context-stat .n {
+      font-family: "IBM Plex Serif", Georgia, serif;
+      font-size: 1.45rem;
+      font-weight: 600;
+      line-height: 1.1;
+    }
+
+    .context-stat .lbl {
+      margin-top: 0.2rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .context-stat .pct {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <a class="back-link" href="index.html">← Back to all metrics</a>
+    <h1>Runtime details</h1>
+    <p class="lede">
+      Second-level view of how Runtime-positive papers report timing: wall-clock stages,
+      throughput, relative performance, and scaling. Binary Runtime flags on the main graph
+      are unchanged — this page only subtypes papers that already have <code>runtime: 1</code>.
+    </p>
+    <p class="multi-note">
+      Papers may contribute to more than one Runtime category, so category totals may exceed
+      the number of Runtime-positive papers.
+    </p>
+
+    <!-- SHELL: filters + category graph -->
+    <div class="panel">
+      <div class="filter-bar">
+        <div class="toggles" role="group" aria-label="Cohort visibility">
+          <span class="toggles-label" id="cohort-filters-label">Cohorts</span>
+          <label>
+            <input type="checkbox" id="toggle-classic" checked aria-describedby="cohort-filters-label" />
+            <span class="swatch classic" aria-hidden="true"></span>
+            Classic
+          </label>
+          <label>
+            <input type="checkbox" id="toggle-emerging" checked />
+            <span class="swatch emerging" aria-hidden="true"></span>
+            Emerging-ML
+          </label>
+          <label>
+            <input type="checkbox" id="toggle-r2d2" checked />
+            <span class="swatch r2d2" aria-hidden="true"></span>
+            R2D2-citing
+          </label>
+        </div>
+
+        <div class="category-filter">
+          <span class="toggles-label" id="category-filters-label">Runtime category</span>
+          <label>
+            <span class="visually-hidden" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Runtime category</span>
+            <select id="categorySelect" aria-labelledby="category-filters-label"></select>
+          </label>
+        </div>
+
+        <div class="category-legend" id="categoryLegend" aria-label="Runtime category legend"></div>
+      </div>
+
+      <div class="chart-wrap">
+        <canvas id="runtimeChart" aria-label="Stacked bar chart of Runtime categories by cohort"></canvas>
+        <div class="empty" id="emptyState">Turn on at least one cohort and category to see the chart.</div>
+      </div>
+      <p class="hint">
+        Click a category bar to focus it and list contributing papers. Sub-metrics with zero
+        papers in the visible set are hidden.
+      </p>
+    </div>
+
+    <!-- CONTROLS / GRAPH companion: sub-metric inspection -->
+    <div class="panel">
+      <h2>Sub-metrics</h2>
+      <p class="panel-note" id="submetricNote">Paper counts within the active filters, sorted descending.</p>
+      <ul class="submetric-list" id="submetricList"></ul>
+    </div>
+
+    <!-- LIST: contributing papers -->
+    <div class="panel">
+      <div class="detail-head">
+        <div>
+          <h2 class="detail-title" id="detailTitle">Contributing papers</h2>
+          <div class="count" id="detailCount"></div>
+        </div>
+        <button type="button" class="clear-btn" id="clearFocus" hidden>Clear focus</button>
+      </div>
+      <div class="paper-search">
+        <input type="search" id="paperSearch" placeholder="Search by title, bibcode, cohort, category…" autocomplete="off" />
+      </div>
+      <ul class="paper-list" id="paperList"></ul>
+    </div>
+
+    <!-- CONTEXT: reporting completeness (not a Runtime metric) -->
+    <div class="panel">
+      <h2>Runtime Measurement Context</h2>
+      <p class="panel-note">
+        Execution context describes how a Runtime result was measured. It is not itself a Runtime metric.
+        Counts are unique Runtime-positive papers (in visible cohorts) that report each metadata field
+        on at least one subtype entry — reporting completeness, not performance.
+      </p>
+      <div class="context-grid" id="contextGrid"></div>
+    </div>
+  </main>
+
+  <script>
+    const cohorts = {
+      classic: { label: "Classic", color: "#0b6e6a" },
+      emerging: { label: "Emerging-ML", color: "#c45c26" },
+      r2d2: { label: "R2D2-citing", color: "#1f4e79" },
+    };
+
+    const toggles = {
+      classic: document.getElementById("toggle-classic"),
+      emerging: document.getElementById("toggle-emerging"),
+      r2d2: document.getElementById("toggle-r2d2"),
+    };
+    const categorySelect = document.getElementById("categorySelect");
+    const categoryLegendEl = document.getElementById("categoryLegend");
+    const emptyState = document.getElementById("emptyState");
+    const submetricList = document.getElementById("submetricList");
+    const submetricNote = document.getElementById("submetricNote");
+    const detailTitle = document.getElementById("detailTitle");
+    const detailCount = document.getElementById("detailCount");
+    const paperList = document.getElementById("paperList");
+    const paperSearch = document.getElementById("paperSearch");
+    const clearFocus = document.getElementById("clearFocus");
+    const contextGrid = document.getElementById("contextGrid");
+
+    let papers = [];
+    let selectedCategory = null; // taxonomy id or null
+    let selectedSubmetric = null; // {category, submetric} or null
+    let currentOrder = [];
+
+    function buildCategoryControls() {
+      const allOpt = document.createElement("option");
+      allOpt.value = "all";
+      allOpt.textContent = "All Runtime categories";
+      categorySelect.append(allOpt);
+
+      RUNTIME_CATEGORY_ORDER.forEach((cid) => {
+        const cat = RUNTIME_TAXONOMY[cid];
+        const opt = document.createElement("option");
+        opt.value = cid;
+        opt.textContent = cat.label;
+        categorySelect.append(opt);
+
+        const leg = document.createElement("span");
+        leg.className = "leg-item";
+        const sw = document.createElement("span");
+        sw.className = "cat-swatch";
+        sw.style.background = cat.color;
+        sw.style.borderColor = cat.color;
+        sw.style.borderStyle = cat.borderStyle || "solid";
+        if (cat.distinct) {
+          sw.style.backgroundImage =
+            "repeating-linear-gradient(-45deg, transparent, transparent 2px, rgba(255,255,255,0.35) 2px, rgba(255,255,255,0.35) 4px)";
+        }
+        sw.setAttribute("aria-hidden", "true");
+        leg.append(sw, document.createTextNode(` ${cat.label}`));
+        categoryLegendEl.append(leg);
+      });
+      categorySelect.value = "all";
+    }
+
+    buildCategoryControls();
+
+    function activeCohortKeys() {
+      return Object.keys(toggles).filter((k) => toggles[k].checked);
+    }
+
+    function activeCategories() {
+      const v = categorySelect.value;
+      if (v === "all") return RUNTIME_CATEGORY_ORDER.slice();
+      return RUNTIME_CATEGORY_ORDER.includes(v) ? [v] : [];
+    }
+
+    function runtimePapers() {
+      const active = new Set(activeCohortKeys());
+      return papers
+        .filter((p) => p.metrics && p.metrics.runtime === 1 && active.has(p.cohort))
+        .sort((a, b) => (a.bibcode < b.bibcode ? 1 : a.bibcode > b.bibcode ? -1 : 0));
+    }
+
+    function paperCategories(p) {
+      const set = new Set();
+      (p.runtime_details || []).forEach((d) => set.add(d.category));
+      return set;
+    }
+
+    function paperHasSubmetric(p, category, submetric) {
+      return (p.runtime_details || []).some(
+        (d) => d.category === category && d.submetric === submetric
+      );
+    }
+
+    function categoryCountsByCohort() {
+      const keys = activeCohortKeys();
+      const cats = activeCategories();
+      const counts = {};
+      cats.forEach((cid) => {
+        counts[cid] = { classic: 0, emerging: 0, r2d2: 0 };
+      });
+      runtimePapers().forEach((p) => {
+        const have = paperCategories(p);
+        cats.forEach((cid) => {
+          if (have.has(cid)) counts[cid][p.cohort] += 1;
+        });
+      });
+      return counts;
+    }
+
+    function orderedCategories() {
+      const counts = categoryCountsByCohort();
+      const keys = activeCohortKeys();
+      return activeCategories()
+        .map((cid) => ({
+          cid,
+          total: keys.reduce((s, k) => s + (counts[cid]?.[k] || 0), 0),
+        }))
+        .filter((x) => x.total > 0)
+        .sort((a, b) => b.total - a.total || RUNTIME_CATEGORY_ORDER.indexOf(a.cid) - RUNTIME_CATEGORY_ORDER.indexOf(b.cid))
+        .map((x) => x.cid);
+    }
+
+    function chartData() {
+      currentOrder = orderedCategories();
+      const counts = categoryCountsByCohort();
+      const keys = activeCohortKeys();
+      return {
+        labels: currentOrder.map((cid) => RUNTIME_TAXONOMY[cid].label),
+        datasets: keys.map((k) => ({
+          label: cohorts[k].label,
+          data: currentOrder.map((cid) => counts[cid][k]),
+          backgroundColor: cohorts[k].color,
+          borderWidth: 0,
+          barPercentage: 0.72,
+          categoryPercentage: 0.85,
+        })),
+      };
+    }
+
+    function submetricStats() {
+      const cats = new Set(activeCategories());
+      const keys = activeCohortKeys();
+      const map = new Map();
+      runtimePapers().forEach((p) => {
+        const seen = new Set();
+        (p.runtime_details || []).forEach((d) => {
+          if (!cats.has(d.category)) return;
+          const key = `${d.category}::${d.submetric}`;
+          if (seen.has(key)) return;
+          seen.add(key);
+          if (!map.has(key)) {
+            map.set(key, {
+              category: d.category,
+              submetric: d.submetric,
+              total: 0,
+              byCohort: { classic: 0, emerging: 0, r2d2: 0 },
+            });
+          }
+          const row = map.get(key);
+          row.total += 1;
+          row.byCohort[p.cohort] += 1;
+        });
+      });
+      return [...map.values()]
+        .filter((r) => r.total > 0)
+        .filter((r) => !selectedCategory || r.category === selectedCategory)
+        .sort((a, b) => b.total - a.total || a.submetric.localeCompare(b.submetric));
+    }
+
+    function renderSubmetrics() {
+      const rows = submetricStats();
+      if (!rows.length) {
+        submetricNote.textContent = "No sub-metrics for the current filters.";
+        submetricList.replaceChildren();
+        return;
+      }
+      submetricNote.textContent = selectedCategory
+        ? `Sub-metrics in ${RUNTIME_TAXONOMY[selectedCategory].label} (visible cohorts), sorted by paper count.`
+        : "Sub-metrics across visible Runtime categories, sorted by paper count.";
+
+      submetricList.replaceChildren(
+        ...rows.map((row) => {
+          const cat = RUNTIME_TAXONOMY[row.category];
+          const sub = cat.submetrics[row.submetric] || {
+            label: row.submetric,
+            short: row.submetric,
+          };
+          const li = document.createElement("li");
+          const btn = document.createElement("button");
+          btn.type = "button";
+          const active =
+            selectedSubmetric &&
+            selectedSubmetric.category === row.category &&
+            selectedSubmetric.submetric === row.submetric;
+          if (active) btn.classList.add("active");
+          btn.textContent = `${sub.label}`;
+          btn.addEventListener("click", () => {
+            if (active) {
+              selectedSubmetric = null;
+            } else {
+              selectedSubmetric = { category: row.category, submetric: row.submetric };
+              selectedCategory = row.category;
+              categorySelect.value = row.category;
+            }
+            refresh(false);
+          });
+          const count = document.createElement("span");
+          count.className = "sub-count";
+          count.textContent = String(row.total);
+          const meta = document.createElement("div");
+          meta.className = "sub-meta";
+          const parts = Object.keys(cohorts)
+            .filter((k) => row.byCohort[k])
+            .map((k) => `${cohorts[k].label} ${row.byCohort[k]}`);
+          meta.textContent = `${cat.label}${parts.length ? " · " + parts.join(", ") : ""}`;
+          li.append(btn, count, meta);
+          return li;
+        })
+      );
+    }
+
+    // LIST helpers
+    function matchingEntries(p) {
+      return (p.runtime_details || []).filter((d) => {
+        if (selectedSubmetric) {
+          return (
+            d.category === selectedSubmetric.category &&
+            d.submetric === selectedSubmetric.submetric
+          );
+        }
+        if (selectedCategory) return d.category === selectedCategory;
+        const cats = activeCategories();
+        return cats.includes(d.category);
+      });
+    }
+
+    function listedPapers() {
+      return runtimePapers().filter((p) => matchingEntries(p).length > 0);
+    }
+
+    function searchQuery() {
+      return (paperSearch.value || "").trim().toLowerCase();
+    }
+
+    function paperMatchesSearch(p, q) {
+      if (!q) return true;
+      const bits = [
+        p.bibcode,
+        p.title,
+        cohorts[p.cohort]?.label,
+        p.cohort,
+        ...matchingEntries(p).flatMap((d) => [
+          d.category,
+          d.submetric,
+          d.scope,
+          d.evidence,
+          RUNTIME_TAXONOMY[d.category]?.label,
+          RUNTIME_TAXONOMY[d.category]?.submetrics?.[d.submetric]?.label,
+        ]),
+      ];
+      return bits.filter(Boolean).join(" ").toLowerCase().includes(q);
+    }
+
+    function formatValue(d) {
+      if (d.value === null || d.value === undefined) return "—";
+      const v = typeof d.value === "number" ? String(d.value) : d.value;
+      return d.unit ? `${v} ${d.unit}` : v;
+    }
+
+    function contextSummary(ec) {
+      if (!ec) return "—";
+      const parts = EXECUTION_CONTEXT_FIELDS.map((f) => ec[f.id])
+        .filter(Boolean)
+        .map((s) => (s.length > 90 ? `${s.slice(0, 87)}…` : s));
+      return parts.length ? parts.join(" · ") : "—";
+    }
+
+    function createPaperItem(p) {
+      const li = document.createElement("li");
+      const row = document.createElement("div");
+      row.className = "paper-row";
+
+      const tag = document.createElement("div");
+      tag.className = "cohort-tag";
+      tag.innerHTML = `<span class="swatch ${p.cohort}" aria-hidden="true"></span>${cohorts[p.cohort].label}`;
+
+      const meta = document.createElement("div");
+      meta.className = "paper-meta";
+      meta.innerHTML = `<div class="bib"></div><div class="title"></div>`;
+      meta.querySelector(".bib").textContent = p.bibcode;
+      meta.querySelector(".title").textContent = p.title;
+
+      const open = document.createElement("a");
+      open.className = "open-link";
+      open.href = p.url;
+      open.target = "_blank";
+      open.rel = "noopener noreferrer";
+      open.textContent = "Open";
+
+      row.append(tag, meta, open);
+
+      const cards = document.createElement("div");
+      cards.className = "entry-cards";
+      matchingEntries(p).forEach((d) => {
+        const cat = RUNTIME_TAXONOMY[d.category];
+        const sub = cat?.submetrics?.[d.submetric];
+        const card = document.createElement("div");
+        card.className = "entry-card" + (d.category === "unspecified" ? " unspecified" : "");
+        const tags = document.createElement("div");
+        tags.className = "tags";
+        const b1 = document.createElement("span");
+        b1.className = "badge";
+        b1.style.color = cat?.color || "#475569";
+        b1.textContent = cat?.label || d.category;
+        const b2 = document.createElement("span");
+        b2.className = "badge";
+        b2.style.color = cat?.color || "#475569";
+        b2.textContent = sub?.label || d.submetric;
+        tags.append(b1, b2);
+
+        const kv = (label, val) => {
+          const div = document.createElement("div");
+          div.className = "kv";
+          div.innerHTML = `<strong>${label}:</strong> `;
+          div.append(document.createTextNode(val));
+          return div;
+        };
+
+        const ev = document.createElement("p");
+        ev.className = "evidence";
+        ev.textContent = d.evidence || "";
+
+        card.append(
+          tags,
+          kv("Value", formatValue(d)),
+          kv("Baseline", d.baseline || "—"),
+          kv("Scope", d.scope || "—"),
+          kv("Context", contextSummary(d.execution_context)),
+          ev
+        );
+        cards.append(card);
+      });
+
+      li.append(row, cards);
+      return li;
+    }
+
+    function renderPapers() {
+      const all = listedPapers();
+      const q = searchQuery();
+      const matches = all.filter((p) => paperMatchesSearch(p, q));
+      let title = "Contributing papers";
+      if (selectedSubmetric) {
+        const cat = RUNTIME_TAXONOMY[selectedSubmetric.category];
+        const sub = cat.submetrics[selectedSubmetric.submetric];
+        title = `${sub.label} · ${cat.label}`;
+      } else if (selectedCategory) {
+        title = RUNTIME_TAXONOMY[selectedCategory].label;
+      }
+      detailTitle.textContent = title;
+      detailCount.textContent = q
+        ? `${matches.length} of ${all.length} paper${all.length === 1 ? "" : "s"}`
+        : `${all.length} paper${all.length === 1 ? "" : "s"} in visible cohorts`;
+      clearFocus.hidden = !(selectedCategory || selectedSubmetric);
+
+      if (!matches.length) {
+        const empty = document.createElement("li");
+        empty.style.color = "var(--muted)";
+        empty.style.padding = "0.4rem 0";
+        empty.textContent = q
+          ? "No papers match this search."
+          : "No papers for the current filters.";
+        paperList.replaceChildren(empty);
+        return;
+      }
+      paperList.replaceChildren(...matches.map(createPaperItem));
+    }
+
+    function renderContext() {
+      const visible = runtimePapers();
+      const have = Object.fromEntries(EXECUTION_CONTEXT_FIELDS.map((f) => [f.id, 0]));
+      visible.forEach((p) => {
+        const flags = Object.fromEntries(EXECUTION_CONTEXT_FIELDS.map((f) => [f.id, false]));
+        (p.runtime_details || []).forEach((d) => {
+          const ec = d.execution_context || {};
+          EXECUTION_CONTEXT_FIELDS.forEach((f) => {
+            if (ec[f.id]) flags[f.id] = true;
+          });
+        });
+        EXECUTION_CONTEXT_FIELDS.forEach((f) => {
+          if (flags[f.id]) have[f.id] += 1;
+        });
+      });
+      contextGrid.replaceChildren(
+        ...EXECUTION_CONTEXT_FIELDS.map((f) => {
+          const div = document.createElement("div");
+          div.className = "context-stat";
+          const count = have[f.id];
+          const pct = visible.length ? Math.round((100 * count) / visible.length) : 0;
+          div.innerHTML = `<div class="n">${count}</div><div class="lbl">${f.label}</div><div class="pct">${pct}% of ${visible.length} Runtime papers</div>`;
+          return div;
+        })
+      );
+    }
+
+    const categoryBarPlugin = {
+      id: "runtimeCategoryOutline",
+      afterDatasetsDraw(chartInstance) {
+        const { ctx, chartArea } = chartInstance;
+        if (!currentOrder.length) return;
+        currentOrder.forEach((cid, barIndex) => {
+          const cat = RUNTIME_TAXONOMY[cid];
+          if (!cat) return;
+          let top = Infinity;
+          let bottom = -Infinity;
+          let left = Infinity;
+          let right = -Infinity;
+          chartInstance.data.datasets.forEach((_, di) => {
+            const meta = chartInstance.getDatasetMeta(di);
+            if (meta.hidden) return;
+            const el = meta.data[barIndex];
+            if (!el || el.skip) return;
+            const b = typeof el.getProps === "function"
+              ? el.getProps(["x", "y", "base", "width"], true)
+              : el;
+            const half = (b.width || el.width || 0) / 2;
+            const x = b.x ?? el.x;
+            const y = b.y ?? el.y;
+            const base = b.base ?? el.base;
+            left = Math.min(left, x - half);
+            right = Math.max(right, x + half);
+            top = Math.min(top, y, base);
+            bottom = Math.max(bottom, y, base);
+          });
+          if (!Number.isFinite(left) || right <= left) return;
+          ctx.save();
+          ctx.strokeStyle = cat.color;
+          ctx.lineWidth = 2;
+          if (cat.borderStyle === "dashed") ctx.setLineDash([5, 3]);
+          else if (cat.borderStyle === "dotted") ctx.setLineDash([1.5, 2.5]);
+          else ctx.setLineDash([]);
+          const pad = 1.5;
+          ctx.strokeRect(
+            left - pad,
+            Math.max(chartArea.top, top) - pad,
+            right - left + pad * 2,
+            Math.min(chartArea.bottom, bottom) - Math.max(chartArea.top, top) + pad * 2
+          );
+          ctx.restore();
+        });
+      },
+    };
+
+    const chart = new Chart(document.getElementById("runtimeChart"), {
+      type: "bar",
+      data: { labels: [], datasets: [] },
+      plugins: [categoryBarPlugin],
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: { duration: 280 },
+        onClick(_evt, elements) {
+          if (!elements.length) {
+            selectedCategory = null;
+            selectedSubmetric = null;
+            categorySelect.value = "all";
+            refresh(false);
+            return;
+          }
+          const cid = currentOrder[elements[0].index];
+          selectedCategory = cid;
+          selectedSubmetric = null;
+          categorySelect.value = cid;
+          refresh(false);
+        },
+        onHover(evt, elements) {
+          evt.native.target.style.cursor = elements.length ? "pointer" : "default";
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              title(items) {
+                if (!items.length) return "";
+                const cid = currentOrder[items[0].dataIndex];
+                return RUNTIME_TAXONOMY[cid]?.label || "";
+              },
+              footer(items) {
+                const total = items.reduce((s, it) => s + it.parsed.y, 0);
+                return `Papers: ${total} · click to focus`;
+              },
+            },
+          },
+        },
+        scales: {
+          x: {
+            stacked: true,
+            grid: { display: false },
+            ticks: {
+              maxRotation: 30,
+              minRotation: 0,
+              font: { family: "IBM Plex Sans", size: 11 },
+              color(ctx) {
+                const cid = currentOrder[ctx.index];
+                return cid ? RUNTIME_TAXONOMY[cid].color : "#5a6670";
+              },
+            },
+          },
+          y: {
+            stacked: true,
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: "Papers reporting category",
+              color: "#5a6670",
+              font: { family: "IBM Plex Sans", size: 12 },
+            },
+            grid: { color: "rgba(28, 36, 41, 0.08)" },
+            ticks: { color: "#5a6670", precision: 0, font: { family: "IBM Plex Sans", size: 11 } },
+          },
+        },
+      },
+    });
+
+    function refresh(resetFocusOnFilter = true) {
+      if (resetFocusOnFilter) {
+        // keep explicit category select focus when user picks from dropdown
+        const v = categorySelect.value;
+        selectedCategory = v === "all" ? null : v;
+        if (selectedSubmetric && selectedSubmetric.category !== selectedCategory && selectedCategory) {
+          selectedSubmetric = null;
+        }
+        if (!selectedCategory) selectedSubmetric = null;
+      }
+
+      const keys = activeCohortKeys();
+      const cats = activeCategories();
+      chart.data = chartData();
+      const nothing = keys.length === 0 || cats.length === 0 || currentOrder.length === 0;
+      emptyState.classList.toggle("show", nothing);
+      chart.canvas.style.opacity = nothing ? "0" : "1";
+      chart.update();
+      renderSubmetrics();
+      renderPapers();
+      renderContext();
+    }
+
+    clearFocus.addEventListener("click", () => {
+      selectedCategory = null;
+      selectedSubmetric = null;
+      categorySelect.value = "all";
+      refresh(false);
+    });
+
+    Object.values(toggles).forEach((el) => el.addEventListener("change", () => refresh(true)));
+    categorySelect.addEventListener("change", () => refresh(true));
+    paperSearch.addEventListener("input", () => renderPapers());
+
+    fetch("papers-data.json")
+      .then((r) => {
+        if (!r.ok) throw new Error(`Failed to load papers-data.json (${r.status})`);
+        return r.json();
+      })
+      .then((data) => {
+        papers = data.papers || [];
+        refresh(false);
+      })
+      .catch((err) => {
+        emptyState.textContent = String(err.message || err);
+        emptyState.classList.add("show");
+      });
+  </script>
+</body>
+</html>

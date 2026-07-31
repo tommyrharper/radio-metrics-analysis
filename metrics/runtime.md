@@ -56,4 +56,22 @@ Several papers plot **wall time vs residual level** rather than fixed iteration 
 - **Internal inconsistencies** appear in some classic figures (MRC 6× vs "one third"; IDG LOFAR image dimensions differ between text and figure captions).
 - **Training and operator precomputation** are frequently excluded from inference runtime but dominate total cost for AIRI/uSARA on real ASKAP fields (hundreds of CPU core-hours precompute).
 - **Stopping criteria differ**: fixed iteration budgets (20,000 CLEAN iterations in w-projection benchmarks), residual thresholds, or validation-plateau iteration counts (S-R2D2 I=10) produce non-equivalent "runtime" labels.
-- **Two papers** (IRIS 2025, SKA-AI review 2026) were classified under Runtime from summaries without dedicated timing bullets in the notes.
+- **Unspecified Runtime**: the SKA-era AI review (2026) remains Runtime-positive at the binary flag but is typed as Unspecified on the detail page — qualitative speed claims without primary timings. IRIS (2025) lacked an auto-matched Runtime bullet in `metric_details` but its Performance section reports ~2.5 h / 250 samples on 10 V100s, so it is typed as wall-clock (not Unspecified).
+
+## Second-level Runtime page
+
+The main metrics graph keeps a single binary **Runtime** column. Drill-down lives at [`runtime.html`](../runtime.html) (linked as **Explore Runtime Details** when Runtime is selected on `index.html`).
+
+Reporting categories (a paper may appear in more than one — category totals can exceed Runtime-positive paper counts):
+
+| Category | Sub-metrics |
+|---|---|
+| Wall-clock Runtime | end_to_end, reconstruction_per_image, deconvolution, gridding, fft_ifft, other_stage_specific |
+| Throughput | images_per_second, components_per_second, pixels_per_second, visibilities_per_second, data_throughput |
+| Relative Performance | speedup_factor, slowdown_factor, percentage_runtime_reduction, runtime_ratio |
+| Runtime Scaling | image_size, visibility_count, iteration_count, source_count, channel_count, asymptotic_complexity |
+| Unspecified Runtime | unspecified (extraction limitation; not silently mapped to end-to-end) |
+
+**Runtime Measurement Context** (separate panel): Hardware, Parallelism, Software, Numerical Configuration, Workload — reporting-completeness counts only. CPU/GPU/multi-core/distributed are execution context, not Runtime sub-metrics.
+
+Structured data: `runtime_details` arrays on Runtime-positive papers in `papers-data.json` (optional mirror `data/runtime-details.json`). Taxonomy: `runtime-taxonomy.js`.

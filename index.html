@@ -389,6 +389,39 @@
 
     .metric-summary.open { display: block; }
 
+    /* Second-level metric drill-down (Runtime now; pattern reusable for other metrics). */
+    .metric-drilldown {
+      display: none;
+      margin: 0 0 0.85rem;
+    }
+
+    .metric-drilldown.open { display: block; }
+
+    .metric-drilldown a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #fff;
+      background: var(--r2d2);
+      border: 1px solid var(--r2d2);
+      padding: 0.45rem 0.8rem;
+      text-decoration: none;
+      border-radius: 2px;
+    }
+
+    .metric-drilldown a:hover {
+      background: #163a5c;
+      border-color: #163a5c;
+    }
+
+    .metric-drilldown a:focus-visible {
+      outline: 2px solid var(--r2d2);
+      outline-offset: 3px;
+    }
+
     .metric-variants {
       display: none;
       margin: 0 0 0.85rem;
@@ -730,7 +763,8 @@
     }
 
     .detail.browse-mode .title-hint,
-    .detail.browse-mode .close-btn {
+    .detail.browse-mode .close-btn,
+    .detail.browse-mode .metric-drilldown {
       display: none;
     }
 
@@ -823,6 +857,9 @@
           />
         </div>
         <div class="metric-summary" id="metricSummary"></div>
+        <div class="metric-drilldown" id="metricDrilldown">
+          <a href="runtime.html" id="runtimeDrilldownLink">Explore Runtime Details</a>
+        </div>
         <div class="metric-variants" id="metricVariants"></div>
         <ul class="paper-list" id="paperList"></ul>
       </section>
@@ -1048,6 +1085,7 @@
     const detailTitle = document.getElementById("detailTitle");
     const detailCount = document.getElementById("detailCount");
     const metricSummary = document.getElementById("metricSummary");
+    const metricDrilldown = document.getElementById("metricDrilldown");
     const metricVariants = document.getElementById("metricVariants");
     const paperList = document.getElementById("paperList");
     const paperSearch = document.getElementById("paperSearch");
@@ -1284,6 +1322,14 @@
       detailTitle.append(main, full, tag);
     }
 
+    function updateMetricDrilldown(metricIndex) {
+      // Only Runtime has a detail page for now. To add another metric page later:
+      // map metricKeys[i] → "<metric>.html" and reuse this show/hide hook.
+      const key = metricIndex === null || metricIndex === undefined ? null : metricKeys[metricIndex];
+      const show = key === "runtime";
+      metricDrilldown.classList.toggle("open", show);
+    }
+
     function showAllPapers() {
       selectedMetric = null;
       variantsOpen = false;
@@ -1293,6 +1339,7 @@
       detailTitle.setAttribute("aria-expanded", "false");
       metricSummary.classList.remove("open");
       metricSummary.replaceChildren();
+      updateMetricDrilldown(null);
       metricVariants.classList.remove("open");
       metricVariants.replaceChildren();
       paperSearchWrap.classList.add("open");
@@ -1516,6 +1563,7 @@
       detail.classList.remove("browse-mode");
       setDetailTitle(metricIndex);
       setMetricSummary(metricIndex);
+      updateMetricDrilldown(metricIndex);
       paperSearchWrap.classList.add("open");
       if (metricChanged) {
         variantsView = "overview";

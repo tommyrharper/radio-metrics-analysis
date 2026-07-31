@@ -1,0 +1,1946 @@
+{
+  "schema_note": "runtime_details live primarily on each paper in papers-data.json. This mirror is bibcode -> entries for inspection/tools. Top-level metrics.runtime binary flags are unchanged.",
+  "papers": {
+    "1980A&A....89..377C": {
+      "cohort": "classic",
+      "title": "An Efficient Implementation of the Algorithm \"CLEAN\"",
+      "runtime_details": [
+        {
+          "category": "throughput",
+          "submetric": "components_per_second",
+          "value": 15,
+          "unit": "components/s",
+          "scope": "CLEAN minor cycle throughput",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "PDP-11/70 with FPS AP-120B array processor",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": "Typical VLA CLEAN minor-cycle component placement"
+          },
+          "evidence": "Minor cycle processed about 15 components per second on a PDP-11/70 with FPS AP-120B; implementation throughput, not end-to-end image runtime."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "speedup_factor",
+          "value": null,
+          "unit": null,
+          "scope": "Typical VLA use vs conventional CLEAN",
+          "baseline": "conventional CLEAN implementation",
+          "empirical": true,
+          "execution_context": {
+            "hardware": "PDP-11/70 with FPS AP-120B array processor",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": "Map size, CLEAN gain, map complexity, and sidelobe level dependent"
+          },
+          "evidence": "Saved a factor of 2 to 10 relative to conventional CLEAN; ratio depends on map size, gain, complexity, and sidelobe level. No individual timing tables."
+        }
+      ]
+    },
+    "1988A&A...200..312W": {
+      "cohort": "classic",
+      "title": "The Multi-Resolution Clean and its application to the short-spacing problem in interferometry",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "deconvolution",
+          "value": 15,
+          "unit": "min",
+          "scope": "MRC component recovery at 1-sigma cutoff (Fig. 5 caption)",
+          "baseline": "CLEAN ~90 min for ~15,000 components",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": "CLEAN ~15,000 components vs MRC equivalent of ~50,000 components"
+          },
+          "evidence": "Figure 5 caption: 90 minutes for CLEAN vs 15 minutes for MRC; body text inconsistently says MRC needed 'one third' of CLEAN's time. Hardware for this timing not restated."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "speedup_factor",
+          "value": 6,
+          "unit": "x",
+          "scope": "MRC vs CLEAN wall-clock (Fig. 5 caption)",
+          "baseline": "CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Caption implies ~6x timing ratio (90 vs 15 min); body text says 'one third' of CLEAN's time — internal inconsistency."
+        }
+      ]
+    },
+    "2004A&A...426..747B": {
+      "cohort": "classic",
+      "title": "Scale sensitive deconvolution of interferometric images. I. Adaptive Scale Pixel (Asp) decomposition",
+      "runtime_details": [
+        {
+          "category": "relative_performance",
+          "submetric": "speedup_factor",
+          "value": null,
+          "unit": null,
+          "scope": "Active-set heuristic vs prior Asp approach",
+          "baseline": "prior Asp / conventional approach",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Active-set heuristic reported to improve performance by an order of magnitude or more; no absolute wall-clock times or hardware."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "runtime_ratio",
+          "value": 3,
+          "unit": "x slower",
+          "scope": "Complete Asp-Clean vs MS-Clean",
+          "baseline": "MS-Clean",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Complete Asp-Clean implementation still takes about three times as long as MS-Clean; no absolute timings or CPU model."
+        }
+      ]
+    },
+    "2008ISTSP...2..647C": {
+      "cohort": "classic",
+      "title": "The Noncoplanar Baselines Effect in Radio Interferometry: The W-Projection Algorithm",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "deconvolution",
+          "value": 3161,
+          "unit": "s",
+          "scope": "Total deconvolution time, w-projection 64 w-planes",
+          "baseline": "2D transform 216 s; 9x9 facet 30,488 s",
+          "empirical": true,
+          "execution_context": {
+            "hardware": "Dual 3.06 GHz Xeon, 512 kB cache/processor, 3 GB memory",
+            "parallelism": null,
+            "software": "AIPS++ compiled with GNU O2",
+            "numerical_configuration": "20,000 CLEAN iterations, loop gain 0.1; 1536x1536 @ 60 arcsec/pix",
+            "workload": "74 MHz VLA C-config simulation; 505,440 visibilities x 8 channels; 66 WENSS sources"
+          },
+          "evidence": "W-projection 64 planes: 607 s/residual and 3,161 s total deconvolution; 2D transform 27 s/residual and 216 s total; 9x9 facet 1,348 s/residual and 30,488 s total."
+        },
+        {
+          "category": "wall_clock",
+          "submetric": "other_stage_specific",
+          "value": 607,
+          "unit": "s",
+          "scope": "Per residual calculation, w-projection 64 planes",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "Dual 3.06 GHz Xeon",
+            "parallelism": null,
+            "software": "AIPS++",
+            "numerical_configuration": null,
+            "workload": "Same controlled VLA C-config simulation"
+          },
+          "evidence": "Per-residual-calculation times tabulated (e.g. 27 s for 2D, 607 s for 64 w-planes, 507 s for 256 planes) plus kernel initialization (83–231 s)."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "runtime_ratio",
+          "value": 0.1,
+          "unit": "fraction of facet time",
+          "scope": "W-projection 64-plane total vs 9x9 facet total",
+          "baseline": "9x9 uvw-facet run (30,488 s)",
+          "empirical": true,
+          "execution_context": {
+            "hardware": "Dual 3.06 GHz Xeon",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Representative higher-DR w-projection run took about one tenth the total time of the 9x9 facet run."
+        }
+      ]
+    },
+    "2008ISTSP...2..793C": {
+      "cohort": "classic",
+      "title": "Multiscale CLEAN Deconvolution of Radio Synthesis Images",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "deconvolution",
+          "value": 614,
+          "unit": "s",
+          "scope": "M31 simulation Table II deconvolution time (Multiscale CLEAN)",
+          "baseline": "Högbom 204 s; Clark 50 s; MRC 147 s; MEM 13 s",
+          "empirical": true,
+          "execution_context": {
+            "hardware": "3.06 GHz Xeon (core count / memory not stated)",
+            "parallelism": null,
+            "software": "AIPS++/CASA simulation pipeline",
+            "numerical_configuration": null,
+            "workload": "Simulated VLA C-config M31 test image; Multiscale CLEAN 5,000 iterations"
+          },
+          "evidence": "Table II: Multiscale CLEAN deconvolution time 614 s (vs Högbom 204 s, Clark 50 s, MRC 147 s, MEM 13 s) with recovered flux and RMS error."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "runtime_ratio",
+          "value": null,
+          "unit": null,
+          "scope": "Multiscale CLEAN slower than all CLEAN-family comparators in Table II",
+          "baseline": "Högbom / Clark / MRC / MEM",
+          "empirical": true,
+          "execution_context": {
+            "hardware": "3.06 GHz Xeon",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Multiscale CLEAN was slower than every comparator in this measured M31 run despite lowest CLEAN-family RMS error."
+        }
+      ]
+    },
+    "2012MNRAS.426.1223C": {
+      "cohort": "classic",
+      "title": "Sparsity Averaging Reweighted Analysis (SARA): a novel algorithm for radio-interferometric imaging",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "reconstruction_per_image",
+          "value": null,
+          "unit": "s (log10 plotted)",
+          "scope": "MATLAB wall-clock over coverage sweep (means ±1σ over 100 sims)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "2.4 GHz Xeon quad-core",
+            "parallelism": null,
+            "software": "MATLAB",
+            "numerical_configuration": null,
+            "workload": "Synthetic on-grid DFT samples; coverage sweep; order of minutes, similar to TV"
+          },
+          "evidence": "Wall-clock times plotted in log10 seconds over coverage; SARA of order of minutes, similar to TV and published MS-CLEAN times. Exact times not tabulated."
+        },
+        {
+          "category": "runtime_scaling",
+          "submetric": "visibility_count",
+          "value": null,
+          "unit": null,
+          "scope": "Runtime vs coverage fraction (visibility sampling density)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "2.4 GHz Xeon quad-core",
+            "parallelism": null,
+            "software": "MATLAB",
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Runtime plotted across coverage sweep; MS-CLEAN comparison is cross-paper rather than same-hardware."
+        }
+      ]
+    },
+    "2014MNRAS.439.3591C": {
+      "cohort": "classic",
+      "title": "PURIFY: a new approach to radio-interferometric imaging",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "reconstruction_per_image",
+          "value": null,
+          "unit": "min–h",
+          "scope": "Figure 2 mean wall-clock vs coverage (non-optimized beta)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "2.4 GHz quad-core Xeon",
+            "parallelism": "SARA basis decompositions parallelized; proximity operators otherwise serial",
+            "software": "PURIFY beta (MATLAB/SDMM); nine SARA bases parallelized",
+            "numerical_configuration": null,
+            "workload": "M31 and 30 Doradus; M/N = 0.2–2; 30 noise/coverage realizations"
+          },
+          "evidence": "Reweighted methods tens of minutes at 0.2N to ~1 h at 2N; non-reweighted mostly <10 min except TV on 30 Doradus."
+        },
+        {
+          "category": "runtime_scaling",
+          "submetric": "visibility_count",
+          "value": null,
+          "unit": null,
+          "scope": "Time scales approximately linearly with visibility count",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "2.4 GHz quad-core Xeon",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Reweighted method time scales approximately linearly with visibility count because CG repeatedly applies Φ and Φ†."
+        }
+      ]
+    },
+    "2014MNRAS.444..606O": {
+      "cohort": "classic",
+      "title": "WSClean: an implementation of a fast, generic wide-field imager for radio astronomy",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "end_to_end",
+          "value": 8.5,
+          "unit": "min",
+          "scope": "Accuracy tests with five major iterations (WSClean vs CASA)",
+          "baseline": "CASA 19.3 min (zenith, 12 planes)",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": "WSClean vs CASA",
+            "numerical_configuration": "Five major iterations; 12–195 w-layers/planes",
+            "workload": "Accuracy-test configurations at zenith and 10° zenith angle"
+          },
+          "evidence": "WSClean vs CASA: 8.5 vs 19.3 min (zenith, 12 layers), 10.3 vs 19.6 min (128), 15.3 vs 178.2 min (10°, 195); recentered WSClean 6.6 min in 10° case."
+        },
+        {
+          "category": "wall_clock",
+          "submetric": "other_stage_specific",
+          "value": null,
+          "unit": "min",
+          "scope": "Imaging-only wall time (PSF + image; excludes cleaning/prediction)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": "WSClean vs CASA",
+            "numerical_configuration": null,
+            "workload": "Five repeats per configuration; Fig. 7"
+          },
+          "evidence": "Imaging-only benchmarks exclude cleaning, prediction, and reduced-resolution optimization; WSClean 7.9× faster than CASA at 10° for large visibility sets."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "speedup_factor",
+          "value": 7.9,
+          "unit": "x",
+          "scope": "Large visibility sets, 10° zenith (imaging-only)",
+          "baseline": "CASA",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": "WSClean vs CASA",
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "WSClean 7.9× faster than CASA at 10° zenith and 2.6× at zenith for large sets; ~3× for small sets; conclusion cites 2–10× speedup."
+        },
+        {
+          "category": "runtime_scaling",
+          "submetric": "image_size",
+          "value": null,
+          "unit": null,
+          "scope": "Reduced-resolution inversion cost savings",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": "WSClean",
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Reducing 3072-pixel inversion to ~1500 pixels saved ~2× at 10°; at 10,000 output pixels reduced cost by ~order of magnitude; real field 41→24 min."
+        }
+      ]
+    },
+    "2017MNRAS.471..301O": {
+      "cohort": "classic",
+      "title": "An optimized algorithm for multi-scale wideband deconvolution of radio astronomical images",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "deconvolution",
+          "value": 223,
+          "unit": "s",
+          "scope": "WSClean multi-scale single-frequency minor-loop (100,000 iterations)",
+          "baseline": "CASA extrapolated 3480 s; CPU MORESANE 256 min",
+          "empirical": true,
+          "execution_context": {
+            "hardware": "40-core Intel Xeon E5-2660 v2 @ 2.20 GHz, 128 GB RAM",
+            "parallelism": null,
+            "software": "WSClean vs CASA / MORESANE / IUWT",
+            "numerical_configuration": "2048×2048, six scales; excludes inversion, prediction, gridding",
+            "workload": "Single-frequency and multi-frequency joined cleaning (2–8 channels)"
+          },
+          "evidence": "WSClean 223 s for 100,000 iterations (~15.6× vs CASA extrapolation); 8-channel joined cleaning 600 s; MORESANE 256 min; IUWT 44–179 min."
+        },
+        {
+          "category": "throughput",
+          "submetric": "components_per_second",
+          "value": 748,
+          "unit": "iterations/s",
+          "scope": "WSClean final major-cycle minor iterations/s (single-frequency)",
+          "baseline": "CASA 29 iterations/s",
+          "empirical": true,
+          "execution_context": {
+            "hardware": "40-core Intel Xeon E5-2660 v2",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": "2048×2048 six-scale deconvolution"
+          },
+          "evidence": "CASA 29 iterations/s; WSClean major cycles average 5, 44, and 748 iterations/s. Multi-frequency: CASA MSMFS 0.42 iter/s; WSClean final cycle 323–771 iter/s."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "speedup_factor",
+          "value": 15.6,
+          "unit": "x",
+          "scope": "Minor-loop only vs CASA extrapolation",
+          "baseline": "CASA multi-scale CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "hardware": "40-core Intel Xeon E5-2660 v2",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "About 15.6× faster than CASA extrapolation for 100,000 iterations; multi-frequency roughly 400–900× faster (minor loop only)."
+        },
+        {
+          "category": "runtime_scaling",
+          "submetric": "channel_count",
+          "value": null,
+          "unit": null,
+          "scope": "Joined-channel cleaning time vs output channel count",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "40-core Intel Xeon E5-2660 v2",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "WSClean joined-channel multi-scale: 265, 349, and 600 s for 100,000 iterations with 2, 4, and 8 output channels."
+        }
+      ]
+    },
+    "2018A&A...611A..87T": {
+      "cohort": "classic",
+      "title": "Faceting for direction-dependent spectral deconvolution",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "end_to_end",
+          "value": 12,
+          "unit": "h",
+          "scope": "Single-core wall time for 3C147 faceted imaging run",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "Two Sandy Bridge Intel Xeon E5 (8 physical / 16 virtual cores each)",
+            "parallelism": "Scales through 16 physical cores; degrades with hyperthreads",
+            "software": null,
+            "numerical_configuration": "5100×5100, 529 facets, five HMP major cycles to 0.4 mJy",
+            "workload": "14 h VLA C+D L-band 3C147; 2,350,127 samples; 64 channels / 256 MHz"
+          },
+          "evidence": "Single-core wall time ~12 h with 94% in gridding; reaches 12× speedup at 16 physical cores."
+        },
+        {
+          "category": "wall_clock",
+          "submetric": "gridding",
+          "value": null,
+          "unit": null,
+          "scope": "Gridding share of end-to-end run (~94%)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "Sandy Bridge Xeon E5 pair",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "94% of the ~12 h single-core wall time spent in gridding."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "speedup_factor",
+          "value": 12,
+          "unit": "x",
+          "scope": "16 physical cores vs single core",
+          "baseline": "single-core wall time",
+          "empirical": true,
+          "execution_context": {
+            "hardware": "Two Sandy Bridge Intel Xeon E5",
+            "parallelism": "16 physical cores (~98% parallelized interpretation)",
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Approximately linear scaling through 16 physical cores; 12× speedup at 16 cores."
+        }
+      ]
+    },
+    "2018A&A...616A..27V": {
+      "cohort": "classic",
+      "title": "Image Domain Gridding: a fast method for convolutional resampling of visibilities",
+      "runtime_details": [
+        {
+          "category": "throughput",
+          "submetric": "visibilities_per_second",
+          "value": 4300000.0,
+          "unit": "visibilities/s",
+          "scope": "Low-level IDG routine on laptop GPU",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "NVIDIA GeForce 840M; dual-core hyperthreaded 2.60 GHz Intel i7 host",
+            "parallelism": null,
+            "software": "IDG vs classical gridding / WSClean",
+            "numerical_configuration": null,
+            "workload": "~93 million visibilities"
+          },
+          "evidence": "Low-level IDG processes 4.3 M visibilities/s, taking 22 s for ~93 M visibilities; WSClean reports 72 s including FFTs/I/O."
+        },
+        {
+          "category": "wall_clock",
+          "submetric": "gridding",
+          "value": 22,
+          "unit": "s",
+          "scope": "IDG low-level gridding for ~93 M visibilities",
+          "baseline": "Classical gridding 52 s (Stokes I) / 192 s (4 pol); WSClean 72 s",
+          "empirical": true,
+          "execution_context": {
+            "hardware": "GeForce 840M + Intel i7 host",
+            "parallelism": null,
+            "software": "IDG",
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "IDG 22 s for ~93 M visibilities; classical gridding 52 s Stokes I / 192 s all four polarizations."
+        },
+        {
+          "category": "wall_clock",
+          "submetric": "other_stage_specific",
+          "value": 20,
+          "unit": "min",
+          "scope": "LOFAR major cycle duration (~4 cycles)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "Two 8-core Xeon E5-2630 v3 + four Tesla K40c GPUs",
+            "parallelism": "32 hardware threads; 4 GPUs",
+            "software": null,
+            "numerical_configuration": "Briggs robust 0; 100 mJy cleaning threshold",
+            "workload": "LOFAR observed-data scaling run (identity DD corrections)"
+          },
+          "evidence": "Four major cycles of about 20 min each on LOFAR job; measures runtime scaling feasibility, not calibrated DD fidelity."
+        }
+      ]
+    },
+    "2023arXiv230606007K": {
+      "cohort": "classic",
+      "title": "HVOX: Scalable Interferometric Synthesis and Analysis of Spherical Sky Maps",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "end_to_end",
+          "value": 38,
+          "unit": "s",
+          "scope": "LOFAR-HBA Boötes dirty-image synthesis + FITS write (HVOX-500MB)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "Intel Core i9-10900X 10-core, 128 GB DDR4",
+            "parallelism": "20 threads monolithic / 5 per chunk; 500 MB max partition",
+            "software": "HVOX vs W-gridder",
+            "numerical_configuration": null,
+            "workload": "8 h LOFAR-HBA; ~1.5 Mpix HEALPix; 5×5° dirty image"
+          },
+          "evidence": "Real-data demonstration writes FITS output in 38 s on the benchmark workstation; no matched W-gridder timing for this observation."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "runtime_ratio",
+          "value": null,
+          "unit": null,
+          "scope": "Sparse-domain HVOX vs W-gridder (~order of magnitude)",
+          "baseline": "W-gridder (full regular image)",
+          "empirical": true,
+          "execution_context": {
+            "hardware": "i9-10900X workstation",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "When only 500 sky pixels requested, HVOX-500MB ~one order of magnitude faster than W-gridder for analysis and synthesis."
+        },
+        {
+          "category": "runtime_scaling",
+          "submetric": "image_size",
+          "value": null,
+          "unit": null,
+          "scope": "Dense-grid runtime vs telescope radius / image megapixels",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "i9-10900X",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": "SKA-Low simulation defaults; up to 182.25 Mpix"
+          },
+          "evidence": "Dense-grid timings vs telescope radius; monolithic HVOX OOMs at largest configs while HVOX-500MB continues to 100 km / 182.25 Mpix case."
+        }
+      ]
+    },
+    "2025arXiv251213591C": {
+      "cohort": "classic",
+      "title": "astroCAMP: A Community Benchmark and Co-Design Framework for Sustainable SKA-Scale Radio Imaging",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "end_to_end",
+          "value": null,
+          "unit": "s",
+          "scope": "Time-to-solution T_c (POSIX / logs / scheduler)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": "Strong scaling 1–64 CPU threads; GPU/IDG device layers",
+            "software": "WSClean+IDG under astroCAMP",
+            "numerical_configuration": null,
+            "workload": "e.g. 16,384² image strong-scaling example 3:13:10 → 1:08:06"
+          },
+          "evidence": "Defines T_c as full-system end-to-end wall-clock; measured extensively on WSClean+IDG including strong-scaling wall times."
+        },
+        {
+          "category": "throughput",
+          "submetric": "visibilities_per_second",
+          "value": null,
+          "unit": "visibilities/s",
+          "scope": "Derived throughput Θ = N/T_c",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": "astroCAMP / WSClean+IDG",
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Framework defines throughput Θ = N/T_c (visibilities/s) alongside energy and cost metrics."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "speedup_factor",
+          "value": null,
+          "unit": null,
+          "scope": "CPU strong scaling 1→64 cores (wall-time reduction)",
+          "baseline": "1-core / 1-thread wall time",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": "1–64 CPU threads",
+            "software": "WSClean+IDG",
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Example strong-scaling wall times 3:13:10 → 1:08:06 on 16,384²; GPU IDG ≈flat ~1:09; I/O ≈1% of wall time."
+        }
+      ]
+    },
+    "2022A&A...664A.134S": {
+      "cohort": "emerging",
+      "title": "Deep learning-based imaging in radio interferometry",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "reconstruction_per_image",
+          "value": 0.0031,
+          "unit": "s",
+          "scope": "Pure network evaluation at 64 pixels (mean ± std over 100 runs)",
+          "baseline": "WSClean 0.43±0.02 s at 64 px",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": "radionets vs WSClean",
+            "numerical_configuration": null,
+            "workload": "Averaged over 100 runs on one image; sizes 64–1024"
+          },
+          "evidence": "Pure network 0.0031–0.4070 s (64–1024 px); end-to-end radionets framework 2.29–3.20 s; WSClean 0.43–9.00 s. Framework faster than WSClean only above 512 px."
+        },
+        {
+          "category": "wall_clock",
+          "submetric": "end_to_end",
+          "value": 2.29,
+          "unit": "s",
+          "scope": "Radionets framework including load/save (64 px)",
+          "baseline": "WSClean",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": "radionets",
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Complete framework times 2.29±0.04 to 3.20±0.06 s across sizes; not raw telescope-data end-to-end."
+        },
+        {
+          "category": "runtime_scaling",
+          "submetric": "image_size",
+          "value": null,
+          "unit": null,
+          "scope": "Runtime vs image side length 64–1024",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": "radionets vs WSClean",
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Both pure inference and WSClean wall times increase with image size; tabulated at 64, 128, 256, 512, 1024 pixels."
+        }
+      ]
+    },
+    "2022MNRAS.514.2614C": {
+      "cohort": "emerging",
+      "title": "Deep radio-interferometric imaging with POLISH: DSA-2000 and weak lensing",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "reconstruction_per_image",
+          "value": null,
+          "unit": "s",
+          "scope": "2000×2000 dirty-image reconstruction ('a few seconds')",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "Unspecified laptop",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": "2000×2000 dirty image; no exact timing protocol"
+          },
+          "evidence": "States a 2000×2000 dirty image can be reconstructed in a few seconds on a laptop; neither exact timing protocol nor laptop hardware given. CLEAN runtime not reported."
+        }
+      ]
+    },
+    "2023MNRAS.522.5558W": {
+      "cohort": "emerging",
+      "title": "Scalable precision wide-field imaging in radio interferometry: I. uSARA validated on ASKAP data",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "deconvolution",
+          "value": 4.3,
+          "unit": "h",
+          "scope": "uSARA full-band SB9442 deconvolution wall time",
+          "baseline": "WSClean 0.8 h on one node",
+          "empirical": true,
+          "execution_context": {
+            "hardware": "Cirrus UK Tier-2; 36 physical cores / 72 threads / 256 GB per node",
+            "parallelism": null,
+            "software": "uSARA MATLAB prototype vs WSClean",
+            "numerical_configuration": null,
+            "workload": "467 M visibilities; 19 w-stacks; 64 facets; SB9442 full-band"
+          },
+          "evidence": "Deconvolution 4.3 h wall time (770 CPU core-hours) vs WSClean 0.8 h; sub-band uSARA 5.2–8.8 h vs WSClean 0.2–0.7 h."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "runtime_ratio",
+          "value": 20,
+          "unit": "x more costly (avg)",
+          "scope": "uSARA MATLAB prototype vs WSClean",
+          "baseline": "WSClean",
+          "empirical": true,
+          "execution_context": {
+            "hardware": "Cirrus",
+            "parallelism": null,
+            "software": "MATLAB uSARA",
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Paper characterizes uSARA prototype as about 20× more costly on average; WSClean roughly an order of magnitude cheaper in wall time on same fields."
+        }
+      ]
+    },
+    "2023MNRAS.522.5576W": {
+      "cohort": "emerging",
+      "title": "Scalable precision wide-field imaging in radio interferometry: II. AIRI validated on ASKAP data",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "reconstruction_per_image",
+          "value": 1.1,
+          "unit": "h",
+          "scope": "AIRI SB9442 full-band reconstruction wall time",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "Cirrus GPU nodes; four GPUs, 40 CPU cores, 384 GB shared; 1–5 nodes",
+            "parallelism": "CPU measurement operator; four GPUs for four denoiser facets",
+            "software": "AIRI",
+            "numerical_configuration": null,
+            "workload": "ASKAP SB8275/9351/9442 sub-bands and full-band"
+          },
+          "evidence": "Sub-bands 1.0–2.9 h wall time; SB9442 full-band 1.1 h (Table 6). GPU model and training cost not reported."
+        }
+      ]
+    },
+    "2024ApJS..273....3A": {
+      "cohort": "emerging",
+      "title": "The R2D2 Deep Neural Network Series Paradigm for Fast Precision Imaging in Radio Astronomy",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "reconstruction_per_image",
+          "value": 2.9,
+          "unit": "s",
+          "scope": "R2D2 fully-on-GPU Python generic-test mean",
+          "baseline": "CLEAN 65.9±18.8 s; uSARA 4184±1549 s; AIRI 3479±1531 s",
+          "empirical": true,
+          "execution_context": {
+            "hardware": "1 CPU core (CLEAN/uSARA); 1 CPU+1 GPU (AIRI/MATLAB R2D2); hybrid or full GPU (Python)",
+            "parallelism": null,
+            "software": "MATLAB and Python R2D2-family backends",
+            "numerical_configuration": "R2D2 I=15; R3D3-3L I=7; R3D3-6L I=8",
+            "workload": "Generic-test averages"
+          },
+          "evidence": "CLEAN ~66 s, uSARA ~4184 s, AIRI ~3479 s vs R2D2 12.2/18.6/2.9 s (MATLAB/hybrid/GPU) and R3D3 variants ~1.9–15 s. Authors warn exact timing comparisons are cautious."
+        },
+        {
+          "category": "wall_clock",
+          "submetric": "other_stage_specific",
+          "value": 0.05,
+          "unit": "s",
+          "scope": "Per-iteration data-fidelity time (GPU Python R2D2)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": "Python R2D2 on GPU",
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Table 2: MATLAB R2D2 averages 0.4±0.2 s data-fidelity and 0.2±0.07 s DNN/step; GPU Python 0.05±0.01 s and 0.1±0.2 s."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "runtime_ratio",
+          "value": null,
+          "unit": null,
+          "scope": "Seconds (R2D2) vs ~hour (uSARA/AIRI)",
+          "baseline": "uSARA / AIRI",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Authors describe contrast as seconds versus about an hour for uSARA/AIRI while noting exact timing caveats."
+        }
+      ]
+    },
+    "2024A&A...690A.387R": {
+      "cohort": "r2d2",
+      "title": "fast-resolve: Fast Bayesian Radio Interferometric Imaging",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "reconstruction_per_image",
+          "value": 10,
+          "unit": "min",
+          "scope": "fast-resolve to residual ~1e-3 on A100 (VLA Cygnus A, S-band, 1 channel)",
+          "baseline": "resolve 1416 min",
+          "empirical": true,
+          "execution_context": {
+            "hardware": "NVIDIA A100; also RTX 3090; Intel Xeon 8-core",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": "VLA Cygnus A single channel S-band; residual ~10⁻³"
+          },
+          "evidence": "Time-to-residual ~10⁻³: ~10 min (A100), ~20 min (3090), ~200 min (8-core Xeon) vs resolve 1416 min."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "speedup_factor",
+          "value": 144,
+          "unit": "x",
+          "scope": "fast-resolve on A100 vs resolve",
+          "baseline": "resolve (CPU)",
+          "empirical": true,
+          "execution_context": {
+            "hardware": "NVIDIA A100 vs resolve CPU baseline",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "144× (A100), 72× (RTX 3090), 7.2× (8-core Xeon) speedup vs resolve."
+        }
+      ]
+    },
+    "2024ApJ...966L..34D": {
+      "cohort": "r2d2",
+      "title": "CLEANing Cygnus A Deep and Fast with R2D2",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "reconstruction_per_image",
+          "value": 3.31,
+          "unit": "s",
+          "scope": "R2D2 Cygnus A reconstruction",
+          "baseline": "Hö-CLEAN 21.87 s; uSARA 1197 s; AIRI 672 s",
+          "empirical": true,
+          "execution_context": {
+            "hardware": "1 CPU core for CLEAN/uSARA; 1 GPU for DNN methods and AIRI",
+            "parallelism": null,
+            "software": "R2D2 / R2D2-Net / R3D3 vs CLEAN variants, uSARA, AIRI",
+            "numerical_configuration": null,
+            "workload": "Cygnus A deep imaging comparison"
+          },
+          "evidence": "Hö-CLEAN 21.87s; CS-CLEAN 33.69s; MS-CLEAN 39.01s; R2D2 3.31s; R2D2-Net 0.97s; R3D3 1.83s; uSARA 1197s; AIRI 672s."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "speedup_factor",
+          "value": null,
+          "unit": null,
+          "scope": "R2D2 family vs Högbom CLEAN and uSARA/AIRI",
+          "baseline": "Högbom CLEAN / uSARA / AIRI",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "R2D2 variants deliver roughly an order-of-magnitude speed-up over Högbom CLEAN and 10–20×+ over uSARA/AIRI."
+        }
+      ]
+    },
+    "2024RASTI...3..505L": {
+      "cohort": "r2d2",
+      "title": "Scalable Bayesian uncertainty quantification with data-driven priors for radio interferometric imaging",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "reconstruction_per_image",
+          "value": 0.64,
+          "unit": "s",
+          "scope": "QuantifAI MAP optimisation (W28, A100)",
+          "baseline": "Wavelet-based MAP 0.94 s",
+          "empirical": true,
+          "execution_context": {
+            "hardware": "NVIDIA A100",
+            "parallelism": null,
+            "software": "QuantifAI vs wavelet-based UQ",
+            "numerical_configuration": null,
+            "workload": "W28 image Table 4; also MeerKAT M31 visibility sweep"
+          },
+          "evidence": "MAP: wavelet 0.94 s vs QuantifAI 0.64 s; MCMC 36.0×10³ vs 6.44×10³ s; LCIs 149.7 vs 108.2 s; fast pixel UQ 0.17 s."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "speedup_factor",
+          "value": 60,
+          "unit": "x",
+          "scope": "8×8 LCIs vs MCMC sampling (order-of-magnitude statements also for fast UQ)",
+          "baseline": "MCMC posterior sampling",
+          "empirical": true,
+          "execution_context": {
+            "hardware": "NVIDIA A100",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "MCMC ~60× slower than 8×8 LCIs and >37,500× slower than fast pixel UQ; fast pixel UQ >630× faster than 8×8 LCIs."
+        },
+        {
+          "category": "runtime_scaling",
+          "submetric": "visibility_count",
+          "value": null,
+          "unit": null,
+          "scope": "MAP/UQ wall time vs synthesis duration (3e4–2.4e5 visibilities)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "A100",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": "MeerKAT M31 1/2/4/8 h syntheses"
+          },
+          "evidence": "As synthesis time increases (1/2/4/8 h; 3×10⁴–2.4×10⁵ visibilities), reconstruction wall-clock 17.0–105.3 s and fast-pixel UQ 0.28–1.26 s."
+        }
+      ]
+    },
+    "2024arXiv240317905C": {
+      "cohort": "r2d2",
+      "title": "Scalable Non-Cartesian Magnetic Resonance Imaging with R2D2",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "reconstruction_per_image",
+          "value": 0.237,
+          "unit": "s",
+          "scope": "R2D2 mean inference time (Table II, 160 test problems)",
+          "baseline": "AIRI 1857±387 s",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": "R2D2 / R2D2-Net vs AIRI, U-Net, NC-PDNet",
+            "numerical_configuration": null,
+            "workload": "Non-Cartesian MRI inverse problems (R2D2 paradigm transfer)"
+          },
+          "evidence": "AIRI IT 1857±387 s vs R2D2 0.237±0.005 s and R2D2-Net (FFT) 0.129±0.004 s; R2D2 inference ~four orders of magnitude faster than AIRI."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "speedup_factor",
+          "value": null,
+          "unit": null,
+          "scope": "R2D2 inference vs AIRI (~10^4)",
+          "baseline": "AIRI",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Headline: R2D2's inference is roughly four orders of magnitude faster than AIRI."
+        }
+      ]
+    },
+    "2024arXiv240318052A": {
+      "cohort": "r2d2",
+      "title": "R2D2 Image Reconstruction with Model Uncertainty Quantification in Radio Astronomy",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "reconstruction_per_image",
+          "value": 2.0,
+          "unit": "s",
+          "scope": "R2D2 mean total reconstruction time",
+          "baseline": "CLEAN 93.2±26.7 s; AIRI 3430±1461 s; uSARA 4016±1471 s",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": "R2D2 vs U-Net, CLEAN, AIRI, uSARA",
+            "numerical_configuration": "R2D2 12 iterations; U-Net 1; CLEAN 8±1; AIRI ~4995; uSARA ~1107",
+            "workload": null
+          },
+          "evidence": "U-Net 0.1±0.1 s; R2D2 2.0±0.4 s; CLEAN 93.2±26.7 s; AIRI 3430±1461 s; uSARA 4015.9±1471.2 s."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "runtime_ratio",
+          "value": null,
+          "unit": null,
+          "scope": "R2D2 orders of magnitude faster than CLEAN/uSARA/AIRI",
+          "baseline": "CLEAN / uSARA / AIRI",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "R2D2 is orders of magnitude faster than CLEAN, uSARA and AIRI, enabling multiple reconstructions for UQ."
+        }
+      ]
+    },
+    "2024arXiv241023178C": {
+      "cohort": "r2d2",
+      "title": "Uncertainty Quantification for Fast Reconstruction Methods Using Augmented Equivariant Bootstrap: Application to Radio Interferometry",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "reconstruction_per_image",
+          "value": 51,
+          "unit": "ms",
+          "scope": "EVIL-Deconv median reconstruction time (Table 2)",
+          "baseline": "CLEAN 794 ms; PnP DnCNN 1110 ms",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": "EVIL-Deconv vs CLEAN / PnP",
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "CLEAN 794 ms; PnP 1110 ms; EVIL-Deconv 51 ms median reconstruction time."
+        },
+        {
+          "category": "wall_clock",
+          "submetric": "other_stage_specific",
+          "value": 735,
+          "unit": "ms",
+          "scope": "Bootstrap confidence-region construction per image (500 samples)",
+          "baseline": "Direct quantile-regression inference ~153 ms",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": "Bootstrap parallelized 128 samples at a time",
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "~735 ms/image for bootstrap-based confidence regions vs ~153 ms for quantile-regression inference."
+        }
+      ]
+    },
+    "2025AJ....169..289W": {
+      "cohort": "r2d2",
+      "title": "A Decentralized Framework for Radio-interferometric Image Reconstruction",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "end_to_end",
+          "value": null,
+          "unit": "s",
+          "scope": "Total processing time per method/dataset (Fig. 6)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": "Two-node parallel vs serial",
+            "software": "Decentralized framework (p-L1, p-msc vs serial)",
+            "numerical_configuration": null,
+            "workload": "HL Tau, Cygnus A, Sgr B2, Sgr C"
+          },
+          "evidence": "Serial L1 ~637–919 s; parallel p-L1 ~540–867 s across datasets."
+        },
+        {
+          "category": "wall_clock",
+          "submetric": "other_stage_specific",
+          "value": null,
+          "unit": null,
+          "scope": "Stage breakdown: degridding, gridding, deconvolution, I/O, idle, other",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": "Multi-node",
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Timing breakdown by pipeline stage; deconvolution and disk I/O overhead dominate; idle when partitions unbalanced."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "speedup_factor",
+          "value": 2,
+          "unit": "x",
+          "scope": "Serial-to-parallel ratio on larger datasets",
+          "baseline": "serial L1 / msc",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": "Two nodes",
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Speedup close to theoretical 2× for larger datasets (HL Tau, Cygnus A); smaller datasets show little gain."
+        }
+      ]
+    },
+    "2025A&A...698A..61J": {
+      "cohort": "r2d2",
+      "title": "Deep learning inference with the Event Horizon Telescope: II. The ZINGULARITY framework for Bayesian artificial neural networks",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "reconstruction_per_image",
+          "value": null,
+          "unit": "s",
+          "scope": "Forward pass 'a few seconds'; ~20 s for 100×100 bootstrap posterior procedure",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "NVIDIA A100",
+            "parallelism": "Horovod distributed training up to 128 GPUs",
+            "software": "ZINGULARITY BANN (~12M parameters)",
+            "numerical_configuration": null,
+            "workload": "600,000 training samples; 21,956 visibility points each"
+          },
+          "evidence": "Forward pass only a few seconds; obtaining 100 posterior samples from 100 bootstrapped datasets takes ~20 s; post-training inference 'practically instantaneous'. One training epoch ~30 s."
+        }
+      ]
+    },
+    "2025A&A...698A.176M": {
+      "cohort": "r2d2",
+      "title": "How to make CLEAN variants faster using clustered components informed by the autocorrelation function",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "deconvolution",
+          "value": null,
+          "unit": null,
+          "scope": "Wall-clock vs residual level (Fig. 5)",
+          "baseline": "Classical CLEAN / Asp-CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": "Autocorr-CLEAN vs CLEAN / Asp-CLEAN",
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Autocorr-CLEAN reaches a given residual level significantly faster than classical CLEAN and faster than Asp-CLEAN in nearly all cases."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "speedup_factor",
+          "value": null,
+          "unit": null,
+          "scope": "Up to an order of magnitude faster than classical CLEAN",
+          "baseline": "classical CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Claims up to an order of magnitude faster than classical CLEAN with fidelity comparable to or better than Asp-CLEAN."
+        },
+        {
+          "category": "runtime_scaling",
+          "submetric": "asymptotic_complexity",
+          "value": null,
+          "unit": null,
+          "scope": "Theoretical complexity m·N·(8l/k)",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Derived scaling m·N·(8l/k) used to argue the method avoids super-linear complexity growth relative to CLEAN."
+        }
+      ]
+    },
+    "2025A&A...704A..43Y": {
+      "cohort": "r2d2",
+      "title": "Non-convex sparse regularisation for radio interferometric imaging via smoothly clipped absolute deviation",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "reconstruction_per_image",
+          "value": 107.11,
+          "unit": "s",
+          "scope": "ISCAD Messier 106 (SKA, 512×512) runtime",
+          "baseline": "SARA 321.06 s; AIRI 127.34 s; LPG 156.78 s",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": "Messier 106 SKA 512×512 test case among three reported cases"
+          },
+          "evidence": "ISCAD 107.11 s vs SARA 321.06 / AIRI 127.34 / LPG 156.78; lowest runtime of the four methods across reported cases."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "runtime_ratio",
+          "value": null,
+          "unit": null,
+          "scope": "ISCAD lowest runtime among SARA/AIRI/LPG/ISCAD",
+          "baseline": "SARA / AIRI / LPG",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Across all three test cases ISCAD attains the lowest runtime of the four methods."
+        }
+      ]
+    },
+    "2025ApJS..280...63A": {
+      "cohort": "r2d2",
+      "title": "Toward a Robust R2D2 Paradigm for Radio-interferometric Imaging: Revisiting Deep Neural Network Training and Architecture",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "reconstruction_per_image",
+          "value": null,
+          "unit": "s",
+          "scope": "R2D2 total reconstruction time t_tot (~5.6–9.0 s for R2D2_A2,T2)",
+          "baseline": "AIRI/uSARA several minutes",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": "R2D2 with TorchKbNufft / PyNUFFT / FINUFFT / PSF backends",
+            "numerical_configuration": null,
+            "workload": "Mean ± std over 200 inverse problems"
+          },
+          "evidence": "R2D2 total reconstruction a few seconds (e.g. R2D2_A2,T2 ~5.6–9.0 s depending on NUFFT backend) vs several minutes for AIRI/uSARA."
+        },
+        {
+          "category": "wall_clock",
+          "submetric": "other_stage_specific",
+          "value": null,
+          "unit": "s",
+          "scope": "Per-iteration t_dat and t_reg across Φ†Φ implementations",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": "R2D2 backends",
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Reports average per-iteration data-fidelity and regularization/DNN times for four measurement-operator implementations."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "runtime_ratio",
+          "value": null,
+          "unit": null,
+          "scope": "R2D2 seconds vs AIRI/uSARA minutes",
+          "baseline": "AIRI / uSARA",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Large speed advantage while matching or beating fidelity/data-fidelity metrics."
+        }
+      ]
+    },
+    "2025ChJSS..45.1597F": {
+      "cohort": "r2d2",
+      "title": "Imaging Method of Synthetic Aperture Radio Telescope Based on Minimax Concave Penalty",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "reconstruction_per_image",
+          "value": 25.07,
+          "unit": "s",
+          "scope": "MCP proposed method at 10% undersampling",
+          "baseline": "SARA 43.27 s; AIRI 21.76 s",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": "MCP vs SARA / AIRI",
+            "numerical_configuration": null,
+            "workload": "10%/50% undersampling and simulated SKA array tables"
+          },
+          "evidence": "10%: MCP 25.07 s (SARA 43.27, AIRI 21.76); 50%: MCP 26.11 s; SKA: MCP 189.62 s (SARA 342.75, AIRI 175.32). Faster than SARA, marginally slower than AIRI."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "runtime_ratio",
+          "value": null,
+          "unit": null,
+          "scope": "MCP vs SARA/AIRI wall-clock",
+          "baseline": "SARA / AIRI",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Substantially faster than SARA and only marginally slower than AIRI while improving SNR/fidelity."
+        }
+      ]
+    },
+    "2025MNRAS.537.1608T": {
+      "cohort": "r2d2",
+      "title": "The AIRI plug-and-play algorithm for image reconstruction in radio-interferometry: variations and robustness",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "other_stage_specific",
+          "value": 0.05,
+          "unit": "s",
+          "scope": "AIRI per denoising step on GPU",
+          "baseline": "SARA proximal 1.31±1.12 s; BM3D 15.08±0.40 s; AIRI CPU 7.92±0.52 s",
+          "empirical": true,
+          "execution_context": {
+            "hardware": "GPU vs CPU for AIRI denoisers",
+            "parallelism": null,
+            "software": "AIRI vs SARA proximal / BM3D",
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "AIRI GPU 0.05±0.02 s/step; AIRI CPU 7.92±0.52 s; SARA 1.31±1.12 s; BM3D 15.08±0.40 s."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "speedup_factor",
+          "value": 20,
+          "unit": "x",
+          "scope": "GPU AIRI denoisers vs SARA/uSARA proximity operators",
+          "baseline": "SARA/uSARA proximity operators",
+          "empirical": true,
+          "execution_context": {
+            "hardware": "GPU",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "On GPU, AIRI denoisers give roughly a 20-fold speed-up over proximity operators used in SARA/uSARA."
+        }
+      ]
+    },
+    "2025MNRAS.542..426T": {
+      "cohort": "r2d2",
+      "title": "S-R2D2: a spherical extension of the R2D2 deep neural network series paradigm for wide-field radio-interferometric imaging",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "reconstruction_per_image",
+          "value": 3.0,
+          "unit": "s",
+          "scope": "S-R2D2 t_tot at I=10 (~3.0–3.3 s)",
+          "baseline": "R2D2 ~2.1–2.5 s",
+          "empirical": true,
+          "execution_context": {
+            "hardware": "NVIDIA A40 48GB",
+            "parallelism": null,
+            "software": "S-R2D2 vs R2D2",
+            "numerical_configuration": "Fixed I=10; t_tot = I×(t_reg + t_dat)",
+            "workload": "60 test problems; Np=400²–800²; DR ∈ [10^3,5×10^5]"
+          },
+          "evidence": "S-R2D2 t_tot ≈ 3.0–3.3 s vs R2D2 ≈ 2.1–2.5 s; less than 1.5× slower while much higher SNR/logSNR."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "runtime_ratio",
+          "value": 1.5,
+          "unit": "x slower (upper)",
+          "scope": "S-R2D2 vs R2D2 total reconstruction time",
+          "baseline": "R2D2",
+          "empirical": true,
+          "execution_context": {
+            "hardware": "NVIDIA A40",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "S-R2D2 less than 1.5× slower (~3 s vs ~2–2.5 s) than planar R2D2."
+        },
+        {
+          "category": "runtime_scaling",
+          "submetric": "image_size",
+          "value": null,
+          "unit": null,
+          "scope": "t_tot and fidelity vs Np = 400²–800²",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "A40",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Reports metrics at Np=400², 600², 800²; best overall operating point SR=2.25 (Np=600²)."
+        }
+      ]
+    },
+    "2025MNRAS.543.1727L": {
+      "cohort": "r2d2",
+      "title": "MROP: modulated rank-one projections for compressive radio interferometric imaging",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "other_stage_specific",
+          "value": null,
+          "unit": null,
+          "scope": "Average per-iteration runtime (uSARA) across sensing models",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "Single NVIDIA A40",
+            "parallelism": null,
+            "software": "uSARA",
+            "numerical_configuration": null,
+            "workload": "MROP compressive sensing model comparison"
+          },
+          "evidence": "Uses average per-iteration runtime on a single Nvidia A40 to compare computational cost across sensing models; no numeric values captured in the summary."
+        }
+      ]
+    },
+    "2025RASTI...4..25M": {
+      "cohort": "r2d2",
+      "title": "Learned Radio Interferometric Imaging for Varying Visibility Coverage",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "reconstruction_per_image",
+          "value": 54.9,
+          "unit": "ms",
+          "scope": "U-Net reconstruction time (Table 1)",
+          "baseline": "Pseudo-inverse 13.0±0.4 ms; GU-Net 85.7±1.5 ms",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": "Pseudo-inverse / U-Net / GU-Net",
+            "numerical_configuration": null,
+            "workload": "Varying visibility coverage; MeerKAT larger coverage case"
+          },
+          "evidence": "Pseudo-inverse 13.0±0.4 ms; U-Net 54.9±1.6 ms; GU-Net 85.7±1.5 ms. On MeerKAT larger coverage, time rose to 194.6±3.1 ms (~2.3× longer)."
+        },
+        {
+          "category": "runtime_scaling",
+          "submetric": "visibility_count",
+          "value": null,
+          "unit": null,
+          "scope": "Reconstruction time vs coverage regime (Gaussian vs MeerKAT)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "MeerKAT larger coverage reconstruction ~2.3× longer (194.6±3.1 ms) than Gaussian-coverage setting."
+        }
+      ]
+    },
+    "2025arXiv250102473D": {
+      "cohort": "r2d2",
+      "title": "IRIS: A Bayesian Approach for Image Reconstruction in Radio Interferometry with expressive Score-Based priors",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "reconstruction_per_image",
+          "value": 2.5,
+          "unit": "h",
+          "scope": "250 posterior samples per disk",
+          "baseline": "CLEAN/MPoL described as much faster",
+          "empirical": true,
+          "execution_context": {
+            "hardware": "10 V100 GPUs (sampling); also notes 0.72 A100 GPU-years for calibration/simulation testing",
+            "parallelism": "10 V100 GPUs",
+            "software": "IRIS (diffusion SDE sampling)",
+            "numerical_configuration": null,
+            "workload": "250 posterior samples per disk"
+          },
+          "evidence": "250 posterior samples per disk generated in ~2.5 hours on 10 V100 GPUs; explicitly noted much slower than CLEAN/MPoL. Metric-details lacked a dedicated Runtime bullet but Performance section reports this timing."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "runtime_ratio",
+          "value": null,
+          "unit": null,
+          "scope": "IRIS sampling vs CLEAN/MPoL (qualitative: much slower)",
+          "baseline": "CLEAN / MPoL",
+          "empirical": true,
+          "execution_context": {
+            "hardware": "10 V100 GPUs",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Explicitly noted to be much slower than CLEAN/MPoL; no numeric CLEAN/MPoL timings given."
+        }
+      ]
+    },
+    "2025arXiv250309559C": {
+      "cohort": "r2d2",
+      "title": "Interlaced R2D2 DNN Series for Scalable Non-Cartesian MRI with Sensitivity Self-calibration",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "reconstruction_per_image",
+          "value": 5.92,
+          "unit": "s",
+          "scope": "iR2D2(U-WDSR) reconstruction runtime",
+          "baseline": "DDS 82.39±6.62 s; R2D2(U-WDSR) 0.68±0.22 s",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": "iR2D2 vs R2D2 / U-WDSR / NC-PDNet / DDS",
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "iR2D2 5.92±0.38 s vs R2D2 0.68±0.22 s, U-WDSR 0.10±0.03 s, NC-PDNet 0.32±0.01 s, DDS 82.39±6.62 s."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "speedup_factor",
+          "value": 14,
+          "unit": "x",
+          "scope": "iR2D2 vs diffusion baseline DDS",
+          "baseline": "DDS",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "iR2D2 is ~14× faster than the diffusion baseline (DDS) despite added self-calibration cost."
+        }
+      ]
+    },
+    "2025arXiv250915176M": {
+      "cohort": "r2d2",
+      "title": "To CLEAN or not to CLEAN: Data Processing in the ngVLA era",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "deconvolution",
+          "value": 227,
+          "unit": "s",
+          "scope": "Högbom CLEAN to a residual level on Cygnus A (~4000 iterations)",
+          "baseline": "Autocorr-CLEAN / Asp-CLEAN faster to same residual",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": "Högbom / Autocorr-CLEAN / Asp-CLEAN / CG-CLEAN / Momentum-CLEAN",
+            "numerical_configuration": null,
+            "workload": "Cygnus A ngVLA-era test case"
+          },
+          "evidence": "Högbom needs ~4000 iterations/227 s to reach a residual level Autocorr-CLEAN reaches with far fewer/faster iterations; Asp-CLEAN much slower per iteration."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "speedup_factor",
+          "value": null,
+          "unit": null,
+          "scope": "Autocorr-CLEAN / Asp-CLEAN wall-clock reduction vs Högbom",
+          "baseline": "Högbom CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Autocorr-CLEAN and Asp-CLEAN reduce minor-loop iteration counts and wall-clock time needed for convergence by up to an order of magnitude relative to Högbom CLEAN."
+        }
+      ]
+    },
+    "2026AJ....171...44Y": {
+      "cohort": "r2d2",
+      "title": "A Radio-interferometric Imaging Method Based on Adaptively Learned Sparsifying Basis",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "reconstruction_per_image",
+          "value": 301,
+          "unit": "s",
+          "scope": "ALSB on VLA/W28 1024×1024",
+          "baseline": "SARA 494 s; AIRI 285 s; WTF 297 s",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": "VLA/W28 SNR remnant; 1024×1024; 894,240 baselines; iSNR=35 dB"
+          },
+          "evidence": "SARA 494s; AIRI 285s; WTF 297s; ALSB 301s — ALSB best SNR/fidelity with runtime comparable to AIRI/WTF and much faster than SARA."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "runtime_ratio",
+          "value": null,
+          "unit": null,
+          "scope": "ALSB vs SARA/AIRI/WTF",
+          "baseline": "SARA / AIRI / WTF",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Runtime comparable to AIRI/WTF and much faster than SARA."
+        }
+      ]
+    },
+    "2026AJ....171..220Y": {
+      "cohort": "r2d2",
+      "title": "An Imaging Algorithm Based on Generalized Minimax-concave Penalty in Radio Interferometry",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "reconstruction_per_image",
+          "value": 69.1,
+          "unit": "s",
+          "scope": "GMCP VLA/3c353 mean over 100 sims",
+          "baseline": "R2D2 5.3 s; AIRI 55.2 s; SARA 113.0 s",
+          "empirical": true,
+          "execution_context": {
+            "hardware": "Intel i9-13900HX, 64 GB RAM; AIRI/R2D2 on RTX 4060 8GB",
+            "parallelism": null,
+            "software": "MATLAB R2021a",
+            "numerical_configuration": null,
+            "workload": "VLA/3c353 and DART/Sun; avg of 100 sims; iSNR=35 dB"
+          },
+          "evidence": "VLA/3c353: GMCP 69.1 s (best fidelity) vs R2D2 5.3 s / AIRI 55.2 s / SARA 113.0 s. DART/Sun: GMCP 20.2 s."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "runtime_ratio",
+          "value": null,
+          "unit": null,
+          "scope": "GMCP slower than R2D2/AIRI/LPG on VLA case despite best fidelity",
+          "baseline": "R2D2 / AIRI / LPG",
+          "empirical": true,
+          "execution_context": {
+            "hardware": "i9-13900HX / RTX 4060",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "GMCP best SNR/SNRlog/fidelity on VLA case but slower than AIRI/LPG/R2D2."
+        }
+      ]
+    },
+    "2026ApJS..283....9T": {
+      "cohort": "r2d2",
+      "title": "HyperAIRI: A Plug-and-play Algorithm for Precise Hyperspectral Image Reconstruction in Radio Interferometry",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "reconstruction_per_image",
+          "value": 1.9,
+          "unit": "h",
+          "scope": "HyperAIRI simulated VLA benchmark mean wall time",
+          "baseline": "WSClean 0.56±0.24 h; AIRI 1.84±0.14 h; uSARA 2.60±0.55 h",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": "HyperAIRI vs WSClean / uSARA / AIRI / Hyper-uSARA",
+            "numerical_configuration": null,
+            "workload": "Simulated VLA hyperspectral benchmark (Table 1)"
+          },
+          "evidence": "HyperAIRI 1.90±0.14 h vs WSClean 0.56±0.24 h, AIRI 1.84±0.14 h, uSARA 2.60±0.55 h, Hyper-uSARA 2.42±0.87 h."
+        },
+        {
+          "category": "wall_clock",
+          "submetric": "other_stage_specific",
+          "value": 1.61,
+          "unit": "s",
+          "scope": "HyperAIRI per-step gradient timing",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": "HyperAIRI",
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Per-step timing: gradient step ≈1.61±0.23 s, denoising step ≈0.52±0.25 s."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "runtime_ratio",
+          "value": null,
+          "unit": null,
+          "scope": "HyperAIRI hours vs WSClean ~0.56 h",
+          "baseline": "WSClean",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "HyperAIRI still reports hours (~1.9 hr) vs WSClean ≈0.56 hr on the VLA benchmark."
+        }
+      ]
+    },
+    "2026arXiv260115844M": {
+      "cohort": "r2d2",
+      "title": "Radio-Interferometric Image Reconstruction with Denoising Diffusion Restoration Models",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "reconstruction_per_image",
+          "value": 45.47,
+          "unit": "s",
+          "scope": "DDRM sampling at K=1000 (VLA, batch 128)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "Single NVIDIA GH200",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": "Sampling steps K=10…1000; batch size 128",
+            "workload": "VLA (also EHT/ALMA at K=1000)"
+          },
+          "evidence": "K=10: 0.44 s … K=1000: 45.47 s on GH200; used K=1000 for subsequent results."
+        },
+        {
+          "category": "runtime_scaling",
+          "submetric": "iteration_count",
+          "value": null,
+          "unit": null,
+          "scope": "Sampling time scales linearly with steps K",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": "NVIDIA GH200",
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "Sampling time grows roughly linearly with K from 0.44 s (K=10) to 45.47 s (K=1000)."
+        }
+      ]
+    },
+    "2026arXiv260526347D": {
+      "cohort": "r2d2",
+      "title": "A distributed resource-adaptive implementation of the widefield radio-interferometric measurement model for scalable image formation",
+      "runtime_details": [
+        {
+          "category": "wall_clock",
+          "submetric": "fft_ifft",
+          "value": null,
+          "unit": null,
+          "scope": "FFT dominates total application runtime (Fig. 8)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": "Distributed 1–10 CPU nodes; adaptive workers vs available cores",
+            "software": "Distributed widefield measurement-model implementation",
+            "numerical_configuration": null,
+            "workload": "e.g. MeerKAT ESO 137-006; runtime grows with w-layers (23→126)"
+          },
+          "evidence": "FFT computations dominate total application runtime; de-gridding/gridding matvecs almost negligible; total time grows with number of w-layers."
+        },
+        {
+          "category": "wall_clock",
+          "submetric": "gridding",
+          "value": null,
+          "unit": null,
+          "scope": "De-gridding/gridding matvecs nearly negligible vs FFT",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": "1–10 CPU nodes",
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "De-gridding/gridding matrix-vector products are almost negligible compared with FFT cost."
+        },
+        {
+          "category": "relative_performance",
+          "submetric": "runtime_ratio",
+          "value": null,
+          "unit": null,
+          "scope": "High-precision measurement operator vs CLEAN (within one order of magnitude)",
+          "baseline": "CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": "MeerKAT ESO 137-006"
+          },
+          "evidence": "Proposed high-precision measurement operator achieves imaging cost within one order of magnitude of CLEAN."
+        }
+      ]
+    },
+    "2026arXiv260628493D": {
+      "cohort": "r2d2",
+      "title": "The Role of Artificial Intelligence in the SKA Era",
+      "runtime_details": [
+        {
+          "category": "unspecified",
+          "submetric": "unspecified",
+          "value": null,
+          "unit": null,
+          "scope": "Review discusses inference speed / computational cost qualitatively without primary timing measurements",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "hardware": null,
+            "parallelism": null,
+            "software": null,
+            "numerical_configuration": null,
+            "workload": null
+          },
+          "evidence": "SKA-era AI review cites R2D2/AIRI/U-Net speed qualitatively ('CLEAN-like speeds', 'extreme inference speed') but does not report dedicated own wall-clock or throughput measurements. Left as Unspecified Runtime rather than silently typed as end-to-end."
+        }
+      ]
+    }
+  }
+}
