@@ -50,6 +50,24 @@ CG-CLEAN (2026) emphasizes **major-loop iteration count** because gridding/FFT c
 - **Analytic iteration-count models**: operation ratios (MRC/CLEAN ≈0.25–0.6; modified vs standard CLEAN work formulas).
 - **Active-set / Aspen count**: Asp-Clean dynamic search-space size vs iteration (qualitative convergence plots).
 
+## Iterations details page
+
+The main metrics graph keeps a single binary **Iters** column. Drill-down lives at [`iterations.html`](../iterations.html) (linked as **Explore Iterations Details** when Iters is selected on `index.html`).
+
+Reporting categories (a paper may appear in more than one — category totals can exceed Iterations-positive paper counts):
+
+| Category | Sub-metrics |
+|---|---|
+| Iteration Count | total_optimisation_iterations, outer_iterations, inner_iterations, epochs, training_iterations, inference_iterations |
+| Convergence Behaviour | iterations_to_convergence, convergence_rate, early_stopping, convergence_tolerance_reached, stable_solution_achieved, divergence_failure |
+| Comparative Iteration Performance | fewer_than_baseline, more_than_baseline, percentage_iteration_reduction, iteration_ratio |
+| Iteration Scaling | image_size, visibility_count, source_count, noise_level, stopping_tolerance, algorithm_parameters |
+| Unspecified Iterations | unspecified (extraction limitation; not silently overclassified) |
+
+**Iteration Context** (separate panel): Stopping criterion, Convergence threshold, Maximum iterations allowed, Optimiser, Learning rate, Batch size, Initialisation method, Regularisation parameters — reporting-completeness counts only. Context is not itself an Iterations sub-metric. Stopping criteria alone are not Iteration Count subtypes unless the paper also reports iteration numbers or convergence behaviour as results.
+
+Structured data: `iterations_details` arrays on Iterations-positive papers in `papers-data.json` (optional mirror `data/iterations-details.json`). Taxonomy: `iterations-taxonomy.js`. Injector: `scripts/inject_iterations_details.py`.
+
 ## Gaps and caveats
 
 - **Incommensurable units**: one R2D2 series iteration (data fidelity + DNN) is not equivalent to one CLEAN minor cycle or one uSARA proximal step; cross-method iteration comparison is indicative, not normalized compute.

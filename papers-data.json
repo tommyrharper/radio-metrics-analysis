@@ -31,7 +31,29 @@
           "Green Bank qualitative iteration study (3C 244.1 at 2695 MHz): Figure 3 compares the dirty map with cleaned maps after 1, 2, and 6 iterations, all using loop gain 1. The data contain 50 interferometer baselines, corresponding to 100 measured amplitudes and phases. Högbom states that the six-iteration map can be described by fewer than 30 numbers, and attributes the later visual improvement to removal of sidelobes from weaker features left after two iterations. Contour maps provide the fidelity evidence; no ground-truth error is available."
         ],
         "astrometric_accuracy": []
-      }
+      },
+      "iterations_details": [
+        {
+          "category": "iteration_count",
+          "submetric": "total_optimisation_iterations",
+          "value": 6,
+          "unit": "CLEAN iterations",
+          "scope": "Green Bank 3C 244.1 qualitative CLEAN study",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": "Stop when next residual peak is no longer significant relative to map noise",
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": "Loop gain 1"
+          },
+          "evidence": "Figure 3 compares dirty and cleaned maps after 1, 2, and 6 CLEAN iterations (gain 1). Reported algorithmic cycle counts, not wall-clock."
+        }
+      ]
     },
     {
       "cohort": "classic",
@@ -128,6 +150,48 @@
           },
           "evidence": "Machine had 32 kwords of main memory; beam patch constrained between 21×41 and 64×127 elements. Implementation memory footprint, not a reconstruction-quality score."
         }
+      ],
+      "iterations_details": [
+        {
+          "category": "iteration_count",
+          "submetric": "outer_iterations",
+          "value": null,
+          "unit": null,
+          "scope": "Clark CLEAN major-cycle structure and stopping",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": "Major-cycle ends minor iteration N when map max falls below S_limit",
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": "Gain-dependent minor-cycle limit (e.g. ~250 at gain 0.5)"
+          },
+          "evidence": "Describes major cycles that batch approximate minor-cycle components then correct in the Fourier domain; empirical major/minor stopping behaviour."
+        },
+        {
+          "category": "iteration_count",
+          "submetric": "inner_iterations",
+          "value": 250,
+          "unit": "components per major cycle (approx.)",
+          "scope": "Minor-cycle component counts vs gain",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": "Typically ~250 components at gain 0.5; first major cycle often 5–6"
+          },
+          "evidence": "First major cycle usually removes ~5–6 components, increasing toward a map- and gain-dependent limit (~250 at gain 0.5)."
+        }
       ]
     },
     {
@@ -189,6 +253,68 @@
             "workload": null
           },
           "evidence": "Analytical work estimates compare standard CLEAN, modified (SDI) CLEAN, and Clark CLEAN via operation-count formulae in image size M and iteration counts. Algorithmic models, not measured hardware timings."
+        }
+      ],
+      "iterations_details": [
+        {
+          "category": "iteration_count",
+          "submetric": "total_optimisation_iterations",
+          "value": 17,
+          "unit": "modified CLEAN iterations",
+          "scope": "Noise-free 64×64 synthetic test",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": "Modified CLEAN Tc=0.55; comparison CLEAN 15% central beam spike"
+          },
+          "evidence": "Modified CLEAN uses 17 iterations vs standard CLEAN 2,000 subtractions on the same 64×64 test."
+        },
+        {
+          "category": "comparative_iteration",
+          "submetric": "iteration_ratio",
+          "value": null,
+          "unit": null,
+          "scope": "Modified vs standard CLEAN iteration counts",
+          "baseline": "standard CLEAN (2,000 subtractions)",
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "17 modified-CLEAN iterations versus 2,000 standard CLEAN subtractions on the noise-free test — large iteration-count ratio."
+        },
+        {
+          "category": "iteration_scaling",
+          "submetric": "image_size",
+          "value": null,
+          "unit": null,
+          "scope": "Analytic work vs iteration count and image size M",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Work estimates Ns≈2QsM and Nm≈QmM(4log(M)/2+4) couple iteration counts Q to image size M (and Clark major/minor counts)."
         }
       ]
     },
@@ -337,6 +463,28 @@
             "workload": null
           },
           "evidence": "Authors count convolutions, masking, decimation, component subtraction, and map recombination to predict when MRC has lower operation count for extended sources vs overhead for compact sources."
+        }
+      ],
+      "iterations_details": [
+        {
+          "category": "iteration_count",
+          "submetric": "inner_iterations",
+          "value": null,
+          "unit": "search-mask iterations",
+          "scope": "MRC search-mask iteration range in cost model",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": "Typical f=2–4; 3–6 search-mask iterations"
+          },
+          "evidence": "Cost model assumes 3–6 search-mask iterations (with decimation factor f=2–4). Iteration counts enter the work estimate; MRC/CLEAN op ratios are Compute, not Iterations."
         }
       ]
     },
@@ -521,6 +669,28 @@
             "workload": null
           },
           "evidence": "Active-set heuristic and Asp vs MS-Clean comparisons are framed as wall-clock performance ('takes about three times as long'). No CPU-hours, memory, FLOPs, or energy. Left Unspecified for Compute; Runtime covers the ratios."
+        }
+      ],
+      "iterations_details": [
+        {
+          "category": "convergence_behaviour",
+          "submetric": "stable_solution_achieved",
+          "value": null,
+          "unit": null,
+          "scope": "Asp-Clean residual/active-set vs iteration plots",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": "Components dropped below L0=λΣIR",
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": "User λ trades sparsity vs residual"
+          },
+          "evidence": "Figures track Asp width, active Aspen count, and residual area vs iteration; large components stabilize and leave the active set. Qualitative convergence behaviour without a numeric iterations-to-solution table."
         }
       ]
     },
@@ -741,6 +911,28 @@
           },
           "evidence": "Each w-plane used a 512×512 complex-pixel kernel requiring 2 MB; greater convolution support raises memory demand. Host machine had 3 GB RAM. Absolute memory footprint for w-projection kernels."
         }
+      ],
+      "iterations_details": [
+        {
+          "category": "iteration_count",
+          "submetric": "total_optimisation_iterations",
+          "value": 20000,
+          "unit": "CLEAN iterations",
+          "scope": "Fixed CLEAN budget for all w-projection DR benchmarks",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": "20,000 CLEAN iterations",
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": "Loop gain 0.1"
+          },
+          "evidence": "Every image CLEANed for 20,000 iterations (gain 0.1) on 1536×1536. Fixed iteration budget, not wall-clock."
+        }
       ]
     },
     {
@@ -834,6 +1026,68 @@
           },
           "evidence": "Multiscale CLEAN was slower than every comparator in this measured M31 run despite lowest CLEAN-family RMS error."
         }
+      ],
+      "iterations_details": [
+        {
+          "category": "iteration_count",
+          "submetric": "total_optimisation_iterations",
+          "value": 1000,
+          "unit": "multiscale CLEAN iterations",
+          "scope": "NGC 1058 VLA D-config channel",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": "Stopping threshold 4σ",
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": "Loop gain 1.0; scales 0–24 px"
+          },
+          "evidence": "Multiscale CLEAN used 1,000 iterations on NGC 1058 real data."
+        },
+        {
+          "category": "convergence_behaviour",
+          "submetric": "iterations_to_convergence",
+          "value": 5000,
+          "unit": "iterations",
+          "scope": "M31 simulation multiscale CLEAN",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Multiscale CLEAN converged in 5,000 iterations on the M31 simulation."
+        },
+        {
+          "category": "convergence_behaviour",
+          "submetric": "divergence_failure",
+          "value": 300000,
+          "unit": "components",
+          "scope": "Clark CLEAN on M31 simulation",
+          "baseline": "Multiscale CLEAN (converged)",
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Clark CLEAN diverged beyond ~300,000 components while still ~7% low in flux vs truth."
+        }
       ]
     },
     {
@@ -880,7 +1134,29 @@
           "Taylor-order numerical test (noise-free 1 Jy point source): for 2:1 band and four Taylor terms, reference-frequency peak-flux error ≈ 1 part in 1,000 (with DR ≈ 100,000)."
         ],
         "astrometric_accuracy": []
-      }
+      },
+      "iterations_details": [
+        {
+          "category": "iteration_count",
+          "submetric": "total_optimisation_iterations",
+          "value": 10,
+          "unit": "iterations (max)",
+          "scope": "Taylor-order EVLA point-source numerical tests",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": "1 μJy stopping threshold",
+            "maximum_iterations": "At most ten iterations",
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": "Loop gain 1"
+          },
+          "evidence": "Noise-free EVLA simulations used at most ten iterations (gain 1, 1 μJy stop)."
+        }
+      ]
     },
     {
       "cohort": "classic",
@@ -1195,6 +1471,28 @@
           },
           "evidence": "Reducing a 3072-pixel inversion to ~1500 pixels saved roughly a factor of 2 at 10° zenith; at 10,000 output pixels cost fell by about an order of magnitude. Framed as computational cost reduction for reduced-resolution inversion."
         }
+      ],
+      "iterations_details": [
+        {
+          "category": "iteration_count",
+          "submetric": "outer_iterations",
+          "value": 5,
+          "unit": "major iterations",
+          "scope": "WSClean accuracy-test and cross-array projections",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": "Five major iterations in Table 3 / projections",
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Accuracy tests and SKA-era projections fix five major iterations (Cotton–Schwab outer loops)."
+        }
       ]
     },
     {
@@ -1333,6 +1631,48 @@
           },
           "evidence": "Quantitative compute claims are wall-clock seconds and minor iterations/s versus CASA/MORESANE/IUWT. No CPU-hours, energy, FLOPs, or memory scores. Left Unspecified for Compute; Runtime covers throughput/wall-clock."
         }
+      ],
+      "iterations_details": [
+        {
+          "category": "iteration_count",
+          "submetric": "outer_iterations",
+          "value": 3,
+          "unit": "major cycles",
+          "scope": "WSClean single-frequency minor-loop speed test",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "WSClean three major cycles perform 142, 2409, and 97,449 minor iterations on 2048² multi-scale CLEAN."
+        },
+        {
+          "category": "iteration_count",
+          "submetric": "inner_iterations",
+          "value": 100000,
+          "unit": "minor iterations",
+          "scope": "Minor-loop throughput benchmarks vs CASA",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": "100,000 minor iterations in speed tests",
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Benchmarks quote 10k–100k minor iterations and iterations/s (throughput is Runtime; the iteration counts are Iterations)."
+        }
       ]
     },
     {
@@ -1454,6 +1794,28 @@
             "workload": "VLA B-configuration test; decorrelation limits 0.001–0.04"
           },
           "evidence": "Baseline-dependent averaging yields per-facet gridding speedup rising to roughly 4–5× then flattening at about 4× because memory access becomes limiting. Computational savings test, not fidelity."
+        }
+      ],
+      "iterations_details": [
+        {
+          "category": "iteration_count",
+          "submetric": "outer_iterations",
+          "value": 5,
+          "unit": "HMP major cycles",
+          "scope": "3C147 faceted L-band imaging",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": "Clean to 0.4 mJy",
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Five HMP major cycles clean the 5100×5100 / 529-facet 3C147 image to 0.4 mJy."
         }
       ]
     },
@@ -1578,6 +1940,28 @@
             "workload": null
           },
           "evidence": "Primary measured scores are visibility/s throughput and wall-clock (Runtime). Avoiding oversampled kernel storage is qualitative; GPU Tflop rating is hardware context, not a reported compute cost. Left Unspecified for Compute."
+        }
+      ],
+      "iterations_details": [
+        {
+          "category": "iteration_count",
+          "submetric": "outer_iterations",
+          "value": 4,
+          "unit": "major cycles",
+          "scope": "LOFAR observed-data IDG scaling run",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": "100 mJy cleaning threshold",
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "LOFAR job with Briggs robust 0 requires four major cycles (~20 min each) to the 100 mJy threshold."
         }
       ]
     },
@@ -2139,6 +2523,48 @@
           },
           "evidence": "Training takes about 170 s per epoch and just over 14 h for 300 epochs on an RTX 2080. Training compute budget (GPU time), not inference wall-clock alone. CPU/GPU utilisation and energy not separated."
         }
+      ],
+      "iterations_details": [
+        {
+          "category": "iteration_count",
+          "submetric": "epochs",
+          "value": 300,
+          "unit": "epochs",
+          "scope": "Radionets CNN training",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": "300 epochs",
+            "optimiser": "ADAM",
+            "learning_rate": "2×10⁻⁴",
+            "batch_size": "64",
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Training uses ADAM for 300 epochs (batch 64, lr 2e-4); ~170 s/epoch."
+        },
+        {
+          "category": "iteration_count",
+          "submetric": "total_optimisation_iterations",
+          "value": 50000,
+          "unit": "CLEAN iterations",
+          "scope": "CLEAN baseline imaging setup for 10,000 sources",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": "50,000 CLEAN iterations",
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": "Major-cycle gain 0.3; gain 0.005"
+          },
+          "evidence": "CLEAN comparison path uses 50,000 iterations (major-cycle gain 0.3, gain 0.005) on 64-pixel maps."
+        }
       ]
     },
     {
@@ -2236,6 +2662,28 @@
             "workload": null
           },
           "evidence": "AIRI imaging uses about 2.3× fewer CPU-hours than uSARA but about 4× the imaging compute of WSClean; including operator construction makes AIRI about 7× as costly as WSClean."
+        }
+      ],
+      "iterations_details": [
+        {
+          "category": "unspecified",
+          "submetric": "unspecified",
+          "value": null,
+          "unit": null,
+          "scope": "AIRI/uSARA described as iterative PnP without reported iteration counts",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": "Forward-backward / plug-and-play iterations",
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Method uses forward-backward PnP iterations, but this paper does not report countable iteration totals, epochs, or convergence iteration results. Left Unspecified."
         }
       ]
     },
@@ -2364,7 +2812,29 @@
           "No dedicated summary bullet was auto-matched for this metric. It was classified from the paper summary overall; see the paper page for full context."
         ],
         "astrometric_accuracy": []
-      }
+      },
+      "iterations_details": [
+        {
+          "category": "unspecified",
+          "submetric": "unspecified",
+          "value": null,
+          "unit": null,
+          "scope": "PRIMO MCMC inference without imaging-iteration counts",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": "MARCH MCMC",
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "PRIMO fits PCA coefficients via MCMC and contrasts with CLEAN minor cycles conceptually, but reports no imaging iteration counts or epochs-to-solution. Left Unspecified."
+        }
+      ]
     },
     {
       "cohort": "emerging",
@@ -2503,6 +2973,28 @@
             "workload": null
           },
           "evidence": "Paper characterizes uSARA's MATLAB prototype as about 20× more costly on average and WSClean as roughly an order of magnitude faster (resource/cost framing alongside wall time)."
+        }
+      ],
+      "iterations_details": [
+        {
+          "category": "unspecified",
+          "submetric": "unspecified",
+          "value": null,
+          "unit": null,
+          "scope": "uSARA ASKAP imaging; max CLEAN iters only as config",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "stopping_criterion": "WSClean stop at residual standard deviation; auto-mask 2.5× residual σ",
+            "convergence_threshold": null,
+            "maximum_iterations": "WSClean at most 1,000,000 iterations",
+            "optimiser": "Forward-backward iterations with iterative reweighting",
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": "WSClean loop gain 0.8; uSARA step 1.98/L; ASKAP λ scaled to 0.7–0.8 of heuristic"
+          },
+          "evidence": "uSARA is iterative and WSClean is capped at 1e6 iterations, but the paper does not report achieved iteration counts or convergence-iteration results. Stopping/max-iter config only → Unspecified (context captured separately)."
         }
       ]
     },
@@ -2736,6 +3228,108 @@
           },
           "evidence": "R2D2: 160 GPU-h + 4757 CPU-h. R3D3-3L: 1291 GPU-h + 2165 CPU-h; R3D3-6L: 1276 GPU-h + 2244 CPU-h. R2D2 uses ~80% fewer training GPU-hours than R3D3 but about twice the CPU-hours."
         }
+      ],
+      "iterations_details": [
+        {
+          "category": "iteration_count",
+          "submetric": "outer_iterations",
+          "value": 9,
+          "unit": "CLEAN major cycles (mean)",
+          "scope": "Generic R2D2 benchmark Table 2",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "CLEAN averages 9±1 major cycles on the generic test set."
+        },
+        {
+          "category": "iteration_count",
+          "submetric": "total_optimisation_iterations",
+          "value": 5000,
+          "unit": "iterations",
+          "scope": "uSARA / AIRI vs R2D2-family on generic tests",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": "AIRI often fixed at 5000",
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "uSARA 1103±373 iterations; AIRI 5000 fixed; contrasts with short R2D2 series lengths."
+        },
+        {
+          "category": "iteration_count",
+          "submetric": "inference_iterations",
+          "value": 15,
+          "unit": "R2D2 series iterations (training/inference setup)",
+          "scope": "R2D2 / R3D3 series length",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": "Plain R2D2 trained for 15 outer iterations; R3D3 7–8",
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "R2D2 trains ~15 outer residual-series iterations (R3D3 variants 7–8); inference series length fixed during training."
+        },
+        {
+          "category": "iteration_count",
+          "submetric": "training_iterations",
+          "value": 15,
+          "unit": "outer training series slots",
+          "scope": "Sequential per-iteration DNN training",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Experiments train plain R2D2 for 15 outer iterations and R3D3 for 7–8 — training-series depth distinct from single-pass U-Net."
+        },
+        {
+          "category": "comparative_iteration",
+          "submetric": "fewer_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "R2D2 O(10) series vs uSARA/AIRI O(10³)",
+          "baseline": "uSARA / AIRI iteration counts",
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "R2D2-family needs far fewer iterations than uSARA (~1100) and AIRI (5000) while matching morphology."
+        }
       ]
     },
     {
@@ -2857,6 +3451,48 @@
           },
           "evidence": "Scalability demonstration contrasts ~24 GPU-h (+2 CPU-h precompute) against 900–3000 CPU-hours per band for prior methods on the large MeerKAT field."
         }
+      ],
+      "iterations_details": [
+        {
+          "category": "iteration_count",
+          "submetric": "outer_iterations",
+          "value": 28,
+          "unit": "major cycles",
+          "scope": "MeerKAT ESO 137-006 scalability run",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "fast-resolve completes MeerKAT case over 25–28 major cycles (CLEAN-style outer loops)."
+        },
+        {
+          "category": "convergence_behaviour",
+          "submetric": "convergence_rate",
+          "value": null,
+          "unit": null,
+          "scope": "Mean-squared log-brightness residual between successive iterations",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": "Successive-iteration mean-squared residual in log-brightness (Fig. 5)",
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Convergence diagnostic tracks mean-squared residual between successive iterations over wall-clock/hardware — convergence behaviour, not Runtime."
+        }
       ]
     },
     {
@@ -2977,6 +3613,88 @@
           },
           "evidence": "Paper concludes R2D2 variants incur only a fraction of the reconstruction cost of optimization-based methods. Numeric seconds remain Runtime; the cross-method cost framing supports a relative Compute entry."
         }
+      ],
+      "iterations_details": [
+        {
+          "category": "iteration_count",
+          "submetric": "total_optimisation_iterations",
+          "value": 1783,
+          "unit": "iterations",
+          "scope": "Cygnus A head-to-head iteration table",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Reported iterations: Hö-CLEAN 1; CS-CLEAN 7; MS-CLEAN 9; R2D2 15; R3D3 8; R2D2-Net 1; uSARA 477; AIRI 1783."
+        },
+        {
+          "category": "iteration_count",
+          "submetric": "inference_iterations",
+          "value": 15,
+          "unit": "series iterations",
+          "scope": "R2D2 / R3D3 / R2D2-Net on Cygnus A",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "R2D2 15 series iterations; R3D3 8; R2D2-Net single unrolled iteration."
+        },
+        {
+          "category": "comparative_iteration",
+          "submetric": "fewer_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "R2D2-family vs uSARA/AIRI iteration counts",
+          "baseline": "uSARA 477 / AIRI 1783",
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "R2D2-Net needs only 1 iteration and R3D3 8 vs hundreds/thousands for uSARA/AIRI."
+        },
+        {
+          "category": "comparative_iteration",
+          "submetric": "iteration_ratio",
+          "value": null,
+          "unit": null,
+          "scope": "Cross-method iteration table on Cygnus A",
+          "baseline": "CLEAN-family and PnP baselines",
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Direct iteration-count comparison across CLEAN variants, R2D2-family, uSARA, and AIRI."
+        }
       ]
     },
     {
@@ -3076,6 +3794,68 @@
             "workload": "MeerKAT M31 1/2/4/8 h syntheses"
           },
           "evidence": "As synthesis time increases (1/2/4/8 h; 3×10⁴–2.4×10⁵ visibilities), reconstruction wall-clock 17.0–105.3 s and fast-pixel UQ 0.28–1.26 s."
+        }
+      ],
+      "iterations_details": [
+        {
+          "category": "iteration_count",
+          "submetric": "total_optimisation_iterations",
+          "value": 11000000,
+          "unit": "measurement-operator evaluations",
+          "scope": "W28 UQ Table 5 operator-evaluation counts",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": "FISTA MAP; SK-ROCK MCMC for UQ baseline",
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Reports measurement-operator evaluation counts as iteration-like work: MCMC 11×10⁶; LCIs 21k–81k; fast pixel UQ 28."
+        },
+        {
+          "category": "comparative_iteration",
+          "submetric": "fewer_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "Fast pixel UQ vs MCMC/LCI operator evaluations",
+          "baseline": "MCMC sampling operator evaluations",
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Fast pixel UQ uses 3–6 orders of magnitude fewer likelihood/operator evaluations than LCIs and MCMC."
+        },
+        {
+          "category": "comparative_iteration",
+          "submetric": "iteration_ratio",
+          "value": null,
+          "unit": null,
+          "scope": "Orders-of-magnitude fewer operator evaluations",
+          "baseline": "MCMC / LCI evaluation counts",
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Headline claim: fast UQ uses orders of magnitude fewer operator evaluations than MCMC-based UQ."
         }
       ]
     },
@@ -3210,6 +3990,88 @@
           },
           "evidence": "Parameter counts reported alongside training/inference cost: AIRI 0.6M, U-Net 31M, R2D2/R2D2-Net 248M, NC-PDNet 1.6M — model size as resource footprint."
         }
+      ],
+      "iterations_details": [
+        {
+          "category": "iteration_count",
+          "submetric": "inference_iterations",
+          "value": 8,
+          "unit": "R2D2 series iterations",
+          "scope": "NC-MRI R2D2 SNR vs series length",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "SNR/logSNR vs R2D2 iterations (1–8); R2D2 needs ~8 networks. U-Net/R2D2-Net reported as 1 iteration."
+        },
+        {
+          "category": "iteration_count",
+          "submetric": "total_optimisation_iterations",
+          "value": 616,
+          "unit": "AIRI PnP iterations",
+          "scope": "Table II iteration counts vs learned methods",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "AIRI 616±138 PnP iterations vs U-Net/R2D2-Net 1 and short R2D2 series."
+        },
+        {
+          "category": "convergence_behaviour",
+          "submetric": "iterations_to_convergence",
+          "value": 8,
+          "unit": "series iterations",
+          "scope": "Performance rises and plateaus vs series length",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "SNR/logSNR rises with series length and converges by ~8 R2D2 iterations."
+        },
+        {
+          "category": "comparative_iteration",
+          "submetric": "fewer_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "R2D2 ~8 vs AIRI ~616",
+          "baseline": "AIRI PnP iteration count",
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "R2D2 needs only ~8 networks versus AIRI's hundreds of PnP iterations."
+        }
       ]
     },
     {
@@ -3294,6 +4156,88 @@
             "workload": null
           },
           "evidence": "R2D2 is orders of magnitude faster than CLEAN, uSARA and AIRI, enabling multiple reconstructions for UQ."
+        }
+      ],
+      "iterations_details": [
+        {
+          "category": "iteration_count",
+          "submetric": "inference_iterations",
+          "value": 12,
+          "unit": "R2D2 series iterations",
+          "scope": "Simulated test + 3C 353 case study",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "R2D2 12 iterations (2.0±0.4 s); U-Net baseline is iteration 1 of the series."
+        },
+        {
+          "category": "iteration_count",
+          "submetric": "total_optimisation_iterations",
+          "value": 4995,
+          "unit": "iterations",
+          "scope": "Table I CLEAN / AIRI / uSARA iteration counts",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "CLEAN 8±1; AIRI 4995±50; uSARA 1107±377 iterations alongside R2D2's 12."
+        },
+        {
+          "category": "convergence_behaviour",
+          "submetric": "iterations_to_convergence",
+          "value": 12,
+          "unit": "series iterations",
+          "scope": "SNR/logSNR progression across R2D2 series",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "R2D2 converges to ~33 dB SNR by final iteration i=12 (from ~28 dB at iteration 1)."
+        },
+        {
+          "category": "comparative_iteration",
+          "submetric": "fewer_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "R2D2 12 vs AIRI/uSARA thousands",
+          "baseline": "AIRI / uSARA",
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "R2D2 uses orders of magnitude fewer iterations than AIRI (~5000) and uSARA (~1100)."
         }
       ]
     },
@@ -3723,6 +4667,88 @@
           },
           "evidence": "Derived scaling m·N·(8l/k) used to argue the method avoids super-linear complexity growth relative to CLEAN. Analytic compute complexity; wall-clock residual curves are Runtime."
         }
+      ],
+      "iterations_details": [
+        {
+          "category": "iteration_count",
+          "submetric": "inner_iterations",
+          "value": null,
+          "unit": "subminor / minor-cycle iterations",
+          "scope": "Autocorr-CLEAN residual vs (sub)minor iterations",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Fig. 4: residual vs subminor-cycle iterations with l ≪ k ≪ m (subminor loops ≪ basis components ≪ classical CLEAN iterations)."
+        },
+        {
+          "category": "comparative_iteration",
+          "submetric": "fewer_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "Autocorr-CLEAN vs classical CLEAN / Asp-CLEAN",
+          "baseline": "classical CLEAN minor-cycle iterations",
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Autocorr-CLEAN needs substantially fewer (sub)minor iterations than classical CLEAN to reach a given residual."
+        },
+        {
+          "category": "iteration_scaling",
+          "submetric": "image_size",
+          "value": null,
+          "unit": null,
+          "scope": "Complexity model m·N·(8l/k)",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Derived scaling m·N·(8l/k) couples total CLEAN iterations m and pixel count N to argue against super-linear growth vs CLEAN."
+        },
+        {
+          "category": "iteration_scaling",
+          "submetric": "algorithm_parameters",
+          "value": null,
+          "unit": null,
+          "scope": "Dependence on l, k relative to m",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Iteration relation l ≪ k ≪ m ties subminor loops and autocorrelation basis size to classical CLEAN iteration count."
+        }
       ]
     },
     {
@@ -3804,6 +4830,68 @@
             "workload": null
           },
           "evidence": "Across all three test cases ISCAD attains the lowest runtime of the four methods."
+        }
+      ],
+      "iterations_details": [
+        {
+          "category": "iteration_count",
+          "submetric": "total_optimisation_iterations",
+          "value": null,
+          "unit": null,
+          "scope": "ISCAD vs SARA/AIRI/LPG iteration counts with SNR/runtime",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Iteration count reported alongside S/N and runtime for SARA/AIRI/LPG/ISCAD on Messier 106 and other cases."
+        },
+        {
+          "category": "convergence_behaviour",
+          "submetric": "iterations_to_convergence",
+          "value": null,
+          "unit": null,
+          "scope": "ISCAD converges in fewer iterations than LPG",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "ISCAD converges in fewer iterations than LPG while attaining higher S/N / S/N_log."
+        },
+        {
+          "category": "comparative_iteration",
+          "submetric": "fewer_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "ISCAD vs LPG iteration counts",
+          "baseline": "LPG",
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Explicit fewer-iterations claim vs LPG (with matched fidelity/runtime tables)."
         }
       ]
     },
@@ -3971,6 +5059,148 @@
             "workload": null
           },
           "evidence": "Full series training: R2D2_A1,T2 231.6 GPU·hr; R2D2_A2,T2 420.9 GPU·hr. Standalone single-network training 85.6 GPU·hr (U-Net) and 165.7 GPU·hr (U-WDSR). Reconstruction seconds remain Runtime."
+        }
+      ],
+      "iterations_details": [
+        {
+          "category": "iteration_count",
+          "submetric": "inference_iterations",
+          "value": 15.8,
+          "unit": "series iterations (mean)",
+          "scope": "Robust R2D2 Table 4 setup E2",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": "Data-fidelity-based series convergence criterion on residual dirty image",
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "R2D2_A2,T2 needs 15.8±5.5 series iterations; R2D2_A1,T2 18.3±5.6; vs AIRI 5000 and uSARA ~1482."
+        },
+        {
+          "category": "iteration_count",
+          "submetric": "training_iterations",
+          "value": 25,
+          "unit": "training series iterations",
+          "scope": "Table 2 full R2D2 series training",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": "25 training-series iterations",
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Full R2D2 series training uses 25 iterations (U-Net / U-WDSR); distinct from adaptive inference length."
+        },
+        {
+          "category": "convergence_behaviour",
+          "submetric": "iterations_to_convergence",
+          "value": 15,
+          "unit": "series iterations",
+          "scope": "Cygnus A real-data convergence",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": "Series halts once residual dirty image compatible with noise",
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Cygnus A iteration counts to convergence: 12 / 16 / 15 for R2D2_A1,T1 / A1,T2 / A2,T2."
+        },
+        {
+          "category": "convergence_behaviour",
+          "submetric": "early_stopping",
+          "value": null,
+          "unit": null,
+          "scope": "Adaptive series halt vs fixed AIRI budget",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": "Data-fidelity residual dirty-image compatibility criterion",
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Introduces a convergence criterion that halts the DNN series once the residual dirty image is noise-compatible, rather than always running a fixed max."
+        },
+        {
+          "category": "convergence_behaviour",
+          "submetric": "divergence_failure",
+          "value": null,
+          "unit": null,
+          "scope": "CLEAN diverged on 3 of the test problems",
+          "baseline": "R2D2 models",
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "CLEAN diverged on 3 test problems in setup E2 (alongside poor mean SNR)."
+        },
+        {
+          "category": "comparative_iteration",
+          "submetric": "fewer_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "R2D2 ~16 vs AIRI 5000 / uSARA ~1482",
+          "baseline": "AIRI / uSARA",
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "R2D2 inference series (~16) vs AIRI fixed 5000 and uSARA ~1482 iterations."
+        },
+        {
+          "category": "comparative_iteration",
+          "submetric": "more_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "R2D2 series vs single-iteration U-Net/U-WDSR",
+          "baseline": "standalone end-to-end U-Net / U-WDSR (1 iteration)",
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Standalone U-Net/U-WDSR use 1 iteration only (and underperform); R2D2 uses a multi-iteration series."
         }
       ]
     },
@@ -4743,6 +5973,88 @@
           },
           "evidence": "iR2D2 shows shallower (near-linear) training-time growth with number of coils than unrolled architectures, attributed to avoiding NUFFT inside backprop. Problem-size scaling of training compute."
         }
+      ],
+      "iterations_details": [
+        {
+          "category": "iteration_count",
+          "submetric": "inference_iterations",
+          "value": 11,
+          "unit": "series iterations",
+          "scope": "iR2D2 vs R2D2 U-WDSR series length",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": "Adaptive stopping via RDR / update condition (UC)",
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "R2D2(U-WDSR) converges at i≈3; iR2D2(U-WDSR) at i≈11 due to interlaced image/sensitivity structure."
+        },
+        {
+          "category": "iteration_count",
+          "submetric": "outer_iterations",
+          "value": 11,
+          "unit": "DNN series steps",
+          "scope": "Interlaced outer residual series",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Series length is the outer residual-DNN iteration count (not CLEAN minor cycles)."
+        },
+        {
+          "category": "convergence_behaviour",
+          "submetric": "iterations_to_convergence",
+          "value": 11,
+          "unit": "series iterations",
+          "scope": "RDR-tracked adaptive stopping",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": "RDR-driven adaptive stopping with monotonic residual-energy update condition",
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Converges at series length i≈3 (R2D2) or i≈11 (iR2D2); ablation without UC shows residual spikes."
+        },
+        {
+          "category": "convergence_behaviour",
+          "submetric": "convergence_tolerance_reached",
+          "value": null,
+          "unit": null,
+          "scope": "RDR / update-condition halt",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": "RDR = ‖r‖₂/‖x_b‖₂ used to drive stopping",
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "RDR tracked over series iterations to diagnose and drive the adaptive stopping condition."
+        }
       ]
     },
     {
@@ -4879,6 +6191,88 @@
           },
           "evidence": "Cites ~100 Tflop/s for ALMA WSU and ~50 Pflop/s for ngVLA, with gridding as dominant computational cost (NRAO/ALMA memos). Facility FLOP/s budgets framed as compute cost; fidelity comparisons remain qualitative."
         }
+      ],
+      "iterations_details": [
+        {
+          "category": "iteration_count",
+          "submetric": "outer_iterations",
+          "value": null,
+          "unit": "major-loop iterations",
+          "scope": "ngVLA review of CG/Momentum-CLEAN residual vs major-loop iteration",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Review shows CG-CLEAN and Momentum-CLEAN drive major-loop residuals down more efficiently than traditional CLEAN."
+        },
+        {
+          "category": "iteration_count",
+          "submetric": "inner_iterations",
+          "value": 4000,
+          "unit": "Högbom iterations (example)",
+          "scope": "Cygnus A Autocorr-CLEAN vs Högbom",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Högbom needs ~4000 iterations / 227 s to match a residual level Autocorr-CLEAN reaches with far fewer minor iterations."
+        },
+        {
+          "category": "comparative_iteration",
+          "submetric": "fewer_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "Autocorr-CLEAN / Asp-CLEAN / CG-CLEAN vs Högbom",
+          "baseline": "Högbom CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Autocorr-CLEAN and Asp-CLEAN reduce minor-loop iteration counts by up to an order of magnitude vs Högbom; CG-CLEAN reduces major loops."
+        },
+        {
+          "category": "comparative_iteration",
+          "submetric": "percentage_iteration_reduction",
+          "value": null,
+          "unit": "up to ~order of magnitude",
+          "scope": "Minor-loop iteration reduction cited for Autocorr/Asp-CLEAN",
+          "baseline": "Högbom CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Review cites up to an order-of-magnitude reduction in minor iterations (and wall time) vs Högbom."
+        }
       ]
     },
     {
@@ -4992,6 +6386,68 @@
             "workload": null
           },
           "evidence": "Runtime comparable to AIRI/WTF and much faster than SARA."
+        }
+      ],
+      "iterations_details": [
+        {
+          "category": "convergence_behaviour",
+          "submetric": "iterations_to_convergence",
+          "value": 15,
+          "unit": "iterations",
+          "scope": "ALSB across noise sweeps",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": "Split Bregman iteration",
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": "Optimum sparsity level L=4; K=256 dictionary atoms"
+          },
+          "evidence": "Convergence reached by ~iteration 15 across noise levels."
+        },
+        {
+          "category": "iteration_scaling",
+          "submetric": "noise_level",
+          "value": null,
+          "unit": null,
+          "scope": "Convergence iteration vs input noise / SNR",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Reports convergence by ~iteration 15 across noise levels in noise-robustness sweeps."
+        },
+        {
+          "category": "iteration_scaling",
+          "submetric": "algorithm_parameters",
+          "value": null,
+          "unit": null,
+          "scope": "Patch size and sparsity L sweeps",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": "Sparsity level L (optimum L=4)"
+          },
+          "evidence": "Parameter sweeps over patch size and sparsity level L accompany the convergence study."
         }
       ]
     },
@@ -5166,6 +6622,128 @@
           },
           "evidence": "Momentum-CLEAN overhead is an image-sum with the numerical cost of one minor-loop iteration; combined CG+Asp approach claimed near order-of-magnitude improvement at lower numerical cost than upgrading the minor loop alone."
         }
+      ],
+      "iterations_details": [
+        {
+          "category": "iteration_count",
+          "submetric": "outer_iterations",
+          "value": null,
+          "unit": "major-loop iterations",
+          "scope": "CG-CLEAN / Momentum-CLEAN vs CLEAN",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": "χ² visibility residual tracked per major-loop iteration",
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Primary speed metric is major-loop iteration count (gridding/FFT dominated)."
+        },
+        {
+          "category": "comparative_iteration",
+          "submetric": "fewer_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "CG-CLEAN major loops vs Cotton–Schwab CLEAN",
+          "baseline": "standard CLEAN major-loop count",
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "CG-CLEAN reaches matched accuracy in roughly a fifth of the major-loop iterations on synthetic Cygnus A; 3–5× fewer on real narrowband data."
+        },
+        {
+          "category": "comparative_iteration",
+          "submetric": "iteration_ratio",
+          "value": 0.2,
+          "unit": "major-loop ratio (approx.)",
+          "scope": "Synthetic Cygnus A",
+          "baseline": "CLEAN major loops",
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "About one-fifth the major-loop iterations of CLEAN on synthetic Cygnus A."
+        },
+        {
+          "category": "comparative_iteration",
+          "submetric": "percentage_iteration_reduction",
+          "value": null,
+          "unit": "~order of magnitude (combined CG+Asp)",
+          "scope": "Combined CG + Asp-CLEAN convergence speed claim",
+          "baseline": "standard CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Combined CG + Asp-CLEAN described as close to an order-of-magnitude improvement in convergence speed."
+        },
+        {
+          "category": "convergence_behaviour",
+          "submetric": "convergence_rate",
+          "value": null,
+          "unit": null,
+          "scope": "Momentum early speed vs CG later superlinear behaviour",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Momentum-CLEAN fastest in first few iterations; CG-CLEAN overtakes once Krylov orthogonalization builds up (superlinear-type later convergence)."
+        },
+        {
+          "category": "convergence_behaviour",
+          "submetric": "stable_solution_achieved",
+          "value": null,
+          "unit": null,
+          "scope": "CG + Asp-CLEAN reaches noise floor in few major loops",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Combining CG-CLEAN with Asp-CLEAN reaches the noise floor after just a few major-loop iterations."
+        }
       ]
     },
     {
@@ -5300,6 +6878,88 @@
           },
           "evidence": "Table reports iterations and wall-clock reconstruction hours (e.g. HyperAIRI 1.90±0.14 hr). No CPU/GPU-hours, energy, or memory scores. Left Unspecified for Compute; Runtime covers the timings."
         }
+      ],
+      "iterations_details": [
+        {
+          "category": "iteration_count",
+          "submetric": "outer_iterations",
+          "value": 10,
+          "unit": "WSClean major cycles (mean)",
+          "scope": "Hyperspectral VLA Table 1",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "WSClean 10±1 iterations (major cycles) on the simulated VLA hyperspectral benchmark."
+        },
+        {
+          "category": "iteration_count",
+          "submetric": "total_optimisation_iterations",
+          "value": 3000,
+          "unit": "iterations",
+          "scope": "HyperAIRI / AIRI fixed budgets; Hyper-uSARA / uSARA adaptive",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": "AIRI/HyperAIRI fixed at 3000",
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Table 1: HyperAIRI/AIRI fixed 3000; Hyper-uSARA 1827±675; uSARA similar O(10³) iteration totals."
+        },
+        {
+          "category": "iteration_count",
+          "submetric": "inference_iterations",
+          "value": 3000,
+          "unit": "PnP series iterations",
+          "scope": "Plug-and-play denoiser series length",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": "3000 fixed for AIRI/HyperAIRI",
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "PnP methods report series iteration counts (fixed 3000 for AIRI/HyperAIRI) with per-step timing breakdown."
+        },
+        {
+          "category": "comparative_iteration",
+          "submetric": "more_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "PnP fixed budgets vs WSClean major cycles",
+          "baseline": "WSClean ~10 major cycles",
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Despite needing more iterations than WSClean/optimization methods' major-cycle counts, PnP remains competitive in wall-clock (Runtime separate)."
+        }
       ]
     },
     {
@@ -5386,6 +7046,88 @@
           },
           "evidence": "Sampling time grows roughly linearly with K from 0.44 s (K=10) to 45.47 s (K=1000)."
         }
+      ],
+      "iterations_details": [
+        {
+          "category": "iteration_count",
+          "submetric": "training_iterations",
+          "value": 300000,
+          "unit": "optimizer steps",
+          "scope": "DDPM prior training on VLA FIRST",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": "300,000 optimizer steps",
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": "Training; inference Table 1 uses batch size 128",
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "DDPM prior trained unconditionally for 300,000 optimizer steps on FIRST radio-galaxy images."
+        },
+        {
+          "category": "iteration_count",
+          "submetric": "inference_iterations",
+          "value": null,
+          "unit": "DDRM sampling steps K",
+          "scope": "Table 1 sampling steps K vs quality/runtime",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": "128",
+            "initialisation_method": null,
+            "regularisation_parameters": "η=0.85, η_b=1.0"
+          },
+          "evidence": "DDRM uses sampling steps K (swept, e.g. 10–1000 class) as the inference iteration axis for quality/runtime trade-offs."
+        },
+        {
+          "category": "iteration_scaling",
+          "submetric": "algorithm_parameters",
+          "value": null,
+          "unit": null,
+          "scope": "Quality/runtime vs sampling steps K",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Reports fidelity vs K sampling steps; complexity O(K·N·log N)."
+        },
+        {
+          "category": "iteration_scaling",
+          "submetric": "image_size",
+          "value": null,
+          "unit": null,
+          "scope": "O(K·N·log N) complexity",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Analytic complexity O(K·N·log N) couples sampling steps to pixel count N."
+        }
       ]
     },
     {
@@ -5439,7 +7181,69 @@
           "Shape & flux estimation RMSE on SEP true-positive detections: flux (Jy/pixel) — CLEAN 3.2625×10⁻⁴ (best), POLISH 1.9504×10⁻³, POLISH+ 3.8411×10⁻³, POLISH++ 3.1703×10⁻³ (Table 3); CLEAN superior for flux fidelity vs nonlinear learned reconstruction."
         ],
         "astrometric_accuracy": []
-      }
+      },
+      "iterations_details": [
+        {
+          "category": "iteration_count",
+          "submetric": "epochs",
+          "value": 11,
+          "unit": "epochs",
+          "scope": "POLISH++ fine-tuning vs train-from-scratch under PSF mismatch",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": "11 fine-tune epochs vs 57 from scratch",
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Fine-tuning reaches peak PSNR in 11 epochs vs 57 epochs training from scratch."
+        },
+        {
+          "category": "comparative_iteration",
+          "submetric": "fewer_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "Fine-tune epochs vs scratch",
+          "baseline": "training from scratch (57 epochs)",
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Fine-tuning needs fewer epochs than training from scratch to peak PSNR."
+        },
+        {
+          "category": "comparative_iteration",
+          "submetric": "iteration_ratio",
+          "value": 5,
+          "unit": "× epoch speedup (approx.)",
+          "scope": "11 vs 57 epochs",
+          "baseline": "train from scratch",
+          "empirical": true,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Authors state >5× speedup in epochs to peak PSNR for fine-tuning vs scratch."
+        }
+      ]
     },
     {
       "cohort": "r2d2",
@@ -5621,6 +7425,28 @@
             "workload": null
           },
           "evidence": "Number of w-layers used as computational-efficiency proxy: fewer layers at comparable/better efficiency vs WSClean recommendations across test configurations."
+        }
+      ],
+      "iterations_details": [
+        {
+          "category": "unspecified",
+          "submetric": "unspecified",
+          "value": null,
+          "unit": null,
+          "scope": "Operator precomputation amortization phrased in iteration budgets",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "stopping_criterion": null,
+            "convergence_threshold": null,
+            "maximum_iterations": null,
+            "optimiser": null,
+            "learning_rate": null,
+            "batch_size": null,
+            "initialisation_method": null,
+            "regularisation_parameters": null
+          },
+          "evidence": "Mentions cost crossover within 'tens' / 'few hundred' iterations of iterative imagers, but does not report algorithm iteration performance or convergence results. Left Unspecified."
         }
       ]
     },
