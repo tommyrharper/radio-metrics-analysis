@@ -321,6 +321,19 @@
       open.textContent = "Open";
       open.title = "Open paper webpage";
 
+      const paperDetails = document.createElement("a");
+      paperDetails.className = "open-link";
+      paperDetails.href = `../paper.html?bib=${encodeURIComponent(p.bibcode)}`;
+      paperDetails.textContent = "Paper";
+      paperDetails.title = "All structured metric details for this paper";
+
+      const actions = document.createElement("div");
+      actions.style.display = "flex";
+      actions.style.flexDirection = "column";
+      actions.style.gap = "0.35rem";
+      actions.style.alignSelf = "center";
+      actions.append(paperDetails, open);
+
       const entriesWrap = document.createElement("div");
       entriesWrap.className = "paper-entries";
       const cards = document.createElement("div");
@@ -341,7 +354,7 @@
         main.setAttribute("aria-expanded", String(isOpen));
       });
 
-      row.append(tag, main, open);
+      row.append(tag, main, actions);
       li.append(row, entriesWrap);
       return li;
     }

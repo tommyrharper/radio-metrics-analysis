@@ -596,6 +596,20 @@
       align-items: start;
     }
 
+    .paper-content {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .paper-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      align-self: start;
+      align-items: stretch;
+    }
+
     .paper-main {
       border: 0;
       background: transparent;
@@ -640,11 +654,11 @@
       line-height: 1.35;
     }
 
-    .open-link {
+    .open-link,
+    .paper-details-link {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      align-self: center;
       border: 1px solid var(--line);
       background: transparent;
       color: var(--ink);
@@ -656,14 +670,24 @@
       white-space: nowrap;
     }
 
-    .open-link:hover {
+    .open-link:hover,
+    .paper-details-link:hover {
       border-color: var(--ink);
+    }
+
+    .paper-details-link {
+      border-color: var(--r2d2);
+      color: var(--r2d2);
+      font-weight: 600;
+    }
+
+    .paper-details-link:hover {
+      border-color: var(--r2d2);
     }
 
     .paper-metrics {
       display: none;
-      grid-column: 1 / -1;
-      padding: 0 0.15rem 0.7rem 6.35rem;
+      padding: 0.45rem 0 0.15rem;
     }
 
     .paper-list li.open .paper-metrics {
@@ -1217,6 +1241,9 @@
       meta.querySelector(".title").textContent = p.title;
       main.append(meta);
 
+      const actions = document.createElement("div");
+      actions.className = "paper-actions";
+
       const open = document.createElement("a");
       open.className = "open-link";
       open.href = p.url;
@@ -1224,6 +1251,16 @@
       open.rel = "noopener noreferrer";
       open.textContent = "Open";
       open.title = "Open paper webpage";
+
+      const paperHref = `site/paper.html?bib=${encodeURIComponent(p.bibcode)}`;
+      const details = document.createElement("a");
+      details.className = "paper-details-link";
+      details.href = paperHref;
+      details.textContent = "Details";
+      details.title = "Explore structured metric details for this paper";
+      details.addEventListener("click", (evt) => evt.stopPropagation());
+
+      actions.append(details, open);
 
       const metricsWrap = document.createElement("div");
       metricsWrap.className = "paper-metrics";
@@ -1281,6 +1318,10 @@
       }
       metricsWrap.append(chips, detailBox);
 
+      const content = document.createElement("div");
+      content.className = "paper-content";
+      content.append(main, metricsWrap);
+
       main.addEventListener("click", () => {
         const isOpen = li.classList.toggle("open");
         main.setAttribute("aria-expanded", String(isOpen));
@@ -1291,8 +1332,8 @@
         }
       });
 
-      row.append(tag, main, open);
-      li.append(row, metricsWrap);
+      row.append(tag, content, actions);
+      li.append(row);
       return li;
     }
 

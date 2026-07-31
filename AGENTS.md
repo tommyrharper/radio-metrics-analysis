@@ -19,6 +19,8 @@ This file is the project's committed home for project-intrinsic agent knowledge:
 
 All chart metrics have second-level pages under `site/detail/` (19 stubs). Shared shell: `site/css/metric-detail.css` + `site/js/metric-detail.js`. Each stub only sets `window.METRIC_DETAIL` (taxonomy from `site/js/taxonomies/`, binary/details keys, page copy) then loads the shared script. Main chart Explore links: `METRIC_DRILLDOWNS` in `index.html`. Do not copy-paste a full detail page for new metrics — add taxonomy + stub + `*_details` in `data/papers-data.json` + one Explore link.
 
+Paper-centric view: `site/paper.html?bib=<bibcode>` (registry `site/js/metric-registry.js`) lists every flagged metric for one paper with structured `*_details` cards. Linked from the main paper list (**Details**) and from metric-detail paper rows (**Paper**).
+
 ## RMS / RDR schema
 
 Former combined column `RDR/Resid` (`rdr_residual`) is split into **RMS** (`rms`) and **RDR** (`rdr`). **All three cohorts and the root aggregate** use this schema (see each `METRICS_TABLE.md` and the website). Classification: RMS = absolute residual/dirty/off-source RMS as a reported score (not merely DR’s denominator); RDR = residual-to-dirty ratio only; qualitative residuals alone → both 0.

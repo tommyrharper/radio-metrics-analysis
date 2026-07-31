@@ -1,0 +1,273 @@
+/*
+ * Paper-centric detail page — all structured metric subtypes for one paper.
+ * Reuses entry-card look from metric-detail.css.
+ */
+:root {
+  --bg: #f3efe6;
+  --ink: #1c2429;
+  --muted: #5a6670;
+  --panel: #fffdf8;
+  --line: #d7d0c3;
+  --classic: #0b6e6a;
+  --emerging: #c45c26;
+  --r2d2: #1f4e79;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  background:
+    radial-gradient(ellipse 80% 50% at 10% -10%, #dce8e4 0%, transparent 55%),
+    radial-gradient(ellipse 70% 45% at 100% 0%, #efe2d4 0%, transparent 50%),
+    var(--bg);
+}
+
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 3rem;
+}
+
+.back {
+  margin: 0 0 1rem;
+}
+
+.back a {
+  color: var(--r2d2);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+.back a:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+.paper-header {
+  margin-bottom: 1.5rem;
+}
+
+.paper-header .cohort-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--muted);
+  margin-bottom: 0.45rem;
+}
+
+.swatch {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 1px;
+  display: inline-block;
+}
+.swatch.classic { background: var(--classic); }
+.swatch.emerging { background: var(--emerging); }
+.swatch.r2d2 { background: var(--r2d2); }
+
+.paper-header .bib {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0 0 0.35rem;
+}
+
+.paper-header h1 {
+  margin: 0 0 0.75rem;
+  font-family: "IBM Plex Serif", Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(1.35rem, 2.8vw, 1.85rem);
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  max-width: 46rem;
+}
+
+.paper-header .actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.paper-header .actions a {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.4rem 0.75rem;
+  text-decoration: none;
+}
+
+.paper-header .actions a:hover { border-color: var(--ink); }
+
+.paper-header .actions a.primary {
+  border-color: var(--r2d2);
+  color: var(--r2d2);
+  font-weight: 600;
+}
+
+.lede {
+  margin: 0;
+  color: var(--muted);
+  max-width: 46rem;
+  line-height: 1.45;
+  font-size: 0.95rem;
+}
+
+.metric-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0 0 1.5rem;
+}
+
+.metric-nav a {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--ink);
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.3rem 0.55rem;
+  text-decoration: none;
+}
+
+.metric-nav a:hover { border-color: var(--ink); }
+
+.metric-nav a .n {
+  margin-left: 0.35rem;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 1.1rem 1.15rem 1.25rem;
+  margin-bottom: 1rem;
+  scroll-margin-top: 1rem;
+}
+
+.panel h2 {
+  margin: 0 0 0.25rem;
+  font-family: "IBM Plex Serif", Georgia, serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.panel .full-name {
+  margin: 0 0 0.65rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.panel .metric-links {
+  margin: 0 0 0.85rem;
+}
+
+.panel .metric-links a {
+  color: var(--r2d2);
+  font-weight: 600;
+  font-size: 0.88rem;
+  text-decoration: none;
+}
+
+.panel .metric-links a:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+.notes {
+  margin: 0 0 1rem;
+  padding: 0.65rem 0.8rem;
+  background: #f7f2e9;
+  border: 1px solid var(--line);
+}
+
+.notes h3 {
+  margin: 0 0 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.notes ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.notes li {
+  margin: 0 0 0.4rem;
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.notes li:last-child { margin-bottom: 0; }
+
+.entry-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.entry-card {
+  border: 1px solid var(--line);
+  padding: 0.7rem 0.8rem;
+  background: #fff;
+}
+
+.entry-card.unspecified {
+  border-style: dashed;
+  background: #faf8f4;
+}
+
+.entry-card .tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.45rem;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid currentColor;
+  padding: 0.12rem 0.4rem;
+}
+
+.entry-card .kv {
+  margin: 0.2rem 0;
+  font-size: 0.88rem;
+  line-height: 1.35;
+}
+
+.entry-card .kv strong {
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.entry-card .evidence {
+  margin: 0.55rem 0 0;
+  font-size: 0.86rem;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+.entry-empty {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.error, .loading {
+  padding: 1.5rem;
+  color: var(--muted);
+}
+
+.error { color: #9a3412; }
