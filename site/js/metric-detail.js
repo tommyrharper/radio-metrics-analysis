@@ -780,7 +780,7 @@
     });
     paperSearch.addEventListener("input", renderPaperList);
 
-    fetch("papers-data.json")
+    fetch("../../data/papers-data.json")
       .then((r) => {
         if (!r.ok) throw new Error(`Failed to load papers-data.json (${r.status})`);
         return r.json();

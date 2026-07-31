@@ -32,19 +32,21 @@ Each cohort has its own `METRICS_TABLE.md`, plus one root aggregate:
 
 ## Metrics webpage
 
-Interactive stacked bar chart of metric usage by cohort (`index.html` + `papers-data.json`).
+Interactive stacked bar chart of metric usage by cohort (`index.html` + `data/papers-data.json`).
 
-**Metric detail pages (shared shell):** Runtime, Compute, Iterations, DR, and RMS each have a bookmarkable second-level page (`runtime.html`, `compute.html`, `iterations.html`, `dr.html`, `rms.html`). Those HTML files are thin configs; shared UI lives in `metric-detail.css` + `metric-detail.js`, driven by a `window.METRIC_DETAIL` object (taxonomy, binary/details keys, copy). Per-metric taxonomies stay in `*-taxonomy.js`. To add another metric later: write `foo-taxonomy.js`, classify `foo_details` on papers, add a ~100-line `foo.html` stub like the others, and one Explore link in `index.html`.
+**Layout:** project docs and cohorts stay at the repo root; the browsable site assets live under `site/` (shared CSS/JS, taxonomies, detail pages); structured site data under `data/`; metric overview markdown under `metrics/`; injectors under `scripts/`.
 
-**Runtime:** **Explore Runtime Details** → [`runtime.html`](runtime.html). Categories: Wall-clock, Throughput, Relative Performance, Runtime Scaling (+ Unspecified). Context panel: Hardware / Parallelism / Software / Numerical Configuration / Workload. Data: `runtime_details` (`runtime-taxonomy.js`; mirror `data/runtime-details.json`). Binary `runtime` unchanged.
+**Metric detail pages (shared shell):** Runtime, Compute, Iterations, DR, and RMS each have a bookmarkable second-level page under [`site/detail/`](site/detail/) (`runtime.html`, `compute.html`, …). Those HTML files are thin configs; shared UI lives in `site/css/metric-detail.css` + `site/js/metric-detail.js`, driven by `window.METRIC_DETAIL`. Per-metric taxonomies live in `site/js/taxonomies/`. To add another metric later: add a taxonomy JS, classify `*_details` on papers in `data/papers-data.json`, add a thin `site/detail/<metric>.html` stub, and one Explore link in `index.html`.
 
-**Compute:** **Explore Compute Details** → [`compute.html`](compute.html). Categories: Resource Usage, Efficiency / Intensity, Relative Compute, Scaling / Complexity (+ Unspecified). Data: `compute_details` (`compute-taxonomy.js`). Binary `compute_cost` unchanged.
+**Runtime:** **Explore Runtime Details** → [`site/detail/runtime.html`](site/detail/runtime.html). Categories: Wall-clock, Throughput, Relative Performance, Runtime Scaling (+ Unspecified). Context panel: Hardware / Parallelism / Software / Numerical Configuration / Workload. Data: `runtime_details` (`site/js/taxonomies/runtime-taxonomy.js`; mirror `data/runtime-details.json`). Binary `runtime` unchanged.
 
-**Iterations:** **Explore Iterations Details** → [`iterations.html`](iterations.html). Categories: Iteration Count, Convergence Behaviour, Comparative Iteration Performance, Iteration Scaling (+ Unspecified). Context: stopping / optimiser / LR / etc. Data: `iterations_details`. Binary `iterations` unchanged.
+**Compute:** **Explore Compute Details** → [`site/detail/compute.html`](site/detail/compute.html). Categories: Resource Usage, Efficiency / Intensity, Relative Compute, Scaling / Complexity (+ Unspecified). Data: `compute_details` (`site/js/taxonomies/compute-taxonomy.js`). Binary `compute_cost` unchanged.
 
-**DR:** **Explore DR Details** → [`dr.html`](dr.html). Categories: Reported / Achieved, Target / Configured, Comparative, Limits / System Effects (+ Unspecified). Data: `dr_details`. Binary `dynamic_range` unchanged.
+**Iterations:** **Explore Iterations Details** → [`site/detail/iterations.html`](site/detail/iterations.html). Categories: Iteration Count, Convergence Behaviour, Comparative Iteration Performance, Iteration Scaling (+ Unspecified). Context: stopping / optimiser / LR / etc. Data: `iterations_details`. Binary `iterations` unchanged.
 
-**RMS:** **Explore RMS Details** → [`rms.html`](rms.html). Categories: Absolute, Comparative, Framework / Defined (+ Unspecified). Data: `rms_details`. Binary `rms` unchanged. RMS used only as a DR denominator is not a subtype; RDR is not RMS.
+**DR:** **Explore DR Details** → [`site/detail/dr.html`](site/detail/dr.html). Categories: Reported / Achieved, Target / Configured, Comparative, Limits / System Effects (+ Unspecified). Data: `dr_details`. Binary `dynamic_range` unchanged.
+
+**RMS:** **Explore RMS Details** → [`site/detail/rms.html`](site/detail/rms.html). Categories: Absolute, Comparative, Framework / Defined (+ Unspecified). Data: `rms_details`. Binary `rms` unchanged. RMS used only as a DR denominator is not a subtype; RDR is not RMS.
 
 Interaction on every detail page mirrors the main graph: all positive papers by default, bar click focuses a sub-metric, title opens Overview / By paper, **All papers** / empty chart returns to browse. Papers may count in more than one sub-metric.
 
@@ -76,7 +78,7 @@ python3 -m http.server
 
 **Stop:** press `Ctrl+C` in the terminal running the server.
 
-Needs a local HTTP server (not `file://`) so the page can load `papers-data.json` and `metrics/*.md`. If port 8000 is taken, pick another and match the URL, e.g. `python3 -m http.server 8765` → `http://127.0.0.1:8765/`.
+Needs a local HTTP server (not `file://`) so the page can load `data/papers-data.json` and `metrics/*.md`. If port 8000 is taken, pick another and match the URL, e.g. `python3 -m http.server 8765` → `http://127.0.0.1:8765/`.
 
 ### Metric overviews
 

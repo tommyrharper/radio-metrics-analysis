@@ -1,5 +1,5 @@
 {
-  "schema_note": "iterations_details live primarily on each paper in papers-data.json. This mirror is bibcode -> entries for inspection/tools. Top-level metrics.iterations binary flags are unchanged.",
+  "schema_note": "iterations_details live primarily on each paper in data/papers-data.json. This mirror is bibcode -> entries for inspection/tools. Top-level metrics.iterations binary flags are unchanged.",
   "papers": {
     "1974A&AS...15..417H": {
       "cohort": "classic",

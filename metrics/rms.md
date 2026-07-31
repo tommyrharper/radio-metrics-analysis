@@ -3,7 +3,7 @@
 ## What this metric means here
 **RMS** covers absolute residual / dirty / off-source RMS (or equivalent standard deviation) reported as a fidelity or noise score in physical units (Jy/beam, mJy/beam, μJy/PSF, etc.), or explicitly named as a core framework quality metric (e.g. astroCAMP dirty-image RMS / residual RMS). It is **not** the R2D2-family normalised residual-to-dirty ratio (see **RDR**).
 
-Root totals after the split: classic RMS = 8, emerging-ml RMS = 1, r2d2-citing RMS = 2 (grand total **11**). Binary `rms: 0|1` flags are unchanged by the drill-down; subtype detail lives in `rms_details` ([`rms.html`](../rms.html)).
+Root totals after the split: classic RMS = 8, emerging-ml RMS = 1, r2d2-citing RMS = 2 (grand total **11**). Binary `rms: 0|1` flags are unchanged by the drill-down; subtype detail lives in `rms_details` ([`site/detail/rms.html`](../site/detail/rms.html)).
 
 ## How papers use it
 **Classical residual RMS and morphology (classic cohort).** Asp-CLEAN, WSClean, and wideband deconvolution papers treat residual images as primary fidelity evidence: Asp-CLEAN residuals statistically consistent with noise vs correlated MS-CLEAN structure (Asp itself is qualitative morphology only under the new split — RMS=0); WSClean compares residual RMS (μJy/beam or mJy/PSF) against CASA on MWA simulations (e.g. 0.94 vs 1.90 mJy/beam at 12 w-planes) and real MWA Vela field (50 vs 64 mJy/PSF). Wideband MS tests report off-source residual RMS from 880 μJy/PSF (single-scale CLEAN) down to 55–64 μJy/PSF (multi-frequency multi-scale CLEAN)—factor ≈4400–5100 below dirty RMS. IDG reports ≈17–19× lower residual RMS than classical gridding in source box and full image. Multi-frequency paper warns unchanged low residual can mask wrong spectral solutions when short spacings are missing. Bhatnagar et al. report off-source and Stokes V residual RMS; Cornwell MS-CLEAN tabulates image-domain RMS error vs smoothed truth; Rau & Cornwell report on-/off-source residual RMS on M87/3C286.
@@ -15,7 +15,7 @@ Root totals after the split: classic RMS = 8, emerging-ml RMS = 1, r2d2-citing R
 **Absolute residual / image RMS (r2d2-citing).** CLEANing Cygnus A with R2D2 (2024ApJ...966L..34D) and MROP (2025MNRAS.543.1727L) report absolute residual or image-domain RMS-style scores as fidelity evidence (r2d2-citing RMS total = 2). Most other R2D2-family papers score data fidelity with normalised **RDR** instead.
 
 ## Drill-down taxonomy (second-level page)
-See [`rms.html`](../rms.html) / `rms-taxonomy.js`. Categories (papers may hit more than one):
+See [`site/detail/rms.html`](../site/detail/rms.html) / `site/js/taxonomies/rms-taxonomy.js`. Categories (papers may hit more than one):
 
 | Category | Sub-metrics |
 |---|---|

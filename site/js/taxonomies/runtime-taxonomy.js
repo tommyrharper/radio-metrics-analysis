@@ -1,8 +1,8 @@
 /**
- * Runtime sub-metric taxonomy — shared config for runtime.html (and future reuse).
+ * Runtime sub-metric taxonomy — shared config for site/detail/runtime.html.
  *
  * How to add another metric detail page later:
- * 1. Copy runtime.html → <metric>.html and this file → <metric>-taxonomy.js
+ * 1. Copy site/detail/runtime.html → site/detail/<metric>.html and this file → <metric>-taxonomy.js
  * 2. Replace RUNTIME_TAXONOMY / category keys with that metric’s subtypes
  * 3. Store structured details on each paper (e.g. psnr_details) without changing binary flags
  * 4. From index.html, show an “Explore … Details” link only when that metric is selected

@@ -68,7 +68,7 @@ AIRI variations (2025): GPU denoiser 0.05±0.02 s vs CPU 7.92±0.52 s vs SARA pr
 
 ## Second-level Compute page
 
-The main metrics graph keeps a single binary **Compute** column. Drill-down lives at [`compute.html`](../compute.html) (linked as **Explore Compute Details** when Compute is selected on `index.html`).
+The main metrics graph keeps a single binary **Compute** column. Drill-down lives at [`site/detail/compute.html`](../site/detail/compute.html) (linked as **Explore Compute Details** when Compute is selected on `index.html`).
 
 Reporting categories (a paper may appear in more than one — category totals can exceed Compute-positive paper counts):
 
@@ -82,4 +82,4 @@ Reporting categories (a paper may appear in more than one — category totals ca
 
 **Compute Measurement Context** (separate panel): Hardware, Parallelism, Software, Numerical Configuration, Workload — reporting-completeness counts only. Context is not itself a Compute sub-metric.
 
-Structured data: `compute_details` arrays on Compute-positive papers in `papers-data.json` (optional mirror `data/compute-details.json`). Taxonomy: `compute-taxonomy.js`. Injector: `scripts/inject_compute_details.py`.
+Structured data: `compute_details` arrays on Compute-positive papers in `data/papers-data.json` (optional mirror `data/compute-details.json`). Taxonomy: `site/js/taxonomies/compute-taxonomy.js`. Injector: `scripts/inject_compute_details.py`.

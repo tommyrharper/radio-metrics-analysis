@@ -1,5 +1,5 @@
 {
-  "schema_note": "dr_details live primarily on each paper in papers-data.json. This mirror is bibcode -> entries for inspection/tools. Top-level metrics.dynamic_range binary flags are unchanged.",
+  "schema_note": "dr_details live primarily on each paper in data/papers-data.json. This mirror is bibcode -> entries for inspection/tools. Top-level metrics.dynamic_range binary flags are unchanged.",
   "papers": {
     "2008A&A...487..419B": {
       "cohort": "classic",

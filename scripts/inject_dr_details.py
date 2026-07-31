@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Inject dr_details into papers-data.json for DR-positive papers.
+"""Inject dr_details into data/papers-data.json for DR-positive papers.
 
 Run from repo root: python3 scripts/inject_dr_details.py
 Does not change top-level metrics.dynamic_range flags.
@@ -10,7 +10,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-PAPERS_DATA = ROOT / "papers-data.json"
+PAPERS_DATA = ROOT / "data" / "papers-data.json"
 MIRROR = ROOT / "data" / "dr-details.json"
 
 

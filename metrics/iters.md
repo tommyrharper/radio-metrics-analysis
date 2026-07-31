@@ -52,7 +52,7 @@ CG-CLEAN (2026) emphasizes **major-loop iteration count** because gridding/FFT c
 
 ## Iterations details page
 
-The main metrics graph keeps a single binary **Iters** column. Drill-down lives at [`iterations.html`](../iterations.html) (linked as **Explore Iterations Details** when Iters is selected on `index.html`).
+The main metrics graph keeps a single binary **Iters** column. Drill-down lives at [`site/detail/iterations.html`](../site/detail/iterations.html) (linked as **Explore Iterations Details** when Iters is selected on `index.html`).
 
 Reporting categories (a paper may appear in more than one — category totals can exceed Iterations-positive paper counts):
 
@@ -66,7 +66,7 @@ Reporting categories (a paper may appear in more than one — category totals ca
 
 **Iteration Context** (separate panel): Stopping criterion, Convergence threshold, Maximum iterations allowed, Optimiser, Learning rate, Batch size, Initialisation method, Regularisation parameters — reporting-completeness counts only. Context is not itself an Iterations sub-metric. Stopping criteria alone are not Iteration Count subtypes unless the paper also reports iteration numbers or convergence behaviour as results.
 
-Structured data: `iterations_details` arrays on Iterations-positive papers in `papers-data.json` (optional mirror `data/iterations-details.json`). Taxonomy: `iterations-taxonomy.js`. Injector: `scripts/inject_iterations_details.py`.
+Structured data: `iterations_details` arrays on Iterations-positive papers in `data/papers-data.json` (optional mirror `data/iterations-details.json`). Taxonomy: `site/js/taxonomies/iterations-taxonomy.js`. Injector: `scripts/inject_iterations_details.py`.
 
 ## Gaps and caveats
 

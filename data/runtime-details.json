@@ -1,5 +1,5 @@
 {
-  "schema_note": "runtime_details live primarily on each paper in papers-data.json. This mirror is bibcode -> entries for inspection/tools. Top-level metrics.runtime binary flags are unchanged.",
+  "schema_note": "runtime_details live primarily on each paper in data/papers-data.json. This mirror is bibcode -> entries for inspection/tools. Top-level metrics.runtime binary flags are unchanged.",
   "papers": {
     "1980A&A....89..377C": {
       "cohort": "classic",

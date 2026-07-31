@@ -60,7 +60,7 @@ Several papers plot **wall time vs residual level** rather than fixed iteration 
 
 ## Second-level Runtime page
 
-The main metrics graph keeps a single binary **Runtime** column. Drill-down lives at [`runtime.html`](../runtime.html) (linked as **Explore Runtime Details** when Runtime is selected on `index.html`).
+The main metrics graph keeps a single binary **Runtime** column. Drill-down lives at [`site/detail/runtime.html`](../site/detail/runtime.html) (linked as **Explore Runtime Details** when Runtime is selected on `index.html`).
 
 Reporting categories (a paper may appear in more than one — category totals can exceed Runtime-positive paper counts):
 
@@ -74,4 +74,4 @@ Reporting categories (a paper may appear in more than one — category totals ca
 
 **Runtime Measurement Context** (separate panel): Hardware, Parallelism, Software, Numerical Configuration, Workload — reporting-completeness counts only. CPU/GPU/multi-core/distributed are execution context, not Runtime sub-metrics.
 
-Structured data: `runtime_details` arrays on Runtime-positive papers in `papers-data.json` (optional mirror `data/runtime-details.json`). Taxonomy: `runtime-taxonomy.js`.
+Structured data: `runtime_details` arrays on Runtime-positive papers in `data/papers-data.json` (optional mirror `data/runtime-details.json`). Taxonomy: `site/js/taxonomies/runtime-taxonomy.js`.

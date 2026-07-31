@@ -10,13 +10,14 @@ This file is the project's committed home for project-intrinsic agent knowledge:
 
 ## Repo structure
 
-- Three cohorts under `cohorts/`: `r2d2-citing` (complete), `classic`, `emerging-ml` (both extracted). Root `METRICS_TABLE.md` merges all three. Metrics webpage: see README “Metrics webpage” (`python3 -m http.server` → http://127.0.0.1:8000/).
+- Three cohorts under `cohorts/`: `r2d2-citing` (complete), `classic`, `emerging-ml` (both extracted). Root `METRICS_TABLE.md` merges all three. Metrics webpage: serve from repo root (`python3 -m http.server` → http://127.0.0.1:8000/).
+- Site assets under `site/` (detail pages, shared CSS/JS, taxonomies); site data under `data/` (`papers-data.json`, `*-details.json` mirrors); overview markdown under `metrics/`; injectors under `scripts/`.
 - This repo has no dependency on the separate PDF-extractor project.
 - When a candidate is approved and extracted, follow the existing `cohorts/r2d2-citing/` layout as the template: `papers/<id>.md` summary + `metrics_table/rows/<id>.json` classification row, then regenerate that cohort's `METRICS_TABLE.md` and the root aggregate.
 
 ## Metric detail pages
 
-Second-level drill-downs (Runtime, Compute, Iterations, DR, RMS, …) share `metric-detail.css` + `metric-detail.js`. Each `*.html` stub only sets `window.METRIC_DETAIL` (taxonomy globals from `*-taxonomy.js`, binary/details keys, page copy) then loads the shared script. Do not copy-paste a full detail page for new metrics — add taxonomy + stub + `*_details` data + one Explore link in `index.html`.
+Second-level drill-downs share `site/css/metric-detail.css` + `site/js/metric-detail.js`. Each `site/detail/*.html` stub only sets `window.METRIC_DETAIL` (taxonomy from `site/js/taxonomies/`, binary/details keys, page copy) then loads the shared script. Do not copy-paste a full detail page for new metrics — add taxonomy + stub + `*_details` in `data/papers-data.json` + one Explore link in `index.html`.
 
 ## RMS / RDR schema
 

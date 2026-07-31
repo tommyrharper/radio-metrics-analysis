@@ -23,7 +23,7 @@
 
 ## DR details page
 
-The main metrics graph keeps a single binary **DR** column. Drill-down lives at [`dr.html`](../dr.html) (linked as **Explore DR Details** when DR is selected on `index.html`).
+The main metrics graph keeps a single binary **DR** column. Drill-down lives at [`site/detail/dr.html`](../site/detail/dr.html) (linked as **Explore DR Details** when DR is selected on `index.html`).
 
 Reporting categories (a paper may appear in more than one — category totals can exceed DR-positive paper counts):
 
@@ -37,7 +37,7 @@ Reporting categories (a paper may appear in more than one — category totals ca
 
 **DR Context** (separate panel): Definition used, Noise estimator, Image region, Simulation vs real data, Frequency, Array — reporting-completeness counts only. DR context describes how dynamic range was defined or measured; it is not itself a DR metric. Residual RMS alone is not DR; SNR is not DR.
 
-Structured data: `dr_details` arrays on DR-positive papers in `papers-data.json` (optional mirror `data/dr-details.json`). Taxonomy: `dr-taxonomy.js`. Injector: `scripts/inject_dr_details.py`.
+Structured data: `dr_details` arrays on DR-positive papers in `data/papers-data.json` (optional mirror `data/dr-details.json`). Taxonomy: `site/js/taxonomies/dr-taxonomy.js`. Injector: `scripts/inject_dr_details.py`.
 
 ## Gaps and caveats
 - **Definition multiplicity:** Peak/RMS, peak/MAD, peak/local-minimum, and configured DR are not interchangeable; classic and ML papers rarely align on one definition.

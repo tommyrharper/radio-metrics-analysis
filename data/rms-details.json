@@ -1,5 +1,5 @@
 {
-  "schema_note": "rms_details live primarily on each paper in papers-data.json. This mirror is bibcode -> entries for inspection/tools. Top-level metrics.rms binary flags are unchanged.",
+  "schema_note": "rms_details live primarily on each paper in data/papers-data.json. This mirror is bibcode -> entries for inspection/tools. Top-level metrics.rms binary flags are unchanged.",
   "papers": {
     "1994A&AS..108..585S": {
       "cohort": "classic",

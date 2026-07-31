@@ -863,11 +863,11 @@
         </div>
         <div class="metric-summary" id="metricSummary"></div>
         <div class="metric-drilldown" id="metricDrilldown">
-          <a href="runtime.html" id="runtimeDrilldownLink" hidden>Explore Runtime Details</a>
-          <a href="compute.html" id="computeDrilldownLink" hidden>Explore Compute Details</a>
-          <a href="iterations.html" id="iterationsDrilldownLink" hidden>Explore Iterations Details</a>
-          <a href="dr.html" id="drDrilldownLink" hidden>Explore DR Details</a>
-          <a href="rms.html" id="rmsDrilldownLink" hidden>Explore RMS Details</a>
+          <a href="site/detail/runtime.html" id="runtimeDrilldownLink" hidden>Explore Runtime Details</a>
+          <a href="site/detail/compute.html" id="computeDrilldownLink" hidden>Explore Compute Details</a>
+          <a href="site/detail/iterations.html" id="iterationsDrilldownLink" hidden>Explore Iterations Details</a>
+          <a href="site/detail/dr.html" id="drDrilldownLink" hidden>Explore DR Details</a>
+          <a href="site/detail/rms.html" id="rmsDrilldownLink" hidden>Explore RMS Details</a>
         </div>
         <div class="metric-variants" id="metricVariants"></div>
         <ul class="paper-list" id="paperList"></ul>
@@ -1332,7 +1332,7 @@
     }
 
     function updateMetricDrilldown(metricIndex) {
-      // Detail pages: Runtime → runtime.html; Compute → compute.html; Iterations → iterations.html; DR → dr.html; RMS → rms.html.
+      // Detail pages live under site/detail/*.html
       // Mutually exclusive: only the link for the selected metric is shown (a[hidden]{display:none}).
       const key = metricIndex === null || metricIndex === undefined ? null : metricKeys[metricIndex];
       const runtimeLink = document.getElementById("runtimeDrilldownLink");
@@ -1774,7 +1774,7 @@
     });
     paperSearch.addEventListener("input", renderPaperList);
 
-    fetch("papers-data.json")
+    fetch("data/papers-data.json")
       .then((r) => {
         if (!r.ok) throw new Error(`Failed to load papers-data.json (${r.status})`);
         return r.json();
