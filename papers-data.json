@@ -545,6 +545,26 @@
           },
           "evidence": "Authors estimate the method to be about 2–3 times more computationally expensive than corresponding conventional Hogbom or Clark CLEAN, plus guard-band overhead. No runtime, processor, or memory benchmark."
         }
+      ],
+      "rms_details": [
+        {
+          "category": "absolute_rms",
+          "submetric": "off_source_blank_rms",
+          "value": 90,
+          "unit": "μJy/beam (approx.)",
+          "scope": "Blank regions of final multi-frequency CLEAN image (PKSB1733-565)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "μJy/beam",
+            "image_region": "Blank / off-source regions",
+            "residual_vs_dirty": "Residual (final CLEAN image)",
+            "simulation_vs_real": "Real ATCA observation",
+            "frequency": "4.418–6.099 GHz",
+            "array": "ATCA (6-antenna east-west)"
+          },
+          "evidence": "Blank regions have rms about 1.5× the stated 60 μJy/beam thermal-noise limit (≈90 μJy/beam). Remaining local errors near the core/hot spot are discussed; no single measured DR ratio for the final image."
+        }
       ]
     },
     {
@@ -808,6 +828,62 @@
             "array": "EVLA"
           },
           "evidence": "First-/second-order polarization leakage (~1e-2 / ~1e-4) motivates full-Mueller treatment above DR of a few thousand; DD effects and pixelized sky models limit full-beam DR to ~1e4–1e5; conclusion quotes ~1e5:1 pointing-error limit. No tabulated achieved reconstruction DR."
+        }
+      ],
+      "rms_details": [
+        {
+          "category": "absolute_rms",
+          "submetric": "off_source_blank_rms",
+          "value": 1,
+          "unit": "μJy/beam",
+          "scope": "Simulated Stokes V with squint+pointing correction (Figure 4)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "μJy/beam",
+            "image_region": "Off-source",
+            "residual_vs_dirty": "Residual / corrected Stokes V image",
+            "simulation_vs_real": "Simulation (VLA C-array 1.4 GHz)",
+            "frequency": "1.4 GHz",
+            "array": "VLA C-array"
+          },
+          "evidence": "Figure 4 reports off-source RMS of 10 μJy/beam without squint and pointing correction and 1 μJy/beam with both corrections."
+        },
+        {
+          "category": "absolute_rms",
+          "submetric": "residual_image_rms",
+          "value": 0.15,
+          "unit": "mJy/beam",
+          "scope": "Real IC2233 Stokes V residual after A-projection correction",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "mJy/beam",
+            "image_region": "Full residual (Stokes V; extrema no longer source-correlated)",
+            "residual_vs_dirty": "Residual",
+            "simulation_vs_real": "Real VLA observation (~11.6 h)",
+            "frequency": "1.4 GHz",
+            "array": "VLA"
+          },
+          "evidence": "After time-varying primary-beam and polarization-squint correction, Stokes V residual extrema were about ±0.5 mJy/beam and the RMS was 0.15 mJy/beam, slightly above expected thermal noise (~0.13 mJy/beam)."
+        },
+        {
+          "category": "comparative_rms",
+          "submetric": "rms_reduction_factor",
+          "value": 10,
+          "unit": "× (approx. order-of-magnitude)",
+          "scope": "Simulated polarization-squint / pointing correction vs uncorrected",
+          "baseline": "Uncorrected Stokes V / off-source RMS",
+          "empirical": true,
+          "execution_context": {
+            "units": "μJy/beam",
+            "image_region": "Off-source",
+            "residual_vs_dirty": "Residual",
+            "simulation_vs_real": "Simulation (and order-of-magnitude claim on real data)",
+            "frequency": "1.4 GHz",
+            "array": "VLA C-array"
+          },
+          "evidence": "Simulated Stokes V RMS falls from ~2 mJy peak / 10 μJy/beam RMS to noise-like ~1 μJy/beam (factor ≈10). Paper also characterizes systematic-error reduction as one order of magnitude on real data."
         }
       ]
     },
@@ -1184,6 +1260,44 @@
           },
           "evidence": "Source-size and noise sweeps report dynamic range as peak / off-source RMS; at low input SNR, reconstructed DR flattens near 4 as thermal noise dominates."
         }
+      ],
+      "rms_details": [
+        {
+          "category": "absolute_rms",
+          "submetric": "other_absolute_rms",
+          "value": 4.9,
+          "unit": "mJy/beam (RMS error vs smoothed truth)",
+          "scope": "M31 VLA C-array simulation Table II (Multiscale CLEAN)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "mJy/beam",
+            "image_region": "Full error image vs clean-beam-smoothed truth",
+            "residual_vs_dirty": "Image-domain reconstruction error (not residual-dirty RDR)",
+            "simulation_vs_real": "Simulation (M31 test image)",
+            "frequency": null,
+            "array": "VLA C configuration"
+          },
+          "evidence": "Table II image-domain RMS error: Högbom 8.8, Clark 25.6, Multi-Resolution 14.7, Multiscale CLEAN 4.9, maximum entropy 2.5 mJy/beam. Multiscale lowest among CLEAN-family methods. Peak/off-source RMS used only to define DR in other sweeps is not counted as a standalone RMS subtype here."
+        },
+        {
+          "category": "comparative_rms",
+          "submetric": "lower_higher_than_baseline",
+          "value": 4.9,
+          "unit": "mJy/beam vs CLEAN-family baselines",
+          "scope": "M31 Table II RMS error comparison",
+          "baseline": "Högbom / Clark / Multi-Resolution CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "units": "mJy/beam",
+            "image_region": null,
+            "residual_vs_dirty": null,
+            "simulation_vs_real": "Simulation (M31)",
+            "frequency": null,
+            "array": "VLA C configuration"
+          },
+          "evidence": "Multiscale CLEAN's 4.9 mJy/beam RMS error is lower than Högbom (8.8), Multi-Resolution (14.7), and Clark (25.6); maximum entropy is lower still (2.5)."
+        }
       ]
     },
     {
@@ -1289,6 +1403,62 @@
             "array": "EVLA"
           },
           "evidence": "Simulated primary beam can impose a dynamic-range limit near 1,000 if ignored (apparent spectral index ≈ −1.4 at half-power)."
+        }
+      ],
+      "rms_details": [
+        {
+          "category": "absolute_rms",
+          "submetric": "off_source_blank_rms",
+          "value": 1.8,
+          "unit": "mJy",
+          "scope": "M87 L-band restored image (3 arcsec; C+B config)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "mJy (image RMS)",
+            "image_region": "Off-source (also reports 3–10 mJy on-source RMS)",
+            "residual_vs_dirty": "Restored / residual image noise",
+            "simulation_vs_real": "Real VLA snapshots",
+            "frequency": "L band",
+            "array": "VLA"
+          },
+          "evidence": "Central restored image peaked at 15 Jy, with 1.8 mJy off-source RMS and 3–10 mJy on-source RMS."
+        },
+        {
+          "category": "absolute_rms",
+          "submetric": "residual_image_rms",
+          "value": 140,
+          "unit": "μJy (near-source residual RMS, 4 Taylor terms)",
+          "scope": "3C286 EVLA wideband test — RMS near source and 1° away",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "mJy / μJy",
+            "image_region": "Near 3C286 and 1° away (off-source)",
+            "residual_vs_dirty": "Residual",
+            "simulation_vs_real": "Real EVLA snapshots",
+            "frequency": "1.02–2.1 GHz (~1.5 GHz reference)",
+            "array": "EVLA"
+          },
+          "evidence": "Raising Taylor terms from one to four reduced RMS near 3C286 through 9 mJy, 1 mJy, 200 μJy, and 140 μJy; RMS 1° away was 1 mJy, 200 μJy, 85 μJy, and 80 μJy vs ~70 μJy thermal estimate."
+        },
+        {
+          "category": "comparative_rms",
+          "submetric": "lower_higher_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "3C286 RMS vs fewer Taylor terms",
+          "baseline": "1–3 Taylor-term reconstructions",
+          "empirical": true,
+          "execution_context": {
+            "units": null,
+            "image_region": "Near-source and off-source",
+            "residual_vs_dirty": "Residual",
+            "simulation_vs_real": "Real EVLA",
+            "frequency": "1.02–2.1 GHz",
+            "array": "EVLA"
+          },
+          "evidence": "Near-source and off-source residual RMS fall by orders of magnitude as Taylor terms increase from 1 to 4 (numerical comparison across configurations)."
         }
       ]
     },
@@ -1647,6 +1817,62 @@
           },
           "evidence": "Conclusion reports no noticeable accuracy loss in simulations reaching about 1:1000 dynamic range (and in a real field with 10.3 Jy/beam peak vs 67 mJy/beam residual noise)."
         }
+      ],
+      "rms_details": [
+        {
+          "category": "absolute_rms",
+          "submetric": "residual_image_rms",
+          "value": 0.94,
+          "unit": "mJy/beam",
+          "scope": "MWA 100-source simulation, zenith, 12 w-layers (WSClean)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "mJy/beam",
+            "image_region": "Residual image (RMS flux density)",
+            "residual_vs_dirty": "Residual",
+            "simulation_vs_real": "Simulation (no system noise; MWA field)",
+            "frequency": null,
+            "array": "MWA (simulated)"
+          },
+          "evidence": "At zenith with 12 w-layers/planes, WSClean reports 0.94 mJy/beam residual RMS vs CASA 1.90 mJy/beam; other zenith/plane settings tabulated similarly (e.g. 0.90–1.07 mJy/beam at 10° zenith angle)."
+        },
+        {
+          "category": "comparative_rms",
+          "submetric": "lower_higher_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "WSClean vs CASA residual RMS on controlled MWA sims",
+          "baseline": "CASA",
+          "empirical": true,
+          "execution_context": {
+            "units": "mJy/beam",
+            "image_region": null,
+            "residual_vs_dirty": "Residual",
+            "simulation_vs_real": "Simulation",
+            "frequency": null,
+            "array": "MWA (simulated)"
+          },
+          "evidence": "Across tests, WSClean summarized as having 0–49% lower residual RMS than CASA (e.g. 0.94 vs 1.90 mJy/beam at 12 planes). Authors caution equal plane counts can disadvantage CASA at zenith."
+        },
+        {
+          "category": "comparative_rms",
+          "submetric": "percentage_rms_change",
+          "value": 49,
+          "unit": "% lower residual RMS (upper end of stated range)",
+          "scope": "WSClean vs CASA summary across controlled tests",
+          "baseline": "CASA",
+          "empirical": true,
+          "execution_context": {
+            "units": "mJy/beam",
+            "image_region": null,
+            "residual_vs_dirty": "Residual",
+            "simulation_vs_real": "Simulation",
+            "frequency": null,
+            "array": "MWA (simulated)"
+          },
+          "evidence": "Paper summarizes WSClean as 0–49% lower residual RMS than CASA across the controlled accuracy benchmarks."
+        }
       ]
     },
     {
@@ -1826,6 +2052,98 @@
             "regularisation_parameters": null
           },
           "evidence": "Benchmarks quote 10k–100k minor iterations and iterations/s (throughput is Runtime; the iteration counts are Iterations)."
+        }
+      ],
+      "rms_details": [
+        {
+          "category": "absolute_rms",
+          "submetric": "residual_image_rms",
+          "value": 50,
+          "unit": "mJy/PSF",
+          "scope": "Real MWA Vela/Puppis A field (WSClean scale-bias 0.60)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "mJy/PSF",
+            "image_region": "Residual image",
+            "residual_vs_dirty": "Residual",
+            "simulation_vs_real": "Real MWA observation (2 min)",
+            "frequency": "MWA band (Vela/Puppis A)",
+            "array": "MWA"
+          },
+          "evidence": "Default CASA multi-scale CLEAN 64 mJy/PSF residual RMS; WSClean bias 0.60 gives 50 mJy/PSF. Masked cleaning reduces residual RMS from 50 to 38 mJy/PSF (near 36 mJy/PSF Stokes V system-noise estimate). LOFAR imperfect-data run reaches 1.4 mJy/PSF RMS (WSClean MF multi-scale)."
+        },
+        {
+          "category": "absolute_rms",
+          "submetric": "off_source_blank_rms",
+          "value": 63,
+          "unit": "μJy/PSF",
+          "scope": "Wideband MWA simulation — multi-frequency multi-scale CLEAN",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "μJy/PSF",
+            "image_region": "Off-source",
+            "residual_vs_dirty": "Residual (vs dirty RMS for reduction factor)",
+            "simulation_vs_real": "Simulation (2 min zenith MWA, 149 MHz)",
+            "frequency": "30 MHz centred at 149 MHz",
+            "array": "MWA (simulated)"
+          },
+          "evidence": "Figure 10 off-source residual RMS: 880, 310, 2000, 460, and 63 μJy/PSF for single-scale, multi-scale, MORESANE, MF single-scale, and MF multi-scale CLEAN. Masked MF multi-scale reaches 55 μJy/PSF."
+        },
+        {
+          "category": "absolute_rms",
+          "submetric": "dirty_image_rms",
+          "value": 280,
+          "unit": "mJy/PSF",
+          "scope": "Wideband MWA simulation dirty-image RMS (reference for reduction factor)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "mJy/PSF",
+            "image_region": "Dirty image",
+            "residual_vs_dirty": "Dirty",
+            "simulation_vs_real": "Simulation",
+            "frequency": "~149 MHz",
+            "array": "MWA (simulated)"
+          },
+          "evidence": "Dirty-image RMS quoted as 280 mJy/PSF; MF multi-scale residual 63–64 μJy/PSF is described as a factor of ~4400 below that dirty RMS (masked: factor ~5100)."
+        },
+        {
+          "category": "comparative_rms",
+          "submetric": "lower_higher_than_baseline",
+          "value": 50,
+          "unit": "mJy/PSF vs CASA 64 mJy/PSF",
+          "scope": "Real MWA Vela/Puppis A residual RMS",
+          "baseline": "CASA multi-scale CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "units": "mJy/PSF",
+            "image_region": null,
+            "residual_vs_dirty": "Residual",
+            "simulation_vs_real": "Real MWA",
+            "frequency": null,
+            "array": "MWA"
+          },
+          "evidence": "WSClean 50 mJy/PSF vs CASA 64 mJy/PSF (and IUWT/MORESANE 63/75). Authors caution scale-bias/gridder differences; text/figure discrepancy on one WSClean setting (47 vs 62 mJy/PSF) unresolved."
+        },
+        {
+          "category": "comparative_rms",
+          "submetric": "rms_reduction_factor",
+          "value": 4400,
+          "unit": "× below dirty-image RMS",
+          "scope": "Wideband sim MF multi-scale residual vs dirty RMS",
+          "baseline": "Dirty-image RMS (280 mJy/PSF)",
+          "empirical": true,
+          "execution_context": {
+            "units": "μJy/PSF vs mJy/PSF",
+            "image_region": "Off-source residual vs dirty",
+            "residual_vs_dirty": "Residual vs dirty (scalar factor; not ‖r̂‖₂/‖x_dirty‖₂ RDR)",
+            "simulation_vs_real": "Simulation",
+            "frequency": "~149 MHz",
+            "array": "MWA (simulated)"
+          },
+          "evidence": "MF multi-scale residual ~63–64 μJy/PSF called a factor of 4400 below 280 mJy/PSF dirty RMS; with automatic masking 55 μJy/PSF → factor ~5100. Treated as absolute RMS reduction vs dirty, not R2D2-style normalised RDR."
         }
       ]
     },
@@ -2136,6 +2454,80 @@
             "regularisation_parameters": null
           },
           "evidence": "LOFAR job with Briggs robust 0 requires four major cycles (~20 min each) to the 100 mJy threshold."
+        }
+      ],
+      "rms_details": [
+        {
+          "category": "absolute_rms",
+          "submetric": "residual_image_rms",
+          "value": 7.6e-06,
+          "unit": "Jy/beam",
+          "scope": "Source-box residual image (IDG vs classical gridding)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "Jy/beam",
+            "image_region": "Source box and full residual image",
+            "residual_vs_dirty": "Residual",
+            "simulation_vs_real": "Simulation",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Source-box residual RMS: IDG 7.6e-6 vs classical 1.3e-4 Jy/beam (~19× lower). Full residual image: 1.1e-6 vs 2.1e-5 Jy/beam (~17× lower). Visibility-domain RMS and PSF-sidelobe RMS are not counted as residual-image RMS subtypes."
+        },
+        {
+          "category": "absolute_rms",
+          "submetric": "dirty_image_rms",
+          "value": null,
+          "unit": "Jy/beam (caption values inconsistent)",
+          "scope": "Out-of-field-source dirty-image RMS comparison",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "Jy/beam",
+            "image_region": "Dirty image (source outside imaged area)",
+            "residual_vs_dirty": "Dirty",
+            "simulation_vs_real": "Simulation",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Dirty-image RMS for a simulated out-of-field source reported 2% lower with IDG. Figure 8 caption absolute values are internally inconsistent with the 2% claim; percentage retained, absolute caption values not trusted without erratum."
+        },
+        {
+          "category": "comparative_rms",
+          "submetric": "rms_reduction_factor",
+          "value": 18,
+          "unit": "× residual-noise reduction (approx.)",
+          "scope": "IDG vs classical gridding residual RMS",
+          "baseline": "Classical gridding",
+          "empirical": true,
+          "execution_context": {
+            "units": "Jy/beam",
+            "image_region": "Source box / full residual",
+            "residual_vs_dirty": "Residual",
+            "simulation_vs_real": "Simulation",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Text summarizes residual-noise reduction as roughly a factor of 18 (~17× full image, ~19× source box)."
+        },
+        {
+          "category": "comparative_rms",
+          "submetric": "percentage_rms_change",
+          "value": 2,
+          "unit": "% lower dirty-image RMS",
+          "scope": "Out-of-field-source suppression",
+          "baseline": "Classical gridding",
+          "empirical": true,
+          "execution_context": {
+            "units": null,
+            "image_region": null,
+            "residual_vs_dirty": "Dirty",
+            "simulation_vs_real": "Simulation",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Out-of-field dirty-image RMS reported 2% lower with IDG than classical gridding."
         }
       ]
     },
@@ -2489,6 +2881,26 @@
             "array": null
           },
           "evidence": "Defines DR = I_max / σ_res as a core quality metric for faint-emission detectability. Named in the algorithmic-quality set with dirty RMS and PSNR/SSIM; not tabulated as a measured Section 6 result."
+        }
+      ],
+      "rms_details": [
+        {
+          "category": "framework_defined",
+          "submetric": "named_core_quality_metric",
+          "value": null,
+          "unit": "Jy/beam (σ_dirty definition)",
+          "scope": "astroCAMP Table 2 core fidelity metric (not tabulated in §6 runs)",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "units": "Jy/beam",
+            "image_region": "Dirty image (imstat / PyBDSF)",
+            "residual_vs_dirty": "Dirty (σ_dirty); residual RMS appears only inside DR = I_max/σ_res",
+            "simulation_vs_real": "Framework definition (WSClean+IDG matrix does not tabulate RMS values)",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Defines dirty-image RMS σ_dirty = sqrt((1/N) Σ (I_i − Ī)²) as a core quality metric and uses it in the example quality tuple. Section 6 does not tabulate those RMS values. Residual RMS as DR denominator alone is not a separate measured RMS subtype here."
         }
       ]
     },
@@ -3209,6 +3621,26 @@
             "regularisation_parameters": "WSClean loop gain 0.8; uSARA step 1.98/L; ASKAP λ scaled to 0.7–0.8 of heuristic"
           },
           "evidence": "uSARA is iterative and WSClean is capped at 1e6 iterations, but the paper does not report achieved iteration counts or convergence-iteration results. Stopping/max-iter config only → Unspecified (context captured separately)."
+        }
+      ],
+      "rms_details": [
+        {
+          "category": "absolute_rms",
+          "submetric": "residual_map_sigma",
+          "value": 1.6,
+          "unit": "μJy/pixel (example WSClean measured residual rms)",
+          "scope": "ASKAP real-data fields (Abell 3395 / PKS 2014-55 / Dancing Ghosts)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "μJy/pixel",
+            "image_region": "Residual map (contours at multiples of residual rms)",
+            "residual_vs_dirty": "Residual-map rms",
+            "simulation_vs_real": "Real ASKAP Early Science / Pilot data",
+            "frequency": "~817–1139 MHz sub-bands",
+            "array": "ASKAP"
+          },
+          "evidence": "Reports measured residual-map rms as fidelity/sensitivity context: e.g. WSClean ~1–2 μJy/pixel, 1.6 μJy/pixel (PKS 2014-55), and 1 μJy/pixel (Dancing Ghosts). Source boundaries drawn at multiples of residual rms vs calculated image-noise std. Not a normalised RDR score."
         }
       ]
     },
@@ -3988,6 +4420,44 @@
             "array": "VLA"
           },
           "evidence": "Target/achieved dynamic range for the Cygnus A reconstruction quoted as ~1.7×10⁵."
+        }
+      ],
+      "rms_details": [
+        {
+          "category": "absolute_rms",
+          "submetric": "residual_map_sigma",
+          "value": 0.00117,
+          "unit": "residual dirty-image std. dev. (linear; R2D2)",
+          "scope": "Cygnus A deep imaging method comparison",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "linear residual std. dev. (table ×10⁻⁴)",
+            "image_region": "Residual dirty image",
+            "residual_vs_dirty": "Residual (std of residual dirty image)",
+            "simulation_vs_real": "Real Cygnus A imaging comparison",
+            "frequency": null,
+            "array": "VLA (Cygnus A reduction context)"
+          },
+          "evidence": "Primary quantitative fidelity metric: std. dev. of the residual dirty image — Hö-CLEAN 359×10⁻⁴; CS-CLEAN 8.6×10⁻⁴; MS-CLEAN 10.4×10⁻⁴; R2D2 11.7×10⁻⁴; R2D2-Net 13.4×10⁻⁴; R3D3 9.7×10⁻⁴; uSARA 7.2×10⁻⁴; AIRI 7.4×10⁻⁴."
+        },
+        {
+          "category": "comparative_rms",
+          "submetric": "lower_higher_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "Residual std across CLEAN / R2D2 / uSARA / AIRI",
+          "baseline": "CLEAN-family and other reconstructors in same table",
+          "empirical": true,
+          "execution_context": {
+            "units": null,
+            "image_region": null,
+            "residual_vs_dirty": "Residual dirty-image std",
+            "simulation_vs_real": "Real Cygnus A",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "AIRI, uSARA, and CS-CLEAN achieve the lowest residual std; R2D2 variants are described as comparable, slightly above those top performers (numerical table)."
         }
       ]
     },
@@ -6018,6 +6488,44 @@
             "array": "VLA / MeerKAT (simulated); VLA real 3C 273"
           },
           "evidence": "Images span d ∈ [10³,10⁵], split into low [10³,10⁴] and high [10⁴,10⁵] for SNR/logSNR reporting. Real-data note recovers features across 4 orders of magnitude without a calibrated DR score."
+        }
+      ],
+      "rms_details": [
+        {
+          "category": "absolute_rms",
+          "submetric": "residual_map_sigma",
+          "value": 0.000687,
+          "unit": "residual-map standard deviation (MROP)",
+          "scope": "Real VLA 3C 273 X-band (D/N ≈ 0.98)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "residual-map std (linear)",
+            "image_region": "Residual map",
+            "residual_vs_dirty": "Residual",
+            "simulation_vs_real": "Real VLA data (also used as sim diagnostic)",
+            "frequency": "X band",
+            "array": "VLA"
+          },
+          "evidence": "Residual dirty image and its standard deviation used as data-fidelity diagnostic. Real-data residual-map std: classical 6.49×10⁻⁴; MROP 6.87×10⁻⁴ (highly comparable at high compression)."
+        },
+        {
+          "category": "comparative_rms",
+          "submetric": "lower_higher_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "MROP vs classical residual-map std (3C 273)",
+          "baseline": "Classical (uncompressed) model",
+          "empirical": true,
+          "execution_context": {
+            "units": null,
+            "image_region": null,
+            "residual_vs_dirty": "Residual",
+            "simulation_vs_real": "Real VLA",
+            "frequency": "X band",
+            "array": "VLA"
+          },
+          "evidence": "MROP residual-map std 6.87×10⁻⁴ vs classical 6.49×10⁻⁴ — numerical comparison confirming fidelity preserved under compression."
         }
       ]
     },

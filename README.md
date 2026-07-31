@@ -42,6 +42,8 @@ Interactive stacked bar chart of metric usage by cohort (`index.html` + `papers-
 
 **DR second-level page:** same shell for DR (`dynamic_range`). **Explore DR Details** → [`dr.html`](dr.html) (short route matching the chart label). Categories: Reported / Achieved DR, Target / Configured DR, Comparative DR, DR Limits / System Effects, plus **Unspecified DR** when evidence is too vague to subtype. A separate **DR Context** panel counts reporting completeness for definition used, noise estimator, image region, simulation vs real, frequency, and array — context is not itself a DR metric. Residual RMS alone is not DR; SNR is not DR. Taxonomy: `dr-taxonomy.js`; data: `dr_details` in `papers-data.json` (mirror: `data/dr-details.json`; injector `scripts/inject_dr_details.py`). Top-level `dynamic_range: 0|1` flags are unchanged.
 
+**RMS second-level page:** same shell for RMS (`rms`). **Explore RMS Details** → [`rms.html`](rms.html). Categories: Residual / Image RMS (Absolute), Comparative RMS, Framework / Defined RMS, plus **Unspecified RMS** when evidence is too vague to subtype. A separate **RMS Context** panel counts reporting completeness for units, image region, residual vs dirty, simulation vs real, frequency, and array — context is not itself an RMS metric. Absolute residual/dirty/off-source RMS as a reported score counts; RMS that appears only as a DR denominator does not invent a subtype; RDR (‖r̂‖₂/‖x_dirty‖₂) is not RMS. Taxonomy: `rms-taxonomy.js`; data: `rms_details` in `papers-data.json` (mirror: `data/rms-details.json`; injector `scripts/inject_rms_details.py`). Top-level `rms: 0|1` flags are unchanged.
+
 Metrics are grouped by a five-category taxonomy:
 
 | Category | Metrics |
