@@ -10,6 +10,7 @@
   "rdr": 0,
   "nmse_nrmse": 0,
   "mae": 0,
+  "flux_recovery": 0,
   "runtime": 1,
   "iterations": 0,
   "credible_interval": 0,
@@ -18,5 +19,7 @@
   "classification_metrics": 1,
   "text_metrics": 0,
   "compute_cost": 1,
-  "other_metrics": ["Calibration error / accuracy"]
+  "other_metrics": [
+    "Calibration error / accuracy"
+  ]
 }

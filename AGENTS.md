@@ -18,6 +18,10 @@ This file is the project's committed home for project-intrinsic agent knowledge:
 
 Former combined column `RDR/Resid` (`rdr_residual`) is split into **RMS** (`rms`) and **RDR** (`rdr`). **All three cohorts and the root aggregate** use this schema (see each `METRICS_TABLE.md` and the website). Classification: RMS = absolute residual/dirty/off-source RMS as a reported score (not merely DR’s denominator); RDR = residual-to-dirty ratio only; qualitative residuals alone → both 0.
 
+## Flux Recovery
+
+Canonical key `flux_recovery` (table label **Flux**, after MAE): quantitative recovered flux vs reference/model/catalogue (or explicit cross-method recovered-flux comparison). Observational flux context, peak brightness alone, DR/RMS, or qualitative morphology → 0. See `metrics/flux-recovery.md`.
+
 ## Maintaining this file
 
 Keep this file for knowledge useful to almost every future agent session in this project.

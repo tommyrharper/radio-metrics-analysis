@@ -10,6 +10,7 @@
   "rdr": 1,
   "nmse_nrmse": 0,
   "mae": 0,
+  "flux_recovery": 0,
   "runtime": 1,
   "iterations": 1,
   "credible_interval": 0,
@@ -18,5 +19,7 @@
   "classification_metrics": 0,
   "text_metrics": 0,
   "compute_cost": 1,
-  "other_metrics": ["MRU (mean relative uncertainty)"]
+  "other_metrics": [
+    "MRU (mean relative uncertainty)"
+  ]
 }

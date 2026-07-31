@@ -13,6 +13,7 @@ Cross-paper syntheses of how each canonical performance/fidelity metric is used 
 | `rdr.md` | RDR |
 | `nmse.md` | NMSE |
 | `mae.md` | MAE |
+| `flux-recovery.md` | Flux Recovery |
 | `runtime.md` | Runtime |
 | `iters.md` | Iters |
 | `credint.md` | CredInt |
