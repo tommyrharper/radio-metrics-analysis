@@ -177,5 +177,66 @@
     },
   ];
 
+  const METRIC_CATEGORIES = {
+    observational: {
+      id: "observational",
+      label: "Observational",
+      short: "Obs",
+      color: "#0f766e",
+      metrics: ["snr", "logsnr", "dynamic_range", "rms", "rdr"],
+    },
+    computational: {
+      id: "computational",
+      label: "Computational",
+      short: "Cmp",
+      color: "#6d28d9",
+      metrics: ["runtime", "compute_cost", "iterations"],
+    },
+    fidelity: {
+      id: "fidelity",
+      label: "Fidelity",
+      short: "Fid",
+      color: "#a16207",
+      metrics: ["psnr", "ssim", "nmse_nrmse", "mae", "wasserstein"],
+    },
+    uncertainty: {
+      id: "uncertainty",
+      label: "Uncertainty",
+      short: "Unc",
+      color: "#2563eb",
+      metrics: ["credible_interval", "uncertainty_correlation"],
+    },
+    scientific: {
+      id: "scientific",
+      label: "Scientific",
+      short: "Sci",
+      color: "#be123c",
+      metrics: [
+        "flux_recovery",
+        "astrometric_accuracy",
+        "classification_metrics",
+        "text_metrics",
+      ],
+    },
+  };
+
+  const METRIC_CATEGORY_ORDER = [
+    "observational",
+    "computational",
+    "fidelity",
+    "uncertainty",
+    "scientific",
+  ];
+
+  const metricToCategory = {};
+  METRIC_CATEGORY_ORDER.forEach((cid) => {
+    (METRIC_CATEGORIES[cid].metrics || []).forEach((k) => {
+      metricToCategory[k] = cid;
+    });
+  });
+
   global.METRIC_REGISTRY = METRIC_REGISTRY;
+  global.METRIC_CATEGORIES = METRIC_CATEGORIES;
+  global.METRIC_CATEGORY_ORDER = METRIC_CATEGORY_ORDER;
+  global.metricToCategory = metricToCategory;
 })(typeof window !== "undefined" ? window : globalThis);

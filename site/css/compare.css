@@ -116,7 +116,8 @@ h1 {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 14rem;
+  max-width: 22rem;
+  font-weight: 500;
 }
 
 .paper-pill .remove {
@@ -131,6 +132,129 @@ h1 {
 }
 
 .paper-pill .remove:hover { color: var(--ink); }
+
+.view-toggle {
+  display: inline-flex;
+  gap: 0;
+  margin: 0 0 1.25rem;
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.view-btn {
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 500;
+  padding: 0.45rem 0.95rem;
+  cursor: pointer;
+}
+
+.view-btn + .view-btn {
+  border-left: 1px solid var(--line);
+}
+
+.view-btn:hover {
+  background: rgba(28, 36, 41, 0.04);
+}
+
+.view-btn.active {
+  background: rgba(31, 78, 121, 0.1);
+  color: var(--r2d2);
+  font-weight: 600;
+}
+
+.view-btn:focus-visible {
+  outline: 2px solid var(--r2d2);
+  outline-offset: -2px;
+}
+
+.overview-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.overview-table th,
+.overview-table td {
+  border: 1px solid var(--line);
+  padding: 0.5rem 0.55rem;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.overview-table th[scope="row"],
+.overview-table thead th:first-child {
+  text-align: left;
+  font-weight: 600;
+}
+
+.overview-table .th-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: left;
+  max-width: 11rem;
+}
+
+.overview-table .cat-dot {
+  display: inline-block;
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-right: 0.4rem;
+  vertical-align: middle;
+}
+
+.overview-table .count-cell {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.overview-table .count-cell.has-count {
+  color: var(--ink);
+  background: rgba(31, 78, 121, 0.05);
+}
+
+.overview-table .total-row th,
+.overview-table .total-row td {
+  background: #f7f2e9;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.overview-table .group-row th {
+  background: #f7f2e9;
+  text-align: left;
+  font-size: 0.84rem;
+  color: var(--ink);
+  padding-top: 0.55rem;
+  padding-bottom: 0.55rem;
+}
+
+.presence-table .metric-short {
+  font-weight: 600;
+}
+
+.presence-table .metric-full {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--muted);
+  margin-top: 0.1rem;
+  line-height: 1.25;
+}
+
+.presence-table td.present {
+  color: var(--classic);
+  font-weight: 700;
+  background: rgba(11, 110, 106, 0.08);
+}
+
+.presence-table td.absent {
+  color: var(--muted);
+}
 
 .metric-nav {
   display: flex;
