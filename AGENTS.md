@@ -22,6 +22,10 @@ Former combined column `RDR/Resid` (`rdr_residual`) is split into **RMS** (`rms`
 
 Canonical key `flux_recovery` (table label **Flux**, after MAE): quantitative recovered flux vs reference/model/catalogue (or explicit cross-method recovered-flux comparison). Observational flux context, peak brightness alone, DR/RMS, or qualitative morphology → 0. See `metrics/flux-recovery.md`.
 
+## Astrometric Accuracy
+
+Canonical key `astrometric_accuracy` (table label **Astrometry**, after Flux): quantitative reconstructed-source position vs reference/catalogue/truth (centroid/RA–Dec/positional error, localisation within tolerance, or comparative position accuracy). Resolution/beam alone, detection without position error, morphology/jet-angle, PSNR/SSIM, matching radius as setting only, or framework-named without measured results → 0. See `metrics/astrometric-accuracy.md`.
+
 ## Maintaining this file
 
 Keep this file for knowledge useful to almost every future agent session in this project.

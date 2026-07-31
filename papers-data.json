@@ -16,6 +16,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 0,
         "iterations": 1,
         "credible_interval": 0,
@@ -28,7 +29,8 @@
       "metric_details": {
         "iterations": [
           "Green Bank qualitative iteration study (3C 244.1 at 2695 MHz): Figure 3 compares the dirty map with cleaned maps after 1, 2, and 6 iterations, all using loop gain 1. The data contain 50 interferometer baselines, corresponding to 100 measured amplitudes and phases. Högbom states that the six-iteration map can be described by fewer than 30 numbers, and attributes the later visual improvement to removal of sidelobes from weaker features left after two iterations. Contour maps provide the fidelity evidence; no ground-truth error is available."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -47,6 +49,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 1,
         "credible_interval": 0,
@@ -68,7 +71,8 @@
         "compute_cost": [
           ": Runtime throughput: on a PDP-11/70 with an attached FPS AP-120B array processor, the minor cycle processed about 15 components per second. This is an implementation throughput, not an end-to-end image-runtime measurement.",
           ": Memory and patch context: the machine had 32 kwords of main memory, and the beam patch was constrained between 21 x 41 and 64 x 127 elements. These are implementation constraints, not reconstruction-quality scores."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -87,6 +91,7 @@
         "nmse_nrmse": 1,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 0,
         "iterations": 1,
         "credible_interval": 0,
@@ -109,7 +114,8 @@
         "compute_cost": [
           "No standardized scalar fidelity benchmark or measured hardware performance is reported.: The paper provides synthetic contour-map comparisons, iteration counts, one unreported numerical RMS comparison, and analytical operation-count models. It does not report PSNR, SNR improvement, dynamic range, recovered-flux error, astrometric error, wall-clock time, memory, throughput, or computing hardware.",
           "Finite-precision error analysis: for a dirty-beam sidelobe at 1% of the peak, loop gain 0.1, and arithmetic with five significant figures, the paper states that each subtraction loses one significant figure of the beam. Because truncation proceeds in the same direction, after about \\(10^3\\) subtractions the accumulated error can be as large as the sidelobe. This is an illustrative numerical analysis, not a measured machine experiment; no hardware or arithmetic implementation is named."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -128,6 +134,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 0,
         "iterations": 0,
         "credible_interval": 0,
@@ -137,7 +144,9 @@
         "text_metrics": 0,
         "compute_cost": 0
       },
-      "metric_details": {}
+      "metric_details": {
+        "astrometric_accuracy": []
+      }
     },
     {
       "cohort": "classic",
@@ -155,6 +164,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 1,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 1,
         "credible_interval": 0,
@@ -180,7 +190,8 @@
           "Recovered integrated flux vs known model (Table 1): at peak-to-noise 20, 5 arcmin circular model true flux 1002; MRC recovers 962 (flat cumulative profile) while CLEAN recovers 563 (strongly changing).",
           "Realistic-source-model test: from true flux 10,000 arbitrary units, MRC recovers 9358 (93.6%).",
           "Low-SNR flux recovery (peak-to-noise 5): MRC recovers 152 of 160, 1232 of 1002, and 3237 of 4010 vs CLEAN 125, 162, and 327 for 2/5/10 arcmin circular models (MRC can over-recover)."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -199,6 +210,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 0,
         "iterations": 0,
         "credible_interval": 0,
@@ -218,7 +230,8 @@
           "Image residual noise: blank regions of the final multi-frequency CLEAN image have an rms about 1.5 times the stated 60 microJy beam^-1 thermal-noise limit, or about 90 microJy beam^-1. The paper reports remaining errors around the 535 mJy core and northeast of the northeast hot spot, which the authors could not identify as gain-amplitude or phase errors. It does not report a single measured dynamic-range ratio for the final image.",
           "Artifact visibility against traditional CLEAN: Figure 3 displays both reconstructions saturated at +/-800 microJy beam^-1, equal to +/-0.15% of the peak intensity. Traditional CLEAN uses the same dirty image and beam and benefits from the multi-frequency self-calibration model and flattened core spectrum, but shows substantial spectral artifacts around the northeast hot spot. The comparison is visual rather than a scalar error, residual-rms, or ground-truth fidelity score. The affected hot spot has 1.45 Jy integrated flux density, about three times the southwest hot spot's flux.",
           "Computational cost and model limits: the authors estimate the method to be about 2-3 times more computationally expensive than corresponding conventional Hogbom or Clark CLEAN, plus guard-band overhead, but provide no runtime, processor, memory, or other hardware benchmark. They state that higher-order spectral terms become essential for high-dynamic-range imaging when the fractional frequency spread exceeds about 20-30%. Values quoted from Conway et al. rather than newly measured here include less than 1% flux-density bias from the linear approximation and residual errors of order \\(5 \\times 10^{-4}\\) of the second-brightest feature for a +/-12.5% frequency spread after flattening the dominant component's spectrum."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -237,6 +250,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 0,
         "iterations": 0,
         "credible_interval": 0,
@@ -246,7 +260,9 @@
         "text_metrics": 0,
         "compute_cost": 0
       },
-      "metric_details": {}
+      "metric_details": {
+        "astrometric_accuracy": []
+      }
     },
     {
       "cohort": "classic",
@@ -264,6 +280,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 1,
         "credible_interval": 0,
@@ -283,7 +300,8 @@
         "compute_cost": [
           "Optimization and runtime: the active-set heuristic is reported to improve performance by an order of magnitude or more, while the complete Asp-Clean implementation still takes about three times as long as MS-Clean. The paper gives no absolute wall-clock time, CPU model, core count, memory use, or hardware-normalized throughput, so the runtime ratio cannot be transferred directly to modern systems.",
           "Limitations and missing metrics: the experiments are simulations rather than blind tests on measured visibilities, and the paper does not report PSNR, normalized error, SSIM, dynamic range, source completeness, flux recovery, calibrated uncertainty, or an absolute compute benchmark. It also does not specify the simulated VLA configuration, observing frequency, visibility count, noise-generation procedure, or compute hardware. The tested Asp is circularly symmetric, while more flexible shapes, component merging/removal, improved active-set selection, and late switching to a faster scale-less method are left for future work."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -302,6 +320,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 0,
         "iterations": 0,
         "credible_interval": 0,
@@ -311,7 +330,9 @@
         "text_metrics": 0,
         "compute_cost": 0
       },
-      "metric_details": {}
+      "metric_details": {
+        "astrometric_accuracy": []
+      }
     },
     {
       "cohort": "classic",
@@ -329,6 +350,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 0,
         "iterations": 0,
         "credible_interval": 0,
@@ -338,7 +360,9 @@
         "text_metrics": 0,
         "compute_cost": 0
       },
-      "metric_details": {}
+      "metric_details": {
+        "astrometric_accuracy": []
+      }
     },
     {
       "cohort": "classic",
@@ -356,6 +380,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 0,
         "iterations": 0,
         "credible_interval": 0,
@@ -372,7 +397,8 @@
         "rms": [
           "Observed residual peaks and RMS: without time-varying primary-beam and polarization-squint correction, Stokes V residual extrema were -9.7 and +2.8 mJy/beam. After correction, extrema were about +/-0.5 mJy/beam, were no longer correlated with the bright-source positions, and the RMS was 0.15 mJy/beam, slightly above the expected thermal noise. The paper characterizes the systematic-error reduction as one order of magnitude and reports that instrumental Stokes V was removed to better than 10% accuracy. Remaining errors are attributed plausibly, but not conclusively, to beam-model error, uncorrected pointing error coupled to self-calibration, and image pixelization.",
           "Primary-beam error model: for a 1 Jy source in the 1.4 GHz VLA C-array data, a measured 40% instantaneous PSF sidelobe and peak primary-beam mismatch of 0.005 predict about 2 mJy peak Stokes I residual and about 10 mJy Stokes V residual. With a piecewise-constant beam approximation sampled every 10 degrees in parallactic angle, predicted peaks are about 1 mJy in Stokes I and 5 mJy in Stokes V. Requiring approximation error to remain several times below a roughly 0.1 mJy/beam thermal sensitivity led to a 1 degree sampling requirement for this data set. These values are analytic estimates tied to the measured PSF and modeled beam, not separate end-to-end timing or fidelity benchmarks."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -391,6 +417,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 1,
         "credible_interval": 0,
@@ -420,7 +447,8 @@
           "Hardware, software, and deconvolution context: Processing used a dual 3.06 GHz Xeon machine with 512 kB cache per processor and 3 GB memory. AIPS++ was compiled with GNU compilers at optimization level O2. Every image was CLEANed for 20,000 iterations with loop gain 0.1. The image grid was 1536 by 1536 pixels at 60 arcsec per pixel. Both uvw-space faceting and w-projection used in-memory gridding and Fourier transforms. In this benchmark the maximum w-projection kernel support was 220 pixels full width; each w-plane used a 512 by 512 complex-pixel kernel requiring 2 MB.",
           "Real-data capability demonstration: A 1.4 GHz image of supernova remnant SN1006 combines all four VLA configurations with Green Bank Telescope data. A maximum-entropy GBT image initializes multi-scale CLEAN, and w-projection with 256 planes performs the major cycle. The paper estimates that an image-plane facet method would need at least 10 by 10 facets. This is a qualitative reconstruction demonstration: it reports no runtime, controlled fidelity metric, noise level, or hardware result for SN1006.",
           "Limitations: Greater convolution support raises memory demand, and the authors state that the worst few-hundred-kilometer, meter-wavelength cases were not feasible on a single-processor machine of the period. Table II presents scaled kernel-support estimates rather than measured end-to-end runtimes for those future-array regimes. A hybrid w-projection and uvw-faceting design is suggested for such cases."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -439,6 +467,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 1,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 1,
         "credible_interval": 0,
@@ -475,7 +504,8 @@
           "M31 Table II: total recovered flux vs 1,495 Jy reference — Högbom CLEAN 1,474 Jy; Clark 1,326 Jy; Multi-Resolution CLEAN 1,546 Jy; Multiscale CLEAN 1,495 Jy (exact match).",
           "Real NGC 1058 HI channel: Multiscale CLEAN recovered 3.08 Jy of integrated flux vs 0.32 Jy for Högbom CLEAN (method-comparative recovery).",
           "Source-size sweep reports recovered-flux fraction; noise sweep notes Multiscale CLEAN retained accurate flux estimates down to SNR ~ few vs MEM overestimating flux at SNR as high as 100."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -494,6 +524,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 1,
+        "astrometric_accuracy": 0,
         "runtime": 0,
         "iterations": 1,
         "credible_interval": 0,
@@ -519,7 +550,8 @@
         ],
         "flux_recovery": [
           "Taylor-order numerical test (noise-free 1 Jy point source): for 2:1 band and four Taylor terms, reference-frequency peak-flux error ≈ 1 part in 1,000 (with DR ≈ 100,000)."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -538,6 +570,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 0,
         "credible_interval": 0,
@@ -559,7 +592,8 @@
         "runtime": [
           "Runtime: MATLAB wall-clock times are measured on a 2.4 GHz Xeon quad-core processor and plotted in log10 seconds over the coverage sweep, again as means and one-standard-deviation error bars over 100 simulations. The paper describes SARA runtime as of the order of minutes and similar to TV in these tests and to published MS-CLEAN times. It does not tabulate exact times, specify the Xeon model, memory, MATLAB version, thread use, or visibility counts, and its MS-CLEAN comparison is cross-paper rather than a controlled same-hardware run.",
           "Scope and missing benchmarks: The study uses synthetic, on-grid discrete Fourier samples and no measured interferometer data. Except for the simplified spread-spectrum illustration, it assumes a small field, identity primary beam, monochromatic non-polarized imaging, and no direction-dependent effects. It does not report flux-recovery error, source completeness, residual RMS in physical units, SSIM, memory use, or a direct CLEAN/MS-CLEAN runtime or fidelity benchmark. The authors identify continuous visibility handling, lower-level implementation, and parallel or distributed solvers as future work."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -578,6 +612,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 0,
         "credible_interval": 0,
@@ -596,7 +631,8 @@
         "runtime": [
           "Random variable-density coverage sweep: across \\(M/N = 0.2\\) to 2, Figure 2 reports mean reconstruction SNR and mean wall-clock time over 30 noise and coverage realizations for each image. SARA has the highest mean SNR throughout both sweeps. For M31, RWBPDb8 is the next-best reported method but remains as much as 4 dB below SARA. For 30 Doradus, TV and RWTV are at most 2 dB below SARA, while BP and RWBP are at least 4 dB below every other method once the coverage exceeds \\(0.2N\\). These comparisons use synthetic truth and indirect CLEAN proxies, not observed-sky truth or a direct CLEAN run.",
           "Runtime and hardware: Figure 2 measures wall-clock reconstruction time on a 2.4 GHz quad-core Xeon using the non-optimized beta software. Reweighted methods take from tens of minutes at \\(0.2N\\) to about one hour at \\(2N\\); their time scales approximately linearly with visibility count because the conjugate-gradient step repeatedly applies \\(\\Phi\\) and \\(\\Phi^\\dagger\\). Non-reweighted methods remain below 10 minutes across the sweep except TV on 30 Doradus. RWBPDb8 is the slowest and shows the largest timing error bars, while SARA remains competitive because its nine basis decompositions are parallelized. The beta code otherwise evaluates the SDMM proximity operators serially, so these timings do not benchmark the paper's proposed fully parallel or distributed design."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -615,6 +651,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 1,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 1,
         "credible_interval": 0,
@@ -650,7 +687,8 @@
         ],
         "flux_recovery": [
           "Controlled MWA simulation: 100 sources of 1 Jy; AEGEAN source-flux standard error — WSClean 1.31% flux error vs CASA 1.34% at zenith with 12 w-planes."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -669,6 +707,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 1,
         "credible_interval": 0,
@@ -697,7 +736,8 @@
           "Wideband simulation: The test uses a 2 min zenith MWA synthesis over 30 MHz centred at 149 MHz. It contains two overlapping 2 degree FWHM Gaussians 1.5 degrees apart with spectral indices -1 and +1, 400 Jy integrated flux density and 35 mJy peak flux density, plus a 1 Jy point source with spectral index -2. All methods stop when the residual peak falls below three residual standard deviations. Figure 10 gives off-source residual RMS values of 880, 310, 2000, 460, and 63 microJy/PSF for single-scale CLEAN, multi-scale CLEAN, MORESANE, multi-frequency single-scale CLEAN, and multi-frequency multi-scale CLEAN respectively. The narrative rounds the last value to 64 microJy/PSF and calls it a factor of 4400 below the 280 mJy/PSF dirty-image RMS. Adding automatic scale-dependent masking reaches 55 microJy/PSF, reported as a factor of 5100 reduction. The multi-scale spectral-index map follows the input gradient but has local errors of a few tenths; the paper presents this qualitatively and does not report a spectral-index RMSE.",
           "Real wideband Cygnus A test: The JVLA subset spans 832 MHz centred at 3.47 GHz, contains about 25 h across A, B, and C configurations, and is imaged at 6 arcsec resolution on a 6120 x 6120 grid. The hotspot models are removed in visibility space after self-calibration and direction-dependent calibration. Multi-frequency IUWT does not converge. MORESANE, multi-scale CLEAN, and masked multi-scale CLEAN have visually similar off-source artefact levels but different residual morphology; masked multi-scale CLEAN is judged best for filamentary residual structure. No scalar RMS or dynamic-range value is reported for this comparison.",
           "Metric scope: Quantitative fidelity is evaluated mainly with residual RMS or standard deviation and convergence, alongside visual model and residual morphology. Runtime is measured as wall-clock time and minor iterations per second with explicit image size and hardware. The paper does not report PSNR, SSIM, learned-model accuracy, or a controlled end-to-end wall time that includes gridding, inversion, prediction, and deconvolution."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -716,6 +756,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 1,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 1,
         "credible_interval": 0,
@@ -745,7 +786,8 @@
         ],
         "flux_recovery": [
           "Relative flux-density error `(estimated S_50 - true S_50) / true S_50` at 50 MHz vs distance from beam center; direction-dependent HMP-WB and SSD-WB cluster much more closely around zero than direction-independent imaging."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -764,6 +806,7 @@
         "nmse_nrmse": 1,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 1,
         "credible_interval": 0,
@@ -795,7 +838,8 @@
         "rms": [
           "Residual-image RMS: in the box around the simulated source, IDG reports 7.6e-6 Jy/beam versus 1.3e-4 Jy/beam for classical gridding, described as about 19 times lower. Across the entire residual image, the values are 1.1e-6 and 2.1e-5 Jy/beam, described as about 17 times lower. The text summarizes the residual-noise reduction as roughly a factor of 18 and notes that this improves the dynamic-range limit only when gridding error is the limiting factor.",
           "Out-of-field-source suppression: the dirty-image RMS for a simulated source outside the imaged area is reported as 2% lower with IDG. Figure 8's caption prints 1.35 Jy/beam for IDG and 1.38e-3 Jy/beam for classical gridding, which is internally inconsistent with both the stated 2% difference and the plotted scale. The percentage is therefore reportable, but the first absolute value should not be treated as reliable without an erratum."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -814,6 +858,7 @@
         "nmse_nrmse": 1,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 0,
         "credible_interval": 0,
@@ -834,7 +879,8 @@
           "Dense-grid runtime findings: For dense direction-cosine images, W-gridder is faster than HVOX v1, especially over roughly 1-10 km telescope radii. Monolithic HVOX exhausts memory at the largest configurations, whereas HVOX-500MB continues to the 100 km, 182.25-megapixel case and approaches W-gridder's analysis time there. Synthesis is slower than analysis for the NUFFT methods, with a particularly visible penalty for chunked HVOX because of v1's repeated spreading or interpolation. For dense HEALPix images, W-gridder plus mesh interpolation remains faster in these tests.",
           "Sparse-domain runtime findings: When only 500 sky pixels are requested, HVOX-500MB performs both analysis and synthesis about one order of magnitude faster than W-gridder because it evaluates only the requested regions, while W-gridder still forms the full regular image. HVOX also significantly outperforms W-gridder plus interpolation on sparse HEALPix meshes. These are the paper's strongest runtime results and are relevant to sparse CLEAN models and calibration, but they do not establish the same advantage for dense imaging.",
           "Real-data capability and timing: A qualitative demonstration loads an 8 h LOFAR-HBA Boötes-field measurement set with 24 core and 14 remote stations, synthesizes a 5 x 5 degree dirty image on an approximately 1.5-megapixel HEALPix mesh with HVOX-500MB, and writes FITS output in 38 s on the benchmark workstation. The paper shows the resulting image but reports no source-flux error, residual RMS, PSNR, SSIM, dynamic range, or matched W-gridder timing for this observation."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -853,6 +899,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 0,
         "credible_interval": 0,
@@ -897,7 +944,8 @@
           "Dynamic range: `DR = I_max / σ_res`, core — peak intensity over residual-image RMS for faint-emission detectability. Framework-defined; not tabulated as a measured result in Section 6.",
           "Astrometric / photometric error: catalogue position and flux offsets vs reference — named with dirty-image RMS, PSNR/SSIM, and DR as the algorithmic-quality set that captures scientific impact of approximations (precision, w-stacking, NUFFT truncation).",
           "No standalone SNR or NMSE: the paper does not define a separate linear SNR or NMSE/NRMSE column. Reconstruction error enters via MSE inside PSNR, plus dirty-image/residual RMS."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -916,6 +964,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 0,
         "iterations": 0,
         "credible_interval": 0,
@@ -935,7 +984,8 @@
           "Optimization gains (Section 8): favorable implicit on-the-fly sorting of samples by uvw coordinates improves CPU throughput by about 50% beyond Table 1, while an explicit sort yields 10-20%; software prefetch hints improve throughput by up to 15%, most strongly at small support.",
           "W-stacking operation-count estimate (Section 8.3): relative to ASKAP W-projection supports that can exceed 100 pixels and require tens of thousands of grid-point updates per visibility sample, the memo estimates that W-stacking can use about 15-pixel support and reduce gridding operations by one to two orders of magnitude. It does not report a W-stacking implementation, wall-clock result, memory measurement, image comparison, or end-to-end accuracy benchmark.",
           "Image fidelity: no reconstruction SNR, PSNR, RMSE, dynamic range, residual-image statistic, or deconvolution comparison is reported. The quantitative study concerns computational throughput, power, kernel support and truncation, hardware efficiency, and modeled capacity; image quality is not benchmarked."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -954,6 +1004,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 1,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 1,
         "credible_interval": 0,
@@ -978,7 +1029,8 @@
         "flux_recovery": [
           "Core specific-intensity (peak-flux) relative deviation vs synthetic Gaussian truth: noiseless network −4.354% ± 6.662%, image-noise-trained 0.613% ± 12.402%, WSClean −13.645% ± 24.312%; with Fourier white noise network 3.49% ± 12.26%.",
           "Mixed point/extended sources (Fig. 21): mean specific-intensity deviations −5.856% ± 21.548% (point) and −13.88% ± 16.191% (extended)."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -997,6 +1049,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 1,
+        "astrometric_accuracy": 0,
         "runtime": 0,
         "iterations": 1,
         "credible_interval": 0,
@@ -1021,7 +1074,8 @@
         ],
         "flux_recovery": [
           "AGN flux cross-check (MeerKAT): at 1053 MHz, uSARA/AIRI/CLEAN recover 143, 143, and 146 mJy; at 1399 MHz 124, 125, and 123 mJy — comparative integrated-flux consistency across methods (no known-truth flux error)."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -1040,6 +1094,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 0,
         "credible_interval": 0,
@@ -1072,7 +1127,8 @@
         "compute_cost": [
           "Definitions and evaluation scope: The paper uses PSNR in decibels as its pixel-wise truth metric and SSIM as its local structural or perceptual metric. PSNR is sensitive to astrometric shifts; SSIM compares local means, variances, and covariance. Inputs and targets are normalized to the available integer range before evaluation. CLEAN's computational cost limits the controlled comparison to 50 validation images, even though the validation pool contains 100 pairs.",
           "Compute and latency context: The paper states that a 2000 x 2000 dirty image can be reconstructed in a few seconds on a laptop, but gives neither an exact timing protocol nor laptop hardware. Training takes about 20 GPU h per model on a 24 GB TITAN RTX and about 300 GPU h in total. CLEAN runtime is not reported, so the study does not provide a controlled end-to-end latency or energy comparison."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -1091,6 +1147,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 0,
         "iterations": 1,
         "credible_interval": 1,
@@ -1106,7 +1163,8 @@
         ],
         "credible_interval": [
           "No dedicated summary bullet was auto-matched for this metric. It was classified from the paper summary overall; see the paper page for full context."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -1125,6 +1183,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 1,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 1,
         "credible_interval": 0,
@@ -1155,7 +1214,8 @@
           "Cross-method integrated flux in identical source regions (ASKAP real data): e.g. Abell 3395 phoenix sub-bands — uSARA 29.3…7.4 mJy vs WSClean restored 30.2…8.3 mJy (Table 3).",
           "PKS 2014-55: uSARA integrated flux 758.8→268.2 mJy (817–1069 MHz) vs WSClean restored 756.4→352.1 and smoothed model 743.7→308.4 mJy (Table 4).",
           "PKS 2130-538 full-band 943 MHz: uSARA 117.2 mJy vs WSClean restored/smoothed 115.5 mJy."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -1174,6 +1234,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 1,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 0,
         "credible_interval": 0,
@@ -1197,7 +1258,8 @@
         "flux_recovery": [
           "AIRI Abell 3395 phoenix integrated fluxes 25.3…1.6 mJy across eight windows (Table 1), with modest variation relative to uSARA and WSClean.",
           "PKS 2014-55 AIRI fluxes 678.7→190.5 mJy (817–1069 MHz, Table 2); PKS 2130-538 full-band AIRI 116.7 mJy — closest flux agreement among AIRI, uSARA, and WSClean."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -1216,6 +1278,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 1,
         "credible_interval": 0,
@@ -1256,7 +1319,8 @@
         "rdr": [
           "Residual-to-dirty-image ratio: Image-domain data fidelity is `||r_hat||2 / ||x_dirty||2`, with lower values indicating a cleaner back-projected residual. Table 2 reports means in units of `1e-4`: CLEAN `5.1 +/- 5.2`, uSARA `6.5 +/- 8.2`, AIRI `6.4 +/- 8.0`, R2D2 `13.5 +/- 46.9`, R3D3-3L `7.6 +/- 7.6`, and R3D3-6L `7.9 +/- 7.8`. Thus CLEAN has the lowest mean ratio in the generic experiment, uSARA, AIRI, and both R3D3 variants are comparable, and plain R2D2 is nearly twice the R3D3 level with much larger dispersion. In the targeted experiments, all methods are similar at dynamic range `5e3`; at dynamic range `1e5`, AIRI and uSARA have the lowest ratios, CLEAN is 2-4 times higher, R3D3 is 3-5 times higher, and R2D2 is another 20%-60% above R3D3. The paper therefore distinguishes reconstruction fidelity to known truth from data-residual fidelity rather than treating them as interchangeable.",
           "Qualitative image and residual assessment: R2D2, R3D3, AIRI, and uSARA recover broadly comparable compact and extended morphology, while CLEAN is smoother because its model is restored with a CLEAN beam. The end-to-end U-Net produces over-smoothed images and visible hallucinated structure in some cases. Those artifacts disappear in the iterative R2D2 series, and the data-informed single R2D2-Net does not show them. Conversely, R2D2 and R3D3 retain discernible residual structure around the brightest emission, especially in high-dynamic-range cases, consistent with their worse residual ratios. These are visual findings, not separately quantified morphology or hallucination metrics."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -1275,6 +1339,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 1,
         "credible_interval": 1,
@@ -1303,7 +1368,8 @@
         "compute_cost": [
           "Convergence / mean-squared residual: (in log-brightness) between successive iterations, used as the main convergence and accuracy diagnostic (Fig. 5), tracked over wall-clock time across hardware.",
           "Scalability demonstration: (MeerKAT ESO 137-006, ~400x larger dataset than the VLA case, multi-channel): fast-resolve completes in ~24 GPU-hours plus ~2 CPU-hours kernel precomputation over 25-28 major cycles — a dataset described as computationally out of reach for resolve; compared against convex-optimization/CLEAN-family results (Dabbech et al. 2022) that needed 900-3000 CPU-hours per band."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -1322,6 +1388,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 1,
         "credible_interval": 0,
@@ -1349,7 +1416,8 @@
         ],
         "rms": [
           "Data-fidelity residual standard deviation: (std. dev. of the residual dirty image, linear scale) — the primary quantitative fidelity metric: Hö-CLEAN 359×10⁻⁴; CS-CLEAN 8.6×10⁻⁴; MS-CLEAN 10.4×10⁻⁴; R2D2 11.7×10⁻⁴; R2D2-Net 13.4×10⁻⁴; R3D3 9.7×10⁻⁴; uSARA 7.2×10⁻⁴; AIRI 7.4×10⁻⁴. AIRI, uSARA and CS-CLEAN achieve the lowest (best) residual std. dev.; the R2D2 variants are described as \"comparable, slightly above\" these top performers."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -1368,6 +1436,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 1,
         "credible_interval": 1,
@@ -1394,7 +1463,8 @@
           "Highest Posterior Density (HPD) credible regions: defined at credible level 100(1−α)% (Eq. 29–32); approximated analytically from the MAP potential via a concentration bound (Pereyra 2017), avoiding MCMC. Used as the basis for all downstream UQ tools.",
           "Hypothesis testing of image structure: a region-of-interest is inpainted (Table 2) or Gaussian-blurred (σ=3.5 px, Table 3) to build a \"surrogate\" image, and its potential (f+g) is compared to the 99% HPD isocontour γ̂₀.₀₁ (α=0.01). Table 2 (inpainting) and Table 3 (blurring) report the initial/surrogate potentials and isocontour thresholds for MAP vs. SK-ROCK (MCMC) estimates on all four images; MAP-based and MCMC-based hypothesis-test outcomes agree in every case reported. QuantifAI correctly rejects \"artefact\" hypotheses for physical structures in M31, W28 and 3C288 (both regions), but is inconclusive for a small physical feature in Cygnus A.",
           "Local Credible Intervals (LCIs): per-superpixel Bayesian error bars, l_i = ξ+,Ωi − ξ−,Ωi, computed by root-finding the HPD boundary (Eq. 36–39); validated qualitatively against posterior-sample-based standard deviation. Mean LCI values reported for 16×16 superpixels: 0.20, 0.08, 0.24, 0.07 (image order as in their Figure 7); higher mean LCI = higher uncertainty (M31 and 3C288 flagged as more uncertain)."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -1413,6 +1483,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 1,
         "credible_interval": 0,
@@ -1453,7 +1524,8 @@
         "compute_cost": [
           "logSNR: SNR computed after applying a logarithmic intensity mapping rlog(x) = log_a(a·x + 1) (with a set to the image's Dynamic Range) to both reconstruction and ground truth before computing SNR — used specifically to assess recovery of faint/low-intensity signal (i.e. high-dynamic-range fidelity), directly analogous to the \"high-dynamic-range imaging\" emphasis of the original R2D2 radio-astronomy papers.",
           "Runtime / compute cost (Table II): number of trainable parameters (M), Training Time (TT, hours), Inference Time (IT, seconds ± std), and iteration count, averaged over 160 test inverse problems: - AIRI: 0.6M params, 48h TT, 1857±387 s IT, 616±138 iterations (non-scalable PnP). - U-Net: 31M, 52h, 0.053±0.007 s, 1 iteration. - R2D2-Net (FFT): 248M, 152h, 0.129±0.004 s, 1 iteration (scalable). - R2D2: 248M, 140h, 0.237±0.005 s, 8 iterations (scalable). - NC-PDNet: 1.6M, 230h, 0.263±0.011 s, 1 iteration (non-scalable). - R2D2-Net (NUFFT): 248M, 315h, 0.237±0.005 s, 1 iteration (non-scalable, treated as an \"oracle\" upper bound). - Headline result: R2D2's inference is roughly four orders of magnitude faster than AIRI, and R2D2-Net (NUFFT) costs ~163 extra training hours vs. R2D2-Net (FFT) purely from NUFFT computation."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -1472,6 +1544,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 1,
         "credible_interval": 0,
@@ -1500,7 +1573,8 @@
           "Relative epistemic uncertainty [σ/µ]: pixel-wise ratio of the standard deviation to the mean image across the L=5 ensemble realizations (Eq. 11), thresholded to zero below 1/(target dynamic range) to suppress noise-floor artifacts. On the simulated test set this drops sharply across the R2D2 series: ~5% (0.05) at iteration 1 (U-Net), ~1.4% at iteration 3, down to ~0.2–0.3% at the final iteration (i=12) — demonstrating that later R2D2 iterations are far more robust/consistent across random initializations than the first-iteration U-Net alone. For the 3C 353 case study: 0.0537 → 0.0139 → 0.0023 across iterations 1, 3, 12. On real Cygnus A VLA data, the final mean-image estimate (averaged over the 5 realizations) achieves a relative uncertainty of only ~0.5%.",
           "Computational cost (Table I): number of iterations and total wall-clock reconstruction time (mean ± std): U-Net 1 iteration, 0.1±0.1 s; R2D2 12 iterations, 2.0±0.4 s; CLEAN 8±1 iterations, 93.2±26.7 s; AIRI 4995±50 iterations, 3430±1461 s; uSARA 1107±377 iterations, 4015.9±1471.2 s. R2D2 is orders of magnitude faster than CLEAN, uSARA and AIRI, which is what makes computing multiple (L=5) full reconstructions for uncertainty quantification practical at large image dimensions.",
           "Qualitative/comparative conclusion: the paper states R2D2's \"image estimation capability is largely superior to that of CLEAN, U-Net, and even uSARA and AIRI,\" combining higher SNR/logSNR, much lower compute cost, and low epistemic uncertainty relative to the single-iteration U-Net baseline."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -1519,6 +1593,7 @@
         "nmse_nrmse": 1,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 0,
         "credible_interval": 1,
@@ -1541,7 +1616,8 @@
         ],
         "credible_interval": [
           "No dedicated summary bullet was auto-matched for this metric. It was classified from the paper summary overall; see the paper page for full context."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -1560,6 +1636,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 0,
         "credible_interval": 0,
@@ -1586,7 +1663,8 @@
           "Wasserstein distance (W₅): L2 norm of per-pixel Wasserstein-1 distances computed in 5×5 sliding windows between reconstructions across iterations/methods, used as a fidelity proxy on the real datasets (HL Tau, Cygnus A) where no ground truth exists; decreases with iteration count, used to argue convergence and similarity of parallel vs. serial output images.",
           "Timing breakdown by pipeline stage: degridding, gridding, deconvolution, disk I/O, inter-node idle time, and \"other\" (polarization conversion, memory allocation, weight computation) — decomposed per method to identify bottlenecks. Deconvolution and disk I/O overhead (not raw I/O bandwidth) dominate; idle time appears when visibility partitions are unbalanced (e.g., Sgr B2 split 75%/27%).",
           "Resolution-scaling factors (Table 3, Cygnus A 1728² → 10k×10k): deconvolution time scales ×50 (p-msc, multiscale CLEAN) / ×39 (p-L1); degridding ×16; gridding ×21–22; disk I/O ×1 (negligible/constant); inter-node image-transfer time ×52 (p-msc) / ×30 (p-L1), reaching just over 0.5 s at 10k×10k — flagged as a potential future bottleneck as node count grows (communication cost grows faster than linearly with the number of partitions)."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -1605,6 +1683,7 @@
         "nmse_nrmse": 0,
         "mae": 1,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 0,
         "credible_interval": 0,
@@ -1628,7 +1707,8 @@
         "compute_cost": [
           "Bootstrapping over calibration uncertainty: ~100 posterior samples drawn per bootstrapped dataset (~100 resampled datasets) to fold gain/leakage/thermal-noise systematics into final parameter posteriors; a forward pass takes only a few seconds, so this Monte Carlo procedure is computationally cheap.",
           "Compute/runtime cost: one training epoch over 600,000 samples (21,956 visibility points each) takes ~30 s on a single NVIDIA A100 GPU; obtaining 100 posterior samples from 100 bootstrapped datasets takes ~20 s; post-training inference is \"practically instantaneous\"; representative BANN has ~12M trainable parameters; distributed training via Horovod scales efficiently over native TensorFlow up to 128 GPUs."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -1647,6 +1727,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 1,
         "credible_interval": 0,
@@ -1668,7 +1749,8 @@
         "compute_cost": [
           "Wall-clock runtime vs. residual level: primary comparison metric (Fig. 5, bottom panels) — residual magnitude plotted against computation time; Autocorr-CLEAN reaches a given residual level significantly faster than classical CLEAN and faster than Asp-CLEAN in nearly all cases (Asp-CLEAN only ahead on the very first iteration due to Autocorr-CLEAN's larger up-front \"head-on\" processing cost).",
           "Theoretical computational complexity: derived scaling m·N·(8l/k) (m = total CLEAN iterations, N = number of pixels, l = subminor-loop iterations, k = number of autocorrelation basis components) — used to argue the method avoids super-linear complexity growth relative to CLEAN."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -1687,6 +1769,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 1,
         "credible_interval": 0,
@@ -1712,7 +1795,8 @@
         "iterations": [
           "Running time (s): and **iteration count** — used as computational-efficiency/convergence-speed metrics, reported alongside fidelity.",
           "Messier 106 (SKA, 512×512): SARA 31.95/20.14/321.06; AIRI 33.12/21.23/127.34; LPG 34.40/21.75/156.78; **ISCAD 34.63/21.97/107.11**. Across all three test cases ISCAD attains the highest S/N and S/N_log and the lowest runtime of the four methods; it also converges in fewer iterations than LPG and shows greater robustness (consistently higher S/N/S/N_log) across the swept 15–55 dB noise range in the Monte Carlo experiment."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -1731,6 +1815,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 0,
         "iterations": 0,
         "credible_interval": 0,
@@ -1740,7 +1825,9 @@
         "text_metrics": 0,
         "compute_cost": 0
       },
-      "metric_details": {}
+      "metric_details": {
+        "astrometric_accuracy": []
+      }
     },
     {
       "cohort": "r2d2",
@@ -1758,6 +1845,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 1,
         "credible_interval": 0,
@@ -1802,7 +1890,8 @@
           "RDR (residual-to-dirty image ratio, ×10⁻³ typical scale): image-domain **data-fidelity** metric: RDR(r̂, x_d) = ‖r̂‖₂ / ‖x_d‖₂. Lower = higher data fidelity (residual closer to pure noise).",
           ": Data fidelity (RDR, Table 4): R2D2_A2,T2 2.22×10⁻³, AIRI 2.24×10⁻³, uSARA 2.15×10⁻³ (comparable, best group); CLEAN ~50% higher (3.29×10⁻³); R2D2_A1,T2 about twice as high (4.07×10⁻³) as R2D2_A2,T2.",
           ": Real data (Cygnus A, Section 5, Fig. 6): iteration counts to convergence were 12 (R2D2_A1,T1), 16 (R2D2_A1,T2), 15 (R2D2_A2,T2). RDR values: R2D2_A1,T1 2.85×10⁻³, R2D2_A1,T2 2.68×10⁻³, R2D2_A2,T2 2.46×10⁻³ (best/lowest, i.e., highest data fidelity). MRU (mean image over R=25 realizations/weightings): R2D2_A1,T2 8.98×10⁻², R2D2_A2,T2 2.37×10⁻² — roughly 4× lower uncertainty for the U-WDSR model. The U-WDSR model recovered all 3 highlighted faint features near the Cygnus A core/jets consistently, versus only 1–2 for the U-Net models, and produced more homogeneous (less structured) residuals around calibration-error-affected hotspots."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -1821,6 +1910,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 0,
         "credible_interval": 0,
@@ -1840,7 +1930,8 @@
         ],
         "runtime": [
           "Runtime (seconds): wall-clock reconstruction time, compared across methods."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -1859,6 +1950,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 0,
         "iterations": 0,
         "credible_interval": 0,
@@ -1874,7 +1966,8 @@
         ],
         "text_metrics": [
           "VQA / free-text tasks: BLEU, ROUGE, and chrF for semantic similarity between generated and reference answers."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -1893,6 +1986,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 0,
         "credible_interval": 0,
@@ -1923,7 +2017,8 @@
         ],
         "runtime": [
           "Runtime / compute cost (per denoising step, mean ± std, seconds): AIRI on GPU: 0.05 ± 0.02 s; AIRI on CPU: 7.92 ± 0.52 s; SARA (proximal operator, presumably CPU): 1.31 ± 1.12 s; BM3D: 15.08 ± 0.40 s. On GPU, AIRI denoisers give roughly a 20-fold speed-up over the proximity operators used in SARA/uSARA."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -1942,6 +2037,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 0,
         "credible_interval": 0,
@@ -1986,7 +2082,8 @@
           "Runtime / compute cost (GPU hours / seconds on an Nvidia A40 48GB): total reconstruction time t_tot = I×(t_reg + t_dat), split into regularisation-step time (t_reg, DNN forward pass + Γ†) and data-fidelity-step time (t_dat, residual computation with Φp and Γ). Fixed number of iterations I = 10 (chosen because logSNR stopped improving beyond that on validation data).",
           "Quantitative comparison table (Table 1, means ± std over 60 test problems, DR ∈ [10^3,5×10^5], final iteration I=10): R2D2: SNR 6.6±1.5 dB (Np=400²) → 1.9±1.5 dB (Np=800²) — performance *degrades* with resolution; logSNR 7.3±3.2 → 1.6±1.3 dB; RDR 0.8×10⁻² → 14×10⁻² (worsens); t_tot ≈ 2.1–2.5 s. - S-R2D2: SNR 21.7±4.3 dB (Np=400²), 21.2±3.9 dB (Np=600², best logSNR), 20.8±3.7 dB (Np=800²); logSNR 17.5±3.2 → 18.7±2.9 (peak at Np=600²) → 15.9±3.5 dB; RDR 1.5×10⁻² → 1.2×10⁻² (best) → 2.1×10⁻²; t_tot ≈ 3.0–3.3 s. - S-R2D2 outperforms R2D2 by roughly **14–19 dB in SNR** and **10–17 dB in logSNR** at matched resolutions, while being **less than 1.5× slower** (~3 s vs ~2–2.5 s total reconstruction time) — both remain orders of magnitude faster than classical/optimisation baselines. - Best overall operating point identified: SR = 2.25 (Np = 600²), balancing interpolation accuracy against super-resolution difficulty; S-R2D2 still performs \"satisfactorily\" at the lowest resolution Np_min = 400² (same pixel size on sphere and plane), which is more computationally favourable.",
           "Ablation/robustness view: metrics are also tracked per-iteration (Fig. 8) and across four individual test images (galaxy clusters Abell 2034, PSZ2 G165.68+44.01, radio galaxies 3C354, Messier 106) at varying DR (8.9×10⁴ to 2.3×10⁵), each reporting per-image (SNR, logSNR) values and RDR at each Np, demonstrating robustness of S-R2D2's improvement across sources and dynamic-range regimes, whereas R2D2's data fidelity (RDR) degrades sharply as Np/SR increases (its \"super-resolving\" limitation)."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -2005,6 +2102,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 0,
         "iterations": 0,
         "credible_interval": 0,
@@ -2021,7 +2119,8 @@
         ],
         "classification_metrics": [
           "Baseline CNN lens-finder benchmark (cited, not original): Rezaei et al. (2022) recover >90% of galaxy-scale lenses with a 0.008% false-positive rate on simulated ILT data, requiring 20σ detection and θE ≥ 3/2 beam size."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -2040,6 +2139,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 0,
         "credible_interval": 0,
@@ -2070,7 +2170,8 @@
         "rms": [
           "Residual dirty image: and its **standard deviation** — used as a data-fidelity/goodness-of-fit diagnostic (should look noise-like if reconstruction succeeded).",
           "Reported values / comparisons: Reference classical-model quality: VLA (VB/N=14.5), low/high DR → (SNR,logSNR) = (30.73, 20.90) / (28.50, 20.15) dB; MeerKAT (VB/N=83.1), low/high DR → (30.13, 22.08) / (27.95, 19.84) dB. - Classical, BDA, CROP (P_crop·B ≈ 2N), and MROP (PM ≈ N) all converge to very similar SNR/logSNR — i.e. MROP matches classical-model quality once D/N ≈ 1 (data size ≈ image size), roughly an order of magnitude below the raw visibility count (VB/N up to ~83). MROP is more memory-efficient than CROP for equal quality (O(N) vs O(2N)). - Below D/N ≈ 1, quality degrades progressively; e.g. for the Abell 2034 (VLA, d=8.6×10⁴) example, dropping D/N from ~1 to 3.8×10⁻¹ costs 0.1 dB (SNR) / 0.7 dB (logSNR); for 3c353 (MeerKAT, d=1.1×10³), the same drop costs 1.1 dB / 2.2 dB. - Plain subsampling performs markedly worse than MROP/CROP/BDA at equivalent data size. - MROP/CROP iterations are always less than 2x the classical model's per-iteration time. - **Real-data result (VLA, 3C 273, X band, D/N ≈ 0.98 ≈ N vs. VB/N=11.1):** MROP and classical reconstructions show nearly identical peak intensities (0.07) and recover features across 4 orders of magnitude; residual-map standard deviations are highly comparable (classical: 6.49×10⁻⁴; MROP: 6.87×10⁻⁴), confirming reconstruction fidelity is preserved at high compression. - No comparison to CLEAN, R2D2, or AIRI is performed — uSARA is the sole reconstruction algorithm used; R2D2 is explicitly named as future work for validating MROP with learned deconvolution methods."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -2089,6 +2190,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 0,
         "credible_interval": 0,
@@ -2117,7 +2219,8 @@
         "compute_cost": [
           "logSNR: SNR computed on the log10 of the true and predicted images (logSNR = SNR(log10(x_true), log10(x_pred))), used to better capture fidelity in faint/high-dynamic-range regions.",
           "Baseline comparisons: CLEAN and multi-scale CLEAN variants are discussed only qualitatively/historically (described as computationally costly and giving suboptimal reconstruction quality); no numeric SNR values against CLEAN/MS-CLEAN are reported in the text — comparisons are between the paper's own U-Net vs. GU-Net variants under different coverage-training strategies."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -2136,6 +2239,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 0,
         "credible_interval": 1,
@@ -2158,7 +2262,8 @@
         "compute_cost": [
           "Chi-squared (χ²) goodness-of-fit: computed on residuals between predicted and observed visibilities in Fourier space. Key finding: \"calibrated posterior samples do not necessarily achieve the best residuals\" — on real DSHARP data, χ² values were much higher than degrees of freedom, attributed to modeling only small image regions while assuming zero flux elsewhere.",
           "Computational cost (reported as a trade-off, not a fidelity metric): 250 posterior samples per disk generated in ~2.5 hours on 10 V100 GPUs; 0.72 A100 GPU-years used for full calibration/simulation testing; explicitly noted to be much slower than CLEAN/MPoL."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -2177,6 +2282,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 1,
         "credible_interval": 0,
@@ -2210,7 +2316,8 @@
           "RDR-bar (sensitivity residual): an analogous aggregate residual metric for the sensitivity-map series, normalized across coils, quantifying self-calibration convergence/accuracy of the estimated coil sensitivities (no separate ground-truth sensitivity-map metric like NRMSE against ESPIRiT is reported; convergence is assessed via residual descent instead).",
           "Convergence/iteration count: R2D2(U-WDSR) converges at series length i≈3; iR2D2(U-WDSR) at i≈11 (more DNNs needed due to the alternating image/sensitivity structure), with monotonic residual-energy descent enforced by the update condition (UC/UC-bar); an ablation without the update condition shows erratic residual spikes.",
           "Real-data validation: (15-coil 3T knee, AF=4 and AF=8): iR2D2 achieves the best (lowest) RDR, roughly an order of magnitude lower than benchmark methods, and qualitatively sharper delineation of anatomical detail (e.g., physeal scar, trabecular bone); residual maps for iR2D2 appear as unstructured noise (indicating successful calibration) whereas benchmarks show structured, anatomy-correlated residuals (indicating model/calibration error)."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -2229,6 +2336,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 0,
         "iterations": 0,
         "credible_interval": 0,
@@ -2247,7 +2355,8 @@
         ],
         "uncertainty_correlation": [
           "No dedicated summary bullet was auto-matched for this metric. It was classified from the paper summary overall; see the paper page for full context."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -2266,6 +2375,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 1,
         "credible_interval": 0,
@@ -2287,7 +2397,8 @@
           "Fidelity claims (largely qualitative, no single benchmark table): forward-modeling/Bayesian/AI methods are said to \"often achieve superior fidelity for complex/extended structures,\" offer flexible priors and principled uncertainty quantification, but at \"greater computational cost\" that remains \"a barrier to routine use.\" No explicit numeric SNR/dynamic-range/NMSE/PSNR comparison table between R2D2/AIRI/CLEAN is given in this piece — R2D2 (Aghabiglou et al. 2024, ApJS 273, 3) and fast-resolve (Roth et al. 2024) are cited specifically as AI/Bayesian methods that adopt CLEAN-like major/minor loop structures \"for efficiency,\" implying scalability is a recognized design constraint even for these ML methods.",
           "AI-assisted hybrid result (Fiedler et al. 2025, Fig. 4): a network trained on single-scale vs. MS-CLEAN component pairs transforms Högbom CLEAN output into a multiscale-equivalent reconstruction, reportedly \"achiev[ing] the accuracy of [MS-CLEAN] with minimal computational overhead and bias from the training set\" — demonstrated visually on an ENZO simulated sky (ground truth vs. Högbom model vs. network+Högbom model).",
           "Data-volume/dynamic-range framing: ngVLA, SKA, and ALMA-WSU are said to produce \"data volumes and dynamic ranges that exceed the scalability of traditional methods,\" though no specific TB/PB or dynamic-range target numbers are given beyond the compute-flop figures above."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -2306,6 +2417,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 0,
         "iterations": 0,
         "credible_interval": 0,
@@ -2315,7 +2427,9 @@
         "text_metrics": 0,
         "compute_cost": 0
       },
-      "metric_details": {}
+      "metric_details": {
+        "astrometric_accuracy": []
+      }
     },
     {
       "cohort": "r2d2",
@@ -2333,6 +2447,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 1,
         "credible_interval": 0,
@@ -2360,7 +2475,8 @@
         "rdr": [
           "Image-domain data fidelity σ: based on the estimated residual dirty image r relative to the dirty image x_d (same style of fidelity metric as used by R2D2/AIRI papers); lower is better.",
           "DART real solar data (Table 3, 256×256, 86,143 baselines, 294 antennas, 425 MHz, iSNR=40dB): MS-CLEAN 10.77 / 0.28025 / 10.14s; SARA 29.48 / 0.03113 / 32.82s; WTF 33.54 / 0.00676 / 18.73s; **ALSB 33.93 / 0.00281 / 20.85s (best SNR/fidelity; MS-CLEAN far behind all CS/learned methods, ALSB gives roughly 2.4x lower fidelity residual than WTF and ~11x lower than SARA).**"
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -2379,6 +2495,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 0,
         "credible_interval": 0,
@@ -2409,7 +2526,8 @@
         ],
         "rdr": [
           "Image-domain data fidelity σ: defined via the estimated residual dirty image r relative to the dirty image x_d (following Aghabiglou et al. 2024's R2D2 fidelity metric); lower is better."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -2428,6 +2546,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 0,
         "iterations": 1,
         "credible_interval": 0,
@@ -2457,7 +2576,8 @@
         "compute_cost": [
           "Major-loop iteration count: (primary speed metric, since gridding/FFT cost is dominated by major loop cycles): CG-CLEAN reaches the same accuracy/dynamic range as CLEAN in roughly a **fifth of the major-loop iterations** on synthetic Cygnus A, and **three to five times fewer major-loop iterations** on real narrowband data (M31, Cygnus A, G055.7+3.4); similar gains confirmed on VLBA 3C 120 data (extrapolation to VLBI regime) and on 100-channel spectral cubes (with one channel showing a narrower margin due to minor-loop stalling).",
           "Computational cost / complexity: Momentum-CLEAN's overhead is just an image-sum with the numerical cost of one minor-loop iteration (no added gridding/FFT); gains come purely from needing fewer major loops. The authors describe the combined (CG + Asp-CLEAN) approach as reaching close to **an order-of-magnitude improvement in convergence speed and dynamic range**, at lower numerical cost than upgrading the minor loop (advanced deconvolution algorithm) alone."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -2476,6 +2596,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 1,
         "credible_interval": 0,
@@ -2517,7 +2638,8 @@
           "Computational cost: number of series iterations, total wall-clock reconstruction time (hours), and per-step timing breakdown (e.g., HyperAIRI: gradient step ≈1.61±0.23 s, denoising step ≈0.52±0.25 s). **Reported results (simulated VLA benchmark, Table 1, mean ± std):** | Algorithm | SNR (dB) | logSNR (dB) | RDR (×10⁻³) | sSNR (dB) | Iterations | Time (hr) | |---|---|---|---|---|---|---| | WSClean | 11.27 ± 1.57 | 12.05 ± 4.08 | 2.36 ± 1.27 | 3.81 ± 5.91 | 10 ± 1 | 0.56 ± 0.24 | | uSARA | 28.32 ± 3.24 | 21.17 ± 3.56 | 2.27 ± 1.32 | 9.54 ± 2.34 | 1251 ± 299 | 2.60 ± 0.55 | | AIRI | 28.70 ± 2.36 | 20.67 ± 5.01 | 2.62 ± 1.41 | 9.18 ± 3.90 | 3000 ± 0 | 1.84 ± 0.14 | | Hyper-uSARA | 29.30 ± 2.91 | 22.30 ± 4.15 | 2.32 ± 1.34 | **11.35 ± 3.78** | 1827 ± 675 | 2.42 ± 0.87 | | **HyperAIRI** | **30.53 ± 1.87** | **23.07 ± 5.13** | 2.44 ± 1.36 | 10.87 ± 3.91 | 3000 ± 0 | 1.90 ± 0.14 |",
           "Comparison to WSClean: WSClean is by far the lowest-fidelity method (SNR 11.27 dB vs. HyperAIRI's 30.53 dB; sSNR only 3.81 dB), though it is fastest (0.56 hr) and has comparable RDR/data-fidelity to the other methods.",
           "Data fidelity (RDR): all methods achieve broadly comparable RDR (~2.3–2.6×10⁻³), close to the ground-truth reference RDR of (2.46 ± 1.37)×10⁻³, i.e. HyperAIRI achieves competitive data fidelity to WSClean and the optimization-based methods despite far higher image-domain SNR."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -2536,6 +2658,7 @@
         "nmse_nrmse": 1,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 1,
         "credible_interval": 0,
@@ -2565,7 +2688,8 @@
         ],
         "iterations": [
           "No LPIPS, SSIM, dynamic-range ratio, or χ² goodness-of-fit metrics are used: in this paper, despite being common in the broader literature — the authors rely specifically on MSE/PSNR/SNR/SRE plus qualitative/visual residual-map comparisons."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -2584,6 +2708,7 @@
         "nmse_nrmse": 1,
         "mae": 0,
         "flux_recovery": 1,
+        "astrometric_accuracy": 0,
         "runtime": 0,
         "iterations": 1,
         "credible_interval": 0,
@@ -2616,7 +2741,8 @@
         ],
         "flux_recovery": [
           "Shape & flux estimation RMSE on SEP true-positive detections: flux (Jy/pixel) — CLEAN 3.2625×10⁻⁴ (best), POLISH 1.9504×10⁻³, POLISH+ 3.8411×10⁻³, POLISH++ 3.1703×10⁻³ (Table 3); CLEAN superior for flux fidelity vs nonlinear learned reconstruction."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -2635,6 +2761,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 1,
         "credible_interval": 0,
@@ -2657,7 +2784,8 @@
           "Number of w-layers / bins required (vs. WSClean baseline): used as a proxy for computational efficiency: e.g., 23 w-layers found optimal for a 10-node test configuration vs. WSClean's recommended 126 for pure w-stacking; 14 w-layers used for MeerKAT ESO 137-006 imaging (4096×4096 px, 1.91°) vs. WSClean's 40; 12 w-layers per frequency for an ASKAP field (4096×4096×8) vs. WSClean's 48–73. Fewer layers at comparable/better efficiency is the headline efficiency claim.",
           "Distributed/parallel scaling: tested from 1 to 10 CPU nodes; the planning stage adapts the number of workers to available CPU cores (e.g., a 3-node run needing 122 workers but only 108 cores available triggers a switch to on-the-fly computation); inter-worker communication overhead (image-sized variable exchange with FFT workers, Fourier-coefficient exchange with de-gridding/gridding workers) is tracked as part of total cost.",
           "Overall computational cost relative to CLEAN: for the MeerKAT ESO 137-006 case, the proposed high-precision measurement operator achieves imaging cost \"within one order of magnitude of CLEAN,\" used as the headline scalability/cost comparison against the standard (non-ML) imaging pipeline."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -2676,6 +2804,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 1,
         "iterations": 0,
         "credible_interval": 0,
@@ -2701,7 +2830,8 @@
         "compute_cost": [
           "Dynamic range / imaging fidelity (qualitative): R2D2 is described as delivering \"high-dynamic-range imaging at CLEAN-like speeds,\" and AIRI as achieving \"image quality comparable to SARA at significantly reduced computational cost\" (comparisons framed relative to existing optimization-based imagers rather than a single unified quantitative metric).",
           "Computational scalability / speed: Inference speed and computational cost are repeatedly used as comparison axes (e.g., R2D2 vs. CLEAN speed; AIRI cost vs. SARA; U-Net \"extreme inference speed\" traded against hallucination risk); relevant given SKA's petabyte/terabit-scale throughput requirements."
-        ]
+        ],
+        "astrometric_accuracy": []
       }
     },
     {
@@ -2720,6 +2850,7 @@
         "nmse_nrmse": 0,
         "mae": 0,
         "flux_recovery": 0,
+        "astrometric_accuracy": 0,
         "runtime": 0,
         "iterations": 0,
         "credible_interval": 0,
@@ -2729,7 +2860,9 @@
         "text_metrics": 0,
         "compute_cost": 0
       },
-      "metric_details": {}
+      "metric_details": {
+        "astrometric_accuracy": []
+      }
     }
   ]
 }

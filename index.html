@@ -619,12 +619,12 @@
   <script>
     const metrics = [
       "SNR", "logSNR", "PSNR", "SSIM", "DR", "RMS", "RDR", "NMSE", "MAE",
-      "Flux", "Runtime", "Iters", "CredInt", "UncCorr", "Wasser", "Class", "Text", "Compute",
+      "Flux", "Astrometry", "Runtime", "Iters", "CredInt", "UncCorr", "Wasser", "Class", "Text", "Compute",
     ];
 
     const metricKeys = [
       "snr", "logsnr", "psnr", "ssim", "dynamic_range", "rms", "rdr",
-      "nmse_nrmse", "mae", "flux_recovery", "runtime", "iterations", "credible_interval",
+      "nmse_nrmse", "mae", "flux_recovery", "astrometric_accuracy", "runtime", "iterations", "credible_interval",
       "uncertainty_correlation", "wasserstein", "classification_metrics",
       "text_metrics", "compute_cost",
     ];
@@ -640,6 +640,7 @@
       nmse_nrmse: "nmse.md",
       mae: "mae.md",
       flux_recovery: "flux-recovery.md",
+      astrometric_accuracy: "astrometric-accuracy.md",
       runtime: "runtime.md",
       iterations: "iters.md",
       credible_interval: "credint.md",
@@ -665,6 +666,7 @@
       nmse_nrmse: "Normalised mean (or root-mean) squared error between reconstruction and truth/reference. A scale-aware pixel error metric for simulation studies with known ground truth.",
       mae: "Mean absolute error between reconstruction and truth/reference (or an analogous absolute deviation score).",
       flux_recovery: "Flux recovery: quantitative measure of how accurately reconstructed source flux is preserved relative to a reference, model, catalogue, or expected value (integrated/peak flux recovery, bias, missing-flux fraction, or cross-method recovered-flux comparison).",
+      astrometric_accuracy: "Astrometric accuracy: quantitative measure of how accurately a reconstructed source’s position is recovered relative to a reference position, catalogue, simulation truth, or known sky coordinate (positional/centroid/RA–Dec error, localisation within tolerance, or comparative position accuracy).",
       runtime: "Wall-clock or end-to-end elapsed time for imaging / reconstruction (time-to-solution). Distinct from abstract FLOP counts: how long the pipeline actually took on the reported hardware.",
       iterations: "Iteration or cycle counts — major/minor CLEAN cycles, optimisation iterations, or outer residual-series steps — used as a convergence or work measure alongside or instead of wall time.",
       credible_interval: "Bayesian credible intervals or related posterior uncertainty intervals on image pixels/regions (e.g. HPD / local credible intervals), reporting calibrated uncertainty not just a point estimate.",
@@ -679,18 +681,18 @@
       classic: {
         label: "Classic",
         color: "#0b6e6a",
-        // SNR…DR | RMS | RDR | NMSE | MAE | Flux | Runtime…Compute — stacked cohort totals (18 metrics)
-        values: [4, 0, 1, 1, 7, 8, 0, 3, 0, 5, 13, 12, 0, 0, 0, 0, 0, 12],
+        // SNR…DR | RMS | RDR | NMSE | MAE | Flux | Astrometry | Runtime…Compute — stacked cohort totals (19 metrics)
+        values: [4, 0, 1, 1, 7, 8, 0, 3, 0, 5, 0, 13, 12, 0, 0, 0, 0, 0, 12],
       },
       emerging: {
         label: "Emerging-ML",
         color: "#c45c26",
-        values: [1, 1, 1, 1, 3, 1, 1, 0, 0, 4, 5, 5, 1, 0, 0, 1, 0, 6],
+        values: [1, 1, 1, 1, 3, 1, 1, 0, 0, 4, 0, 5, 5, 1, 0, 0, 1, 0, 6],
       },
       r2d2: {
         label: "R2D2-citing",
         color: "#1f4e79",
-        values: [18, 10, 4, 2, 11, 2, 6, 3, 1, 1, 25, 16, 4, 1, 1, 5, 1, 16],
+        values: [18, 10, 4, 2, 11, 2, 6, 3, 1, 1, 0, 25, 16, 4, 1, 1, 5, 1, 16],
       },
     };
 
