@@ -316,6 +316,26 @@
           },
           "evidence": "Work estimates Ns≈2QsM and Nm≈QmM(4log(M)/2+4) couple iteration counts Q to image size M (and Clark major/minor counts)."
         }
+      ],
+      "nmse_details": [
+        {
+          "category": "unspecified",
+          "submetric": "unspecified",
+          "value": null,
+          "unit": null,
+          "scope": "SDI CLEAN synthetic contour comparisons",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "domain": "Image (qualitative / unreported RMS)",
+            "formula_scale": null,
+            "reference": "Original synthetic object",
+            "simulation_vs_real": "Noise-free and noisy synthetic tests",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Flagged nmse_nrmse=1, but the summary reports only that modified CLEAN has lower RMS error against the original object with no numeric RMS/NMSE values, and no explicit NMSE/NRMSE formulation. Left unspecified rather than overclassified."
+        }
       ]
     },
     {
@@ -485,6 +505,62 @@
             "regularisation_parameters": "Typical f=2–4; 3–6 search-mask iterations"
           },
           "evidence": "Cost model assumes 3–6 search-mask iterations (with decimation factor f=2–4). Iteration counts enter the work estimate; MRC/CLEAN op ratios are Compute, not Iterations."
+        }
+      ],
+      "flux_recovery_details": [
+        {
+          "category": "truth_based_flux",
+          "submetric": "integrated_vs_true",
+          "value": 962,
+          "unit": "arbitrary flux units (of 1002 true)",
+          "scope": "5′ circular Gaussian, peak-to-noise 20 (Table 1)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "Arbitrary model flux units",
+            "aperture_region": "Source-dependent ring radii (Table 1)",
+            "reference_type": "Known Gaussian model flux",
+            "simulation_vs_real": "Simulation (WSRT dirty beam)",
+            "frequency": null,
+            "array": "WSRT (simulated full-synthesis beam)"
+          },
+          "evidence": "At peak-to-noise 20, the 5′ circular model has true flux 1002; MRC recovers 962 with a flat cumulative profile, while CLEAN recovers 563 with a strongly changing profile."
+        },
+        {
+          "category": "truth_based_flux",
+          "submetric": "recovery_fraction",
+          "value": 93.6,
+          "unit": "%",
+          "scope": "Realistic clean-map model reused as truth (≈30′ / 90 beams)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "% of true integrated flux",
+            "aperture_region": "Full model extent in dirty-map experiment",
+            "reference_type": "Known model flux (10,000 arb. units)",
+            "simulation_vs_real": "Simulation (real-source map as model)",
+            "frequency": null,
+            "array": "WSRT (simulated)"
+          },
+          "evidence": "From a true flux of 10,000 arbitrary units, MRC recovers 9358 (93.6%); CLEAN recovers 6910 (69.1%) and leaves the negative bowl present."
+        },
+        {
+          "category": "cross_method_flux",
+          "submetric": "comparative_recovered_flux",
+          "value": null,
+          "unit": null,
+          "scope": "MRC vs conventional CLEAN recovered integrated flux (Table 1)",
+          "baseline": "Högbom / conventional CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "units": "Arbitrary model flux units",
+            "aperture_region": "Source-dependent radii",
+            "reference_type": "Known model + cross-method comparison",
+            "simulation_vs_real": "Simulation",
+            "frequency": null,
+            "array": "WSRT (simulated)"
+          },
+          "evidence": "Across Table 1 models MRC recovers substantially more integrated flux than CLEAN (e.g. 962 vs 563 of 1002 at 5′; 2788 vs 653 of 4010 at 10′). At low SNR MRC can over-recover."
         }
       ]
     },
@@ -1298,6 +1374,81 @@
           },
           "evidence": "Multiscale CLEAN's 4.9 mJy/beam RMS error is lower than Högbom (8.8), Multi-Resolution (14.7), and Clark (25.6); maximum entropy is lower still (2.5)."
         }
+      ],
+      "snr_details": [
+        {
+          "category": "input_operating_snr",
+          "submetric": "image_plane_theoretical_snr",
+          "value": 4,
+          "unit": "SNR (flux-recovery threshold)",
+          "scope": "M51 noise sweep; theoretical image-plane SNR = clean-beam-convolved model peak / image-plane noise",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formula": "Peak(clean-beam⋆model) / image-plane noise",
+            "simulation_vs_real": "Simulation (VLA C-array X band)",
+            "input_snr_setting": "Swept image-plane SNR (flux accurate down to ~4; MEM fails near 100)",
+            "frequency": "X band",
+            "array": "VLA C-array"
+          },
+          "evidence": "Noise sweep defines theoretical image-plane SNR and studies flux-recovery thresholds: MEM overestimates at SNR as high as 100; CLEAN / Maximum Emptiness / Multiscale CLEAN remain accurate down to SNR ~4; Högbom stays usable even below SNR 1."
+        }
+      ],
+      "flux_recovery_details": [
+        {
+          "category": "truth_based_flux",
+          "submetric": "integrated_vs_true",
+          "value": 1495,
+          "unit": "Jy",
+          "scope": "M31 VLA C-config simulation (Table II total recovered flux)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "Jy",
+            "aperture_region": "Full simulated M31 model",
+            "reference_type": "Known model reference flux 1,495 Jy",
+            "simulation_vs_real": "Simulation (VLA C-configuration)",
+            "frequency": "X-band context in related sweeps; M31 table is continuum sim",
+            "array": "VLA C-configuration"
+          },
+          "evidence": "Table II: Multiscale CLEAN recovers 1,495 Jy (exact match to the table reference), vs Högbom 1,474 Jy, Clark 1,326 Jy, MRC 1,546 Jy, MEM 1,486 Jy."
+        },
+        {
+          "category": "truth_based_flux",
+          "submetric": "recovery_fraction",
+          "value": null,
+          "unit": "recovered-flux fraction (parameter sweeps)",
+          "scope": "Source-size and visibility-noise sweeps (M31/M51 models)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "Fraction of true flux",
+            "aperture_region": "Simulated source extent / masks",
+            "reference_type": "Known model flux",
+            "simulation_vs_real": "Simulation (VLA C-array)",
+            "frequency": "X band (size/noise sweeps)",
+            "array": "VLA C-array"
+          },
+          "evidence": "Source-size and noise sweeps report recovered-flux fraction vs maximum scale and SNR; Multiscale CLEAN retains accurate flux estimates down to SNR ~4, while MEM overestimates from SNR as high as 100."
+        },
+        {
+          "category": "cross_method_flux",
+          "submetric": "comparative_recovered_flux",
+          "value": 3.08,
+          "unit": "Jy (vs 0.32 Jy Högbom)",
+          "scope": "Real VLA D-config H I channel of NGC 1058",
+          "baseline": "Högbom CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "units": "Jy",
+            "aperture_region": "Source region (multiscale flux stable when enlarged)",
+            "reference_type": "Cross-method (no known sky truth)",
+            "simulation_vs_real": "Real VLA observation",
+            "frequency": null,
+            "array": "VLA D-configuration"
+          },
+          "evidence": "On real NGC 1058 H I data, Multiscale CLEAN recovered 3.08 Jy integrated flux vs 0.32 Jy for Högbom CLEAN; Högbom flux was strongly region-dependent due to the negative bowl."
+        }
       ]
     },
     {
@@ -1460,6 +1611,26 @@
           },
           "evidence": "Near-source and off-source residual RMS fall by orders of magnitude as Taylor terms increase from 1 to 4 (numerical comparison across configurations)."
         }
+      ],
+      "flux_recovery_details": [
+        {
+          "category": "truth_based_flux",
+          "submetric": "peak_flux_bias",
+          "value": 0.001,
+          "unit": "fractional peak-flux error (~1 part in 10³)",
+          "scope": "Noise-free EVLA Taylor-order test, 2:1 band, four Taylor terms (Figure 4)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "Fractional error on reference-frequency peak",
+            "aperture_region": "1 Jy point-source peak",
+            "reference_type": "Known 1 Jy point-source model",
+            "simulation_vs_real": "Simulation (noise-free EVLA)",
+            "frequency": "~2 GHz centre; bandwidth ratios 1.1:1–3:1",
+            "array": "EVLA"
+          },
+          "evidence": "Noise-free Taylor-order test: for a 2:1 band and four Taylor terms, reference-frequency peak-flux error is about 1 part in 1,000 (with DR ~100,000 and spectral-index error ~0.01)."
+        }
       ]
     },
     {
@@ -1538,6 +1709,59 @@
           },
           "evidence": "Runtime plotted across coverage sweep; MS-CLEAN comparison is cross-paper rather than same-hardware."
         }
+      ],
+      "snr_details": [
+        {
+          "category": "reconstruction_snr",
+          "submetric": "std_reconstruction_snr",
+          "value": 38.43,
+          "unit": "dB",
+          "scope": "Example M31 reconstruction at 30% coverage (SARA); mean curves over 100 sims",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀(σ_x / σ_{x−x̂})",
+            "simulation_vs_real": "Simulation (variable-density Fourier coverage)",
+            "input_snr_setting": "30 dB input SNR",
+            "frequency": null,
+            "array": "Generic discrete Fourier (no telescope)"
+          },
+          "evidence": "Primary fidelity metric is 20·log₁₀(σ_x/σ_{x−x̂}) dB. Example at 30% coverage: SARA 38.43 dB (M31) / 29.08 dB (30 Doradus) vs BP/TV/IUWT baselines."
+        },
+        {
+          "category": "input_operating_snr",
+          "submetric": "input_visibility_snr",
+          "value": 30,
+          "unit": "dB",
+          "scope": "Complex Gaussian noise on visibilities for all coverage sweeps",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formula": "Same σ form with per-visibility noise std in denominator",
+            "simulation_vs_real": "Simulation",
+            "input_snr_setting": "30 dB",
+            "frequency": null,
+            "array": "Generic discrete Fourier"
+          },
+          "evidence": "Complex Gaussian noise added at fixed 30 dB input SNR; 100 Monte Carlo runs per coverage."
+        },
+        {
+          "category": "comparative_snr",
+          "submetric": "db_gain_vs_baseline",
+          "value": 6,
+          "unit": "dB (lower bound at 10% coverage, M31)",
+          "scope": "SARA vs BP / BPDb8 / TV / IUWT across 10–90% coverage",
+          "baseline": "Directly run BP, BPDb8, TV, IUWT",
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀(σ_x / σ_{x−x̂})",
+            "simulation_vs_real": "Simulation",
+            "input_snr_setting": "30 dB",
+            "frequency": null,
+            "array": "Generic discrete Fourier"
+          },
+          "evidence": "SARA highest mean reconstruction SNR at every coverage; >6 dB gain over every other method at 10% coverage (M31) and ≥3 dB elsewhere; ≥2 dB on 30 Doradus at every coverage."
+        }
       ]
     },
     {
@@ -1612,6 +1836,59 @@
             "workload": null
           },
           "evidence": "Reweighted method time scales approximately linearly with visibility count because CG repeatedly applies Φ and Φ†."
+        }
+      ],
+      "snr_details": [
+        {
+          "category": "reconstruction_snr",
+          "submetric": "l2_reconstruction_snr",
+          "value": null,
+          "unit": "dB",
+          "scope": "Coverage sweep M/N=0.2–2 on M31 and 30 Doradus (mean of 30 sims)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀(‖x‖₂ / ‖x−x̂‖₂)",
+            "simulation_vs_real": "Simulation (continuous off-grid Fourier + AMI coverage test)",
+            "input_snr_setting": "30 dB input visibility SNR",
+            "frequency": null,
+            "array": "Generic + simulated AMI"
+          },
+          "evidence": "Primary fidelity metric is L₂ reconstruction SNR vs noiseless model. SARA has the highest mean SNR throughout both M31 and 30 Doradus coverage sweeps."
+        },
+        {
+          "category": "input_operating_snr",
+          "submetric": "input_visibility_snr",
+          "value": 30,
+          "unit": "dB",
+          "scope": "Fixed input visibility SNR for all PURIFY configurations",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀(‖y₀‖₂ / ‖n‖₂)",
+            "simulation_vs_real": "Simulation",
+            "input_snr_setting": "30 dB",
+            "frequency": null,
+            "array": "Generic + simulated AMI"
+          },
+          "evidence": "Input visibility SNR fixed at 30 dB, distinct from the reconstruction SNR score."
+        },
+        {
+          "category": "comparative_snr",
+          "submetric": "db_gain_vs_baseline",
+          "value": 4,
+          "unit": "dB (upper gap vs next-best on M31)",
+          "scope": "SARA vs RWBPDb8 / TV / RWTV / BP variants",
+          "baseline": "RWBPDb8 (M31); TV/RWTV (30 Doradus)",
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀(‖x‖₂ / ‖x−x̂‖₂)",
+            "simulation_vs_real": "Simulation",
+            "input_snr_setting": "30 dB",
+            "frequency": null,
+            "array": "Generic continuous Fourier"
+          },
+          "evidence": "On M31, next-best RWBPDb8 remains as much as 4 dB below SARA; on 30 Doradus, TV/RWTV are at most 2 dB below SARA."
         }
       ]
     },
@@ -1872,6 +2149,44 @@
             "array": "MWA (simulated)"
           },
           "evidence": "Paper summarizes WSClean as 0–49% lower residual RMS than CASA across the controlled accuracy benchmarks."
+        }
+      ],
+      "flux_recovery_details": [
+        {
+          "category": "truth_based_flux",
+          "submetric": "catalogue_flux_error",
+          "value": 1.31,
+          "unit": "% AEGEAN source-flux standard error",
+          "scope": "100×1 Jy MWA simulation, zenith, 12 w-layers (vs CASA 1.34%)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "% source-flux standard error (AEGEAN)",
+            "aperture_region": "AEGEAN catalogue on 100 simulated 1 Jy sources",
+            "reference_type": "Known injected 1 Jy sources",
+            "simulation_vs_real": "Simulation (MWA, no system noise)",
+            "frequency": "MWA band",
+            "array": "MWA"
+          },
+          "evidence": "At zenith with 12 w-layers, WSClean reports 1.31% AEGEAN source-flux standard error (and 0.94 mJy/beam residual RMS) versus CASA 1.34% and 1.90 mJy/beam."
+        },
+        {
+          "category": "cross_method_flux",
+          "submetric": "comparative_recovered_flux",
+          "value": null,
+          "unit": "2–33% lower source-flux errors than CASA",
+          "scope": "MWA simulation grid (zenith and 10° zenith angle)",
+          "baseline": "CASA w-projection",
+          "empirical": true,
+          "execution_context": {
+            "units": "% source-flux standard error",
+            "aperture_region": "AEGEAN catalogue",
+            "reference_type": "Known injected sources + cross-method",
+            "simulation_vs_real": "Simulation (MWA)",
+            "frequency": "MWA band",
+            "array": "MWA"
+          },
+          "evidence": "Across controlled tests the paper summarizes WSClean as having 2–33% lower source-flux errors (and 0–49% lower residual RMS) than CASA."
         }
       ]
     },
@@ -2309,6 +2624,45 @@
           },
           "evidence": "Authors state HMP or SSD increases dynamic range and reduces flux-density/spectral-index error; residual images improve after DD/wideband correction, but achieved DR is not tabulated."
         }
+      ],
+      "snr_details": [
+        {
+          "category": "input_operating_snr",
+          "submetric": "operational_tradeoff_snr",
+          "value": 10,
+          "unit": "× SNR reduction (sparsification factor 100)",
+          "scope": "Early high-SNR CLEAN major cycles with visibility-block sparsification",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "formula": "Operational effective-SNR trade-off (not truth-based reconstruction SNR)",
+            "simulation_vs_real": "Representative VLA / MeerKAT L-band rationale",
+            "input_snr_setting": "DR ~1e4+; early cycles kept above noise floor",
+            "frequency": "L band",
+            "array": "VLA or MeerKAT (representative)"
+          },
+          "evidence": "Sparsification factor of 100 is argued to reduce SNR by 10× while leaving early cycles above the noise floor (schedule 100, 100, 30, 10, 1). Operational rationale, not a measured end-to-end reconstruction-SNR benchmark."
+        }
+      ],
+      "flux_recovery_details": [
+        {
+          "category": "truth_based_flux",
+          "submetric": "relative_flux_density_error",
+          "value": null,
+          "unit": "(Ŝ₅₀−S₅₀)/S₅₀",
+          "scope": "LOFAR LBA semi-realistic simulation vs beam radius (Figure 9)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "Relative flux-density error at 50 MHz",
+            "aperture_region": "Point sources vs distance from beam centre / HPBW",
+            "reference_type": "Known simulated S₅₀",
+            "simulation_vs_real": "Simulation (LOFAR LBA, DD Jones)",
+            "frequency": "30–70 MHz (S₅₀ at 50 MHz)",
+            "array": "LOFAR LBA (36 stations)"
+          },
+          "evidence": "Simulation measures (estimated S₅₀ − true S₅₀)/true S₅₀ versus beam-radius distance. Direction-independent narrowband imaging shows strong negative radial bias; DD HMP-WB and SSD-WB cluster much closer to zero (SSD visually tighter)."
+        }
       ]
     },
     {
@@ -2529,6 +2883,26 @@
           },
           "evidence": "Out-of-field dirty-image RMS reported 2% lower with IDG than classical gridding."
         }
+      ],
+      "nmse_details": [
+        {
+          "category": "unspecified",
+          "submetric": "unspecified",
+          "value": null,
+          "unit": null,
+          "scope": "IDG vs classical gridding accuracy tests",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "Visibility RMS / residual-image RMS (not NMSE)",
+            "formula_scale": null,
+            "reference": "Direct measurement-equation evaluation",
+            "simulation_vs_real": "LOFAR Toothbrush metadata simulation",
+            "frequency": "130–132 MHz",
+            "array": "LOFAR (55 stations)"
+          },
+          "evidence": "Reports visibility-domain RMS error and residual-image RMS vs classical gridding, plus analytic aliasing energy — not NMSE/NRMSE by name. Flagged nmse_nrmse=1 from classification; left unspecified on this drill-down."
+        }
       ]
     },
     {
@@ -2622,6 +2996,62 @@
             "workload": "SKA-Low simulation defaults; up to 182.25 Mpix"
           },
           "evidence": "Dense-grid timings vs telescope radius; monolithic HVOX OOMs at largest configs while HVOX-500MB continues to 100 km / 182.25 Mpix case."
+        }
+      ],
+      "nmse_details": [
+        {
+          "category": "visibility_domain",
+          "submetric": "fractional_visibility_nmse",
+          "value": 1e-09,
+          "unit": "fractional NMSE floor (double precision)",
+          "scope": "Direction-cosine and HEALPix accuracy sweeps vs direct point-source evaluation",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "Visibility",
+            "formula_scale": "Fractional NMSE (requested vs achieved accuracy targets)",
+            "reference": "Direct evaluation of point-source sky model visibilities",
+            "simulation_vs_real": "Simulation (SKA-Low-style setups; also LOFAR dirty demo without NMSE)",
+            "frequency": "150 MHz (default SKA-Low sim channel)",
+            "array": "SKA-Low (simulated); LOFAR-HBA demo (no NMSE)"
+          },
+          "evidence": "Controlled accuracy experiment measures NMSE between visibilities from direct point-source evaluation vs HVOX, chunked HVOX (500 MB partition limit), NIFTY (DUCC W-gridder), and NIFTY 2D without w-term. Monolithic HVOX tracks requested NMSE down to ≈10⁻⁹ (FINUFFT upsampling floor); chunked HVOX slightly misses targets due to summed-block error; HEALPix matches direction-cosine NMSE for HVOX."
+        },
+        {
+          "category": "comparative_nmse",
+          "submetric": "higher_lower_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "HVOX / chunked HVOX vs NIFTY and NIFTY 2D (no w-term) on visibility NMSE",
+          "baseline": "NIFTY (DUCC W-gridder); NIFTY 2D without w-term; direct-evaluation target",
+          "empirical": true,
+          "execution_context": {
+            "domain": "Visibility",
+            "formula_scale": "Fractional NMSE vs requested target",
+            "reference": "Direct point-source evaluation",
+            "simulation_vs_real": "Simulation",
+            "frequency": "150 MHz (default setup)",
+            "array": "SKA-Low (simulated)"
+          },
+          "evidence": "NIFTY generally exceeds its requested accuracy by about one order of magnitude; omitting the w-term yields much larger error insensitive to the target. HEALPix requires NIFTY bilinear interpolation (≈1% error) before gridding — mesh-conversion loss isolated from restored-image quality."
+        },
+        {
+          "category": "comparative_nmse",
+          "submetric": "nmse_improvement_factor",
+          "value": 10,
+          "unit": "× (approx. order-of-magnitude overshoot of requested target by NIFTY)",
+          "scope": "NIFTY achieved vs requested visibility NMSE",
+          "baseline": "Requested NMSE target",
+          "empirical": true,
+          "execution_context": {
+            "domain": "Visibility",
+            "formula_scale": "Fractional NMSE",
+            "reference": "Direct evaluation / requested target",
+            "simulation_vs_real": "Simulation",
+            "frequency": null,
+            "array": "SKA-Low (simulated)"
+          },
+          "evidence": "NIFTY typically beats the requested NMSE target by ≈1 order of magnitude; chunked HVOX needs tighter per-block targets to hit the global NMSE."
         }
       ]
     },
@@ -2902,6 +3332,46 @@
           },
           "evidence": "Defines dirty-image RMS σ_dirty = sqrt((1/N) Σ (I_i − Ī)²) as a core quality metric and uses it in the example quality tuple. Section 6 does not tabulate those RMS values. Residual RMS as DR denominator alone is not a separate measured RMS subtype here."
         }
+      ],
+      "psnr_details": [
+        {
+          "category": "framework_defined",
+          "submetric": "named_core_quality_metric",
+          "value": null,
+          "unit": "dB (defined)",
+          "scope": "astroCAMP Table 2 core algorithmic-quality pair (PSNR/SSIM)",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "formulation": "10·log₁₀(I_max² / MSE)",
+            "max_definition": "I_max from reference image",
+            "image_domain": "Reconstruction Î vs reference I_ref",
+            "simulation_vs_real": "Framework definition (WSClean+IDG matrix skips computing quality scores)",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Table 2 names PSNR as a core quality metric via 10 log₁₀(I_max²/MSE) vs reference (scikit-image / OpenCV style). PSNR appears in the co-design quality tuple with dirty-image RMS and DR, but Section 6 does not tabulate PSNR for the WSClean+IDG experimental release."
+        }
+      ],
+      "ssim_details": [
+        {
+          "category": "framework_defined",
+          "submetric": "named_core_quality_metric",
+          "value": null,
+          "unit": null,
+          "scope": "astroCAMP Table 2 algorithmic-quality pair (PSNR / SSIM)",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "aggregation": null,
+            "image_domain": "Reconstruction Î vs reference I_ref",
+            "normalization": null,
+            "simulation_vs_real": "Framework definition (WSClean+IDG runs skip computing SSIM)",
+            "frequency": null,
+            "array": "SKA-scale co-design / WSClean+IDG workloads"
+          },
+          "evidence": "Table 2 lists SSIM with PSNR as a core algorithmic-quality pair (dimensionless structural similarity). Both appear in co-design quality examples; the WSClean+IDG experimental release does not compute SSIM pending community tolerances."
+        }
       ]
     },
     {
@@ -3171,6 +3641,44 @@
           },
           "evidence": "CLEAN comparison path uses 50,000 iterations (major-cycle gain 0.3, gain 0.005) on 64-pixel maps."
         }
+      ],
+      "flux_recovery_details": [
+        {
+          "category": "truth_based_flux",
+          "submetric": "peak_flux_bias",
+          "value": -4.354,
+          "unit": "% mean relative core specific-intensity deviation",
+          "scope": "10,000 synthetic radio-galaxy tests, noiseless radionets model",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "% relative deviation (arbitrary intensity units)",
+            "aperture_region": "Brightest Gaussian core pixels averaged",
+            "reference_type": "Synthetic Gaussian truth",
+            "simulation_vs_real": "Simulation (gridded VLBA-like masks)",
+            "frequency": null,
+            "array": "Simulated ten-antenna VLBA-like coverage"
+          },
+          "evidence": "Core specific-intensity mean relative deviations: noiseless network −4.354% ± 6.662%; image-noise-trained 0.613% ± 12.402%; WSClean −13.645% ± 24.312%."
+        },
+        {
+          "category": "cross_method_flux",
+          "submetric": "comparative_recovered_flux",
+          "value": null,
+          "unit": null,
+          "scope": "Radionets vs fixed WSClean config on synthetic cores",
+          "baseline": "WSClean (one fixed configuration)",
+          "empirical": true,
+          "execution_context": {
+            "units": "% relative core intensity deviation",
+            "aperture_region": "Core Gaussian component",
+            "reference_type": "Synthetic truth + cross-method",
+            "simulation_vs_real": "Simulation",
+            "frequency": null,
+            "array": "Simulated VLBA-like"
+          },
+          "evidence": "Network core-intensity bias/scatter is smaller than the reported WSClean mean deviation (−13.6% ± 24.3%), though large dispersions show near-zero mean bias ≠ accurate per-source flux."
+        }
       ]
     },
     {
@@ -3311,6 +3819,26 @@
           },
           "evidence": "Dirty peaks 0.69/0.37 Jy imply nominal target DR ≈5×10⁵ and 2.2×10⁵; authors caution reconstructed peaks (~0.05 Jy) are >10× lower — regularization estimates, not measured fidelity."
         }
+      ],
+      "flux_recovery_details": [
+        {
+          "category": "cross_method_flux",
+          "submetric": "cross_method_integrated",
+          "value": 143,
+          "unit": "mJy (uSARA/AIRI at 1053 MHz; CLEAN 146 mJy)",
+          "scope": "ESO 137-006 AGN photometry, MeerKAT continuum bands",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "mJy",
+            "aperture_region": "AGN region (CLEAN within dirty-beam main lobe; ML over active pixels)",
+            "reference_type": "Cross-method (no known sky truth)",
+            "simulation_vs_real": "Real MeerKAT observation",
+            "frequency": "1053 and 1399 MHz",
+            "array": "MeerKAT"
+          },
+          "evidence": "At 1053 MHz, uSARA, AIRI, and CLEAN recover 143, 143, and 146 mJy; at 1399 MHz 124, 125, and 123 mJy. Agreement is a real-data consistency check, not truth error."
+        }
       ]
     },
     {
@@ -3402,6 +3930,210 @@
           },
           "evidence": "Training takes about 20 GPU-h per model and about 300 GPU-h in total. Inference 'few seconds on a laptop' is wall-clock without protocol — Compute subtype is the GPU-hour training budget."
         }
+      ],
+      "psnr_details": [
+        {
+          "category": "absolute_psnr",
+          "submetric": "ten_log10_psnr",
+          "value": 55.9,
+          "unit": "dB (mean ± std)",
+          "scope": "DSA-2000 full-band sim (1300 MHz, 15 min PSF; 50 validation images)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formulation": "PSNR in dB (pixel-wise truth; integer-range normalised)",
+            "max_definition": "Normalised to available integer range before evaluation",
+            "image_domain": "Normalized 16-bit single-channel dirty→restored images",
+            "simulation_vs_real": "Simulation (DSA-2000 radio-galaxy skies; 0.5 μJy/pixel noise)",
+            "frequency": "1300 MHz (full-band PSF); also 10 MHz narrow-band",
+            "array": "DSA-2000 (simulated)"
+          },
+          "evidence": "Full-band: POLISH mean PSNR 55.9±4.7 dB vs CLEAN 50.0±6.0 dB. Narrow-band snapshot PSF: POLISH 55.1±3.8 dB vs CLEAN 47.4±3.6 dB. Real VLA transfer is qualitative only — no PSNR on observed data."
+        },
+        {
+          "category": "comparative_psnr",
+          "submetric": "psnr_gain_db",
+          "value": 5.9,
+          "unit": "dB mean improvement",
+          "scope": "POLISH vs image-plane CLEAN on DSA-2000 validation",
+          "baseline": "Image-plane CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "formulation": "PSNR in dB",
+            "max_definition": null,
+            "image_domain": "Normalized integer-range images",
+            "simulation_vs_real": "Simulation (DSA-2000)",
+            "frequency": "1300 MHz full-band (+7.7 dB on 10 MHz narrow-band)",
+            "array": "DSA-2000 (simulated)"
+          },
+          "evidence": "Reported mean PSNR improvements: +5.9 dB (full-band) and +7.7 dB (narrow-band) over image-plane CLEAN on the same 50-image validation set."
+        },
+        {
+          "category": "comparative_psnr",
+          "submetric": "higher_lower_than_baseline",
+          "value": 55.9,
+          "unit": "dB vs CLEAN ~47–50 dB",
+          "scope": "DSA-2000 simulated radio-galaxy task",
+          "baseline": "Image-plane CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "formulation": "PSNR in dB",
+            "max_definition": null,
+            "image_domain": null,
+            "simulation_vs_real": "Simulation (DSA-2000)",
+            "frequency": null,
+            "array": "DSA-2000 (simulated)"
+          },
+          "evidence": "POLISH mean PSNR (~55 dB) exceeds CLEAN (~47–50 dB) on both full-band and narrow-band DSA-2000 simulations."
+        },
+        {
+          "category": "parameter_sweep_psnr",
+          "submetric": "vs_hyperparameter",
+          "value": 50,
+          "unit": "dB (floor across γ grid)",
+          "scope": "PSF-mismatch ablation: train γ∈[0,20], test to γ=30 and 1.4× radial stretch",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formulation": "PSNR in dB",
+            "max_definition": null,
+            "image_domain": "Normalized images under synthetic PSF warp",
+            "simulation_vs_real": "Simulation (PSF-warp ablation)",
+            "frequency": null,
+            "array": "DSA-2000 (simulated)"
+          },
+          "evidence": "PSNR decreases outside the training warp distribution but remains above 50 dB across the displayed 3×3 γ / stretch grid."
+        },
+        {
+          "category": "parameter_sweep_psnr",
+          "submetric": "checkpoint_selection",
+          "value": null,
+          "unit": "validation PSNR",
+          "scope": "Model checkpoint selection during training",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formulation": "Validation PSNR",
+            "max_definition": null,
+            "image_domain": null,
+            "simulation_vs_real": "Simulation (training/validation pairs)",
+            "frequency": null,
+            "array": "DSA-2000 (simulated)"
+          },
+          "evidence": "Network minimizes pixel-wise ℓ1 loss; model checkpoints are selected by validation PSNR."
+        }
+      ],
+      "ssim_details": [
+        {
+          "category": "absolute_ssim",
+          "submetric": "mean_image_ssim",
+          "value": 0.998,
+          "unit": "mean ± 0.0016 (dimensionless)",
+          "scope": "Full-band DSA-2000 sim (1300 MHz, 15 min PSF); POLISH on 50 validation fields",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "aggregation": "Mean ± std over validation images",
+            "image_domain": "Intensity / restored vs truth",
+            "normalization": "Inputs and targets normalized to integer range before SSIM",
+            "simulation_vs_real": "Simulation (DSA-2000 synthetic radio-galaxy skies)",
+            "frequency": "1300 MHz full-band",
+            "array": "DSA-2000 (simulated)"
+          },
+          "evidence": "Full-band: POLISH mean SSIM 0.998±0.0016 vs CLEAN 0.989±0.007 on the same simulated radio-galaxy task."
+        },
+        {
+          "category": "absolute_ssim",
+          "submetric": "mean_image_ssim",
+          "value": 0.988,
+          "unit": "mean ± 0.0016 (dimensionless)",
+          "scope": "Narrow-band DSA-2000 sim (10 MHz snapshot PSF); POLISH on 50 validation fields",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "aggregation": "Mean ± std over validation images",
+            "image_domain": "Intensity / restored vs truth",
+            "normalization": "Inputs and targets normalized to integer range before SSIM",
+            "simulation_vs_real": "Simulation (DSA-2000 synthetic radio-galaxy skies)",
+            "frequency": "10 MHz snapshot",
+            "array": "DSA-2000 (simulated)"
+          },
+          "evidence": "Narrow-band: POLISH mean SSIM 0.988±0.0016 vs CLEAN 0.976±0.009 with the more structured 10 MHz snapshot PSF."
+        },
+        {
+          "category": "comparative_ssim",
+          "submetric": "ssim_delta",
+          "value": 0.009,
+          "unit": "mean SSIM improvement",
+          "scope": "Full-band DSA-2000: POLISH vs image-plane CLEAN",
+          "baseline": "Image-plane CLEAN (mean SSIM 0.989±0.007)",
+          "empirical": true,
+          "execution_context": {
+            "aggregation": "Mean improvement over validation set",
+            "image_domain": "Intensity / restored vs truth",
+            "normalization": "Integer-range normalization",
+            "simulation_vs_real": "Simulation (DSA-2000)",
+            "frequency": "1300 MHz full-band",
+            "array": "DSA-2000 (simulated)"
+          },
+          "evidence": "Reported mean SSIM improvement +0.009 (full-band) vs CLEAN."
+        },
+        {
+          "category": "comparative_ssim",
+          "submetric": "ssim_delta",
+          "value": 0.012,
+          "unit": "mean SSIM improvement",
+          "scope": "Narrow-band DSA-2000: POLISH vs image-plane CLEAN",
+          "baseline": "Image-plane CLEAN (mean SSIM 0.976±0.009)",
+          "empirical": true,
+          "execution_context": {
+            "aggregation": "Mean improvement over validation set",
+            "image_domain": "Intensity / restored vs truth",
+            "normalization": "Integer-range normalization",
+            "simulation_vs_real": "Simulation (DSA-2000)",
+            "frequency": "10 MHz snapshot",
+            "array": "DSA-2000 (simulated)"
+          },
+          "evidence": "Reported mean SSIM improvement +0.012 (narrow-band) vs CLEAN."
+        },
+        {
+          "category": "comparative_ssim",
+          "submetric": "higher_lower_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "POLISH vs image-plane CLEAN on DSA-2000 sims",
+          "baseline": "Image-plane CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "aggregation": "Mean SSIM",
+            "image_domain": "Intensity / restored vs truth",
+            "normalization": "Integer-range normalization",
+            "simulation_vs_real": "Simulation (DSA-2000); real VLA transfer has no SSIM",
+            "frequency": "1300 MHz / 10 MHz",
+            "array": "DSA-2000 (simulated)"
+          },
+          "evidence": "POLISH beats CLEAN on both full-band and narrow-band mean SSIM; real VLA transfer is qualitative only (no SSIM)."
+        }
+      ],
+      "class_details": [
+        {
+          "category": "catalog_rates",
+          "submetric": "false_positive_incidence",
+          "value": 2,
+          "unit": "% false-positive incidence (approx.)",
+          "scope": "Source-Extractor false galaxies on simulated DSA-2000 skies (POLISH vs CLEAN)",
+          "baseline": "CLEAN ≈5% (1 false per 20 galaxies)",
+          "empirical": true,
+          "execution_context": {
+            "task": "Source detection / false-galaxy incidence",
+            "finder_method": "Source-Extractor",
+            "operating_point": null,
+            "matching_criterion": "Approximate false galaxies per N simulated galaxies",
+            "simulation_vs_real": "Simulation (DSA-2000)",
+            "dataset_or_survey": "DSA-2000 simulated galaxies"
+          },
+          "evidence": "Source-Extractor finds approximately one false-positive galaxy per 20 simulated galaxies in CLEAN and one per 50 in POLISH (≈5% vs ≈2% false-positive incidence). No underlying source counts, completeness, thresholds, or precision–recall curve."
+        }
       ]
     },
     {
@@ -3459,6 +4191,26 @@
             "regularisation_parameters": null
           },
           "evidence": "PRIMO fits PCA coefficients via MCMC and contrasts with CLEAN minor cycles conceptually, but reports no imaging iteration counts or epochs-to-solution. Left Unspecified."
+        }
+      ],
+      "credint_details": [
+        {
+          "category": "posterior_sample_intervals",
+          "submetric": "parameter_posterior_intervals",
+          "value": null,
+          "unit": null,
+          "scope": "PRIMO MCMC corner plots: eigenimage / structure-parameter posteriors vs ground truth",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "credible_level": "Posterior intervals (corner-plot; level not standardized in notes)",
+            "spatial_aggregation": "Parameter (PCA / image-structure coefficients)",
+            "estimation_method": "MCMC posterior sampling",
+            "simulation_vs_real": "Simulation (2017 Apr 5 M87 EHT (u,v) + thermal noise)",
+            "frequency": "EHT / mm-VLBI (M87)",
+            "array": "EHT"
+          },
+          "evidence": "Corner plots compare ground-truth parameters with highest-likelihood values and posterior intervals. Low-order component posteriors are narrower than priors; higher-order components are increasingly prior-dominated. No calibrated coverage summary across a test set."
         }
       ]
     },
@@ -3642,6 +4394,26 @@
           },
           "evidence": "Reports measured residual-map rms as fidelity/sensitivity context: e.g. WSClean ~1–2 μJy/pixel, 1.6 μJy/pixel (PKS 2014-55), and 1 μJy/pixel (Dancing Ghosts). Source boundaries drawn at multiples of residual rms vs calculated image-noise std. Not a normalised RDR score."
         }
+      ],
+      "flux_recovery_details": [
+        {
+          "category": "cross_method_flux",
+          "submetric": "cross_method_integrated",
+          "value": 117.2,
+          "unit": "mJy (uSARA full-band; WSClean 115.5 mJy)",
+          "scope": "ASKAP fields: Abell 3395, PKS 2014-55, SPT2023, PKS 2130-538",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "mJy",
+            "aperture_region": "Manually drawn regions (~2σ WSClean contour; shared per source/sub-band)",
+            "reference_type": "Cross-method (no catalogue validation)",
+            "simulation_vs_real": "Real ASKAP Early Science / Pilot",
+            "frequency": "~817–1139 MHz sub-bands; 943 MHz full-band",
+            "array": "ASKAP"
+          },
+          "evidence": "Tabulated integrated diffuse fluxes across sub-bands for multiple sources (e.g. Abell 3395 phoenix Table 3; PKS 2014-55 Table 4; SPT2023 relic Table 5). Closest agreement on PKS 2130-538: 117.2 mJy uSARA vs 115.5 mJy WSClean restored/smoothed at 943 MHz."
+        }
       ]
     },
     {
@@ -3760,6 +4532,26 @@
             "array": "ASKAP"
           },
           "evidence": "Denoiser noise levels (2e-5, 4e-5, 8e-5) are inverse target DR; dirty-image peak used to rescale when true sky peak is unavailable. Paper explicitly does not report a calibrated achieved DR score."
+        }
+      ],
+      "flux_recovery_details": [
+        {
+          "category": "cross_method_flux",
+          "submetric": "cross_method_integrated",
+          "value": 116.7,
+          "unit": "mJy (AIRI full-band Dancing Ghosts)",
+          "scope": "ASKAP AIRI vs uSARA / WSClean integrated fluxes (Tables 1–4)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "mJy",
+            "aperture_region": "Hand-drawn regions adjusted to AIRI morphology",
+            "reference_type": "Cross-method (no known sky truth)",
+            "simulation_vs_real": "Real ASKAP Early Science / Pilot",
+            "frequency": "~817–1139 MHz; 943 MHz full-band",
+            "array": "ASKAP"
+          },
+          "evidence": "AIRI integrated fluxes tabulated per field/sub-band (e.g. Abell phoenix Table 1; PKS 2014-55 Table 2; SPT2023 relic Table 3). PKS 2130-538 full-band AIRI 116.7 mJy agrees closely with companion uSARA/WSClean; apertures differ from the uSARA paper."
         }
       ]
     },
@@ -4016,6 +4808,172 @@
           },
           "evidence": "Ground-truth DR randomized from 1e3 to 5e5; targeted experiments isolate low vs high DR (e.g. 5e3 vs 1e5) where residual ratios diverge. High-DR cases show residual structure around bright emission — DR is a configured test axis, not a tabulated achieved reconstruction DR."
         }
+      ],
+      "snr_details": [
+        {
+          "category": "reconstruction_snr",
+          "submetric": "l2_reconstruction_snr",
+          "value": 34.0,
+          "unit": "dB (mean ± std)",
+          "scope": "Generic 200-problem VLA simulation test; R3D3-6L best mean",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀(‖x_true‖₂ / ‖x_true − x̂‖₂)",
+            "simulation_vs_real": "Simulation (VLA A/C; known 512² truth)",
+            "input_snr_setting": "Gaussian visibility noise adapted to target image DR",
+            "frequency": "1–4 channels (varied)",
+            "array": "VLA"
+          },
+          "evidence": "Linear S/N: CLEAN 13.6±3.6, uSARA 30.8±1.9, AIRI 31.3±2.3, R2D2 33.7±1.5, R3D3-3L 33.8±1.4, R3D3-6L 34.0±1.6 dB on the generic 200-problem test."
+        },
+        {
+          "category": "comparative_snr",
+          "submetric": "db_gain_vs_baseline",
+          "value": "2.4–3.2",
+          "unit": "dB mean gain",
+          "scope": "Learned-series methods vs AIRI / uSARA on matched simulated test",
+          "baseline": "AIRI and uSARA",
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀ L₂ reconstruction SNR",
+            "simulation_vs_real": "Simulation (VLA)",
+            "input_snr_setting": "Noise adapted to target DR",
+            "frequency": null,
+            "array": "VLA"
+          },
+          "evidence": "Across R2D2 / R3D3, mean gain is 2.4–2.7 dB over AIRI and 2.9–3.2 dB over uSARA; end-to-end U-Net only 20.5±2.7 dB."
+        }
+      ],
+      "logsnr_details": [
+        {
+          "category": "absolute_logsnr",
+          "submetric": "tabulated_mean_db",
+          "value": 25.0,
+          "unit": "dB (mean ± std)",
+          "scope": "Generic 200-problem VLA test; R2D2 / R3D3 log S/N",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": "Logarithmic image transform then L₂ S/N (R2D2-family)",
+            "transform_parameter": "Ground-truth dynamic range",
+            "paired_with_linear_snr": "Yes (linear S/N + log S/N)",
+            "simulation_vs_real": "Simulation (VLA A/C; 512×512)",
+            "array_or_domain": "VLA",
+            "frequency": null
+          },
+          "evidence": "Generic-test log S/N means: CLEAN 10.3±3.5 dB; uSARA/AIRI 21.9 dB; R2D2 ≈25.0–25.1±4.9 dB; R3D3-3L/6L ≈25.3 dB. End-to-end U-Net only 6.6±3.3 dB."
+        },
+        {
+          "category": "comparative_logsnr",
+          "submetric": "higher_lower_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "R2D2/R3D3 vs CLEAN, uSARA, AIRI, end-to-end U-Net",
+          "baseline": "CLEAN / uSARA / AIRI / U-Net",
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": "Logarithmic image transform parameterized by GT DR",
+            "transform_parameter": null,
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "VLA",
+            "frequency": null
+          },
+          "evidence": "R2D2-family log S/N (~25 dB) exceeds CLEAN (~10 dB) and optimisation baselines (~22 dB); gap vs linear S/N is larger, stressing faint-structure recovery."
+        },
+        {
+          "category": "comparative_logsnr",
+          "submetric": "logsnr_gain_db",
+          "value": 15,
+          "unit": "dB (approx. vs CLEAN)",
+          "scope": "Generic test mean log S/N: R2D2 ≈25 vs CLEAN ≈10",
+          "baseline": "Multiscale CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": null,
+            "transform_parameter": null,
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "VLA",
+            "frequency": null
+          },
+          "evidence": "Mean log S/N rises from CLEAN 10.3 dB to R2D2/R3D3 ≈25 dB (~15 dB gain)."
+        },
+        {
+          "category": "transform_family",
+          "submetric": "r2d2_reversible_rlog",
+          "value": null,
+          "unit": null,
+          "scope": null,
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "transform_definition": "S/N after logarithmic image transform parameterized by known GT DR",
+            "transform_parameter": "Ground-truth dynamic range",
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "VLA",
+            "frequency": null
+          },
+          "evidence": "Introduces faint-structure log S/N via a DR-parameterised logarithmic remapping of reconstruction and ground truth (R2D2-family template used by later papers)."
+        }
+      ],
+      "rdr_details": [
+        {
+          "category": "reported_rdr",
+          "submetric": "planar_l2_rdr",
+          "value": 13.5,
+          "unit": "×10⁻⁴ (mean ± std)",
+          "scope": "Generic VLA 512×512 sims — R2D2 mean residual-to-dirty ratio (Table 2)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": "×10⁻⁴",
+            "simulation_vs_real": "Simulation (VLA)",
+            "frequency": "Monochromatic (sim)",
+            "array": "VLA"
+          },
+          "evidence": "Image-domain data fidelity ‖r̂‖₂/‖x_dirty‖₂; Table 2 means (×10⁻⁴): CLEAN 5.1±5.2, uSARA 6.5±8.2, AIRI 6.4±8.0, R2D2 13.5±46.9, R3D3-3L 7.6±7.6, R3D3-6L 7.9±7.8."
+        },
+        {
+          "category": "comparative_rdr",
+          "submetric": "lower_higher_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "Generic + high-DR targeted VLA experiments vs CLEAN / uSARA / AIRI / R3D3",
+          "baseline": "CLEAN, uSARA, AIRI, R3D3",
+          "empirical": true,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": "×10⁻⁴",
+            "simulation_vs_real": "Simulation (VLA)",
+            "frequency": null,
+            "array": "VLA"
+          },
+          "evidence": "CLEAN lowest mean RDR in generic tests; at DR≈10⁵ AIRI/uSARA beat R2D2 on RDR despite comparable morphology — truth fidelity distinguished from data-residual fidelity."
+        },
+        {
+          "category": "framework_operational",
+          "submetric": "named_data_fidelity_metric",
+          "value": null,
+          "unit": null,
+          "scope": null,
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": "×10⁻⁴",
+            "simulation_vs_real": null,
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Residual-to-dirty-image ratio introduced as the R2D2-family image-domain data-fidelity metric alongside SNR / logSNR."
+        }
       ]
     },
     {
@@ -4198,6 +5156,26 @@
             "array": "VLA"
           },
           "evidence": "fast-resolve achieves higher dynamic range than classical resolve with improved low-surface-brightness detail; no explicit scalar DR formula tabulated."
+        }
+      ],
+      "credint_details": [
+        {
+          "category": "posterior_sample_intervals",
+          "submetric": "relative_posterior_uncertainty_maps",
+          "value": "~1e-3–1e-2",
+          "unit": "relative posterior uncertainty (hotspot)",
+          "scope": "fast-resolve variational posterior uncertainty maps (VLA Cygnus A / resolve comparison)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "credible_level": "Relative posterior uncertainty (not a stated HPD %)",
+            "spatial_aggregation": "Pixel-wise maps",
+            "estimation_method": "Variational Bayesian posterior (resolve / fast-resolve)",
+            "simulation_vs_real": "Real VLA observation (Cygnus A)",
+            "frequency": null,
+            "array": "VLA"
+          },
+          "evidence": "Pixelwise relative posterior uncertainty maps reported at ~10⁻³–10⁻² in hotspot (bright) regions, increasing toward lower-surface-brightness areas — Bayesian UQ not available from CLEAN. No tabulated HPD/LCI widths."
         }
       ]
     },
@@ -4621,6 +5599,98 @@
           },
           "evidence": "Headline claim: fast UQ uses orders of magnitude fewer operator evaluations than MCMC-based UQ."
         }
+      ],
+      "snr_details": [
+        {
+          "category": "reconstruction_snr",
+          "submetric": "l2_reconstruction_snr",
+          "value": 30.25,
+          "unit": "dB",
+          "scope": "QuantifAI MAP on Cygnus A (Table 1); MeerKAT synthesis-time sweep also reported",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formula": "−20·log₁₀(‖x_gt − x‖₂ / ‖x_gt‖₂) ≡ 20·log₁₀ L₂ form",
+            "simulation_vs_real": "Simulation + realistic MeerKAT ungridded-visibility experiment",
+            "input_snr_setting": null,
+            "frequency": null,
+            "array": "MeerKAT (realistic experiment)"
+          },
+          "evidence": "Table 1 QuantifAI MAP SNR: W28 26.85, M31 27.48, 3C288 24.10, Cygnus A 30.25 dB. MeerKAT M31 MAP SNR rises 25.29→34.42 dB over 1–8 h synthesis."
+        },
+        {
+          "category": "comparative_snr",
+          "submetric": "db_gain_vs_baseline",
+          "value": "1.9–12.7",
+          "unit": "dB (avg ~7)",
+          "scope": "QuantifAI MAP vs wavelet-based MAP across four images",
+          "baseline": "Wavelet-based sparsity MAP (Cai et al. 2018b style)",
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀ L₂ reconstruction SNR",
+            "simulation_vs_real": "Simulation (Table 1)",
+            "input_snr_setting": null,
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "QuantifAI MAP beats wavelet-based MAP by 1.9–12.7 dB (average ~7 dB) across the dataset."
+        }
+      ],
+      "credint_details": [
+        {
+          "category": "hpd_local_credint",
+          "submetric": "hpd_credible_regions",
+          "value": "100(1−α)%",
+          "unit": "HPD credible level (Eq. 29–32)",
+          "scope": "QuantifAI MAP-potential HPD regions (four test images; MCMC-free approximation)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "credible_level": "100(1−α)% HPD (Pereyra 2017 concentration bound)",
+            "spatial_aggregation": "Full-image / region potential",
+            "estimation_method": "Analytic HPD from MAP potential (no MCMC)",
+            "simulation_vs_real": "Simulation (gridded FFT + MeerKAT NUFFT experiments)",
+            "frequency": null,
+            "array": "Simulated; MeerKAT visibility patterns (Section 6)"
+          },
+          "evidence": "HPD credible regions at level 100(1−α)% approximated analytically from the MAP potential via a concentration bound, underwriting all downstream UQ tools."
+        },
+        {
+          "category": "hpd_local_credint",
+          "submetric": "hpd_hypothesis_testing",
+          "value": 0.01,
+          "unit": "α (99% HPD isocontour γ̂₀.₀₁)",
+          "scope": "Inpainting (Table 2) and Gaussian-blur (Table 3) surrogate hypothesis tests",
+          "baseline": "SK-ROCK MCMC HPD tests (MAP vs MCMC outcomes agree)",
+          "empirical": true,
+          "execution_context": {
+            "credible_level": "99% HPD (α=0.01)",
+            "spatial_aggregation": "Region-of-interest / surrogate image",
+            "estimation_method": "MAP potential vs HPD isocontour; validated vs SK-ROCK MCMC",
+            "simulation_vs_real": "Simulation (M31, W28, Cygnus A, 3C288)",
+            "frequency": null,
+            "array": "Simulated RI"
+          },
+          "evidence": "Surrogate potentials compared to the 99% HPD isocontour. QuantifAI correctly rejects artefact hypotheses for physical structures in M31, W28 and 3C288; inconclusive for a small Cygnus A feature. MAP and MCMC test outcomes agree in every reported case."
+        },
+        {
+          "category": "hpd_local_credint",
+          "submetric": "local_credible_intervals",
+          "value": "0.20 / 0.08 / 0.24 / 0.07",
+          "unit": "mean LCI (16×16 superpixels; image order as Figure 7)",
+          "scope": "Local Credible Intervals l_i = ξ+,Ωi − ξ−,Ωi on four test images",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "credible_level": "HPD-boundary LCI widths",
+            "spatial_aggregation": "16×16 superpixels (also 8×8 timing tables)",
+            "estimation_method": "Root-finding on HPD boundary; qualitative check vs posterior-sample std",
+            "simulation_vs_real": "Simulation (four astronomical test images)",
+            "frequency": null,
+            "array": "Simulated RI"
+          },
+          "evidence": "Mean LCI values for 16×16 superpixels: 0.20, 0.08, 0.24, 0.07 (Figure 7 order); higher mean LCI flags M31 and 3C288 as more uncertain. Validated qualitatively against posterior-sample standard deviation."
+        }
       ]
     },
     {
@@ -4856,6 +5926,134 @@
           },
           "evidence": "DR defined as max/faintest intensity (1/σ); test set spans DR 10–10⁴ to stress high-DR performance; logSNR uses a = image DR."
         }
+      ],
+      "snr_details": [
+        {
+          "category": "reconstruction_snr",
+          "submetric": "l2_reconstruction_snr",
+          "value": 18.44,
+          "unit": "dB (example validation sample)",
+          "scope": "MRI R2D2 validation sample at DR=167, AF=16 (Fig. 2)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀(‖x̄‖₂ / ‖x̄ − x‖₂)",
+            "simulation_vs_real": "Simulation (non-Cartesian MRI; RI analogue)",
+            "input_snr_setting": null,
+            "frequency": null,
+            "array": "MRI (spokes / AF sweep)"
+          },
+          "evidence": "Primary metric is L₂ SNR vs ground truth. Example at AF=16: R2D2 18.44 dB, R2D2-Net (NUFFT) 19.39 dB, AIRI 15.55 dB, U-Net 14.93 dB."
+        },
+        {
+          "category": "comparative_snr",
+          "submetric": "higher_lower_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "R2D2 / R2D2-Net vs AIRI, U-Net, NC-PDNet across AF and iteration sweeps",
+          "baseline": "AIRI, U-Net, NC-PDNet",
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀ L₂ reconstruction SNR",
+            "simulation_vs_real": "Simulation (MRI)",
+            "input_snr_setting": null,
+            "frequency": null,
+            "array": "MRI"
+          },
+          "evidence": "R2D2-Net (NUFFT) and R2D2 outperform AIRI/U-Net/NC-PDNet on SNR; Additional Acceleration Ratio table reports how much more undersampling R2D2 tolerates at matched SNR targets."
+        }
+      ],
+      "logsnr_details": [
+        {
+          "category": "absolute_logsnr",
+          "submetric": "tabulated_mean_db",
+          "value": 25.1,
+          "unit": "dB",
+          "scope": "Fig. 2 validation sample DR=167, AF=16; R2D2-Net (NUFFT)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": "rlog(x)=log_a(a·x+1) then SNR",
+            "transform_parameter": "a = image Dynamic Range",
+            "paired_with_linear_snr": "Yes (SNR, logSNR pairs)",
+            "simulation_vs_real": "Simulation (non-Cartesian MRI)",
+            "array_or_domain": "MRI (radial k-space; R2D2 analogue)",
+            "frequency": null
+          },
+          "evidence": "Paired (SNR, logSNR): AIRI (15.55, 18.96); U-Net (14.93, 17.88); NC-PDNet (14.40, 17.65); R2D2 (18.44, 23.15); R2D2-Net NUFFT (19.39, 25.10)."
+        },
+        {
+          "category": "absolute_logsnr",
+          "submetric": "parameter_sweep_logsnr",
+          "value": null,
+          "unit": null,
+          "scope": "SNR/logSNR vs acceleration factor (spokes 10–80) and vs R2D2 iterations 1–8",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": "log_a(a·x+1) with a=DR",
+            "transform_parameter": null,
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation (MRI)",
+            "array_or_domain": "MRI non-Cartesian",
+            "frequency": null
+          },
+          "evidence": "Reports SNR/logSNR as a function of AF and DNN-series length; performance rises and converges by ~8 R2D2 networks."
+        },
+        {
+          "category": "absolute_logsnr",
+          "submetric": "per_iteration_curve",
+          "value": null,
+          "unit": null,
+          "scope": "logSNR vs number of R2D2 iterations (1–8)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": null,
+            "transform_parameter": null,
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation (MRI)",
+            "array_or_domain": "MRI non-Cartesian",
+            "frequency": null
+          },
+          "evidence": "SNR/logSNR reported vs iteration count; series converges with few networks vs PnP AIRI."
+        },
+        {
+          "category": "comparative_logsnr",
+          "submetric": "higher_lower_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "R2D2 / R2D2-Net vs AIRI, U-Net, NC-PDNet",
+          "baseline": "AIRI / U-Net / NC-PDNet",
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": null,
+            "transform_parameter": null,
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation (MRI)",
+            "array_or_domain": "MRI non-Cartesian",
+            "frequency": null
+          },
+          "evidence": "R2D2 and R2D2-Net (NUFFT) give the highest logSNR on the illustrated validation sample."
+        },
+        {
+          "category": "transform_family",
+          "submetric": "log_a_ax_plus_1",
+          "value": null,
+          "unit": null,
+          "scope": null,
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "transform_definition": "rlog(x)=log_a(a·x+1)",
+            "transform_parameter": "a = image Dynamic Range",
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation (MRI)",
+            "array_or_domain": "MRI non-Cartesian",
+            "frequency": null
+          },
+          "evidence": "Log map uses DR as base parameter a before SNR; analogue of radio high-DR logSNR."
+        }
       ]
     },
     {
@@ -5023,6 +6221,116 @@
           },
           "evidence": "R2D2 uses orders of magnitude fewer iterations than AIRI (~5000) and uSARA (~1100)."
         }
+      ],
+      "snr_details": [
+        {
+          "category": "reconstruction_snr",
+          "submetric": "l2_reconstruction_snr",
+          "value": 33,
+          "unit": "dB (approx. final)",
+          "scope": "Simulated test set Fig. 2; 3C 353 case study to 37.7 dB",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀(‖x⋆‖₂ / ‖x⋆ − x̂‖₂)",
+            "simulation_vs_real": "Simulation + real-data-like 3C 353 case study",
+            "input_snr_setting": null,
+            "frequency": null,
+            "array": "Radio-interferometric simulation / 3C 353"
+          },
+          "evidence": "R2D2 converges to ~33 dB on the simulated test set; 3C 353 case study rises 35.0→37.7 dB across iterations 1→12."
+        },
+        {
+          "category": "comparative_snr",
+          "submetric": "higher_lower_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "R2D2 vs CLEAN, U-Net, uSARA (and qualitatively AIRI)",
+          "baseline": "CLEAN (~15.9 dB), uSARA (~19.5 dB), U-Net (~28 dB first iteration)",
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀ L₂ reconstruction SNR",
+            "simulation_vs_real": "Simulation",
+            "input_snr_setting": null,
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Simulated test: R2D2 ~33 dB vs U-Net ~28, uSARA 19.5, CLEAN 15.9 dB. Paper states image estimation largely superior to CLEAN, U-Net, uSARA, and AIRI."
+        }
+      ],
+      "logsnr_details": [
+        {
+          "category": "absolute_logsnr",
+          "submetric": "tabulated_mean_db",
+          "value": 30,
+          "unit": "dB (approx. final)",
+          "scope": "Simulated test set Fig. 2 (center); final R2D2",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": "r_log(x)=x_max·log_a(a/x_max·x+1) then SNR",
+            "transform_parameter": "a (reversible log map; DR-style)",
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation (+ 3C 353 case study)",
+            "array_or_domain": "Radio RI (R2D2 UQ paper)",
+            "frequency": null
+          },
+          "evidence": "Simulated test: R2D2 final ~30 dB logSNR vs CLEAN 19.2 dB and uSARA 10.2 dB."
+        },
+        {
+          "category": "absolute_logsnr",
+          "submetric": "per_iteration_curve",
+          "value": 35.3,
+          "unit": "dB (final)",
+          "scope": "3C 353 case study: iteration 1 → final",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": "Reversible r_log then SNR",
+            "transform_parameter": null,
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulated case study (3C 353)",
+            "array_or_domain": "Radio RI",
+            "frequency": null
+          },
+          "evidence": "Case study logSNR rises from 29.2 dB (iteration 1) to 35.3 dB (final iteration)."
+        },
+        {
+          "category": "comparative_logsnr",
+          "submetric": "higher_lower_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "R2D2 vs CLEAN, U-Net, uSARA, AIRI (qualitative + numeric)",
+          "baseline": "CLEAN / uSARA / U-Net",
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": null,
+            "transform_parameter": null,
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "Radio RI",
+            "frequency": null
+          },
+          "evidence": "Claims superior image estimation vs CLEAN, U-Net, uSARA, and AIRI, combining higher SNR/logSNR with lower compute and low epistemic uncertainty."
+        },
+        {
+          "category": "transform_family",
+          "submetric": "r2d2_reversible_rlog",
+          "value": null,
+          "unit": null,
+          "scope": null,
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "transform_definition": "Eq. 7–8 reversible r_log then SNR",
+            "transform_parameter": "a in r_log",
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "Radio RI",
+            "frequency": null
+          },
+          "evidence": "Defines logSNR via reversible log-transformed images (Eq. 7–8) for faint HDR structure."
+        }
       ]
     },
     {
@@ -5101,6 +6409,120 @@
             "workload": null
           },
           "evidence": "~735 ms/image for bootstrap-based confidence regions vs ~153 ms for quantile-regression inference."
+        }
+      ],
+      "ssim_details": [
+        {
+          "category": "absolute_ssim",
+          "submetric": "median_ssim",
+          "value": 0.97,
+          "unit": "median (dimensionless)",
+          "scope": "EVIL-Deconv base network vs CLEAN / PnP (Table 2 medians)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "aggregation": "Median over test set",
+            "image_domain": "Reconstruction vs truth (UQ appendix fidelity table)",
+            "normalization": null,
+            "simulation_vs_real": "Simulation / controlled reconstruction benchmark",
+            "frequency": null,
+            "array": "Radio interferometry (EVIL-Deconv / equivariant bootstrap paper)"
+          },
+          "evidence": "Table 2 median SSIM: CLEAN 0.296; PnP (DnCNN) 0.869; EVIL-Deconv 0.970 (with NMSE 19.9 dB)."
+        },
+        {
+          "category": "comparative_ssim",
+          "submetric": "higher_lower_than_baseline",
+          "value": 0.97,
+          "unit": "median SSIM",
+          "scope": "EVIL-Deconv vs CLEAN and PnP (DnCNN)",
+          "baseline": "CLEAN (0.296) / PnP DnCNN (0.869)",
+          "empirical": true,
+          "execution_context": {
+            "aggregation": "Median",
+            "image_domain": "Reconstruction vs truth",
+            "normalization": null,
+            "simulation_vs_real": "Simulation / controlled reconstruction benchmark",
+            "frequency": null,
+            "array": "Radio interferometry (EVIL-Deconv)"
+          },
+          "evidence": "EVIL-Deconv median SSIM 0.970 exceeds PnP (0.869) and CLEAN (0.296); SSIM validates the fast deconv network used for UQ experiments."
+        }
+      ],
+      "nmse_details": [
+        {
+          "category": "image_domain",
+          "submetric": "image_nmse_db",
+          "value": 19.9,
+          "unit": "NMSE [−dB] (median)",
+          "scope": "EVIL-Deconv vs CLEAN and PnP (Table 2; 64×64 HST patches / MeerKAT PSFs)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "Image",
+            "formula_scale": "NMSE [−dB] = −20·log₁₀(‖x⋆−x̂‖₂/‖x⋆‖₂) (higher dB better)",
+            "reference": "Hubble Space Telescope ground-truth patches",
+            "simulation_vs_real": "Simulation (MeerKAT PSFs; 40 dB training/eval SNR)",
+            "frequency": null,
+            "array": "MeerKAT (simulated PSFs)"
+          },
+          "evidence": "Appendix A.2 defines NMSE [−dB] = −20·log₁₀(‖x⋆−x̂‖₂/‖x⋆‖₂). Median Table 2: CLEAN 4.2 dB, PnP (DnCNN) 16.3 dB, EVIL-Deconv 19.9 dB (with SSIM 0.970 at 51 ms)."
+        },
+        {
+          "category": "comparative_nmse",
+          "submetric": "higher_lower_than_baseline",
+          "value": 19.9,
+          "unit": "NMSE [−dB] vs CLEAN 4.2 / PnP 16.3",
+          "scope": "EVIL-Deconv reconstruction fidelity vs CLEAN and PnP",
+          "baseline": "CLEAN; PnP (DnCNN)",
+          "empirical": true,
+          "execution_context": {
+            "domain": "Image",
+            "formula_scale": "NMSE [−dB]",
+            "reference": "HST ground-truth patches",
+            "simulation_vs_real": "Simulation (MeerKAT PSFs)",
+            "frequency": null,
+            "array": "MeerKAT (simulated PSFs)"
+          },
+          "evidence": "EVIL-Deconv median NMSE 19.9 dB beats PnP (16.3 dB) and CLEAN (4.2 dB) on the same simulated reconstruction benchmark used for the UQ study."
+        }
+      ],
+      "credint_details": [
+        {
+          "category": "bootstrap_conformal_intervals",
+          "submetric": "pixel_confidence_intervals",
+          "value": 0.9,
+          "unit": "target confidence level (1−δ)",
+          "scope": "CARB conformalized augmented equivariant bootstrap pixel intervals (EVIL-Deconv)",
+          "baseline": "Quantile regression / parametric & equivariant bootstrap / uncalibrated CARB",
+          "empirical": true,
+          "execution_context": {
+            "credible_level": "90% (α=δ=0.1)",
+            "spatial_aggregation": "Pixel-wise (64×64 patches)",
+            "estimation_method": "Augmented equivariant bootstrap + conformal calibration",
+            "simulation_vs_real": "Simulation (MeerKAT PSFs; HST-derived ground truth)",
+            "frequency": null,
+            "array": "MeerKAT (simulated PSFs)"
+          },
+          "evidence": "CARB produces pixel-wise predictive intervals via RI-specific equivariant bootstrap group actions plus conformal calibration on EVIL-Deconv reconstructions."
+        },
+        {
+          "category": "bootstrap_conformal_intervals",
+          "submetric": "interval_length_coverage",
+          "value": "0.34 length ratio; 91% coverage",
+          "unit": "mean ℓ2 interval-length / ‖x⋆‖₂; empirical coverage",
+          "scope": "Table 1 CARB vs QR / bootstrap baselines (target ≥90% coverage)",
+          "baseline": "QR 0.15/14%; CQR 204/92%; param boot 0.07/0%; equiv boot 0.13/7%; uncal. CARB 0.29/87%",
+          "empirical": true,
+          "execution_context": {
+            "credible_level": "90% target coverage",
+            "spatial_aggregation": "Pixel / image ℓ2 aggregate",
+            "estimation_method": "Conformalized Augmented Radio Bootstrap (CARB)",
+            "simulation_vs_real": "Simulation",
+            "frequency": null,
+            "array": "MeerKAT (simulated)"
+          },
+          "evidence": "UQ interval tightness (mean ℓ2 length ratio) and empirical coverage: CARB 0.34 / 91% — best trade-off of tight intervals with valid coverage among reported methods."
         }
       ]
     },
@@ -5221,6 +6643,81 @@
           },
           "evidence": "Profiling covers degridding/gridding/deconvolution/I/O/idle wall-clock and resolution-scaling time factors. No CPU-hours, energy, FLOPs, or memory scores. Left Unspecified for Compute; Runtime Scaling covers image-size timing."
         }
+      ],
+      "snr_details": [
+        {
+          "category": "reconstruction_snr",
+          "submetric": "l2_reconstruction_snr",
+          "value": null,
+          "unit": "dB",
+          "scope": "Simulated Sgr B2 / Sgr C; S/N tracked per major cycle (Fig. 5)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀(‖i‖₂ / ‖i − î‖₂)",
+            "simulation_vs_real": "Simulation (Sgr B2, Sgr C); real data use Wasserstein instead",
+            "input_snr_setting": null,
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "S/N defined as 20·log₁₀ L₂ fidelity for simulated datasets with known truth; parallel and serial methods converge to comparable S/N across major cycles."
+        }
+      ],
+      "wasserstein_details": [
+        {
+          "category": "windowed_distance",
+          "submetric": "w5_windowed_w1",
+          "value": null,
+          "unit": "W₅ (dimensionless aggregate)",
+          "scope": "HL Tau (ALMA) and Cygnus A (VLA) reconstructions without ground truth",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "window_size": "5×5 sliding window",
+            "distance_order": "Wasserstein-1 (W₁)",
+            "aggregation": "L2 norm of per-pixel W₁ over the image (W₅)",
+            "simulation_vs_real": "Real (HL Tau, Cygnus A); sims use SNR instead",
+            "frequency": "ALMA Band 6 (HL Tau); VLA (Cygnus A)",
+            "array": "ALMA; VLA"
+          },
+          "evidence": "Defines W₅ as the L2 norm of per-pixel Wasserstein-1 distances in 5×5 sliding windows between reconstructions — fidelity proxy where no ground truth exists."
+        },
+        {
+          "category": "cross_iteration",
+          "submetric": "successive_reconstruction",
+          "value": null,
+          "unit": null,
+          "scope": "W₅ vs major-cycle / iteration progress on real datasets",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "window_size": "5×5",
+            "distance_order": "W₁",
+            "aggregation": "W₅ (L2 of local W₁)",
+            "simulation_vs_real": "Real (HL Tau, Cygnus A)",
+            "frequency": null,
+            "array": "ALMA; VLA"
+          },
+          "evidence": "W₅ decreases with iteration count and is used to argue convergence of the decentralized reconstruction on HL Tau and Cygnus A."
+        },
+        {
+          "category": "cross_method",
+          "submetric": "parallel_vs_serial",
+          "value": null,
+          "unit": null,
+          "scope": "Parallel (p-msc, p-L1) vs serial (msc, L1) output images",
+          "baseline": "Serial ms-CLEAN / L1 reconstructions",
+          "empirical": true,
+          "execution_context": {
+            "window_size": "5×5",
+            "distance_order": "W₁",
+            "aggregation": "W₅",
+            "simulation_vs_real": "Real (HL Tau, Cygnus A)",
+            "frequency": null,
+            "array": "ALMA; VLA"
+          },
+          "evidence": "W₅ between parallel and serial reconstructions used to argue similarity of decentralized vs serial output images on the same real data."
+        }
       ]
     },
     {
@@ -5336,6 +6833,46 @@
             "workload": null
           },
           "evidence": "Distributed training via Horovod scales efficiently over native TensorFlow up to 128 GPUs — hardware scaling of training compute."
+        }
+      ],
+      "mae_details": [
+        {
+          "category": "parameter_regression",
+          "submetric": "physical_parameter_mae",
+          "value": null,
+          "unit": null,
+          "scope": "ZINGULARITY BANN regression: spin, R_high, inclination, position angle (Fig. 4 train/validation MAE curves)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "target_parameters": "spin, R_high, inclination, position angle",
+            "train_vs_validation": "Training vs validation curves across epochs (Fig. 4)",
+            "domain": "Visibility-domain input → physical-parameter outputs (not image MAE)",
+            "simulation_vs_real": "Synthetic EHT training (SYMBA); validation on held-out synthetic",
+            "frequency": "EHT (mm / 230 GHz class)",
+            "array": "EHT (M87* / Sgr A* synthetic campaigns)"
+          },
+          "evidence": "Mean absolute error tracks Bayesian neural-network regression performance for spin, R_high, inclination, and position angle on training vs validation data across epochs; reported qualitatively via validation curves (Fig. 4) rather than single summary scalars in the extracted text. Downstream inference accuracy on source parameters — not MAE between reconstructed and true sky brightness maps."
+        }
+      ],
+      "class_details": [
+        {
+          "category": "label_accuracy",
+          "submetric": "classification_accuracy",
+          "value": null,
+          "unit": "fraction correct (qualitative: near-perfect)",
+          "scope": "MAD/SANE magnetic-state classification on M87* fiducial model (ZINGULARITY)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "task": "Discrete magnetic-state classification (MAD vs SANE)",
+            "finder_method": "ZINGULARITY Bayesian DL inference",
+            "operating_point": null,
+            "matching_criterion": null,
+            "simulation_vs_real": "Simulation / EHT inference (M87* fiducial)",
+            "dataset_or_survey": "EHT M87*"
+          },
+          "evidence": "Classification accuracy (correct predictions / total) for discrete MAD/SANE magnetic-state labels; reported as near-perfect for the M87* fiducial model."
         }
       ]
     },
@@ -5677,6 +7214,133 @@
           },
           "evidence": "Explicit fewer-iterations claim vs LPG (with matched fidelity/runtime tables)."
         }
+      ],
+      "snr_details": [
+        {
+          "category": "reconstruction_snr",
+          "submetric": "l2_reconstruction_snr",
+          "value": 34.63,
+          "unit": "dB",
+          "scope": "Messier 106 SKA sim at input S/N=35 dB (ISCAD)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀(‖x‖₂ / ‖x − x̃‖₂)",
+            "simulation_vs_real": "Simulation",
+            "input_snr_setting": "35 dB (tables); robustness sweep 15–55 dB",
+            "frequency": null,
+            "array": "SKA (Messier 106 test)"
+          },
+          "evidence": "At input S/N=35 dB on Messier 106: ISCAD 34.63 dB vs LPG 34.40, AIRI 33.12, SARA 31.95. ISCAD highest S/N on all three test cases."
+        },
+        {
+          "category": "input_operating_snr",
+          "submetric": "input_visibility_snr",
+          "value": "15–55",
+          "unit": "dB (sweep); 35 dB tabulated",
+          "scope": "Noise-robustness Monte Carlo (100 realisations per point)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formula": "Input S/N swept; reconstruction S/N measured",
+            "simulation_vs_real": "Simulation",
+            "input_snr_setting": "15–55 dB sweep; 35 dB for table",
+            "frequency": null,
+            "array": "SKA / RI simulations"
+          },
+          "evidence": "S/N and S/N_log vs input S/N (15–55 dB), 100 Monte Carlo realisations per point."
+        },
+        {
+          "category": "comparative_snr",
+          "submetric": "higher_lower_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "ISCAD vs SARA, AIRI, LPG across tests and noise sweep",
+          "baseline": "SARA, AIRI, LPG",
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀ L₂ reconstruction SNR",
+            "simulation_vs_real": "Simulation",
+            "input_snr_setting": "15–55 dB",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "ISCAD attains the highest S/N on all three cases and across the 15–55 dB noise-robustness sweep."
+        }
+      ],
+      "logsnr_details": [
+        {
+          "category": "absolute_logsnr",
+          "submetric": "tabulated_mean_db",
+          "value": 21.97,
+          "unit": "dB",
+          "scope": "Messier 106 SKA 512×512; input S/N=35 dB; ISCAD",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": "S/N_log via log₁₀(x/ε + I_N) stretch",
+            "transform_parameter": "ε noise floor",
+            "paired_with_linear_snr": "Yes (S/N and S/N_log)",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "SKA-like (Messier 106 test)",
+            "frequency": null
+          },
+          "evidence": "At input S/N=35 dB: SARA 20.14; AIRI 21.23; LPG 21.75; ISCAD 21.97 dB S/N_log (highest of the four; also best on other test cases)."
+        },
+        {
+          "category": "absolute_logsnr",
+          "submetric": "parameter_sweep_logsnr",
+          "value": null,
+          "unit": null,
+          "scope": "S/N_log vs input S/N 15–55 dB (100 MC realisations)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": "log₁₀ stretch with ε",
+            "transform_parameter": null,
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "SKA-like / RI simulations",
+            "frequency": null
+          },
+          "evidence": "Noise-robustness curves: ISCAD stays highest in S/N and S/N_log across the sweep."
+        },
+        {
+          "category": "comparative_logsnr",
+          "submetric": "higher_lower_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "ISCAD vs SARA, AIRI, LPG",
+          "baseline": "SARA / AIRI / LPG",
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": null,
+            "transform_parameter": null,
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "RI simulations",
+            "frequency": null
+          },
+          "evidence": "ISCAD attains the highest S/N_log on all three reported test cases."
+        },
+        {
+          "category": "transform_family",
+          "submetric": "log10_stretch_epsilon",
+          "value": null,
+          "unit": null,
+          "scope": null,
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "transform_definition": "S/N_log = 20·log₁₀(‖log₁₀(x/ε+I_N)‖₂ / ‖…error…‖₂)",
+            "transform_parameter": "ε",
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "RI simulations",
+            "frequency": null
+          },
+          "evidence": "Explicit log₁₀ stretch with noise floor ε for dynamic-range / faint-structure fidelity."
+        }
       ]
     },
     {
@@ -5986,6 +7650,226 @@
           },
           "evidence": "Standalone U-Net/U-WDSR use 1 iteration only (and underperform); R2D2 uses a multi-iteration series."
         }
+      ],
+      "snr_details": [
+        {
+          "category": "reconstruction_snr",
+          "submetric": "l2_reconstruction_snr",
+          "value": 31.2,
+          "unit": "dB (mean ± 2.4)",
+          "scope": "Table 4 setup E2; R2D2_A2,T2 best model",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀(‖x⋆‖₂ / ‖x⋆ − x̂‖₂)",
+            "simulation_vs_real": "Simulation (fully randomized E2 test)",
+            "input_snr_setting": null,
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "E2 benchmark: R2D2_A2,T2 31.2±2.4 dB; AIRI 28.3±3.1; uSARA 28.1±3.4; CLEAN 12.0±19.3 dB (diverged on 3 problems)."
+        },
+        {
+          "category": "comparative_snr",
+          "submetric": "db_gain_vs_baseline",
+          "value": "2–4",
+          "unit": "dB",
+          "scope": "R2D2 models vs uSARA / AIRI on E2",
+          "baseline": "uSARA / AIRI",
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀ L₂ reconstruction SNR",
+            "simulation_vs_real": "Simulation",
+            "input_snr_setting": null,
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "R2D2 models outperform uSARA/AIRI by roughly 2–4 dB in SNR on the harder E2 setup."
+        }
+      ],
+      "logsnr_details": [
+        {
+          "category": "absolute_logsnr",
+          "submetric": "tabulated_mean_db",
+          "value": 24.6,
+          "unit": "dB (mean ± std)",
+          "scope": "Table 4 setup E2; R2D2_A2,T2 best model",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": "r_log(x)=x_max·log_a(a/x_max·x+1)",
+            "transform_parameter": "a = target dynamic range",
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation (fully-randomized E2)",
+            "array_or_domain": "Radio RI (robust R2D2)",
+            "frequency": null
+          },
+          "evidence": "E2: CLEAN 9.4±18.9; uSARA 20.4±3.4; AIRI 21.1±3.8; U-Net/U-WDSR ~6.6–6.8; R2D2_A2,T2 24.6±4.2 dB logSNR."
+        },
+        {
+          "category": "absolute_logsnr",
+          "submetric": "parameter_sweep_logsnr",
+          "value": null,
+          "unit": null,
+          "scope": "Briggs weighting ρ_br sweep; logSNR peaks at natural weighting",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": "R2D2 r_log",
+            "transform_parameter": "a = target DR",
+            "paired_with_linear_snr": "Yes (SNR peaks at ρ_br=0; logSNR at ρ_br=1)",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "Radio RI",
+            "frequency": null
+          },
+          "evidence": "R2D2_A2,T2 peaks in logSNR at ρ_br=1 (natural weighting) while linear SNR peaks at ρ_br=0."
+        },
+        {
+          "category": "comparative_logsnr",
+          "submetric": "logsnr_gain_db",
+          "value": 3,
+          "unit": "dB (approx. vs AIRI/uSARA)",
+          "scope": "Table 4 E2: R2D2_A2,T2 vs uSARA/AIRI",
+          "baseline": "uSARA / AIRI",
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": null,
+            "transform_parameter": null,
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "Radio RI",
+            "frequency": null
+          },
+          "evidence": "R2D2 models outperform uSARA/AIRI by roughly 2–4 dB in both SNR and logSNR."
+        },
+        {
+          "category": "comparative_logsnr",
+          "submetric": "higher_lower_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "Architecture ablation A1,T1 vs A2,T2; vs CLEAN/U-Net",
+          "baseline": "R2D2_A1,T1 / CLEAN / end-to-end U-Net",
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": null,
+            "transform_parameter": null,
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "Radio RI",
+            "frequency": null
+          },
+          "evidence": "Old stack collapses to logSNR 12.4±12.2 dB; new A2,T2 reaches 24.6±4.2 dB; CLEAN/U-Net far lower."
+        },
+        {
+          "category": "transform_family",
+          "submetric": "r2d2_reversible_rlog",
+          "value": null,
+          "unit": null,
+          "scope": null,
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "transform_definition": "Per-image r_log with target DR a",
+            "transform_parameter": "a = target dynamic range",
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "Radio RI",
+            "frequency": null
+          },
+          "evidence": "Standard R2D2 reversible log map before SNR for faint-structure sensitivity."
+        }
+      ],
+      "rdr_details": [
+        {
+          "category": "reported_rdr",
+          "submetric": "planar_l2_rdr",
+          "value": 0.00222,
+          "unit": "(R2D2_A2,T2; Table 4)",
+          "scope": "Simulated VLA monochromatic 512×512 — RDR(r̂, x_d)=‖r̂‖₂/‖x_d‖₂",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": "×10⁻³",
+            "simulation_vs_real": "Simulation (VLA)",
+            "frequency": "Monochromatic",
+            "array": "VLA"
+          },
+          "evidence": "Table 4: R2D2_A2,T2 2.22×10⁻³, AIRI 2.24×10⁻³, uSARA 2.15×10⁻³; CLEAN 3.29×10⁻³; older R2D2_A1,T2 4.07×10⁻³."
+        },
+        {
+          "category": "reported_rdr",
+          "submetric": "planar_l2_rdr",
+          "value": 0.00246,
+          "unit": "(R2D2_A2,T2 Cygnus A)",
+          "scope": "Real Cygnus A data — converged RDR (Section 5 / Fig. 6)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": "×10⁻³",
+            "simulation_vs_real": "Real (Cygnus A)",
+            "frequency": null,
+            "array": "VLA"
+          },
+          "evidence": "Real-data RDR: R2D2_A1,T1 2.85×10⁻³, R2D2_A1,T2 2.68×10⁻³, R2D2_A2,T2 2.46×10⁻³ (best / lowest)."
+        },
+        {
+          "category": "comparative_rdr",
+          "submetric": "lower_higher_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "R2D2_A2,T2 vs CLEAN / AIRI / uSARA / older architecture",
+          "baseline": "CLEAN, AIRI, uSARA, R2D2_A1",
+          "empirical": true,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": "×10⁻³",
+            "simulation_vs_real": "Simulation (and real Cygnus A)",
+            "frequency": null,
+            "array": "VLA"
+          },
+          "evidence": "R2D2_A2,T2 RDR comparable to AIRI/uSARA; CLEAN ~50% higher; old architecture ~2× worse."
+        },
+        {
+          "category": "framework_operational",
+          "submetric": "named_data_fidelity_metric",
+          "value": null,
+          "unit": null,
+          "scope": null,
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": "×10⁻³",
+            "simulation_vs_real": null,
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "RDR formalized as primary image-domain data-fidelity metric; also used in data-fidelity-based series convergence criterion."
+        },
+        {
+          "category": "framework_operational",
+          "submetric": "adaptive_stopping_criterion",
+          "value": null,
+          "unit": null,
+          "scope": null,
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": null,
+            "simulation_vs_real": "Simulation and real Cygnus A",
+            "frequency": null,
+            "array": "VLA"
+          },
+          "evidence": "Data-fidelity-based series convergence criterion; Cygnus A iteration counts to convergence 12–16 depending on architecture/training."
+        }
       ]
     },
     {
@@ -6062,6 +7946,42 @@
           },
           "evidence": "Substantially faster than SARA and only marginally slower than AIRI while improving SNR/fidelity."
         }
+      ],
+      "snr_details": [
+        {
+          "category": "reconstruction_snr",
+          "submetric": "l2_reconstruction_snr",
+          "value": 35.73,
+          "unit": "dB",
+          "scope": "Simulated SKA array (MCP proposed); also 10%/50% undersampling tables",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formula": "SNR in dB (reconstruction quality; formula not further specialized in notes)",
+            "simulation_vs_real": "Simulation (undersampling + SKA array)",
+            "input_snr_setting": null,
+            "frequency": null,
+            "array": "Simulated SKA"
+          },
+          "evidence": "MCP SNR: 24.16 dB (10% undersampling), 27.78 dB (50%), 35.73 dB (SKA array) — highest in every tested condition."
+        },
+        {
+          "category": "comparative_snr",
+          "submetric": "higher_lower_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "MCP vs SARA and AIRI at 10%/50% undersampling and SKA array",
+          "baseline": "SARA, AIRI",
+          "empirical": true,
+          "execution_context": {
+            "formula": "Reconstruction SNR (dB)",
+            "simulation_vs_real": "Simulation",
+            "input_snr_setting": null,
+            "frequency": null,
+            "array": "Simulated SKA"
+          },
+          "evidence": "MCP exceeds SARA and AIRI on SNR in every condition (e.g. SKA: MCP 35.73 vs AIRI 34.52 vs SARA 32.83 dB)."
+        }
       ]
     },
     {
@@ -6098,7 +8018,134 @@
           "VQA / free-text tasks: BLEU, ROUGE, and chrF for semantic similarity between generated and reference answers."
         ],
         "astrometric_accuracy": []
-      }
+      },
+      "class_details": [
+        {
+          "category": "label_accuracy",
+          "submetric": "classification_accuracy",
+          "value": null,
+          "unit": null,
+          "scope": "Multimodal LLM radio-image understanding / classification tasks",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "task": "Multimodal LLM radio-image classification / VQA-style labels",
+            "finder_method": "Multimodal large language models",
+            "operating_point": null,
+            "matching_criterion": null,
+            "simulation_vs_real": null,
+            "dataset_or_survey": "Radio astronomical image understanding benchmark"
+          },
+          "evidence": "Reports Accuracy among the classification-task metrics for multimodal LLM radio-image understanding."
+        },
+        {
+          "category": "catalog_rates",
+          "submetric": "precision_recall_f1",
+          "value": null,
+          "unit": null,
+          "scope": "Multimodal LLM classification tasks (Precision, Recall, F1)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "task": "Multimodal LLM radio-image classification",
+            "finder_method": "Multimodal large language models",
+            "operating_point": null,
+            "matching_criterion": null,
+            "simulation_vs_real": null,
+            "dataset_or_survey": "Radio astronomical image understanding benchmark"
+          },
+          "evidence": "Classification-task suite includes Precision, Recall, and F1-score alongside accuracy and detection rates."
+        },
+        {
+          "category": "operating_point",
+          "submetric": "tpr_at_fixed_fpr",
+          "value": null,
+          "unit": null,
+          "scope": "Multimodal LLM tasks reporting TPR and FPR",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "task": "Multimodal LLM radio-image classification / detection",
+            "finder_method": "Multimodal large language models",
+            "operating_point": "TPR and FPR reported (operating point not fully specified in notes)",
+            "matching_criterion": null,
+            "simulation_vs_real": null,
+            "dataset_or_survey": "Radio astronomical image understanding benchmark"
+          },
+          "evidence": "True Positive Rate (TPR) and False Positive Rate (FPR) listed among classification-task metrics."
+        },
+        {
+          "category": "catalog_rates",
+          "submetric": "missed_detection_counts",
+          "value": null,
+          "unit": "counts",
+          "scope": "Multimodal LLM missed-detection counts",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "task": "Multimodal LLM radio-image detection",
+            "finder_method": "Multimodal large language models",
+            "operating_point": null,
+            "matching_criterion": null,
+            "simulation_vs_real": null,
+            "dataset_or_survey": "Radio astronomical image understanding benchmark"
+          },
+          "evidence": "Missed-detection counts reported with the classification-task suite."
+        }
+      ],
+      "text_details": [
+        {
+          "category": "semantic_similarity",
+          "submetric": "bleu",
+          "value": null,
+          "unit": null,
+          "scope": "Open-ended VQA / free-text tasks on RadioAstroVQA",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "task": "VQA / free-text (RadioAstroVQA)",
+            "dataset": "RadioAstroVQA (FAST, HTRU Medlat, Spectrumcls, Radio Galaxy)",
+            "models": "DeepSeek-VL-7B, InternVL2-40B (LoRA fine-tuned); vs ML/DL and general MLLM baselines",
+            "reference_type": "Reference answers in VQA-format examples",
+            "domain": "Radio astronomical image understanding / question answering"
+          },
+          "evidence": "VQA / free-text tasks report BLEU as a semantic-similarity score between generated and reference answers. Classification metrics on discrete tasks are scored under Class, not Text."
+        },
+        {
+          "category": "semantic_similarity",
+          "submetric": "rouge",
+          "value": null,
+          "unit": null,
+          "scope": "Open-ended VQA / free-text tasks on RadioAstroVQA",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "task": "VQA / free-text (RadioAstroVQA)",
+            "dataset": "RadioAstroVQA (FAST, HTRU Medlat, Spectrumcls, Radio Galaxy)",
+            "models": "DeepSeek-VL-7B, InternVL2-40B (LoRA fine-tuned); vs ML/DL and general MLLM baselines",
+            "reference_type": "Reference answers in VQA-format examples",
+            "domain": "Radio astronomical image understanding / question answering"
+          },
+          "evidence": "VQA / free-text tasks report ROUGE as a recall-oriented n-gram / sequence overlap score between generated and reference answers."
+        },
+        {
+          "category": "semantic_similarity",
+          "submetric": "chrf",
+          "value": null,
+          "unit": null,
+          "scope": "Open-ended VQA / free-text tasks on RadioAstroVQA",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "task": "VQA / free-text (RadioAstroVQA)",
+            "dataset": "RadioAstroVQA (FAST, HTRU Medlat, Spectrumcls, Radio Galaxy)",
+            "models": "DeepSeek-VL-7B, InternVL2-40B (LoRA fine-tuned); vs ML/DL and general MLLM baselines",
+            "reference_type": "Reference answers in VQA-format examples",
+            "domain": "Radio astronomical image understanding / question answering"
+          },
+          "evidence": "VQA / free-text tasks report chrF (character n-gram F-score) as a semantic-similarity score between generated and reference answers."
+        }
+      ]
     },
     {
       "cohort": "r2d2",
@@ -6204,6 +8251,116 @@
             "array": null
           },
           "evidence": "Ground-truth images had DR slightly above 10⁴; simulated observations averaged 2.9×10³ (1 h) to 1.1×10⁴ (8 h). logSNR transform uses a = 2.5×10³ (lowest DR)."
+        }
+      ],
+      "snr_details": [
+        {
+          "category": "reconstruction_snr",
+          "submetric": "l2_reconstruction_snr",
+          "value": 28.65,
+          "unit": "dB",
+          "scope": "cAIRI-OAID at ΔT=8 h (example); sweeps over 1–8 h",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀(‖x̄‖ / ‖x̄ − x̂‖)",
+            "simulation_vs_real": "Simulation (RI observations, varying integration time)",
+            "input_snr_setting": null,
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "At ΔT=8 h: MS-CLEAN 5.45, SARA 27.74, cAIRI-OAID 28.65 dB SNR. AIRI-family methods tracked across 1–8 h observation times."
+        },
+        {
+          "category": "comparative_snr",
+          "submetric": "db_gain_vs_baseline",
+          "value": "1–2",
+          "unit": "dB over uSARA/SARA; >20 dB over CLEAN",
+          "scope": "AIRI / cAIRI vs uSARA / SARA / MS-CLEAN",
+          "baseline": "uSARA, SARA, MS-CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀ L₂ reconstruction SNR",
+            "simulation_vs_real": "Simulation",
+            "input_snr_setting": null,
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "AIRI/cAIRI improve by 1–2 dB over uSARA/SARA counterparts and dramatically outperform CLEAN (>20 dB) across observation times."
+        }
+      ],
+      "logsnr_details": [
+        {
+          "category": "absolute_logsnr",
+          "submetric": "tabulated_mean_db",
+          "value": 26.29,
+          "unit": "dB",
+          "scope": "ΔT=8h example: cAIRI-OAID (SNR, logSNR)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": "logSNR=SNR(rlog_a(·), rlog_a(·))",
+            "transform_parameter": "a = 2.5×10³ (lowest DR in test set)",
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "Radio RI (AIRI robustness)",
+            "frequency": null
+          },
+          "evidence": "At ΔT=8h: MS-CLEAN (5.45, 7.07); SARA (27.74, 25.16); cAIRI-OAID (28.65, 26.29) dB. AIRI/cAIRI improve 1–2 dB over uSARA/SARA across observation times."
+        },
+        {
+          "category": "absolute_logsnr",
+          "submetric": "parameter_sweep_logsnr",
+          "value": null,
+          "unit": null,
+          "scope": "Observation time ΔT ∈ {1h, 2h, 4h, 8h}; training-realisation spread",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": "rlog_a with fixed a",
+            "transform_parameter": "a = 2.5×10³",
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "Radio RI",
+            "frequency": null
+          },
+          "evidence": "SNR/logSNR vs ΔT; across K=15 denoisers logSNR varies ~4 dB vs ~1.5 dB for linear SNR."
+        },
+        {
+          "category": "comparative_logsnr",
+          "submetric": "higher_lower_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "AIRI/cAIRI vs MS-CLEAN, SARA/uSARA; MRID vs OAID training",
+          "baseline": "MS-CLEAN / SARA / uSARA",
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": null,
+            "transform_parameter": null,
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "Radio RI",
+            "frequency": null
+          },
+          "evidence": "AIRI-family dramatically outperforms CLEAN (>20 dB) and modestly beats SARA/uSARA; MRI-trained denoisers match OAID on SNR/logSNR."
+        },
+        {
+          "category": "transform_family",
+          "submetric": "r2d2_reversible_rlog",
+          "value": null,
+          "unit": null,
+          "scope": null,
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "transform_definition": "rlog_a(x)=x_max·log_a(a·x/x_max+1)",
+            "transform_parameter": "a = 2.5×10³ (lowest DR; cross-method consistency)",
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "Radio RI",
+            "frequency": null
+          },
+          "evidence": "Fixes a to lowest test-set DR so logSNR comparisons stay consistent across methods."
         }
       ]
     },
@@ -6362,6 +8519,208 @@
           },
           "evidence": "Table 1 aggregates 60 test problems with DR ∈ [10³, 5×10⁵]; per-image examples span ≈8.9×10⁴–2.3×10⁵. DR is the configured test axis for SNR/logSNR/RDR comparisons."
         }
+      ],
+      "snr_details": [
+        {
+          "category": "reconstruction_snr",
+          "submetric": "l2_reconstruction_snr",
+          "value": 21.7,
+          "unit": "dB (mean ± 4.3 at Np=400²)",
+          "scope": "S-R2D2 Table 1 means over 60 test problems on the sphere",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀(‖x*‖₂ / ‖x* − x̂‖₂) on the sphere",
+            "simulation_vs_real": "Simulation (spherical wide-field)",
+            "input_snr_setting": null,
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "S-R2D2 SNR 21.7±4.3 / 21.2±3.9 / 20.8±3.7 dB at Np=400²/600²/800²; planar R2D2 degrades from 6.6±1.5 to 1.9±1.5 dB over the same resolutions."
+        },
+        {
+          "category": "comparative_snr",
+          "submetric": "db_gain_vs_baseline",
+          "value": "14–19",
+          "unit": "dB",
+          "scope": "S-R2D2 vs planar R2D2 at matched resolutions",
+          "baseline": "Planar R2D2",
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀ L₂ reconstruction SNR (sphere)",
+            "simulation_vs_real": "Simulation",
+            "input_snr_setting": null,
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "S-R2D2 outperforms R2D2 by roughly 14–19 dB in SNR at matched resolutions."
+        }
+      ],
+      "logsnr_details": [
+        {
+          "category": "absolute_logsnr",
+          "submetric": "tabulated_mean_db",
+          "value": 18.7,
+          "unit": "dB (mean ± std)",
+          "scope": "Table 1; S-R2D2 at Np=600² (best logSNR)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": "rlog(x,a)=x_max·log_a(a·x/x_max+1)",
+            "transform_parameter": "a = target DR",
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation (spherical wide-field)",
+            "array_or_domain": "Spherical RI (S-R2D2)",
+            "frequency": null
+          },
+          "evidence": "S-R2D2 logSNR 17.5±3.2 (400²) → 18.7±2.9 (600² peak) → 15.9±3.5 (800²); planar R2D2 collapses 7.3→1.6 dB as Np grows."
+        },
+        {
+          "category": "absolute_logsnr",
+          "submetric": "parameter_sweep_logsnr",
+          "value": null,
+          "unit": null,
+          "scope": "logSNR vs spherical pixel count Np / super-resolution",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": "R2D2 rlog with a=DR",
+            "transform_parameter": null,
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "Spherical RI",
+            "frequency": null
+          },
+          "evidence": "Best S-R2D2 logSNR at Np=600² (SR=2.25); planar R2D2 degrades sharply with resolution."
+        },
+        {
+          "category": "absolute_logsnr",
+          "submetric": "per_iteration_curve",
+          "value": null,
+          "unit": null,
+          "scope": "Per-iteration metrics to I=10 (logSNR plateau beyond)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": null,
+            "transform_parameter": null,
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "Spherical RI",
+            "frequency": null
+          },
+          "evidence": "Fixed I=10 because logSNR stopped improving beyond that on validation data."
+        },
+        {
+          "category": "comparative_logsnr",
+          "submetric": "logsnr_gain_db",
+          "value": 14,
+          "unit": "dB (approx. range 10–17)",
+          "scope": "S-R2D2 vs planar R2D2 at matched Np",
+          "baseline": "Planar R2D2",
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": null,
+            "transform_parameter": null,
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "Spherical RI",
+            "frequency": null
+          },
+          "evidence": "S-R2D2 outperforms planar R2D2 by roughly 10–17 dB in logSNR at matched resolutions."
+        },
+        {
+          "category": "transform_family",
+          "submetric": "r2d2_reversible_rlog",
+          "value": null,
+          "unit": null,
+          "scope": null,
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "transform_definition": "rlog with a fixed to target DR",
+            "transform_parameter": "a = target DR",
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "Spherical RI",
+            "frequency": null
+          },
+          "evidence": "Same R2D2-family reversible log map; emphasises faint structure on the sphere."
+        }
+      ],
+      "rdr_details": [
+        {
+          "category": "reported_rdr",
+          "submetric": "spherical_rdr",
+          "value": 0.012,
+          "unit": "(S-R2D2 best mean at Np=600²)",
+          "scope": "S-R2D2 sphere RDR across Np=400²–800²",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "Sphere",
+            "norm": "ℓ₂ (sphere via Γ†)",
+            "reporting_scale": "×10⁻²",
+            "simulation_vs_real": "Simulation (wide-field)",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "RDR(r,x^d)=‖r‖₂/‖x^d‖₂ on the sphere. S-R2D2: 1.5×10⁻² → 1.2×10⁻² (best) → 2.1×10⁻² as Np increases 400²→800²."
+        },
+        {
+          "category": "reported_rdr",
+          "submetric": "planar_l2_rdr",
+          "value": 0.14,
+          "unit": "(planar R2D2 at Np=800²)",
+          "scope": "Planar R2D2 RDR degradation with resolution",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": "×10⁻²",
+            "simulation_vs_real": "Simulation (wide-field)",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Planar R2D2 RDR worsens from 0.8×10⁻² (Np=400²) to 14×10⁻² (Np=800²) while S-R2D2 stays ≈1–2×10⁻²."
+        },
+        {
+          "category": "comparative_rdr",
+          "submetric": "lower_higher_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "S-R2D2 vs planar R2D2 across Np / sources",
+          "baseline": "Planar R2D2",
+          "empirical": true,
+          "execution_context": {
+            "domain": "Sphere vs planar",
+            "norm": "ℓ₂",
+            "reporting_scale": "×10⁻²",
+            "simulation_vs_real": "Simulation",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "S-R2D2 maintains low RDR as Np/SR increases; planar R2D2 data fidelity degrades sharply (super-resolving limitation)."
+        },
+        {
+          "category": "framework_operational",
+          "submetric": "named_data_fidelity_metric",
+          "value": null,
+          "unit": null,
+          "scope": null,
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "domain": "Sphere",
+            "norm": "ℓ₂ (sphere via Γ†)",
+            "reporting_scale": null,
+            "simulation_vs_real": null,
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "RDR defined as core data-fidelity metric for spherical R2D2 evaluation alongside SNR / logSNR."
+        }
       ]
     },
     {
@@ -6399,7 +8758,46 @@
           "Baseline CNN lens-finder benchmark (cited, not original): Rezaei et al. (2022) recover >90% of galaxy-scale lenses with a 0.008% false-positive rate on simulated ILT data, requiring 20σ detection and θE ≥ 3/2 beam size."
         ],
         "astrometric_accuracy": []
-      }
+      },
+      "snr_details": [
+        {
+          "category": "input_operating_snr",
+          "submetric": "discoverability_threshold_snr",
+          "value": 20,
+          "unit": "SNR_tot (combined lensed images)",
+          "scope": "Conservative/optimistic lens discoverability criteria for DSA-2000 / SKA-Mid / VLASS forecasts",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "formula": "Total SNR of combined lensed images (literature threshold)",
+            "simulation_vs_real": "Forecast / simulation pipeline (not measured reconstruction SNR)",
+            "input_snr_setting": "SNR_tot ≥ 20",
+            "frequency": "0.7–2 GHz band context (DSA-2000)",
+            "array": "DSA-2000, SKA-Mid AA*/AA4, VLASS"
+          },
+          "evidence": "Adopted discoverability limits require SNR_tot ≥ 20 (Collett 2015; Rezaei et al. 2022). POLISH demo is qualitative only — no reconstruction SNR tabulated for the network itself."
+        }
+      ],
+      "class_details": [
+        {
+          "category": "cited_benchmark",
+          "submetric": "cited_external_tpr_fpr",
+          "value": 90,
+          "unit": "% recovery (cited; at 0.008% FPR)",
+          "scope": "Cited Rezaei et al. (2022) CNN lens finder on simulated ILT data",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "task": "Strong-lens finding (cited benchmark)",
+            "finder_method": "CNN lens finder (Rezaei et al. 2022)",
+            "operating_point": "0.008% FPR; 20σ detection; θE ≥ 3/2 beam size",
+            "matching_criterion": "Galaxy-scale lens recovery on simulated ILT",
+            "simulation_vs_real": "Simulation (ILT; cited)",
+            "dataset_or_survey": "ILT simulations (Rezaei et al. 2022)"
+          },
+          "evidence": "Cites Rezaei et al. (2022): >90% of galaxy-scale lenses recovered with a 0.008% false-positive rate on simulated ILT data (20σ; θE ≥ 3/2 beam). Not an original measurement in this paper."
+        }
+      ]
     },
     {
       "cohort": "r2d2",
@@ -6526,6 +8924,134 @@
             "array": "VLA"
           },
           "evidence": "MROP residual-map std 6.87×10⁻⁴ vs classical 6.49×10⁻⁴ — numerical comparison confirming fidelity preserved under compression."
+        }
+      ],
+      "snr_details": [
+        {
+          "category": "reconstruction_snr",
+          "submetric": "l2_reconstruction_snr",
+          "value": 30.73,
+          "unit": "dB",
+          "scope": "Classical-model reference, VLA low-DR; MROP matches at D/N≈1",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀(‖u‖₂ / ‖u − ũ‖₂)",
+            "simulation_vs_real": "Simulation (VLA/MeerKAT); real VLA 3C 273 residual check without SNR",
+            "input_snr_setting": null,
+            "frequency": "X band (real 3C 273)",
+            "array": "VLA / MeerKAT"
+          },
+          "evidence": "Reference classical SNR: VLA low/high DR 30.73/28.50 dB; MeerKAT 30.13/27.95 dB. MROP matches classical-model SNR once D/N≈1."
+        },
+        {
+          "category": "comparative_snr",
+          "submetric": "higher_lower_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "MROP / BDA / CROP vs classical measurement model at matched data size",
+          "baseline": "Classical visibility model (uSARA reconstructions)",
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀ L₂ reconstruction SNR",
+            "simulation_vs_real": "Simulation",
+            "input_snr_setting": null,
+            "frequency": null,
+            "array": "VLA / MeerKAT"
+          },
+          "evidence": "Classical, BDA, CROP, and MROP converge to very similar SNR at D/N≈1; dropping D/N to ~0.38 costs 0.1–1.1 dB SNR depending on source/array."
+        }
+      ],
+      "logsnr_details": [
+        {
+          "category": "absolute_logsnr",
+          "submetric": "tabulated_mean_db",
+          "value": 20.9,
+          "unit": "dB",
+          "scope": "Classical-model reference: VLA low-DR (SNR, logSNR)=(30.73, 20.90)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": "rlog mapping using image dynamic range d",
+            "transform_parameter": "d = image DR (10³–10⁵)",
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "VLA / MeerKAT",
+            "frequency": null
+          },
+          "evidence": "Reference pairs: VLA low/high DR (20.90 / 20.15); MeerKAT low/high (22.08 / 19.84) dB logSNR. MROP matches classical/BDA/CROP quality once D/N≈1."
+        },
+        {
+          "category": "absolute_logsnr",
+          "submetric": "parameter_sweep_logsnr",
+          "value": null,
+          "unit": null,
+          "scope": "logSNR vs data size D/N below ≈1",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": "rlog with DR d",
+            "transform_parameter": null,
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "VLA / MeerKAT",
+            "frequency": null
+          },
+          "evidence": "Abell 2034 (VLA): D/N drop costs 0.1 dB SNR / 0.7 dB logSNR; 3c353 (MeerKAT): 1.1 / 2.2 dB — logSNR degrades faster than linear SNR."
+        },
+        {
+          "category": "comparative_logsnr",
+          "submetric": "higher_lower_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "MROP vs classical / BDA / CROP / plain subsampling",
+          "baseline": "Classical full model / plain subsampling",
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": null,
+            "transform_parameter": null,
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "VLA / MeerKAT",
+            "frequency": null
+          },
+          "evidence": "MROP converges to similar SNR/logSNR as classical once D/N≈1; plain subsampling is markedly worse at equal data size."
+        },
+        {
+          "category": "comparative_logsnr",
+          "submetric": "logsnr_gain_db",
+          "value": -0.7,
+          "unit": "dB (loss vs D/N≈1)",
+          "scope": "Abell 2034 VLA; D/N from ~1 to 3.8×10⁻¹",
+          "baseline": "D/N ≈ 1 classical-quality operating point",
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": null,
+            "transform_parameter": null,
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "VLA",
+            "frequency": null
+          },
+          "evidence": "Same D/N drop costs 0.7 dB logSNR vs only 0.1 dB linear SNR."
+        },
+        {
+          "category": "transform_family",
+          "submetric": "r2d2_reversible_rlog",
+          "value": null,
+          "unit": null,
+          "scope": null,
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "transform_definition": "rlog using image dynamic range d",
+            "transform_parameter": "d = image DR",
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "VLA / MeerKAT",
+            "frequency": null
+          },
+          "evidence": "LogSNR via DR-parameterised logarithmic remapping for high-DR compressive RI tests."
         }
       ]
     },
@@ -6669,6 +9195,98 @@
           },
           "evidence": "Qualitative DR robustness: GU-Net succeeds on the ~600 DR image despite lower-DR training; U-Net struggled."
         }
+      ],
+      "snr_details": [
+        {
+          "category": "reconstruction_snr",
+          "submetric": "l2_reconstruction_snr",
+          "value": null,
+          "unit": "dB",
+          "scope": "U-Net / GU-Net box-plot SNR on IllustrisTNG test set and OOD 30 Doradus",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀(‖x_true‖ / ‖x_pred − x_true‖)",
+            "simulation_vs_real": "Simulation (Gaussian uv + real MeerKAT coverage; OOD 30 Doradus)",
+            "input_snr_setting": "ISNR = 30 dB",
+            "frequency": null,
+            "array": "Gaussian random + MeerKAT coverage"
+          },
+          "evidence": "Primary metric is L₂ SNR (box-plots Figs. 5, 8, 9). Comparisons are among U-Net/GU-Net coverage-training strategies; no numeric CLEAN SNR table in the extracted notes."
+        },
+        {
+          "category": "input_operating_snr",
+          "submetric": "input_visibility_snr",
+          "value": 30,
+          "unit": "dB (ISNR)",
+          "scope": "Training/test observations: 32,768 measurements, ISNR 30 dB",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formula": "Input SNR (ISNR)",
+            "simulation_vs_real": "Simulation",
+            "input_snr_setting": "30 dB",
+            "frequency": null,
+            "array": "Gaussian / MeerKAT"
+          },
+          "evidence": "Training data use input SNR (ISNR) of 30 dB."
+        }
+      ],
+      "logsnr_details": [
+        {
+          "category": "absolute_logsnr",
+          "submetric": "tabulated_mean_db",
+          "value": null,
+          "unit": null,
+          "scope": "Box-plots of SNR/logSNR (Figs. 5, 8, 9); U-Net vs GU-Net coverage strategies",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": "SNR(log₁₀(x_true), log₁₀(x_pred))",
+            "transform_parameter": "None (plain log₁₀)",
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation (+ high-DR 30 Doradus qualitative)",
+            "array_or_domain": "Radio RI (varying uv-coverage)",
+            "frequency": null
+          },
+          "evidence": "logSNR used in box-plots rather than in-text scalar tables; primary faint-region fidelity metric alongside linear SNR."
+        },
+        {
+          "category": "comparative_logsnr",
+          "submetric": "higher_lower_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "GU-Net vs U-Net under coverage-training strategies",
+          "baseline": "Decoupled U-Net post-processing",
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": "Plain log₁₀ SNR",
+            "transform_parameter": null,
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "Radio RI",
+            "frequency": null
+          },
+          "evidence": "Comparisons are between U-Net and GU-Net variants (no numeric CLEAN logSNR in text); measurement-operator-aware GU-Net generalises better across uv-coverage."
+        },
+        {
+          "category": "transform_family",
+          "submetric": "plain_log10",
+          "value": null,
+          "unit": null,
+          "scope": null,
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "transform_definition": "logSNR = SNR(log₁₀(x_true), log₁₀(x_pred))",
+            "transform_parameter": "None",
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "Radio RI",
+            "frequency": null
+          },
+          "evidence": "Simpler plain log₁₀ on truth and prediction — no DR-parameterised reversible map."
+        }
       ]
     },
     {
@@ -6786,6 +9404,26 @@
             "array": null
           },
           "evidence": "Reports 'competitive resolution and dynamic range performance' vs CLEAN and MPoL without a measured DR formula, configured target, or numeric improvement. Left Unspecified."
+        }
+      ],
+      "credint_details": [
+        {
+          "category": "posterior_sample_intervals",
+          "submetric": "pixel_percentile_ranges",
+          "value": "16th–84th",
+          "unit": "posterior percentile band",
+          "scope": "IRIS score-based posterior samples on ALMA/DSHARP disks (pixel UQ)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "credible_level": "16th–84th percentile (~68% central interval)",
+            "spatial_aggregation": "Pixel-wise",
+            "estimation_method": "Score-based posterior sampling (PC / Euler SDE); TARP-calibrated VP+PC",
+            "simulation_vs_real": "Simulation + real ALMA DSHARP (e.g. RU Lup, WaOph 6)",
+            "frequency": "ALMA (DSHARP)",
+            "array": "ALMA"
+          },
+          "evidence": "Posterior samples yield pixel-wise 16th–84th percentile ranges and per-pixel statistical moments. TARP used as primary calibration/coverage check (VP SDE + PC achieved calibrated posteriors); not a named HPD/LCI pipeline."
         }
       ]
     },
@@ -6995,6 +9633,174 @@
           },
           "evidence": "RDR tracked over series iterations to diagnose and drive the adaptive stopping condition."
         }
+      ],
+      "psnr_details": [
+        {
+          "category": "absolute_psnr",
+          "submetric": "ten_log10_psnr",
+          "value": 40.21,
+          "unit": "dB (mean ± std)",
+          "scope": "iR2D2(U-WDSR) non-Cartesian MRI magnitude reconstructions",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formulation": "10·log₁₀(NM² / ‖|x⋆|−|x̂|‖₂²)",
+            "max_definition": "M = max pixel value; N = image size",
+            "image_domain": "Magnitude images |x⋆| vs |x̂|",
+            "simulation_vs_real": "Simulation / MRI benchmark (non-Cartesian)",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "iR2D2(U-WDSR) achieves 40.21±6.67 dB; other reported means include R2D2 35.08±4.67, R2D2-Net 36.46±5.23, U-WDSR 34.38±4.19, NC-PDNet 34.11±5.01, DDS 33.73±6.80, iR2D2(U-Net) 38.01±6.57 dB."
+        },
+        {
+          "category": "comparative_psnr",
+          "submetric": "psnr_gain_db",
+          "value": 5.13,
+          "unit": "dB",
+          "scope": "iR2D2(U-WDSR) vs R2D2(U-WDSR) from interlaced self-calibration",
+          "baseline": "R2D2(U-WDSR)",
+          "empirical": true,
+          "execution_context": {
+            "formulation": "10·log₁₀(NM² / ‖|x⋆|−|x̂|‖₂²)",
+            "max_definition": "M = max pixel; N = image size",
+            "image_domain": "Magnitude images",
+            "simulation_vs_real": "Simulation / MRI benchmark",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "+5.13 dB mean gain over R2D2(U-WDSR); advantage largest (~6 dB) in the high dynamic-range regime. Also ~6 dB over NC-PDNet and ~6.5 dB over DDS."
+        },
+        {
+          "category": "comparative_psnr",
+          "submetric": "higher_lower_than_baseline",
+          "value": 40.21,
+          "unit": "dB vs R2D2 / NC-PDNet / DDS",
+          "scope": "Non-Cartesian MRI benchmark table",
+          "baseline": "R2D2(U-WDSR), NC-PDNet, DDS, U-WDSR",
+          "empirical": true,
+          "execution_context": {
+            "formulation": "10·log₁₀ magnitude PSNR",
+            "max_definition": null,
+            "image_domain": "Magnitude images",
+            "simulation_vs_real": "Simulation / MRI benchmark",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "iR2D2(U-WDSR) reports the highest mean PSNR among listed baselines (R2D2, R2D2-Net, U-WDSR, NC-PDNet, DDS)."
+        }
+      ],
+      "ssim_details": [
+        {
+          "category": "absolute_ssim",
+          "submetric": "magnitude_image_ssim",
+          "value": 0.96,
+          "unit": "mean ± 0.05 (dimensionless)",
+          "scope": "iR2D2(U-WDSR) magnitude reconstructions vs FastMRI / non-Cartesian MRI truth",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "aggregation": "Mean ± std",
+            "image_domain": "Magnitude images (|x⋆| vs |x̂|)",
+            "normalization": null,
+            "simulation_vs_real": "Simulated multi-coil radial FastMRI knee; real 15-coil 3T validation uses RDR/qualitative (no SSIM table)",
+            "frequency": "MRI (3T bSSFP / FastMRI knee)",
+            "array": "Multi-coil non-Cartesian MRI (iR2D2 transfer of R2D2 paradigm)"
+          },
+          "evidence": "SSIM on magnitude: iR2D2(U-WDSR) 0.96±0.05 vs R2D2 0.93±0.06, NC-PDNet 0.90±0.08, DDS 0.85±0.13."
+        },
+        {
+          "category": "comparative_ssim",
+          "submetric": "higher_lower_than_baseline",
+          "value": 0.96,
+          "unit": "mean SSIM",
+          "scope": "iR2D2(U-WDSR) vs R2D2 / NC-PDNet / DDS on magnitude images",
+          "baseline": "R2D2(U-WDSR) 0.93±0.06; NC-PDNet 0.90±0.08; DDS 0.85±0.13",
+          "empirical": true,
+          "execution_context": {
+            "aggregation": "Mean ± std",
+            "image_domain": "Magnitude images (|x⋆| vs |x̂|)",
+            "normalization": null,
+            "simulation_vs_real": "Simulated FastMRI knee benchmark",
+            "frequency": "MRI (FastMRI knee)",
+            "array": "Multi-coil non-Cartesian MRI"
+          },
+          "evidence": "iR2D2(U-WDSR) SSIM 0.96±0.05 ranks above R2D2, NC-PDNet, and DDS, consistent with PSNR rankings on the same non-Cartesian benchmark."
+        }
+      ],
+      "rdr_details": [
+        {
+          "category": "reported_rdr",
+          "submetric": "backprojected_mri_rdr",
+          "value": null,
+          "unit": null,
+          "scope": "iR2D2 RDR=‖r‖₂/‖x_b‖₂ tracked over series on simulated FastMRI + real 3T knee",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "MRI (non-Cartesian multi-coil)",
+            "norm": "ℓ₂ (back-projected residual / dirty-like image)",
+            "reporting_scale": "Ratio (unitless)",
+            "simulation_vs_real": "Simulation (FastMRI) and real 15-coil 3T knee",
+            "frequency": "MRI (bSSFP knee)",
+            "array": "15-coil 3T"
+          },
+          "evidence": "RDR used as data-fidelity/convergence metric on simulated and real knee data; real-data iR2D2 achieves best (lowest) RDR among benchmarks."
+        },
+        {
+          "category": "comparative_rdr",
+          "submetric": "rdr_factor_vs_baseline",
+          "value": 10,
+          "unit": "× (approx. order-of-magnitude lower)",
+          "scope": "Real 15-coil 3T knee (AF=4 and AF=8) vs benchmark methods",
+          "baseline": "Benchmark MRI reconstruction methods",
+          "empirical": true,
+          "execution_context": {
+            "domain": "MRI (non-Cartesian multi-coil)",
+            "norm": "ℓ₂",
+            "reporting_scale": null,
+            "simulation_vs_real": "Real 15-coil 3T knee",
+            "frequency": null,
+            "array": "15-coil 3T"
+          },
+          "evidence": "iR2D2 RDR roughly an order of magnitude lower than benchmarks; residual maps appear unstructured noise vs anatomy-correlated residuals for baselines."
+        },
+        {
+          "category": "framework_operational",
+          "submetric": "named_data_fidelity_metric",
+          "value": null,
+          "unit": null,
+          "scope": null,
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "domain": "MRI",
+            "norm": "ℓ₂",
+            "reporting_scale": null,
+            "simulation_vs_real": null,
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "RDR (Residual Data Ratio) and RDR-bar (sensitivity residual) named as primary residual/convergence metrics."
+        },
+        {
+          "category": "framework_operational",
+          "submetric": "adaptive_stopping_criterion",
+          "value": null,
+          "unit": null,
+          "scope": null,
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "MRI",
+            "norm": "ℓ₂",
+            "reporting_scale": null,
+            "simulation_vs_real": "Simulation and real",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Adaptive error-controlled stopping driven by sufficient residual-energy descent (UC/UC-bar); ablation without update condition shows erratic residual spikes."
+        }
       ]
     },
     {
@@ -7034,7 +9840,99 @@
           "No dedicated summary bullet was auto-matched for this metric. It was classified from the paper summary overall; see the paper page for full context."
         ],
         "astrometric_accuracy": []
-      }
+      },
+      "snr_details": [
+        {
+          "category": "reconstruction_snr",
+          "submetric": "l2_reconstruction_snr",
+          "value": 46.03,
+          "unit": "dB",
+          "scope": "OOD 30 Doradus (DR~600); GU-Net RI-GAN",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀(‖x_true‖₂ / ‖x_true − x_pred‖₂)",
+            "simulation_vs_real": "Simulation (in-distribution galaxies + OOD 30 Doradus)",
+            "input_snr_setting": null,
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "OOD 30 Doradus: GU-Net RI-GAN 46.03 dB, U-Net RI-GAN 30.80 dB, CLEAN 32.55 dB. In-distribution SNR shown as boxplots (Fig. 3)."
+        },
+        {
+          "category": "comparative_snr",
+          "submetric": "higher_lower_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "GU-Net RI-GAN vs U-Net RI-GAN, dirty image, and CLEAN",
+          "baseline": "U-Net RI-GAN, dirty image, CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀ L₂ reconstruction SNR",
+            "simulation_vs_real": "Simulation",
+            "input_snr_setting": null,
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "GU-Net improves SNR over dirty/U-Net in-distribution and beats U-Net and CLEAN by a wide margin on OOD 30 Doradus (46.03 vs 30.80 / 32.55 dB)."
+        }
+      ],
+      "uncertainty_correlation_details": [
+        {
+          "category": "uncertainty_error_correlation",
+          "submetric": "pearson_uncertainty_vs_abs_error",
+          "value": 0.69,
+          "unit": "Pearson r",
+          "scope": "GU-Net RI-GAN; per-pixel uncertainty (std across 32 posterior samples) vs |x_true − x_pred|",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "correlation_statistic": "Pearson r",
+            "uncertainty_source": "Per-pixel std across posterior samples (RI-GAN)",
+            "error_reference": "Absolute reconstruction error vs ground truth",
+            "sample_count": "32 (main experiments)",
+            "simulation_vs_real": "Simulation (galaxy images; OOD 30 Doradus also discussed for SNR)",
+            "array": null
+          },
+          "evidence": "Uncertainty–error correlation (UQ calibration proxy): Pearson correlation between per-pixel predicted uncertainty (std across samples) and per-pixel absolute reconstruction error |x_true − x_pred|. With 32 posterior samples, GU-Net RI-GAN reaches r = 0.69 (U-Net RI-GAN r = 0.58)."
+        },
+        {
+          "category": "comparative_unccorr",
+          "submetric": "higher_lower_than_baseline",
+          "value": 0.69,
+          "unit": "Pearson r (GU-Net) vs 0.58 (U-Net)",
+          "scope": "GU-Net vs plain U-Net RI-GAN uncertainty–error correlation (32 samples)",
+          "baseline": "U-Net RI-GAN (no embedded measurement operator)",
+          "empirical": true,
+          "execution_context": {
+            "correlation_statistic": "Pearson r",
+            "uncertainty_source": "Per-pixel std across posterior samples",
+            "error_reference": "Absolute reconstruction error vs ground truth",
+            "sample_count": "32",
+            "simulation_vs_real": "Simulation",
+            "array": null
+          },
+          "evidence": "GU-Net uncertainty maps track true error better than the plain U-Net variant: r = 0.69 vs r = 0.58 at 32 samples."
+        },
+        {
+          "category": "comparative_unccorr",
+          "submetric": "correlation_vs_sample_count",
+          "value": 32,
+          "unit": "samples (plateau)",
+          "scope": "Number-of-samples ablation for uncertainty–error correlation (and SNR)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "correlation_statistic": "Pearson r (vs sample count)",
+            "uncertainty_source": "Per-pixel std across N posterior samples",
+            "error_reference": "Absolute reconstruction error vs ground truth",
+            "sample_count": "Ablation; plateaus around 32",
+            "simulation_vs_real": "Simulation",
+            "array": null
+          },
+          "evidence": "Both SNR and the uncertainty–error correlation improve as the number of posterior samples increases and plateau around 32 samples; low sample counts give markedly lower correlation (interpreted as evidence of sample diversity / no mode collapse)."
+        }
+      ]
     },
     {
       "cohort": "r2d2",
@@ -7389,6 +10287,115 @@
           },
           "evidence": "Parameter sweeps over patch size and sparsity level L accompany the convergence study."
         }
+      ],
+      "snr_details": [
+        {
+          "category": "reconstruction_snr",
+          "submetric": "l2_reconstruction_snr",
+          "value": 36.39,
+          "unit": "dB",
+          "scope": "VLA/W28 Table 1 (ALSB); also SKA/3C353 and DART solar tables",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀(‖x‖₂ / ‖x − x̃‖₂)",
+            "simulation_vs_real": "Simulation (VLA/SKA) + DART real solar data",
+            "input_snr_setting": "iSNR=35 dB (VLA/SKA); 40 dB (DART)",
+            "frequency": "425 MHz (DART)",
+            "array": "VLA / SKA / DART (294 antennas)"
+          },
+          "evidence": "ALSB best SNR: W28 36.39 dB, 3C353 33.97 dB, DART solar 33.93 dB (vs SARA/AIRI/WTF/MS-CLEAN baselines)."
+        },
+        {
+          "category": "input_operating_snr",
+          "submetric": "input_visibility_snr",
+          "value": 35,
+          "unit": "dB (iSNR; 40 dB on DART)",
+          "scope": "Tabulated experiments and noise-robustness sweep across input SNR levels",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formula": "Input SNR (iSNR)",
+            "simulation_vs_real": "Simulation + real DART",
+            "input_snr_setting": "35 dB (main tables); 40 dB DART; swept for robustness",
+            "frequency": null,
+            "array": "VLA / SKA / DART"
+          },
+          "evidence": "Main tables use iSNR=35 dB (40 dB DART); noise-robustness test sweeps input SNR levels."
+        },
+        {
+          "category": "comparative_snr",
+          "submetric": "higher_lower_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "ALSB vs SARA, AIRI, WTF (and MS-CLEAN on DART)",
+          "baseline": "SARA, AIRI, WTF, MS-CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀ L₂ reconstruction SNR",
+            "simulation_vs_real": "Simulation + real DART",
+            "input_snr_setting": "35–40 dB",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "ALSB reports the highest SNR on every tabulated test and across the input-SNR robustness sweep."
+        }
+      ],
+      "rdr_details": [
+        {
+          "category": "reported_rdr",
+          "submetric": "planar_l2_rdr",
+          "value": 0.0067,
+          "unit": "(ALSB; VLA/W28 Table 1)",
+          "scope": "Image-domain data fidelity σ=‖r̂‖₂/‖x_dirty‖₂ — VLA/W28, SKA/3C353, DART/Sun",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": "Raw ratio",
+            "simulation_vs_real": "Simulation (VLA/SKA) and DART real solar",
+            "frequency": "425 MHz (DART); sim otherwise",
+            "array": "VLA / SKA-like / DART (294 ant.)"
+          },
+          "evidence": "Following Aghabiglou et al. R2D2 fidelity metric. ALSB best σ: VLA/W28 0.0067 (vs AIRI 0.0106, SARA 0.0182); SKA/3C353 0.0103; DART/Sun 0.00281."
+        },
+        {
+          "category": "comparative_rdr",
+          "submetric": "lower_higher_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "ALSB vs SARA / AIRI / WTF / MS-CLEAN across three experiments",
+          "baseline": "SARA, AIRI, WTF, MS-CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": "Raw ratio",
+            "simulation_vs_real": "Simulation and real DART",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "ALSB reports lowest σ on all three tables; on DART ≈2.4× lower than WTF and ~11× lower than SARA."
+        },
+        {
+          "category": "framework_operational",
+          "submetric": "named_data_fidelity_metric",
+          "value": null,
+          "unit": null,
+          "scope": null,
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": null,
+            "simulation_vs_real": null,
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Image-domain data fidelity σ explicitly adopted from R2D2 convention as a primary evaluation metric with SNR and runtime."
+        }
       ]
     },
     {
@@ -7475,6 +10482,189 @@
             "workload": null
           },
           "evidence": "GMCP best SNR/SNRlog/fidelity on VLA case but slower than AIRI/LPG/R2D2."
+        }
+      ],
+      "snr_details": [
+        {
+          "category": "reconstruction_snr",
+          "submetric": "l2_reconstruction_snr",
+          "value": 28.82,
+          "unit": "dB (mean of 100 sims)",
+          "scope": "VLA/3c353 Table 1 (GMCP); DART/Sun Table 2 also 32.47 dB",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀(‖x‖₂ / ‖x − x̂‖₂)",
+            "simulation_vs_real": "Simulation (avg. of 100)",
+            "input_snr_setting": "iSNR=35 dB",
+            "frequency": null,
+            "array": "VLA / DART"
+          },
+          "evidence": "VLA/3c353: GMCP 28.82 dB vs R2D2 28.33, LPG 28.16, AIRI 26.84, SARA 24.38. DART/Sun: GMCP 32.47 dB (best)."
+        },
+        {
+          "category": "input_operating_snr",
+          "submetric": "input_visibility_snr",
+          "value": 35,
+          "unit": "dB (iSNR)",
+          "scope": "Main tables and noise-robustness sweep (Fig. 8)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formula": "Input SNR (iSNR)",
+            "simulation_vs_real": "Simulation",
+            "input_snr_setting": "35 dB; swept for robustness",
+            "frequency": null,
+            "array": "VLA / DART"
+          },
+          "evidence": "Tables use iSNR=35 dB; Fig. 8 sweeps input noise levels."
+        },
+        {
+          "category": "comparative_snr",
+          "submetric": "higher_lower_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "GMCP vs SARA, AIRI, LPG, R2D2",
+          "baseline": "SARA, AIRI, LPG, R2D2",
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀ L₂ reconstruction SNR",
+            "simulation_vs_real": "Simulation",
+            "input_snr_setting": "35 dB",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "GMCP best aggregate SNR on both tables; noise-robustness sweep shows GMCP clearly beats SARA and slightly beats AIRI/LPG/R2D2 across input noise levels."
+        }
+      ],
+      "logsnr_details": [
+        {
+          "category": "absolute_logsnr",
+          "submetric": "tabulated_mean_db",
+          "value": 16.19,
+          "unit": "dB",
+          "scope": "VLA/3C353 Table 1; GMCP avg of 100 sims, iSNR=35 dB",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": "SNRlog on log-stretched image (Thouvenin et al. 2023)",
+            "transform_parameter": "ε noise level + I_N",
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "VLA (3C353) / DART Sun",
+            "frequency": null
+          },
+          "evidence": "VLA/3C353 SNRlog: SARA 8.06; AIRI 14.12; LPG 14.95; R2D2 15.36; GMCP 16.19 dB. DART/Sun: GMCP 14.16 best (R2D2 not tested)."
+        },
+        {
+          "category": "absolute_logsnr",
+          "submetric": "parameter_sweep_logsnr",
+          "value": null,
+          "unit": null,
+          "scope": "Noise-robustness and γ/λ ablations (Figs. 5–8)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": "SNRlog log-stretch",
+            "transform_parameter": null,
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "VLA / DART",
+            "frequency": null
+          },
+          "evidence": "Adaptive λ raises SNR/SNRlog vs fixed λ; GMCP leads across input-noise sweeps."
+        },
+        {
+          "category": "comparative_logsnr",
+          "submetric": "higher_lower_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "GMCP vs R2D2/AIRI/LPG/SARA (aggregate) with morphology caveat",
+          "baseline": "R2D2 / AIRI / LPG / SARA",
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": null,
+            "transform_parameter": null,
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "VLA",
+            "frequency": null
+          },
+          "evidence": "GMCP leads aggregate SNRlog, but qualitative comparison notes R2D2 better preserves diffuse emission despite lower log-scale scores on some features."
+        },
+        {
+          "category": "transform_family",
+          "submetric": "log10_stretch_epsilon",
+          "value": null,
+          "unit": null,
+          "scope": null,
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "transform_definition": "SNRlog following Thouvenin et al. (log-stretch + ε)",
+            "transform_parameter": "ε estimated noise level",
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "VLA / DART",
+            "frequency": null
+          },
+          "evidence": "Log-scale SNR variant for faint emission; same family as ISCAD S/N_log."
+        }
+      ],
+      "rdr_details": [
+        {
+          "category": "reported_rdr",
+          "submetric": "planar_l2_rdr",
+          "value": 0.03054,
+          "unit": "(GMCP; VLA/3C353 Table 1)",
+          "scope": "Image-domain data fidelity σ — VLA/3C353 and DART/Sun (avg. of 100 sims)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": "Raw / ×10⁻²",
+            "simulation_vs_real": "Simulation (VLA and DART)",
+            "frequency": null,
+            "array": "VLA / DART"
+          },
+          "evidence": "σ=‖r̂‖₂/‖x_dirty‖₂. VLA/3C353: GMCP 3.054e-2 (best) vs R2D2 3.919e-2, AIRI 4.740e-2, SARA 4.858e-2. DART/Sun: GMCP 1.756e-2 (best)."
+        },
+        {
+          "category": "comparative_rdr",
+          "submetric": "lower_higher_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "GMCP vs SARA / AIRI / LPG / R2D2 / MS-CLEAN",
+          "baseline": "SARA, AIRI, LPG, R2D2, MS-CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": null,
+            "simulation_vs_real": "Simulation",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "GMCP lowest σ on both tables; adaptive-λ ablation also lowers σ vs fixed λ=1e-5."
+        },
+        {
+          "category": "framework_operational",
+          "submetric": "named_data_fidelity_metric",
+          "value": null,
+          "unit": null,
+          "scope": null,
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": null,
+            "simulation_vs_real": null,
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Image-domain data fidelity σ listed with SNR/SNRlog as a primary R2D2-convention evaluation metric."
         }
       ]
     },
@@ -7722,6 +10912,62 @@
           },
           "evidence": "Combined CG + Asp-CLEAN described as reaching close to an order-of-magnitude improvement in convergence speed and dynamic range."
         }
+      ],
+      "psnr_details": [
+        {
+          "category": "absolute_psnr",
+          "submetric": "twenty_log10_linear_psnr",
+          "value": null,
+          "unit": "dB (formula; no single scalar headline)",
+          "scope": "Synthetic Cygnus A and ENZO simulation reconstructions",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formulation": "PSNR = 20·log₁₀(max(I) / ‖θ−I‖)",
+            "max_definition": "max(I) from ground-truth image",
+            "image_domain": "Linear image intensity vs reconstruction θ",
+            "simulation_vs_real": "Simulation (synthetic Cygnus A; ENZO)",
+            "frequency": null,
+            "array": "Interferometric simulations (CLEAN-family tests)"
+          },
+          "evidence": "Linear PSNR defined as 20 log₁₀(max(I)/‖θ−I‖). CG-CLEAN and Momentum-CLEAN score highest on synthetic Cygnus A and ENZO; CG-CLEAN leads overall vs standard CLEAN."
+        },
+        {
+          "category": "absolute_psnr",
+          "submetric": "log_domain_psnr",
+          "value": null,
+          "unit": "dB (PSNR_log)",
+          "scope": "Synthetic Cygnus A and ENZO (faint/diffuse emphasis)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formulation": "PSNR_log = 20·log₁₀(max(log I) / ‖log θ − log I‖)",
+            "max_definition": "max(log I)",
+            "image_domain": "Log-scaled image intensities",
+            "simulation_vs_real": "Simulation (synthetic Cygnus A; ENZO)",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Log-domain PSNR emphasises diffuse/faint emission fidelity. CG-CLEAN and Momentum-CLEAN score highest on both PSNR variants; not classified under the separate logSNR column."
+        },
+        {
+          "category": "comparative_psnr",
+          "submetric": "higher_lower_than_baseline",
+          "value": null,
+          "unit": "highest among CLEAN / Momentum-CLEAN / CG-CLEAN",
+          "scope": "Synthetic Cygnus A and ENZO PSNR / PSNR_log",
+          "baseline": "Standard Cotton–Schwab CLEAN; Momentum-CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "formulation": "20·log₁₀ linear and log-domain PSNR",
+            "max_definition": null,
+            "image_domain": null,
+            "simulation_vs_real": "Simulation (synthetic Cygnus A; ENZO)",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "CG-CLEAN outperforms Momentum-CLEAN and standard CLEAN overall on both linear PSNR and PSNR_log."
+        }
       ]
     },
     {
@@ -7938,6 +11184,189 @@
           },
           "evidence": "Despite needing more iterations than WSClean/optimization methods' major-cycle counts, PnP remains competitive in wall-clock (Runtime separate)."
         }
+      ],
+      "snr_details": [
+        {
+          "category": "reconstruction_snr",
+          "submetric": "frobenius_hyperspectral_snr",
+          "value": 30.53,
+          "unit": "dB (mean ± 1.87)",
+          "scope": "Simulated VLA hyperspectral benchmark Table 1 (HyperAIRI)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formula": "20·log₁₀(‖X̄‖_F / ‖X̄ − X‖_F)",
+            "simulation_vs_real": "Simulation (VLA hyperspectral)",
+            "input_snr_setting": null,
+            "frequency": "Multi-channel (hyperspectral)",
+            "array": "VLA"
+          },
+          "evidence": "HyperAIRI mean SNR 30.53±1.87 dB vs Hyper-uSARA 29.30, AIRI 28.70, uSARA 28.32, WSClean 11.27 dB."
+        },
+        {
+          "category": "reconstruction_snr",
+          "submetric": "spectral_index_snr",
+          "value": 10.87,
+          "unit": "dB (mean ± 3.91 sSNR)",
+          "scope": "Spectral-index map SNR on same VLA hyperspectral benchmark",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formula": "SNR between reconstructed and GT spectral-index maps",
+            "simulation_vs_real": "Simulation (VLA hyperspectral)",
+            "input_snr_setting": null,
+            "frequency": "Multi-channel",
+            "array": "VLA"
+          },
+          "evidence": "HyperAIRI sSNR 10.87±3.91 dB; Hyper-uSARA best sSNR 11.35±3.78; WSClean only 3.81±5.91 dB."
+        },
+        {
+          "category": "comparative_snr",
+          "submetric": "db_gain_vs_baseline",
+          "value": 1.8,
+          "unit": "dB (approx. SNR gain vs AIRI)",
+          "scope": "HyperAIRI vs monochromatic AIRI; Hyper-uSARA vs uSARA ~1 dB",
+          "baseline": "AIRI / uSARA",
+          "empirical": true,
+          "execution_context": {
+            "formula": "Frobenius hyperspectral SNR",
+            "simulation_vs_real": "Simulation",
+            "input_snr_setting": null,
+            "frequency": "Multi-channel",
+            "array": "VLA"
+          },
+          "evidence": "HyperAIRI improves SNR over AIRI by ~1.8 dB; Hyper-uSARA improves over uSARA by ~1 dB. WSClean far lower (11.27 vs 30.53 dB)."
+        }
+      ],
+      "logsnr_details": [
+        {
+          "category": "absolute_logsnr",
+          "submetric": "tabulated_mean_db",
+          "value": null,
+          "unit": null,
+          "scope": "Table 1 simulated VLA hyperspectral benchmark (mean ± std logSNR)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": "r_log(X)=max(X)·log_a(a·X/max(X)+1)",
+            "transform_parameter": "a = target dynamic range",
+            "paired_with_linear_snr": "Yes (+ sSNR)",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "VLA hyperspectral",
+            "frequency": "Multi-channel / hyperspectral"
+          },
+          "evidence": "Reports mean±std logSNR for WSClean, uSARA, AIRI, Hyper-uSARA, HyperAIRI, etc. alongside SNR, RDR, sSNR."
+        },
+        {
+          "category": "comparative_logsnr",
+          "submetric": "logsnr_gain_db",
+          "value": 2.4,
+          "unit": "dB (approx.)",
+          "scope": "HyperAIRI vs monochromatic AIRI",
+          "baseline": "AIRI (monochromatic)",
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": null,
+            "transform_parameter": null,
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "VLA hyperspectral",
+            "frequency": "Multi-channel"
+          },
+          "evidence": "HyperAIRI improves logSNR over AIRI by ~2.4 dB (and SNR by ~1.8 dB)."
+        },
+        {
+          "category": "comparative_logsnr",
+          "submetric": "higher_lower_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "Hyperspectral vs monochromatic counterparts; vs WSClean",
+          "baseline": "AIRI / uSARA / WSClean",
+          "empirical": true,
+          "execution_context": {
+            "transform_definition": null,
+            "transform_parameter": null,
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "VLA hyperspectral",
+            "frequency": null
+          },
+          "evidence": "Power-law-coupled hyperspectral methods consistently beat monochromatic counterparts on logSNR."
+        },
+        {
+          "category": "transform_family",
+          "submetric": "r2d2_reversible_rlog",
+          "value": null,
+          "unit": null,
+          "scope": null,
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "transform_definition": "Per-image/channel r_log with target DR a",
+            "transform_parameter": "a = target DR",
+            "paired_with_linear_snr": "Yes",
+            "simulation_vs_real": "Simulation",
+            "array_or_domain": "VLA hyperspectral",
+            "frequency": "Multi-channel"
+          },
+          "evidence": "Standard R2D2-family reversible log map applied for faint structure across channels."
+        }
+      ],
+      "rdr_details": [
+        {
+          "category": "reported_rdr",
+          "submetric": "frobenius_cube_rdr",
+          "value": 0.0023,
+          "unit": "≈2.3–2.6×10⁻³ (all methods)",
+          "scope": "Hyperspectral cube RDR=‖X^res‖_F/‖X^dirty‖_F vs truth reference 2.46×10⁻³",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "Hyperspectral cube",
+            "norm": "Frobenius",
+            "reporting_scale": "×10⁻³",
+            "simulation_vs_real": "Simulation",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "All methods achieve broadly comparable RDR (~2.3–2.6×10⁻³), close to ground-truth reference (2.46±1.37)×10⁻³, despite large SNR spreads."
+        },
+        {
+          "category": "comparative_rdr",
+          "submetric": "lower_higher_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "HyperAIRI vs WSClean / optimization baselines — RDR comparable, SNR not",
+          "baseline": "WSClean and optimization-based methods",
+          "empirical": true,
+          "execution_context": {
+            "domain": "Hyperspectral cube",
+            "norm": "Frobenius",
+            "reporting_scale": "×10⁻³",
+            "simulation_vs_real": "Simulation",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "WSClean matches RDR/data-fidelity of other methods yet has far lower SNR (11.27 dB vs HyperAIRI 30.53 dB) — RDR ≠ truth fidelity."
+        },
+        {
+          "category": "framework_operational",
+          "submetric": "named_data_fidelity_metric",
+          "value": null,
+          "unit": null,
+          "scope": null,
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "domain": "Hyperspectral cube",
+            "norm": "Frobenius",
+            "reporting_scale": "×10⁻³",
+            "simulation_vs_real": null,
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "RDR defined as primary image-domain data-fidelity metric for hyperspectral evaluation alongside SNR, logSNR, and sSNR."
+        }
       ]
     },
     {
@@ -8105,6 +11534,83 @@
             "regularisation_parameters": null
           },
           "evidence": "Analytic complexity O(K·N·log N) couples sampling steps to pixel count N."
+        }
+      ],
+      "snr_details": [
+        {
+          "category": "reconstruction_snr",
+          "submetric": "alternate_mse_snr",
+          "value": 54.7,
+          "unit": "dB (K=1000)",
+          "scope": "DDRM Table 1 VLA; also EHT/ALMA at K=1000",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formula": "10·log₁₀[(1/N)Σx⁽ʲ⁾ / MSE]",
+            "simulation_vs_real": "Simulation (VLA / EHT / ALMA)",
+            "input_snr_setting": null,
+            "frequency": null,
+            "array": "VLA / EHT / ALMA"
+          },
+          "evidence": "Alternate SNR = 10·log₁₀[(1/N)Σx/MSE]. VLA K=1000: SNR 54.7 dB (PSNR 62.9); K=10 already SNR 36.8 dB. EHT/ALMA K=1000: 53.5 / 54.6 dB."
+        }
+      ],
+      "psnr_details": [
+        {
+          "category": "absolute_psnr",
+          "submetric": "ten_log10_psnr",
+          "value": 62.9,
+          "unit": "dB",
+          "scope": "DDRM VLA config at K=1000 sampling steps (flux-normalised)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formulation": "PSNR = 10·log₁₀(MAX / MSE)",
+            "max_definition": "MAX = 1 (flux-normalised images)",
+            "image_domain": "Flux-normalised reconstructed images",
+            "simulation_vs_real": "Simulation (VLA / EHT / ALMA sampling configs)",
+            "frequency": null,
+            "array": "VLA (primary sweep); EHT; ALMA"
+          },
+          "evidence": "VLA K-sweep: PSNR 45.0 (K=10) → 49.9 → 51.8 → 59.8 → 62.9 (K=1000). EHT K=1000: 61.7 dB; ALMA K=1000: 62.8 dB. Reported alongside MSE/SNR/SRE."
+        },
+        {
+          "category": "parameter_sweep_psnr",
+          "submetric": "vs_hyperparameter",
+          "value": 62.9,
+          "unit": "dB at K=1000 (VLA)",
+          "scope": "PSNR vs diffusion sampling steps K on VLA config",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formulation": "10·log₁₀(MAX/MSE), MAX=1",
+            "max_definition": "MAX = 1",
+            "image_domain": "Flux-normalised",
+            "simulation_vs_real": "Simulation (VLA sampling)",
+            "frequency": null,
+            "array": "VLA"
+          },
+          "evidence": "PSNR rises monotonically with sampling steps K from 45.0 dB at K=10 to 62.9 dB at K=1000; K=1000 used for subsequent telescope configs."
+        }
+      ],
+      "nmse_details": [
+        {
+          "category": "unspecified",
+          "submetric": "unspecified",
+          "value": null,
+          "unit": null,
+          "scope": "DDRM vs CLEAN / MS-CLEAN / IUWT CS on VLA/EHT/ALMA sims",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "Image (MSE / PSNR / SNR — not NMSE label)",
+            "formula_scale": "MSE = (1/NM)ΣΣ(x−x̂)²; PSNR = 10·log₁₀(MAX/MSE)",
+            "reference": "Flux-normalized VLA FIRST test images / synthetic skies",
+            "simulation_vs_real": "Simulation (VLA, EHT, ALMA configs)",
+            "frequency": null,
+            "array": "VLA / EHT / ALMA (simulated)"
+          },
+          "evidence": "Primary fidelity metrics are MSE, PSNR, SNR, and SRE. The notes explicitly state MSE/PSNR/SNR are used — not NMSE by name. Flagged nmse_nrmse=1; left unspecified."
         }
       ]
     },
@@ -8276,6 +11782,158 @@
             "array": null
           },
           "evidence": "CLEAN's practical dynamic range noted as 'several hundred' before the Högbom loop diverges."
+        }
+      ],
+      "psnr_details": [
+        {
+          "category": "parameter_sweep_psnr",
+          "submetric": "vs_hyperparameter",
+          "value": null,
+          "unit": "dB vs PSF-warp γ ∈ [0, 30]",
+          "scope": "POLISH++ model-mismatch / robustness experiment (Fig. 8)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formulation": "PSNR in dB (pixel-level fidelity under PSF warp)",
+            "max_definition": null,
+            "image_domain": "Reconstructed images under synthetic PSF warping",
+            "simulation_vs_real": "Simulation (PSF-mismatch; train γ=0, test γ∈[0,30])",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "PSNR degrades predictably as PSF warp γ increases outside training (γ=0 only). Authors note PSNR is more sensitive to model mismatch than visual quality, which remains comparatively stable even at γ=30."
+        },
+        {
+          "category": "parameter_sweep_psnr",
+          "submetric": "checkpoint_selection",
+          "value": 11,
+          "unit": "epochs to peak PSNR (fine-tune)",
+          "scope": "Fine-tuning under PSF mismatch vs train-from-scratch",
+          "baseline": "Train from scratch (57 epochs to peak PSNR)",
+          "empirical": true,
+          "execution_context": {
+            "formulation": "Peak validation / reconstruction PSNR epoch",
+            "max_definition": null,
+            "image_domain": null,
+            "simulation_vs_real": "Simulation (PSF-mismatch fine-tuning)",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Fine-tuning an existing POLISH++ model reaches peak PSNR in 11 epochs vs 57 epochs training from scratch (>5× speedup); both beat the unadapted mismatched baseline. No head-to-head PSNR vs R2D2 on shared data."
+        }
+      ],
+      "nmse_details": [
+        {
+          "category": "unspecified",
+          "submetric": "unspecified",
+          "value": null,
+          "unit": null,
+          "scope": "POLISH++ source detection / shape / flux / PSNR robustness",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "Image (detection F1; parameter RMSE; PSNR — not image NMSE)",
+            "formula_scale": null,
+            "reference": "T-RECS ground-truth radio sky",
+            "simulation_vs_real": "Simulation (DSA PSF / T-RECS)",
+            "frequency": null,
+            "array": "DSA (simulated)"
+          },
+          "evidence": "Reports precision/recall/F1, shape and flux RMSE on true positives, and PSNR under PSF mismatch — no explicit NMSE/NRMSE image score in the notes. Flagged nmse_nrmse=1; left unspecified."
+        }
+      ],
+      "flux_recovery_details": [
+        {
+          "category": "truth_based_flux",
+          "submetric": "catalogue_flux_error",
+          "value": 0.00032625,
+          "unit": "Jy/pixel flux RMSE (CLEAN; best)",
+          "scope": "SEP flux RMSE on true-positive detections (Table 3)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "Jy/pixel RMSE",
+            "aperture_region": "SEP-extracted true-positive sources",
+            "reference_type": "Simulated ground-truth flux",
+            "simulation_vs_real": "Simulation (strong-lens discovery setup)",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Table 3 flux RMSE: CLEAN 3.2625×10⁻⁴ Jy/px (best), POLISH 1.9504×10⁻³, POLISH+ 3.8411×10⁻³, POLISH++ 3.1703×10⁻³ — CLEAN superior for flux fidelity."
+        },
+        {
+          "category": "cross_method_flux",
+          "submetric": "comparative_recovered_flux",
+          "value": null,
+          "unit": null,
+          "scope": "CLEAN vs POLISH / POLISH+ / POLISH++ flux RMSE",
+          "baseline": "CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "units": "Jy/pixel RMSE",
+            "aperture_region": "SEP true positives",
+            "reference_type": "Ground truth + cross-method",
+            "simulation_vs_real": "Simulation",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Learned POLISH variants have higher flux RMSE than CLEAN; attributed to nonlinear learned reconstruction lacking explicit flux calibration."
+        }
+      ],
+      "class_details": [
+        {
+          "category": "catalog_rates",
+          "submetric": "precision_recall_f1",
+          "value": 0.7107,
+          "unit": "F1 (POLISH++; Table 3 also lists P/R)",
+          "scope": "SEP source detection on wide-field simulations (Table 3)",
+          "baseline": "CLEAN 0.3612 / 0.2220 / 0.2750 (P/R/F1)",
+          "empirical": true,
+          "execution_context": {
+            "task": "Source detection catalog metrics",
+            "finder_method": "SEP (Source Extraction and Photometry)",
+            "operating_point": "Also tracked vs SNR threshold 3–300,000 (Fig. 4)",
+            "matching_criterion": "TP = ground-truth galaxy matched to a detection within a size-dependent pixel threshold",
+            "simulation_vs_real": "Simulation (wide-field / DSA-style)",
+            "dataset_or_survey": "POLISH'ing the Sky wide-field simulations"
+          },
+          "evidence": "Table 3 Precision/Recall/F1: CLEAN 0.3612/0.2220/0.2750; POLISH 0.5560/0.4612/0.5042; POLISH+ 0.8744/0.5751/0.6938; POLISH++ 0.8433/0.6142/0.7107. POLISH+/++ outperform CLEAN; largest gains at low SNR."
+        },
+        {
+          "category": "catalog_rates",
+          "submetric": "shape_flux_rmse_on_tps",
+          "value": 0.4654,
+          "unit": "arcsec (θ_A RMSE, POLISH++; Table 3)",
+          "scope": "SEP shape/flux RMSE on true-positive detections (Table 3; SNR>300 plots)",
+          "baseline": "CLEAN θ_A 1.0046″ / θ_B 0.7862″ / flux 3.2625×10⁻⁴ Jy/px",
+          "empirical": true,
+          "execution_context": {
+            "task": "Shape & flux estimation on matched detections",
+            "finder_method": "SEP parameter estimates on TPs",
+            "operating_point": null,
+            "matching_criterion": "True-positive subset from SEP matching",
+            "simulation_vs_real": "Simulation",
+            "dataset_or_survey": "POLISH'ing the Sky wide-field simulations"
+          },
+          "evidence": "Table 3 TP RMSE: θ_A — CLEAN 1.0046″, POLISH++ 0.4654″; θ_B — CLEAN 0.7862″, POLISH++ 0.2056″; flux — CLEAN lowest (3.2625×10⁻⁴ Jy/px) vs POLISH++ 3.1703×10⁻³ (CLEAN better absolute flux; learned methods super-resolve shapes)."
+        },
+        {
+          "category": "operating_point",
+          "submetric": "tpr_at_fixed_fpr",
+          "value": null,
+          "unit": "TPR vs Einstein radius at FPR=10⁻³",
+          "scope": "CNN strong-lens finder per image type (Fig. 7)",
+          "baseline": "CLEAN-trained finder; ~3×PSF-FWHM separation limit (Rezaei et al.)",
+          "empirical": true,
+          "execution_context": {
+            "task": "Strong-lens discovery",
+            "finder_method": "CNN lens finder (Rezaei et al. 2022 architecture)",
+            "operating_point": "FPR=10⁻³; TPR vs Einstein radius",
+            "matching_criterion": "Lens finder trained/evaluated per reconstruction type",
+            "simulation_vs_real": "Simulation",
+            "dataset_or_survey": "DSA-discoverable galaxy–galaxy lenses (yield context)"
+          },
+          "evidence": "TPR at fixed FPR=10⁻³ vs Einstein radius (Fig. 7). CLEAN-trained finder drops below ~3×PSF-FWHM separation; POLISH/++ recover near PSF FWHM (~10× estimated DSA lens-yield gain vs CLEAN). No absolute completeness/purity beyond the curve."
         }
       ]
     },
@@ -8585,6 +12243,45 @@
             "array": null
           },
           "evidence": "R2D2 described as delivering 'high-dynamic-range imaging at CLEAN-like speeds' without a scalar DR, configured target, comparative number, or limit. Left Unspecified."
+        }
+      ],
+      "snr_details": [
+        {
+          "category": "comparative_snr",
+          "submetric": "db_gain_vs_baseline",
+          "value": 3,
+          "unit": "dB (cited POLISH claim)",
+          "scope": "Review citation of POLISH vs CLEAN dirty images",
+          "baseline": "CLEAN dirty images",
+          "empirical": false,
+          "execution_context": {
+            "formula": "Cited SNR improvement (definition not re-derived in review)",
+            "simulation_vs_real": "Secondary citation (review chapter)",
+            "input_snr_setting": null,
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Survey cites POLISH reporting a ≈3 dB SNR gain over CLEAN dirty images; no original reconstruction-SNR benchmark table in this review chapter."
+        }
+      ],
+      "class_details": [
+        {
+          "category": "cited_benchmark",
+          "submetric": "cited_external_tpr_fpr",
+          "value": 95.3,
+          "unit": "% TPR (cited; at 0.008% FPR)",
+          "scope": "Cited CNN lens/source-finding rates in SKA-era AI review",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "task": "CNN-based source / lens finding (cited)",
+            "finder_method": "CNN source/lens finder (literature citation)",
+            "operating_point": "0.008% FPR",
+            "matching_criterion": null,
+            "simulation_vs_real": null,
+            "dataset_or_survey": "SKA-era survey commentary (illustrative)"
+          },
+          "evidence": "Cites 95.3% TPR at 0.008% FPR for CNN-based source (lens) finding as an illustrative classification-style metric in the broader pipeline — not an imaging-specific primary measurement in this review."
         }
       ]
     },

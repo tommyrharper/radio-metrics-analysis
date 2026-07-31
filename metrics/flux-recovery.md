@@ -7,7 +7,7 @@ Included reporting forms: recovered flux / true flux; integrated-flux recovery f
 
 **Not** classified from: a source’s measured flux quoted only as observational context; image peak brightness alone; contour levels; dynamic range; qualitative “more extended emission is visible”; component counts; residual RMS; spectral-index accuracy without an associated flux-recovery measurement; purely qualitative descriptions; or explicit statements that flux recovery was **not** reported.
 
-Cohort totals: classic **5**, emerging-ml **4**, r2d2-citing **1** (grand total **10** / 63).
+Cohort totals: classic **5**, emerging-ml **4**, r2d2-citing **1** (grand total **10** / 63). Binary `flux_recovery: 0|1` flags are unchanged by the drill-down; subtype detail lives in `flux_recovery_details` ([`site/detail/flux-recovery.html`](../site/detail/flux-recovery.html)).
 
 ## How papers use it
 **Truth-based integrated / peak flux (classic).** Multi-Resolution CLEAN reports recovered integrated flux vs known model flux (e.g. MRC 962 of 1002 vs CLEAN 563; 93.6% of 10,000 on a realistic model). Multiscale CLEAN tabulates total recovered flux vs a 1,495 Jy reference and recovered-flux fraction across source-size/noise sweeps. MS-MFS reports reference-frequency peak-flux error (~1 part in 10³) on a noise-free Taylor-order test. WSClean quotes AEGEAN source-flux standard error (~1.3%) on a 100×1 Jy MWA simulation. DDFacet plots relative flux-density error `(Ŝ−S)/S` vs beam radius.
@@ -15,6 +15,17 @@ Cohort totals: classic **5**, emerging-ml **4**, r2d2-citing **1** (grand total 
 **Cross-method photometry on real data (emerging-ml).** AIRI on MeerKAT (ESO 137-006) and uSARA/AIRI ASKAP papers compare AGN or diffuse-source integrated fluxes in mJy across algorithms (no known sky truth)—treated here as comparative flux recovery/consistency checks. Radionets reports core specific-intensity (peak-flux) relative deviation vs synthetic Gaussian truth.
 
 **Catalogue flux RMSE (r2d2-citing).** POLISH’ing the Sky reports SEP-extracted source flux RMSE vs ground truth on true-positive detections (CLEAN best; learned variants worse)—the sole r2d2-citing positive.
+
+## Drill-down taxonomy (second-level page)
+See [`site/detail/flux-recovery.html`](../site/detail/flux-recovery.html) / `site/js/taxonomies/flux-recovery-taxonomy.js`. Categories (papers may hit more than one):
+
+| Category | Sub-metrics |
+|---|---|
+| Truth-based Flux Recovery | Integrated flux vs true model; Recovered-flux fraction / percentage; Peak / core intensity bias vs truth; Relative flux-density error; Catalogue / source-finder flux error |
+| Cross-method / Comparative Flux | Cross-method integrated-flux tables; Comparative recovered flux vs baseline |
+| Unspecified Flux Recovery | Vague flux-preservation mentions already flagged flux_recovery=1 but not subtypeable |
+
+**Flux Context** (units, aperture/region, reference type, simulation vs real, frequency, array) is reporting completeness only — not itself a Flux metric.
 
 ## Popular measurement variants
 - **Integrated flux vs true model flux** (recovery fraction or absolute Jy).

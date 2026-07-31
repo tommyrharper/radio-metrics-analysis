@@ -1,0 +1,239 @@
+{
+  "schema_note": "class_details live primarily on each paper in papers-data.json. This mirror is bibcode -> entries for inspection/tools. Top-level metrics.classification_metrics binary flags are unchanged.",
+  "papers": {
+    "2022MNRAS.514.2614C": {
+      "cohort": "emerging",
+      "title": "Deep radio-interferometric imaging with POLISH: DSA-2000 and weak lensing",
+      "class_details": [
+        {
+          "category": "catalog_rates",
+          "submetric": "false_positive_incidence",
+          "value": 2,
+          "unit": "% false-positive incidence (approx.)",
+          "scope": "Source-Extractor false galaxies on simulated DSA-2000 skies (POLISH vs CLEAN)",
+          "baseline": "CLEAN ≈5% (1 false per 20 galaxies)",
+          "empirical": true,
+          "execution_context": {
+            "task": "Source detection / false-galaxy incidence",
+            "finder_method": "Source-Extractor",
+            "operating_point": null,
+            "matching_criterion": "Approximate false galaxies per N simulated galaxies",
+            "simulation_vs_real": "Simulation (DSA-2000)",
+            "dataset_or_survey": "DSA-2000 simulated galaxies"
+          },
+          "evidence": "Source-Extractor finds approximately one false-positive galaxy per 20 simulated galaxies in CLEAN and one per 50 in POLISH (≈5% vs ≈2% false-positive incidence). No underlying source counts, completeness, thresholds, or precision–recall curve."
+        }
+      ]
+    },
+    "2025A&A...698A..61J": {
+      "cohort": "r2d2",
+      "title": "Deep learning inference with the Event Horizon Telescope: II. The ZINGULARITY framework for Bayesian artificial neural networks",
+      "class_details": [
+        {
+          "category": "label_accuracy",
+          "submetric": "classification_accuracy",
+          "value": null,
+          "unit": "fraction correct (qualitative: near-perfect)",
+          "scope": "MAD/SANE magnetic-state classification on M87* fiducial model (ZINGULARITY)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "task": "Discrete magnetic-state classification (MAD vs SANE)",
+            "finder_method": "ZINGULARITY Bayesian DL inference",
+            "operating_point": null,
+            "matching_criterion": null,
+            "simulation_vs_real": "Simulation / EHT inference (M87* fiducial)",
+            "dataset_or_survey": "EHT M87*"
+          },
+          "evidence": "Classification accuracy (correct predictions / total) for discrete MAD/SANE magnetic-state labels; reported as near-perfect for the M87* fiducial model."
+        }
+      ]
+    },
+    "2025MLS&T...6d5005Z": {
+      "cohort": "r2d2",
+      "title": "Unveiling the power of multimodal large language models for radio astronomical image understanding and question answering",
+      "class_details": [
+        {
+          "category": "label_accuracy",
+          "submetric": "classification_accuracy",
+          "value": null,
+          "unit": null,
+          "scope": "Multimodal LLM radio-image understanding / classification tasks",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "task": "Multimodal LLM radio-image classification / VQA-style labels",
+            "finder_method": "Multimodal large language models",
+            "operating_point": null,
+            "matching_criterion": null,
+            "simulation_vs_real": null,
+            "dataset_or_survey": "Radio astronomical image understanding benchmark"
+          },
+          "evidence": "Reports Accuracy among the classification-task metrics for multimodal LLM radio-image understanding."
+        },
+        {
+          "category": "catalog_rates",
+          "submetric": "precision_recall_f1",
+          "value": null,
+          "unit": null,
+          "scope": "Multimodal LLM classification tasks (Precision, Recall, F1)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "task": "Multimodal LLM radio-image classification",
+            "finder_method": "Multimodal large language models",
+            "operating_point": null,
+            "matching_criterion": null,
+            "simulation_vs_real": null,
+            "dataset_or_survey": "Radio astronomical image understanding benchmark"
+          },
+          "evidence": "Classification-task suite includes Precision, Recall, and F1-score alongside accuracy and detection rates."
+        },
+        {
+          "category": "operating_point",
+          "submetric": "tpr_at_fixed_fpr",
+          "value": null,
+          "unit": null,
+          "scope": "Multimodal LLM tasks reporting TPR and FPR",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "task": "Multimodal LLM radio-image classification / detection",
+            "finder_method": "Multimodal large language models",
+            "operating_point": "TPR and FPR reported (operating point not fully specified in notes)",
+            "matching_criterion": null,
+            "simulation_vs_real": null,
+            "dataset_or_survey": "Radio astronomical image understanding benchmark"
+          },
+          "evidence": "True Positive Rate (TPR) and False Positive Rate (FPR) listed among classification-task metrics."
+        },
+        {
+          "category": "catalog_rates",
+          "submetric": "missed_detection_counts",
+          "value": null,
+          "unit": "counts",
+          "scope": "Multimodal LLM missed-detection counts",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "task": "Multimodal LLM radio-image detection",
+            "finder_method": "Multimodal large language models",
+            "operating_point": null,
+            "matching_criterion": null,
+            "simulation_vs_real": null,
+            "dataset_or_survey": "Radio astronomical image understanding benchmark"
+          },
+          "evidence": "Missed-detection counts reported with the classification-task suite."
+        }
+      ]
+    },
+    "2025MNRAS.542.2494M": {
+      "cohort": "r2d2",
+      "title": "Strong gravitational lensing with upcoming wide-field radio surveys",
+      "class_details": [
+        {
+          "category": "cited_benchmark",
+          "submetric": "cited_external_tpr_fpr",
+          "value": 90,
+          "unit": "% recovery (cited; at 0.008% FPR)",
+          "scope": "Cited Rezaei et al. (2022) CNN lens finder on simulated ILT data",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "task": "Strong-lens finding (cited benchmark)",
+            "finder_method": "CNN lens finder (Rezaei et al. 2022)",
+            "operating_point": "0.008% FPR; 20σ detection; θE ≥ 3/2 beam size",
+            "matching_criterion": "Galaxy-scale lens recovery on simulated ILT",
+            "simulation_vs_real": "Simulation (ILT; cited)",
+            "dataset_or_survey": "ILT simulations (Rezaei et al. 2022)"
+          },
+          "evidence": "Cites Rezaei et al. (2022): >90% of galaxy-scale lenses recovered with a 0.008% false-positive rate on simulated ILT data (20σ; θE ≥ 3/2 beam). Not an original measurement in this paper."
+        }
+      ]
+    },
+    "2026arXiv260309162W": {
+      "cohort": "r2d2",
+      "title": "POLISH'ing the Sky: Wide-Field and High-Dynamic Range Interferometric Image Reconstruction with Application to Strong Lens Discovery",
+      "class_details": [
+        {
+          "category": "catalog_rates",
+          "submetric": "precision_recall_f1",
+          "value": 0.7107,
+          "unit": "F1 (POLISH++; Table 3 also lists P/R)",
+          "scope": "SEP source detection on wide-field simulations (Table 3)",
+          "baseline": "CLEAN 0.3612 / 0.2220 / 0.2750 (P/R/F1)",
+          "empirical": true,
+          "execution_context": {
+            "task": "Source detection catalog metrics",
+            "finder_method": "SEP (Source Extraction and Photometry)",
+            "operating_point": "Also tracked vs SNR threshold 3–300,000 (Fig. 4)",
+            "matching_criterion": "TP = ground-truth galaxy matched to a detection within a size-dependent pixel threshold",
+            "simulation_vs_real": "Simulation (wide-field / DSA-style)",
+            "dataset_or_survey": "POLISH'ing the Sky wide-field simulations"
+          },
+          "evidence": "Table 3 Precision/Recall/F1: CLEAN 0.3612/0.2220/0.2750; POLISH 0.5560/0.4612/0.5042; POLISH+ 0.8744/0.5751/0.6938; POLISH++ 0.8433/0.6142/0.7107. POLISH+/++ outperform CLEAN; largest gains at low SNR."
+        },
+        {
+          "category": "catalog_rates",
+          "submetric": "shape_flux_rmse_on_tps",
+          "value": 0.4654,
+          "unit": "arcsec (θ_A RMSE, POLISH++; Table 3)",
+          "scope": "SEP shape/flux RMSE on true-positive detections (Table 3; SNR>300 plots)",
+          "baseline": "CLEAN θ_A 1.0046″ / θ_B 0.7862″ / flux 3.2625×10⁻⁴ Jy/px",
+          "empirical": true,
+          "execution_context": {
+            "task": "Shape & flux estimation on matched detections",
+            "finder_method": "SEP parameter estimates on TPs",
+            "operating_point": null,
+            "matching_criterion": "True-positive subset from SEP matching",
+            "simulation_vs_real": "Simulation",
+            "dataset_or_survey": "POLISH'ing the Sky wide-field simulations"
+          },
+          "evidence": "Table 3 TP RMSE: θ_A — CLEAN 1.0046″, POLISH++ 0.4654″; θ_B — CLEAN 0.7862″, POLISH++ 0.2056″; flux — CLEAN lowest (3.2625×10⁻⁴ Jy/px) vs POLISH++ 3.1703×10⁻³ (CLEAN better absolute flux; learned methods super-resolve shapes)."
+        },
+        {
+          "category": "operating_point",
+          "submetric": "tpr_at_fixed_fpr",
+          "value": null,
+          "unit": "TPR vs Einstein radius at FPR=10⁻³",
+          "scope": "CNN strong-lens finder per image type (Fig. 7)",
+          "baseline": "CLEAN-trained finder; ~3×PSF-FWHM separation limit (Rezaei et al.)",
+          "empirical": true,
+          "execution_context": {
+            "task": "Strong-lens discovery",
+            "finder_method": "CNN lens finder (Rezaei et al. 2022 architecture)",
+            "operating_point": "FPR=10⁻³; TPR vs Einstein radius",
+            "matching_criterion": "Lens finder trained/evaluated per reconstruction type",
+            "simulation_vs_real": "Simulation",
+            "dataset_or_survey": "DSA-discoverable galaxy–galaxy lenses (yield context)"
+          },
+          "evidence": "TPR at fixed FPR=10⁻³ vs Einstein radius (Fig. 7). CLEAN-trained finder drops below ~3×PSF-FWHM separation; POLISH/++ recover near PSF FWHM (~10× estimated DSA lens-yield gain vs CLEAN). No absolute completeness/purity beyond the curve."
+        }
+      ]
+    },
+    "2026arXiv260628493D": {
+      "cohort": "r2d2",
+      "title": "The Role of Artificial Intelligence in the SKA Era",
+      "class_details": [
+        {
+          "category": "cited_benchmark",
+          "submetric": "cited_external_tpr_fpr",
+          "value": 95.3,
+          "unit": "% TPR (cited; at 0.008% FPR)",
+          "scope": "Cited CNN lens/source-finding rates in SKA-era AI review",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "task": "CNN-based source / lens finding (cited)",
+            "finder_method": "CNN source/lens finder (literature citation)",
+            "operating_point": "0.008% FPR",
+            "matching_criterion": null,
+            "simulation_vs_real": null,
+            "dataset_or_survey": "SKA-era survey commentary (illustrative)"
+          },
+          "evidence": "Cites 95.3% TPR at 0.008% FPR for CNN-based source (lens) finding as an illustrative classification-style metric in the broader pipeline — not an imaging-specific primary measurement in this review."
+        }
+      ]
+    }
+  }
+}

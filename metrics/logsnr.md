@@ -19,6 +19,18 @@
 - **Plain log₁₀ on truth and prediction:** Learned RI for varying coverage (no DR-parameterized map).
 - **Paired reporting:** almost always alongside linear SNR in tables, boxplots, or per-iteration curves; rarely standalone.
 
+## Drill-down taxonomy (second-level page)
+See [`site/detail/logsnr.html`](../site/detail/logsnr.html) / `site/js/taxonomies/logsnr-taxonomy.js`. Binary `logsnr: 0|1` flags are unchanged; subtype detail lives in `logsnr_details` (mirror `data/logsnr-details.json`). Categories (papers may hit more than one; ~11 positives, emerging-ml + r2d2-citing only):
+
+| Category | Sub-metrics |
+|---|---|
+| Reported / Absolute logSNR | Tabulated mean / scalar (dB); Per-iteration / series curve; Parameter-sweep logSNR |
+| Comparative logSNR | Higher / lower than baseline; logSNR gain / loss (dB) |
+| Transform family (definition) | R2D2 reversible r_log; log₁₀ stretch with ε; Plain log₁₀; log_a(a·x+1) |
+| Unspecified logSNR | Vague mentions already flagged logsnr=1 but not subtypeable |
+
+**logSNR Context** (transform definition/parameter, paired linear SNR, simulation vs real, array/domain, frequency) is reporting completeness only — not itself a logSNR metric.
+
 ## Gaps and caveats
 - **Transform parameter choices differ:** a may be ground-truth DR, lowest DR in the test suite (AIRI: 2.5×10³), or image-specific max; cross-paper logSNR values are not directly comparable without the transform definition.
 - **Aggregate vs visual trade-offs:** GMCP vs R2D2 shows higher SNRlog can coexist with staircasing or suppressed faint emission — logSNR alone may not capture preferred morphology.

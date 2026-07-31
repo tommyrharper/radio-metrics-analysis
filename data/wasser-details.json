@@ -1,0 +1,65 @@
+{
+  "schema_note": "wasserstein_details live primarily on each paper in papers-data.json. This mirror is bibcode -> entries for inspection/tools. Top-level metrics.wasserstein binary flags are unchanged.",
+  "papers": {
+    "2025AJ....169..289W": {
+      "cohort": "r2d2",
+      "title": "A Decentralized Framework for Radio-interferometric Image Reconstruction",
+      "wasserstein_details": [
+        {
+          "category": "windowed_distance",
+          "submetric": "w5_windowed_w1",
+          "value": null,
+          "unit": "W₅ (dimensionless aggregate)",
+          "scope": "HL Tau (ALMA) and Cygnus A (VLA) reconstructions without ground truth",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "window_size": "5×5 sliding window",
+            "distance_order": "Wasserstein-1 (W₁)",
+            "aggregation": "L2 norm of per-pixel W₁ over the image (W₅)",
+            "simulation_vs_real": "Real (HL Tau, Cygnus A); sims use SNR instead",
+            "frequency": "ALMA Band 6 (HL Tau); VLA (Cygnus A)",
+            "array": "ALMA; VLA"
+          },
+          "evidence": "Defines W₅ as the L2 norm of per-pixel Wasserstein-1 distances in 5×5 sliding windows between reconstructions — fidelity proxy where no ground truth exists."
+        },
+        {
+          "category": "cross_iteration",
+          "submetric": "successive_reconstruction",
+          "value": null,
+          "unit": null,
+          "scope": "W₅ vs major-cycle / iteration progress on real datasets",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "window_size": "5×5",
+            "distance_order": "W₁",
+            "aggregation": "W₅ (L2 of local W₁)",
+            "simulation_vs_real": "Real (HL Tau, Cygnus A)",
+            "frequency": null,
+            "array": "ALMA; VLA"
+          },
+          "evidence": "W₅ decreases with iteration count and is used to argue convergence of the decentralized reconstruction on HL Tau and Cygnus A."
+        },
+        {
+          "category": "cross_method",
+          "submetric": "parallel_vs_serial",
+          "value": null,
+          "unit": null,
+          "scope": "Parallel (p-msc, p-L1) vs serial (msc, L1) output images",
+          "baseline": "Serial ms-CLEAN / L1 reconstructions",
+          "empirical": true,
+          "execution_context": {
+            "window_size": "5×5",
+            "distance_order": "W₁",
+            "aggregation": "W₅",
+            "simulation_vs_real": "Real (HL Tau, Cygnus A)",
+            "frequency": null,
+            "array": "ALMA; VLA"
+          },
+          "evidence": "W₅ between parallel and serial reconstructions used to argue similarity of decentralized vs serial output images on the same real data."
+        }
+      ]
+    }
+  }
+}

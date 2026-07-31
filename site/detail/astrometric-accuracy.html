@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Metric details — radio interferometry imaging metrics</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="../js/taxonomies/astrometric-accuracy-taxonomy.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/metric-detail.css" />
+</head>
+<body>
+  <main>
+    <p class="back"><a href="../../index.html">← Back to all metrics</a></p>
+    <h1 id="pageHeading"></h1>
+    <p class="lede" id="pageLede"></p>
+    <p class="multi-note" id="pageMultiNote"></p>
+
+    <div class="panel">
+      <div class="filter-bar">
+        <div class="toggles" role="group" aria-label="Cohort visibility">
+          <span class="toggles-label" id="cohort-filters-label">Cohorts</span>
+          <label>
+            <input type="checkbox" id="toggle-classic" checked aria-describedby="cohort-filters-label" />
+            <span class="swatch classic" aria-hidden="true"></span>
+            Classic
+          </label>
+          <label>
+            <input type="checkbox" id="toggle-emerging" checked />
+            <span class="swatch emerging" aria-hidden="true"></span>
+            Emerging-ML
+          </label>
+          <label>
+            <input type="checkbox" id="toggle-r2d2" checked />
+            <span class="swatch r2d2" aria-hidden="true"></span>
+            R2D2-citing
+          </label>
+        </div>
+
+        <div class="category-filter">
+          <span class="toggles-label" id="categoryFiltersLabel">Category</span>
+          <label>
+            <span class="visually-hidden" id="categoryFiltersHidden" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Category</span>
+            <select id="categorySelect" aria-labelledby="categoryFiltersLabel"></select>
+          </label>
+        </div>
+
+        <div class="category-legend" id="categoryLegend" aria-label="Category legend"></div>
+      </div>
+
+      <div class="chart-wrap">
+        <canvas id="detailChart" aria-label="Stacked bar chart of metric sub-types by cohort"></canvas>
+        <div class="empty" id="emptyState">Turn on at least one cohort and category to see the chart.</div>
+      </div>
+      <p class="hint" id="chartHint"></p>
+
+      <section class="detail open browse-mode" id="detail" aria-live="polite">
+        <div class="detail-head">
+          <div>
+            <button type="button" class="detail-title-btn" id="detailTitle" aria-expanded="false">
+              All papers
+            </button>
+            <div class="count" id="detailCount"></div>
+            <div class="title-hint">Click the title for how papers report this · then Overview / By paper</div>
+          </div>
+          <button type="button" class="close-btn" id="detailClose">All papers</button>
+        </div>
+        <div class="paper-search open" id="paperSearchWrap">
+          <input
+            type="search"
+            id="paperSearch"
+            placeholder="Search by title, bibcode, or cohort…"
+            autocomplete="off"
+          />
+        </div>
+        <div class="metric-summary" id="metricSummary"></div>
+        <div class="metric-variants" id="metricVariants"></div>
+        <ul class="paper-list" id="paperList"></ul>
+      </section>
+    </div>
+
+    <div class="panel">
+      <h2 id="contextHeading"></h2>
+      <p class="panel-note" id="contextNote"></p>
+      <div class="context-grid" id="contextGrid"></div>
+    </div>
+  </main>
+
+  <script>
+    window.METRIC_DETAIL = {
+      shortLabel: "Astrometry",
+      pageHeading: "Astrometric accuracy details",
+      documentTitle: "Astrometric accuracy details — radio interferometry imaging metrics",
+      binaryKey: "astrometric_accuracy",
+      detailsKey: "astrometric_accuracy_details",
+      taxonomy: ASTROMETRIC_ACCURACY_TAXONOMY,
+      categoryOrder: ASTROMETRIC_ACCURACY_CATEGORY_ORDER,
+      contextFields: ASTROMETRIC_ACCURACY_CONTEXT_FIELDS,
+      ledeHtml: "Second-level view of how Astrometry-positive papers report quantitative reconstructed-source position accuracy vs a reference, catalogue, or truth. Binary Astrometry flags on the main graph are unchanged — this page only subtypes papers that already have <code>astrometric_accuracy: 1</code>. Resolution/beam alone, detection without position error, morphology/jet-angle, PSNR/SSIM, or a matching radius used only as a pipeline setting are not enough.",
+      multiNote: "Papers may contribute to more than one Astrometry category or sub-metric, so bar totals may exceed the number of Astrometry-positive papers. This review currently has zero positives under the strict include rules.",
+      categoryFilterLabel: "Astrometry category",
+      allCategoriesLabel: "All Astrometry categories",
+      contextTitle: "Astrometry Context",
+      contextNoteHtml: "Astrometry context describes how position error was measured. It is not itself an Astrometry metric. Counts are unique Astrometry-positive papers (in visible cohorts) that report each metadata field on at least one subtype entry — reporting completeness, not performance.",
+      chartHint: "Browse all Astrometry-positive papers below, or click a sub-metric bar to focus it. Sub-metrics with zero papers in the visible set are hidden. Bar outlines and tick colours mark Astrometry category. Click empty chart space to return to all papers.",
+      chartAriaLabel: "Stacked bar chart of Astrometry sub-metrics by cohort",
+      overviewCaveat: "Do not count resolution/beam alone, detection without position error, morphology/jet-angle, PSNR/SSIM, matching radius as setting only, or framework-named astrometric error without measured results.",
+    };
+  </script>
+  <script src="../js/metric-detail.js"></script>
+</body>
+</html>

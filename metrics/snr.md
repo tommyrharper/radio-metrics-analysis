@@ -12,6 +12,18 @@ In this review, **SNR** marks papers that report a signal-to-noise ratio as a qu
 
 **Real-data and non-standard uses.** QuantifAI reports reconstruction SNR rising with MeerKAT synthesis time (25–34 dB over 1–8 h). Lens-discoverability work cites literature thresholds on combined lensed-image SNR (≥ 20). One diffusion paper (DDRM 2026) uses a different definition: `SNR = 10·log₁₀[(1/N)Σx⁽ʲ⁾ / MSE]`. POLISH is described qualitatively as giving ≈3 dB SNR gain over CLEAN dirty images in a review paper. Residual-map flatness is sometimes discussed alongside SNR but explicitly rejected as an adequate substitute (PURIFY, SARA).
 
+## Drill-down taxonomy (second-level page)
+See [`site/detail/snr.html`](../site/detail/snr.html) / `site/js/taxonomies/snr-taxonomy.js`. Categories (papers may hit more than one):
+
+| Category | Sub-metrics |
+|---|---|
+| Reconstruction SNR (Absolute) | L₂ reconstruction SNR (20·log₁₀); Std-dev reconstruction SNR; Frobenius / hyperspectral SNR; Alternate MSE SNR (10·log₁₀); Spectral-index SNR (sSNR) |
+| Input / Operating SNR | Input visibility SNR; Image-plane / theoretical SNR; Discoverability / threshold SNR; Operational SNR trade-off |
+| Comparative SNR | Higher / lower SNR than baseline; dB gain / loss vs baseline |
+| Unspecified SNR | Vague SNR mentions already flagged snr=1 but not subtypeable |
+
+**SNR Context** (formula, simulation vs real, input-SNR setting, frequency, array) is reporting completeness only — not itself an SNR metric. Binary `snr: 0|1` flags are unchanged; subtype detail lives in `snr_details` ([`data/snr-details.json`](../data/snr-details.json)). logSNR is a separate column.
+
 ## Popular measurement variants
 - **L₂ ratio in dB (20·log₁₀):** `‖x‖₂ / ‖x − x̂‖₂` — standard in R2D2, AIRI, QuantifAI, MROP, and most r2d2-citing benchmarks.
 - **Standard-deviation form (20·log₁₀):** `σ_x / σ_{x−x̂}` — used in SARA (2012) as ground-truth image-domain error score.

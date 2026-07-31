@@ -1,0 +1,179 @@
+{
+  "schema_note": "credint_details live primarily on each paper in papers-data.json. This mirror is bibcode -> entries for inspection/tools. Top-level metrics.credible_interval binary flags are unchanged.",
+  "papers": {
+    "2023ApJ...943..144M": {
+      "cohort": "emerging",
+      "title": "Principal-Component Interferometric Modeling (PRIMO), an Algorithm for EHT Data I: Reconstructing Images from Simulated EHT Observations",
+      "credint_details": [
+        {
+          "category": "posterior_sample_intervals",
+          "submetric": "parameter_posterior_intervals",
+          "value": null,
+          "unit": null,
+          "scope": "PRIMO MCMC corner plots: eigenimage / structure-parameter posteriors vs ground truth",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "credible_level": "Posterior intervals (corner-plot; level not standardized in notes)",
+            "spatial_aggregation": "Parameter (PCA / image-structure coefficients)",
+            "estimation_method": "MCMC posterior sampling",
+            "simulation_vs_real": "Simulation (2017 Apr 5 M87 EHT (u,v) + thermal noise)",
+            "frequency": "EHT / mm-VLBI (M87)",
+            "array": "EHT"
+          },
+          "evidence": "Corner plots compare ground-truth parameters with highest-likelihood values and posterior intervals. Low-order component posteriors are narrower than priors; higher-order components are increasingly prior-dominated. No calibrated coverage summary across a test set."
+        }
+      ]
+    },
+    "2024A&A...690A.387R": {
+      "cohort": "r2d2",
+      "title": "fast-resolve: Fast Bayesian Radio Interferometric Imaging",
+      "credint_details": [
+        {
+          "category": "posterior_sample_intervals",
+          "submetric": "relative_posterior_uncertainty_maps",
+          "value": "~1e-3–1e-2",
+          "unit": "relative posterior uncertainty (hotspot)",
+          "scope": "fast-resolve variational posterior uncertainty maps (VLA Cygnus A / resolve comparison)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "credible_level": "Relative posterior uncertainty (not a stated HPD %)",
+            "spatial_aggregation": "Pixel-wise maps",
+            "estimation_method": "Variational Bayesian posterior (resolve / fast-resolve)",
+            "simulation_vs_real": "Real VLA observation (Cygnus A)",
+            "frequency": null,
+            "array": "VLA"
+          },
+          "evidence": "Pixelwise relative posterior uncertainty maps reported at ~10⁻³–10⁻² in hotspot (bright) regions, increasing toward lower-surface-brightness areas — Bayesian UQ not available from CLEAN. No tabulated HPD/LCI widths."
+        }
+      ]
+    },
+    "2024RASTI...3..505L": {
+      "cohort": "r2d2",
+      "title": "Scalable Bayesian uncertainty quantification with data-driven priors for radio interferometric imaging",
+      "credint_details": [
+        {
+          "category": "hpd_local_credint",
+          "submetric": "hpd_credible_regions",
+          "value": "100(1−α)%",
+          "unit": "HPD credible level (Eq. 29–32)",
+          "scope": "QuantifAI MAP-potential HPD regions (four test images; MCMC-free approximation)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "credible_level": "100(1−α)% HPD (Pereyra 2017 concentration bound)",
+            "spatial_aggregation": "Full-image / region potential",
+            "estimation_method": "Analytic HPD from MAP potential (no MCMC)",
+            "simulation_vs_real": "Simulation (gridded FFT + MeerKAT NUFFT experiments)",
+            "frequency": null,
+            "array": "Simulated; MeerKAT visibility patterns (Section 6)"
+          },
+          "evidence": "HPD credible regions at level 100(1−α)% approximated analytically from the MAP potential via a concentration bound, underwriting all downstream UQ tools."
+        },
+        {
+          "category": "hpd_local_credint",
+          "submetric": "hpd_hypothesis_testing",
+          "value": 0.01,
+          "unit": "α (99% HPD isocontour γ̂₀.₀₁)",
+          "scope": "Inpainting (Table 2) and Gaussian-blur (Table 3) surrogate hypothesis tests",
+          "baseline": "SK-ROCK MCMC HPD tests (MAP vs MCMC outcomes agree)",
+          "empirical": true,
+          "execution_context": {
+            "credible_level": "99% HPD (α=0.01)",
+            "spatial_aggregation": "Region-of-interest / surrogate image",
+            "estimation_method": "MAP potential vs HPD isocontour; validated vs SK-ROCK MCMC",
+            "simulation_vs_real": "Simulation (M31, W28, Cygnus A, 3C288)",
+            "frequency": null,
+            "array": "Simulated RI"
+          },
+          "evidence": "Surrogate potentials compared to the 99% HPD isocontour. QuantifAI correctly rejects artefact hypotheses for physical structures in M31, W28 and 3C288; inconclusive for a small Cygnus A feature. MAP and MCMC test outcomes agree in every reported case."
+        },
+        {
+          "category": "hpd_local_credint",
+          "submetric": "local_credible_intervals",
+          "value": "0.20 / 0.08 / 0.24 / 0.07",
+          "unit": "mean LCI (16×16 superpixels; image order as Figure 7)",
+          "scope": "Local Credible Intervals l_i = ξ+,Ωi − ξ−,Ωi on four test images",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "credible_level": "HPD-boundary LCI widths",
+            "spatial_aggregation": "16×16 superpixels (also 8×8 timing tables)",
+            "estimation_method": "Root-finding on HPD boundary; qualitative check vs posterior-sample std",
+            "simulation_vs_real": "Simulation (four astronomical test images)",
+            "frequency": null,
+            "array": "Simulated RI"
+          },
+          "evidence": "Mean LCI values for 16×16 superpixels: 0.20, 0.08, 0.24, 0.07 (Figure 7 order); higher mean LCI flags M31 and 3C288 as more uncertain. Validated qualitatively against posterior-sample standard deviation."
+        }
+      ]
+    },
+    "2024arXiv241023178C": {
+      "cohort": "r2d2",
+      "title": "Uncertainty Quantification for Fast Reconstruction Methods Using Augmented Equivariant Bootstrap: Application to Radio Interferometry",
+      "credint_details": [
+        {
+          "category": "bootstrap_conformal_intervals",
+          "submetric": "pixel_confidence_intervals",
+          "value": 0.9,
+          "unit": "target confidence level (1−δ)",
+          "scope": "CARB conformalized augmented equivariant bootstrap pixel intervals (EVIL-Deconv)",
+          "baseline": "Quantile regression / parametric & equivariant bootstrap / uncalibrated CARB",
+          "empirical": true,
+          "execution_context": {
+            "credible_level": "90% (α=δ=0.1)",
+            "spatial_aggregation": "Pixel-wise (64×64 patches)",
+            "estimation_method": "Augmented equivariant bootstrap + conformal calibration",
+            "simulation_vs_real": "Simulation (MeerKAT PSFs; HST-derived ground truth)",
+            "frequency": null,
+            "array": "MeerKAT (simulated PSFs)"
+          },
+          "evidence": "CARB produces pixel-wise predictive intervals via RI-specific equivariant bootstrap group actions plus conformal calibration on EVIL-Deconv reconstructions."
+        },
+        {
+          "category": "bootstrap_conformal_intervals",
+          "submetric": "interval_length_coverage",
+          "value": "0.34 length ratio; 91% coverage",
+          "unit": "mean ℓ2 interval-length / ‖x⋆‖₂; empirical coverage",
+          "scope": "Table 1 CARB vs QR / bootstrap baselines (target ≥90% coverage)",
+          "baseline": "QR 0.15/14%; CQR 204/92%; param boot 0.07/0%; equiv boot 0.13/7%; uncal. CARB 0.29/87%",
+          "empirical": true,
+          "execution_context": {
+            "credible_level": "90% target coverage",
+            "spatial_aggregation": "Pixel / image ℓ2 aggregate",
+            "estimation_method": "Conformalized Augmented Radio Bootstrap (CARB)",
+            "simulation_vs_real": "Simulation",
+            "frequency": null,
+            "array": "MeerKAT (simulated)"
+          },
+          "evidence": "UQ interval tightness (mean ℓ2 length ratio) and empirical coverage: CARB 0.34 / 91% — best trade-off of tight intervals with valid coverage among reported methods."
+        }
+      ]
+    },
+    "2025arXiv250102473D": {
+      "cohort": "r2d2",
+      "title": "IRIS: A Bayesian Approach for Image Reconstruction in Radio Interferometry with expressive Score-Based priors",
+      "credint_details": [
+        {
+          "category": "posterior_sample_intervals",
+          "submetric": "pixel_percentile_ranges",
+          "value": "16th–84th",
+          "unit": "posterior percentile band",
+          "scope": "IRIS score-based posterior samples on ALMA/DSHARP disks (pixel UQ)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "credible_level": "16th–84th percentile (~68% central interval)",
+            "spatial_aggregation": "Pixel-wise",
+            "estimation_method": "Score-based posterior sampling (PC / Euler SDE); TARP-calibrated VP+PC",
+            "simulation_vs_real": "Simulation + real ALMA DSHARP (e.g. RU Lup, WaOph 6)",
+            "frequency": "ALMA (DSHARP)",
+            "array": "ALMA"
+          },
+          "evidence": "Posterior samples yield pixel-wise 16th–84th percentile ranges and per-pixel statistical moments. TARP used as primary calibration/coverage check (VP SDE + PC achieved calibrated posteriors); not a named HPD/LCI pipeline."
+        }
+      ]
+    }
+  }
+}

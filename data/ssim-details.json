@@ -1,0 +1,209 @@
+{
+  "schema_note": "ssim_details live primarily on each paper in papers-data.json. This mirror is bibcode -> entries for inspection/tools. Top-level metrics.ssim binary flags are unchanged.",
+  "papers": {
+    "2025arXiv251213591C": {
+      "cohort": "classic",
+      "title": "astroCAMP: A Community Benchmark and Co-Design Framework for Sustainable SKA-Scale Radio Imaging",
+      "ssim_details": [
+        {
+          "category": "framework_defined",
+          "submetric": "named_core_quality_metric",
+          "value": null,
+          "unit": null,
+          "scope": "astroCAMP Table 2 algorithmic-quality pair (PSNR / SSIM)",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "aggregation": null,
+            "image_domain": "Reconstruction Î vs reference I_ref",
+            "normalization": null,
+            "simulation_vs_real": "Framework definition (WSClean+IDG runs skip computing SSIM)",
+            "frequency": null,
+            "array": "SKA-scale co-design / WSClean+IDG workloads"
+          },
+          "evidence": "Table 2 lists SSIM with PSNR as a core algorithmic-quality pair (dimensionless structural similarity). Both appear in co-design quality examples; the WSClean+IDG experimental release does not compute SSIM pending community tolerances."
+        }
+      ]
+    },
+    "2022MNRAS.514.2614C": {
+      "cohort": "emerging",
+      "title": "Deep radio-interferometric imaging with POLISH: DSA-2000 and weak lensing",
+      "ssim_details": [
+        {
+          "category": "absolute_ssim",
+          "submetric": "mean_image_ssim",
+          "value": 0.998,
+          "unit": "mean ± 0.0016 (dimensionless)",
+          "scope": "Full-band DSA-2000 sim (1300 MHz, 15 min PSF); POLISH on 50 validation fields",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "aggregation": "Mean ± std over validation images",
+            "image_domain": "Intensity / restored vs truth",
+            "normalization": "Inputs and targets normalized to integer range before SSIM",
+            "simulation_vs_real": "Simulation (DSA-2000 synthetic radio-galaxy skies)",
+            "frequency": "1300 MHz full-band",
+            "array": "DSA-2000 (simulated)"
+          },
+          "evidence": "Full-band: POLISH mean SSIM 0.998±0.0016 vs CLEAN 0.989±0.007 on the same simulated radio-galaxy task."
+        },
+        {
+          "category": "absolute_ssim",
+          "submetric": "mean_image_ssim",
+          "value": 0.988,
+          "unit": "mean ± 0.0016 (dimensionless)",
+          "scope": "Narrow-band DSA-2000 sim (10 MHz snapshot PSF); POLISH on 50 validation fields",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "aggregation": "Mean ± std over validation images",
+            "image_domain": "Intensity / restored vs truth",
+            "normalization": "Inputs and targets normalized to integer range before SSIM",
+            "simulation_vs_real": "Simulation (DSA-2000 synthetic radio-galaxy skies)",
+            "frequency": "10 MHz snapshot",
+            "array": "DSA-2000 (simulated)"
+          },
+          "evidence": "Narrow-band: POLISH mean SSIM 0.988±0.0016 vs CLEAN 0.976±0.009 with the more structured 10 MHz snapshot PSF."
+        },
+        {
+          "category": "comparative_ssim",
+          "submetric": "ssim_delta",
+          "value": 0.009,
+          "unit": "mean SSIM improvement",
+          "scope": "Full-band DSA-2000: POLISH vs image-plane CLEAN",
+          "baseline": "Image-plane CLEAN (mean SSIM 0.989±0.007)",
+          "empirical": true,
+          "execution_context": {
+            "aggregation": "Mean improvement over validation set",
+            "image_domain": "Intensity / restored vs truth",
+            "normalization": "Integer-range normalization",
+            "simulation_vs_real": "Simulation (DSA-2000)",
+            "frequency": "1300 MHz full-band",
+            "array": "DSA-2000 (simulated)"
+          },
+          "evidence": "Reported mean SSIM improvement +0.009 (full-band) vs CLEAN."
+        },
+        {
+          "category": "comparative_ssim",
+          "submetric": "ssim_delta",
+          "value": 0.012,
+          "unit": "mean SSIM improvement",
+          "scope": "Narrow-band DSA-2000: POLISH vs image-plane CLEAN",
+          "baseline": "Image-plane CLEAN (mean SSIM 0.976±0.009)",
+          "empirical": true,
+          "execution_context": {
+            "aggregation": "Mean improvement over validation set",
+            "image_domain": "Intensity / restored vs truth",
+            "normalization": "Integer-range normalization",
+            "simulation_vs_real": "Simulation (DSA-2000)",
+            "frequency": "10 MHz snapshot",
+            "array": "DSA-2000 (simulated)"
+          },
+          "evidence": "Reported mean SSIM improvement +0.012 (narrow-band) vs CLEAN."
+        },
+        {
+          "category": "comparative_ssim",
+          "submetric": "higher_lower_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "POLISH vs image-plane CLEAN on DSA-2000 sims",
+          "baseline": "Image-plane CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "aggregation": "Mean SSIM",
+            "image_domain": "Intensity / restored vs truth",
+            "normalization": "Integer-range normalization",
+            "simulation_vs_real": "Simulation (DSA-2000); real VLA transfer has no SSIM",
+            "frequency": "1300 MHz / 10 MHz",
+            "array": "DSA-2000 (simulated)"
+          },
+          "evidence": "POLISH beats CLEAN on both full-band and narrow-band mean SSIM; real VLA transfer is qualitative only (no SSIM)."
+        }
+      ]
+    },
+    "2024arXiv241023178C": {
+      "cohort": "r2d2",
+      "title": "Uncertainty Quantification for Fast Reconstruction Methods Using Augmented Equivariant Bootstrap: Application to Radio Interferometry",
+      "ssim_details": [
+        {
+          "category": "absolute_ssim",
+          "submetric": "median_ssim",
+          "value": 0.97,
+          "unit": "median (dimensionless)",
+          "scope": "EVIL-Deconv base network vs CLEAN / PnP (Table 2 medians)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "aggregation": "Median over test set",
+            "image_domain": "Reconstruction vs truth (UQ appendix fidelity table)",
+            "normalization": null,
+            "simulation_vs_real": "Simulation / controlled reconstruction benchmark",
+            "frequency": null,
+            "array": "Radio interferometry (EVIL-Deconv / equivariant bootstrap paper)"
+          },
+          "evidence": "Table 2 median SSIM: CLEAN 0.296; PnP (DnCNN) 0.869; EVIL-Deconv 0.970 (with NMSE 19.9 dB)."
+        },
+        {
+          "category": "comparative_ssim",
+          "submetric": "higher_lower_than_baseline",
+          "value": 0.97,
+          "unit": "median SSIM",
+          "scope": "EVIL-Deconv vs CLEAN and PnP (DnCNN)",
+          "baseline": "CLEAN (0.296) / PnP DnCNN (0.869)",
+          "empirical": true,
+          "execution_context": {
+            "aggregation": "Median",
+            "image_domain": "Reconstruction vs truth",
+            "normalization": null,
+            "simulation_vs_real": "Simulation / controlled reconstruction benchmark",
+            "frequency": null,
+            "array": "Radio interferometry (EVIL-Deconv)"
+          },
+          "evidence": "EVIL-Deconv median SSIM 0.970 exceeds PnP (0.869) and CLEAN (0.296); SSIM validates the fast deconv network used for UQ experiments."
+        }
+      ]
+    },
+    "2025arXiv250309559C": {
+      "cohort": "r2d2",
+      "title": "Interlaced R2D2 DNN Series for Scalable Non-Cartesian MRI with Sensitivity Self-calibration",
+      "ssim_details": [
+        {
+          "category": "absolute_ssim",
+          "submetric": "magnitude_image_ssim",
+          "value": 0.96,
+          "unit": "mean ± 0.05 (dimensionless)",
+          "scope": "iR2D2(U-WDSR) magnitude reconstructions vs FastMRI / non-Cartesian MRI truth",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "aggregation": "Mean ± std",
+            "image_domain": "Magnitude images (|x⋆| vs |x̂|)",
+            "normalization": null,
+            "simulation_vs_real": "Simulated multi-coil radial FastMRI knee; real 15-coil 3T validation uses RDR/qualitative (no SSIM table)",
+            "frequency": "MRI (3T bSSFP / FastMRI knee)",
+            "array": "Multi-coil non-Cartesian MRI (iR2D2 transfer of R2D2 paradigm)"
+          },
+          "evidence": "SSIM on magnitude: iR2D2(U-WDSR) 0.96±0.05 vs R2D2 0.93±0.06, NC-PDNet 0.90±0.08, DDS 0.85±0.13."
+        },
+        {
+          "category": "comparative_ssim",
+          "submetric": "higher_lower_than_baseline",
+          "value": 0.96,
+          "unit": "mean SSIM",
+          "scope": "iR2D2(U-WDSR) vs R2D2 / NC-PDNet / DDS on magnitude images",
+          "baseline": "R2D2(U-WDSR) 0.93±0.06; NC-PDNet 0.90±0.08; DDS 0.85±0.13",
+          "empirical": true,
+          "execution_context": {
+            "aggregation": "Mean ± std",
+            "image_domain": "Magnitude images (|x⋆| vs |x̂|)",
+            "normalization": null,
+            "simulation_vs_real": "Simulated FastMRI knee benchmark",
+            "frequency": "MRI (FastMRI knee)",
+            "array": "Multi-coil non-Cartesian MRI"
+          },
+          "evidence": "iR2D2(U-WDSR) SSIM 0.96±0.05 ranks above R2D2, NC-PDNet, and DDS, consistent with PSNR rankings on the same non-Cartesian benchmark."
+        }
+      ]
+    }
+  }
+}

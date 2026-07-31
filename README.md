@@ -36,17 +36,7 @@ Interactive stacked bar chart of metric usage by cohort (`index.html` + `data/pa
 
 **Layout:** project docs and cohorts stay at the repo root; the browsable site assets live under `site/` (shared CSS/JS, taxonomies, detail pages); structured site data under `data/`; metric overview markdown under `metrics/`; injectors under `scripts/`.
 
-**Metric detail pages (shared shell):** Runtime, Compute, Iterations, DR, and RMS each have a bookmarkable second-level page under [`site/detail/`](site/detail/) (`runtime.html`, `compute.html`, …). Those HTML files are thin configs; shared UI lives in `site/css/metric-detail.css` + `site/js/metric-detail.js`, driven by `window.METRIC_DETAIL`. Per-metric taxonomies live in `site/js/taxonomies/`. To add another metric later: add a taxonomy JS, classify `*_details` on papers in `data/papers-data.json`, add a thin `site/detail/<metric>.html` stub, and one Explore link in `index.html`.
-
-**Runtime:** **Explore Runtime Details** → [`site/detail/runtime.html`](site/detail/runtime.html). Categories: Wall-clock, Throughput, Relative Performance, Runtime Scaling (+ Unspecified). Context panel: Hardware / Parallelism / Software / Numerical Configuration / Workload. Data: `runtime_details` (`site/js/taxonomies/runtime-taxonomy.js`; mirror `data/runtime-details.json`). Binary `runtime` unchanged.
-
-**Compute:** **Explore Compute Details** → [`site/detail/compute.html`](site/detail/compute.html). Categories: Resource Usage, Efficiency / Intensity, Relative Compute, Scaling / Complexity (+ Unspecified). Data: `compute_details` (`site/js/taxonomies/compute-taxonomy.js`). Binary `compute_cost` unchanged.
-
-**Iterations:** **Explore Iterations Details** → [`site/detail/iterations.html`](site/detail/iterations.html). Categories: Iteration Count, Convergence Behaviour, Comparative Iteration Performance, Iteration Scaling (+ Unspecified). Context: stopping / optimiser / LR / etc. Data: `iterations_details`. Binary `iterations` unchanged.
-
-**DR:** **Explore DR Details** → [`site/detail/dr.html`](site/detail/dr.html). Categories: Reported / Achieved, Target / Configured, Comparative, Limits / System Effects (+ Unspecified). Data: `dr_details`. Binary `dynamic_range` unchanged.
-
-**RMS:** **Explore RMS Details** → [`site/detail/rms.html`](site/detail/rms.html). Categories: Absolute, Comparative, Framework / Defined (+ Unspecified). Data: `rms_details`. Binary `rms` unchanged. RMS used only as a DR denominator is not a subtype; RDR is not RMS.
+**Metric detail pages (shared shell):** Every chart metric has a bookmarkable second-level page under [`site/detail/`](site/detail/) (19 stubs: SNR, logSNR, PSNR, SSIM, DR, RMS, RDR, NMSE, MAE, Flux, Astrometry, Runtime, Iters, CredInt, UncCorr, Wasser, Class, Text, Compute). Those HTML files are thin configs; shared UI lives in `site/css/metric-detail.css` + `site/js/metric-detail.js`, driven by `window.METRIC_DETAIL`. Per-metric taxonomies live in `site/js/taxonomies/`; classified `*_details` live on papers in `data/papers-data.json` (mirrors under `data/*-details.json`). Selecting a metric on the main chart shows its **Explore … Details** link (`METRIC_DRILLDOWNS` in `index.html`). To add another metric later: taxonomy JS + `*_details` + stub + Explore link.
 
 Interaction on every detail page mirrors the main graph: all positive papers by default, bar click focuses a sub-metric, title opens Overview / By paper, **All papers** / empty chart returns to browse. Papers may count in more than one sub-metric.
 

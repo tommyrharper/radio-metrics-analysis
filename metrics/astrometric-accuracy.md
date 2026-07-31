@@ -7,7 +7,7 @@ Included reporting forms: angular or pixel distance of a reconstructed source fr
 
 **Not** classified from: quoted coordinates as observational context only; image resolution or beam size alone; source detection completeness/purity without a positional-error statistic; morphology or shape accuracy (including jet-angle or ring orientation); qualitative “well aligned” or visual contour agreement; PSNR/SSIM (even when a paper notes PSNR is sensitive to shifts); a matching radius used only as a pipeline/association setting; or framework-named “astrometric error” without measured results.
 
-Cohort totals: classic **0**, emerging-ml **0**, r2d2-citing **0** (grand total **0** / 63).
+Cohort totals: classic **0**, emerging-ml **0**, r2d2-citing **0** (grand total **0** / 63). Binary `astrometric_accuracy: 0|1` flags are unchanged by the drill-down; subtype detail lives in `astrometric_accuracy_details` ([`site/detail/astrometric-accuracy.html`](../site/detail/astrometric-accuracy.html)) — currently an empty papers map.
 
 ## How papers use it
 **No measured positives in this review.** Across all three cohorts, summaries either omit source-position error, explicitly state that astrometric error was not reported, or name it only as a desirable / framework metric.
@@ -17,6 +17,18 @@ Closest non-scoring patterns (kept at 0 under the rules above):
 - **WSClean / POLISH’ing the Sky** run source finders (AEGEAN, SEP) and report flux or shape RMSE on matches; matching thresholds define true positives, not achieved position accuracy.
 - **radionets** reports jet-angle (orientation) error vs synthetic truth and states these are not astrometric tests; the summary also notes no real-data astrometric error.
 - **POLISH (emerging-ml)** notes that PSNR is sensitive to astrometric shifts and recommends measuring astrometric error in production evaluations — sensitivity/recommendation only.
+
+## Drill-down taxonomy (second-level page)
+See [`site/detail/astrometric-accuracy.html`](../site/detail/astrometric-accuracy.html) / `site/js/taxonomies/astrometric-accuracy-taxonomy.js`. Categories (papers may hit more than one; none scored yet):
+
+| Category | Sub-metrics |
+|---|---|
+| Absolute Position Error | Angular / pixel offset; RA / Dec / radial position error; Fraction within tolerance; Astrometric bias; Other absolute position-error variants |
+| Comparative Astrometry | More / less accurate than baseline; Position-error improvement factor / ratio; Percentage position-error change |
+| Framework / Defined Astrometry | Named core quality metric (no tabulated run values) |
+| Unspecified Astrometry | Vague position-accuracy mentions already flagged astrometric_accuracy=1 but not subtypeable |
+
+**Astrometry Context** (units, reference type, simulation vs real, frequency, array) is reporting completeness only — not itself an Astrometry metric.
 
 ## Popular measurement variants
 (Expected forms when papers do report the metric; none scored here.)

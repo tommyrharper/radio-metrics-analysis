@@ -1,0 +1,29 @@
+{
+  "schema_note": "mae_details live primarily on each paper in papers-data.json. This mirror is bibcode -> entries for inspection/tools. Top-level metrics.mae binary flags are unchanged.",
+  "papers": {
+    "2025A&A...698A..61J": {
+      "cohort": "r2d2",
+      "title": "Deep learning inference with the Event Horizon Telescope: II. The ZINGULARITY framework for Bayesian artificial neural networks",
+      "mae_details": [
+        {
+          "category": "parameter_regression",
+          "submetric": "physical_parameter_mae",
+          "value": null,
+          "unit": null,
+          "scope": "ZINGULARITY BANN regression: spin, R_high, inclination, position angle (Fig. 4 train/validation MAE curves)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "target_parameters": "spin, R_high, inclination, position angle",
+            "train_vs_validation": "Training vs validation curves across epochs (Fig. 4)",
+            "domain": "Visibility-domain input → physical-parameter outputs (not image MAE)",
+            "simulation_vs_real": "Synthetic EHT training (SYMBA); validation on held-out synthetic",
+            "frequency": "EHT (mm / 230 GHz class)",
+            "array": "EHT (M87* / Sgr A* synthetic campaigns)"
+          },
+          "evidence": "Mean absolute error tracks Bayesian neural-network regression performance for spin, R_high, inclination, and position angle on training vs validation data across epochs; reported qualitatively via validation curves (Fig. 4) rather than single summary scalars in the extracted text. Downstream inference accuracy on source parameters — not MAE between reconstructed and true sky brightness maps."
+        }
+      ]
+    }
+  }
+}

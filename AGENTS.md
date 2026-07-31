@@ -17,7 +17,7 @@ This file is the project's committed home for project-intrinsic agent knowledge:
 
 ## Metric detail pages
 
-Second-level drill-downs share `site/css/metric-detail.css` + `site/js/metric-detail.js`. Each `site/detail/*.html` stub only sets `window.METRIC_DETAIL` (taxonomy from `site/js/taxonomies/`, binary/details keys, page copy) then loads the shared script. Do not copy-paste a full detail page for new metrics — add taxonomy + stub + `*_details` in `data/papers-data.json` + one Explore link in `index.html`.
+All chart metrics have second-level pages under `site/detail/` (19 stubs). Shared shell: `site/css/metric-detail.css` + `site/js/metric-detail.js`. Each stub only sets `window.METRIC_DETAIL` (taxonomy from `site/js/taxonomies/`, binary/details keys, page copy) then loads the shared script. Main chart Explore links: `METRIC_DRILLDOWNS` in `index.html`. Do not copy-paste a full detail page for new metrics — add taxonomy + stub + `*_details` in `data/papers-data.json` + one Explore link.
 
 ## RMS / RDR schema
 

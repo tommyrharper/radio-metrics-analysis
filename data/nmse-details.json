@@ -1,0 +1,203 @@
+{
+  "schema_note": "nmse_details live primarily on each paper in papers-data.json. This mirror is bibcode -> entries for inspection/tools. Top-level metrics.nmse_nrmse binary flags are unchanged.",
+  "papers": {
+    "1984A&A...137..159S": {
+      "cohort": "classic",
+      "title": "Enhancements to the deconvolution algorithm \"CLEAN\"",
+      "nmse_details": [
+        {
+          "category": "unspecified",
+          "submetric": "unspecified",
+          "value": null,
+          "unit": null,
+          "scope": "SDI CLEAN synthetic contour comparisons",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "domain": "Image (qualitative / unreported RMS)",
+            "formula_scale": null,
+            "reference": "Original synthetic object",
+            "simulation_vs_real": "Noise-free and noisy synthetic tests",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Flagged nmse_nrmse=1, but the summary reports only that modified CLEAN has lower RMS error against the original object with no numeric RMS/NMSE values, and no explicit NMSE/NRMSE formulation. Left unspecified rather than overclassified."
+        }
+      ]
+    },
+    "2018A&A...616A..27V": {
+      "cohort": "classic",
+      "title": "Image Domain Gridding: a fast method for convolutional resampling of visibilities",
+      "nmse_details": [
+        {
+          "category": "unspecified",
+          "submetric": "unspecified",
+          "value": null,
+          "unit": null,
+          "scope": "IDG vs classical gridding accuracy tests",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "Visibility RMS / residual-image RMS (not NMSE)",
+            "formula_scale": null,
+            "reference": "Direct measurement-equation evaluation",
+            "simulation_vs_real": "LOFAR Toothbrush metadata simulation",
+            "frequency": "130–132 MHz",
+            "array": "LOFAR (55 stations)"
+          },
+          "evidence": "Reports visibility-domain RMS error and residual-image RMS vs classical gridding, plus analytic aliasing energy — not NMSE/NRMSE by name. Flagged nmse_nrmse=1 from classification; left unspecified on this drill-down."
+        }
+      ]
+    },
+    "2023arXiv230606007K": {
+      "cohort": "classic",
+      "title": "HVOX: Scalable Interferometric Synthesis and Analysis of Spherical Sky Maps",
+      "nmse_details": [
+        {
+          "category": "visibility_domain",
+          "submetric": "fractional_visibility_nmse",
+          "value": 1e-09,
+          "unit": "fractional NMSE floor (double precision)",
+          "scope": "Direction-cosine and HEALPix accuracy sweeps vs direct point-source evaluation",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "Visibility",
+            "formula_scale": "Fractional NMSE (requested vs achieved accuracy targets)",
+            "reference": "Direct evaluation of point-source sky model visibilities",
+            "simulation_vs_real": "Simulation (SKA-Low-style setups; also LOFAR dirty demo without NMSE)",
+            "frequency": "150 MHz (default SKA-Low sim channel)",
+            "array": "SKA-Low (simulated); LOFAR-HBA demo (no NMSE)"
+          },
+          "evidence": "Controlled accuracy experiment measures NMSE between visibilities from direct point-source evaluation vs HVOX, chunked HVOX (500 MB partition limit), NIFTY (DUCC W-gridder), and NIFTY 2D without w-term. Monolithic HVOX tracks requested NMSE down to ≈10⁻⁹ (FINUFFT upsampling floor); chunked HVOX slightly misses targets due to summed-block error; HEALPix matches direction-cosine NMSE for HVOX."
+        },
+        {
+          "category": "comparative_nmse",
+          "submetric": "higher_lower_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "HVOX / chunked HVOX vs NIFTY and NIFTY 2D (no w-term) on visibility NMSE",
+          "baseline": "NIFTY (DUCC W-gridder); NIFTY 2D without w-term; direct-evaluation target",
+          "empirical": true,
+          "execution_context": {
+            "domain": "Visibility",
+            "formula_scale": "Fractional NMSE vs requested target",
+            "reference": "Direct point-source evaluation",
+            "simulation_vs_real": "Simulation",
+            "frequency": "150 MHz (default setup)",
+            "array": "SKA-Low (simulated)"
+          },
+          "evidence": "NIFTY generally exceeds its requested accuracy by about one order of magnitude; omitting the w-term yields much larger error insensitive to the target. HEALPix requires NIFTY bilinear interpolation (≈1% error) before gridding — mesh-conversion loss isolated from restored-image quality."
+        },
+        {
+          "category": "comparative_nmse",
+          "submetric": "nmse_improvement_factor",
+          "value": 10,
+          "unit": "× (approx. order-of-magnitude overshoot of requested target by NIFTY)",
+          "scope": "NIFTY achieved vs requested visibility NMSE",
+          "baseline": "Requested NMSE target",
+          "empirical": true,
+          "execution_context": {
+            "domain": "Visibility",
+            "formula_scale": "Fractional NMSE",
+            "reference": "Direct evaluation / requested target",
+            "simulation_vs_real": "Simulation",
+            "frequency": null,
+            "array": "SKA-Low (simulated)"
+          },
+          "evidence": "NIFTY typically beats the requested NMSE target by ≈1 order of magnitude; chunked HVOX needs tighter per-block targets to hit the global NMSE."
+        }
+      ]
+    },
+    "2024arXiv241023178C": {
+      "cohort": "r2d2",
+      "title": "Uncertainty Quantification for Fast Reconstruction Methods Using Augmented Equivariant Bootstrap: Application to Radio Interferometry",
+      "nmse_details": [
+        {
+          "category": "image_domain",
+          "submetric": "image_nmse_db",
+          "value": 19.9,
+          "unit": "NMSE [−dB] (median)",
+          "scope": "EVIL-Deconv vs CLEAN and PnP (Table 2; 64×64 HST patches / MeerKAT PSFs)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "Image",
+            "formula_scale": "NMSE [−dB] = −20·log₁₀(‖x⋆−x̂‖₂/‖x⋆‖₂) (higher dB better)",
+            "reference": "Hubble Space Telescope ground-truth patches",
+            "simulation_vs_real": "Simulation (MeerKAT PSFs; 40 dB training/eval SNR)",
+            "frequency": null,
+            "array": "MeerKAT (simulated PSFs)"
+          },
+          "evidence": "Appendix A.2 defines NMSE [−dB] = −20·log₁₀(‖x⋆−x̂‖₂/‖x⋆‖₂). Median Table 2: CLEAN 4.2 dB, PnP (DnCNN) 16.3 dB, EVIL-Deconv 19.9 dB (with SSIM 0.970 at 51 ms)."
+        },
+        {
+          "category": "comparative_nmse",
+          "submetric": "higher_lower_than_baseline",
+          "value": 19.9,
+          "unit": "NMSE [−dB] vs CLEAN 4.2 / PnP 16.3",
+          "scope": "EVIL-Deconv reconstruction fidelity vs CLEAN and PnP",
+          "baseline": "CLEAN; PnP (DnCNN)",
+          "empirical": true,
+          "execution_context": {
+            "domain": "Image",
+            "formula_scale": "NMSE [−dB]",
+            "reference": "HST ground-truth patches",
+            "simulation_vs_real": "Simulation (MeerKAT PSFs)",
+            "frequency": null,
+            "array": "MeerKAT (simulated PSFs)"
+          },
+          "evidence": "EVIL-Deconv median NMSE 19.9 dB beats PnP (16.3 dB) and CLEAN (4.2 dB) on the same simulated reconstruction benchmark used for the UQ study."
+        }
+      ]
+    },
+    "2026arXiv260115844M": {
+      "cohort": "r2d2",
+      "title": "Radio-Interferometric Image Reconstruction with Denoising Diffusion Restoration Models",
+      "nmse_details": [
+        {
+          "category": "unspecified",
+          "submetric": "unspecified",
+          "value": null,
+          "unit": null,
+          "scope": "DDRM vs CLEAN / MS-CLEAN / IUWT CS on VLA/EHT/ALMA sims",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "Image (MSE / PSNR / SNR — not NMSE label)",
+            "formula_scale": "MSE = (1/NM)ΣΣ(x−x̂)²; PSNR = 10·log₁₀(MAX/MSE)",
+            "reference": "Flux-normalized VLA FIRST test images / synthetic skies",
+            "simulation_vs_real": "Simulation (VLA, EHT, ALMA configs)",
+            "frequency": null,
+            "array": "VLA / EHT / ALMA (simulated)"
+          },
+          "evidence": "Primary fidelity metrics are MSE, PSNR, SNR, and SRE. The notes explicitly state MSE/PSNR/SNR are used — not NMSE by name. Flagged nmse_nrmse=1; left unspecified."
+        }
+      ]
+    },
+    "2026arXiv260309162W": {
+      "cohort": "r2d2",
+      "title": "POLISH'ing the Sky: Wide-Field and High-Dynamic Range Interferometric Image Reconstruction with Application to Strong Lens Discovery",
+      "nmse_details": [
+        {
+          "category": "unspecified",
+          "submetric": "unspecified",
+          "value": null,
+          "unit": null,
+          "scope": "POLISH++ source detection / shape / flux / PSNR robustness",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "Image (detection F1; parameter RMSE; PSNR — not image NMSE)",
+            "formula_scale": null,
+            "reference": "T-RECS ground-truth radio sky",
+            "simulation_vs_real": "Simulation (DSA PSF / T-RECS)",
+            "frequency": null,
+            "array": "DSA (simulated)"
+          },
+          "evidence": "Reports precision/recall/F1, shape and flux RMSE on true positives, and PSNR under PSF mismatch — no explicit NMSE/NRMSE image score in the notes. Flagged nmse_nrmse=1; left unspecified."
+        }
+      ]
+    }
+  }
+}

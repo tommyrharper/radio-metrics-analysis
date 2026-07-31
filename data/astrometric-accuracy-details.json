@@ -1,0 +1,4 @@
+{
+  "schema_note": "astrometric_accuracy_details live primarily on each paper in papers-data.json. This mirror is bibcode -> entries for inspection/tools. Top-level metrics.astrometric_accuracy binary flags are unchanged. Empty papers map: zero positives under current strict include rules.",
+  "papers": {}
+}

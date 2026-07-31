@@ -3,7 +3,7 @@
 ## What this metric means here
 **RDR** is the residual-to-dirty ratio `‖r̂‖₂ / ‖x_dirty‖₂` (or Frobenius analogue on cubes/spheres) as used in the R2D2 family — a normalised data-fidelity score (lower = cleaner fit to the measured visibilities after imaging/deconvolution). It is **not** absolute residual RMS in Jy/beam (see **RMS**).
 
-Root totals after the split: classic RDR = 0, emerging-ml RDR = 1 (2024ApJS..273....3A), r2d2-citing RDR = 6 (grand total **7**).
+Root totals after the split: classic RDR = 0, emerging-ml RDR = 1 (2024ApJS..273....3A), r2d2-citing RDR = 6 (grand total **7**). Binary `rdr: 0|1` flags are unchanged by the drill-down; subtype detail lives in `rdr_details` ([`site/detail/rdr.html`](../site/detail/rdr.html)).
 
 ## How papers use it
 **RDR as quantitative data-fidelity metric (emerging-ml + r2d2-citing).** R2D2 (2024ApJS) introduces residual-to-dirty-image ratio `‖r̂‖₂/‖x_dirty‖₂` (×10⁻⁴ in tables): CLEAN lowest mean (≈5.1) in generic tests; uSARA/AIRI/R3D3 ≈6–8; plain R2D2 ≈13.5 with high dispersion; at DR ≈10⁵, optimization methods beat R2D2 on RDR despite comparable morphology. Robust R2D2 (2025ApJS..280...63A) formalizes RDR(r̂, x_d) = ‖r̂‖₂/‖x_d‖₂ (≈10⁻³ scale): R2D2_A2,T2 ≈2.22×10⁻³ comparable to AIRI/uSARA (≈2.15–2.24×10⁻³), CLEAN ≈50% higher, old architecture ≈2× worse. HyperAIRI (2026ApJS..283....9T) uses Frobenius RDR on hyperspectral cubes (≈2.3–2.6×10⁻³ for all methods, near truth reference 2.46×10⁻³)—high image SNR with matched data fidelity. S-R2D2 (2025MNRAS.542..426T) extends RDR to the sphere; planar R2D2 RDR degrades from 0.8×10⁻² to 14×10⁻² as Np increases while S-R2D2 stays ≈1–2×10⁻². iR2D2 MRI (2025arXiv250309559C) uses RDR = ‖r‖₂/‖x_b‖₂ for adaptive stopping and reports order-of-magnitude lower RDR than baselines on knee data. ALSB / generalized soft-thresholding papers (2026AJ....171...44Y, 2026AJ....171..220Y) tabulate image-domain data fidelity σ = ‖r̂‖₂/‖x_dirty‖₂ following the R2D2 convention.
@@ -11,6 +11,18 @@ Root totals after the split: classic RDR = 0, emerging-ml RDR = 1 (2024ApJS..273
 **Not RDR after reclassification.** uSARA ASKAP (2023MNRAS.522.5558W) reports absolute residual-map rms and contour multiples → **RMS**, not RDR. PRIMO (2023ApJ...943..144M) shows visibility-amplitude/closure-phase residual plots normalised by observational uncertainties — neither absolute residual RMS nor ‖r̂‖₂/‖x_dirty‖₂ → both flags 0. In r2d2-citing, Cygnus A R2D2 real-data (2024ApJ...966L..34D) and MROP (2025MNRAS.543.1727L) report residual dirty-image / residual-map **standard deviation** → **RMS**, not RDR. Autocorr-CLEAN residual-magnitude curves, IRIS Fourier-space χ², Momentum-CLEAN qualitative residual/DR discussion, and ngVLA perspective figure-based residual convergence → both 0 (former combined `rdr_residual=1` false positives under the split).
 
 **Qualitative and proxy residual assessments (not RDR).** SARA/PURIFY inspect dirty residuals (observed minus predicted dirty image) but reject flat residuals as sufficient fidelity indicator — qualitative residual discussion alone is neither RMS nor RDR. R2D2 Cygnus A real-data: homogeneous residuals around hotspots with U-WDSR vs structured residuals for U-Net. CG-CLEAN and Asp-CLEAN discuss reaching noise floor in major loops—iteration-based convergence rather than normalised RDR.
+
+## Drill-down taxonomy (second-level page)
+See [`site/detail/rdr.html`](../site/detail/rdr.html) / `site/js/taxonomies/rdr-taxonomy.js`. Categories (papers may hit more than one):
+
+| Category | Sub-metrics |
+|---|---|
+| Reported / Measured RDR | Planar ℓ₂ RDR / data-fidelity σ; Frobenius hyperspectral RDR; Spherical RDR; Back-projected residual ratio (MRI) |
+| Comparative RDR | Lower / higher RDR than baseline; RDR factor / order-of-magnitude vs baseline |
+| Framework / Operational RDR | Named core data-fidelity metric; Adaptive stopping via RDR |
+| Unspecified RDR | Vague residual-ratio mentions already flagged rdr=1 but not subtypeable |
+
+**RDR Context** (domain, norm, reporting scale, simulation vs real, frequency, array) is reporting completeness only — not itself an RDR metric.
 
 ## Popular measurement variants
 - **RDR = ‖residual dirty‖₂ / ‖dirty image‖₂:** R2D2, robust R2D2, HyperAIRI (Frobenius on cubes), S-R2D2 on sphere; typical scale 10⁻³–10⁻².

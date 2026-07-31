@@ -1,0 +1,329 @@
+{
+  "schema_note": "psnr_details live primarily on each paper in papers-data.json when injected. This mirror is bibcode -> entries for inspection/tools. Top-level metrics.psnr binary flags are unchanged.",
+  "papers": {
+    "2025arXiv251213591C": {
+      "cohort": "classic",
+      "title": "astroCAMP: A Community Benchmark and Co-Design Framework for Sustainable SKA-Scale Radio Imaging",
+      "psnr_details": [
+        {
+          "category": "framework_defined",
+          "submetric": "named_core_quality_metric",
+          "value": null,
+          "unit": "dB (defined)",
+          "scope": "astroCAMP Table 2 core algorithmic-quality pair (PSNR/SSIM)",
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "formulation": "10·log₁₀(I_max² / MSE)",
+            "max_definition": "I_max from reference image",
+            "image_domain": "Reconstruction Î vs reference I_ref",
+            "simulation_vs_real": "Framework definition (WSClean+IDG matrix skips computing quality scores)",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Table 2 names PSNR as a core quality metric via 10 log₁₀(I_max²/MSE) vs reference (scikit-image / OpenCV style). PSNR appears in the co-design quality tuple with dirty-image RMS and DR, but Section 6 does not tabulate PSNR for the WSClean+IDG experimental release."
+        }
+      ]
+    },
+    "2022MNRAS.514.2614C": {
+      "cohort": "emerging",
+      "title": "Deep radio-interferometric imaging with POLISH: DSA-2000 and weak lensing",
+      "psnr_details": [
+        {
+          "category": "absolute_psnr",
+          "submetric": "ten_log10_psnr",
+          "value": 55.9,
+          "unit": "dB (mean ± std)",
+          "scope": "DSA-2000 full-band sim (1300 MHz, 15 min PSF; 50 validation images)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formulation": "PSNR in dB (pixel-wise truth; integer-range normalised)",
+            "max_definition": "Normalised to available integer range before evaluation",
+            "image_domain": "Normalized 16-bit single-channel dirty→restored images",
+            "simulation_vs_real": "Simulation (DSA-2000 radio-galaxy skies; 0.5 μJy/pixel noise)",
+            "frequency": "1300 MHz (full-band PSF); also 10 MHz narrow-band",
+            "array": "DSA-2000 (simulated)"
+          },
+          "evidence": "Full-band: POLISH mean PSNR 55.9±4.7 dB vs CLEAN 50.0±6.0 dB. Narrow-band snapshot PSF: POLISH 55.1±3.8 dB vs CLEAN 47.4±3.6 dB. Real VLA transfer is qualitative only — no PSNR on observed data."
+        },
+        {
+          "category": "comparative_psnr",
+          "submetric": "psnr_gain_db",
+          "value": 5.9,
+          "unit": "dB mean improvement",
+          "scope": "POLISH vs image-plane CLEAN on DSA-2000 validation",
+          "baseline": "Image-plane CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "formulation": "PSNR in dB",
+            "max_definition": null,
+            "image_domain": "Normalized integer-range images",
+            "simulation_vs_real": "Simulation (DSA-2000)",
+            "frequency": "1300 MHz full-band (+7.7 dB on 10 MHz narrow-band)",
+            "array": "DSA-2000 (simulated)"
+          },
+          "evidence": "Reported mean PSNR improvements: +5.9 dB (full-band) and +7.7 dB (narrow-band) over image-plane CLEAN on the same 50-image validation set."
+        },
+        {
+          "category": "comparative_psnr",
+          "submetric": "higher_lower_than_baseline",
+          "value": 55.9,
+          "unit": "dB vs CLEAN ~47–50 dB",
+          "scope": "DSA-2000 simulated radio-galaxy task",
+          "baseline": "Image-plane CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "formulation": "PSNR in dB",
+            "max_definition": null,
+            "image_domain": null,
+            "simulation_vs_real": "Simulation (DSA-2000)",
+            "frequency": null,
+            "array": "DSA-2000 (simulated)"
+          },
+          "evidence": "POLISH mean PSNR (~55 dB) exceeds CLEAN (~47–50 dB) on both full-band and narrow-band DSA-2000 simulations."
+        },
+        {
+          "category": "parameter_sweep_psnr",
+          "submetric": "vs_hyperparameter",
+          "value": 50,
+          "unit": "dB (floor across γ grid)",
+          "scope": "PSF-mismatch ablation: train γ∈[0,20], test to γ=30 and 1.4× radial stretch",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formulation": "PSNR in dB",
+            "max_definition": null,
+            "image_domain": "Normalized images under synthetic PSF warp",
+            "simulation_vs_real": "Simulation (PSF-warp ablation)",
+            "frequency": null,
+            "array": "DSA-2000 (simulated)"
+          },
+          "evidence": "PSNR decreases outside the training warp distribution but remains above 50 dB across the displayed 3×3 γ / stretch grid."
+        },
+        {
+          "category": "parameter_sweep_psnr",
+          "submetric": "checkpoint_selection",
+          "value": null,
+          "unit": "validation PSNR",
+          "scope": "Model checkpoint selection during training",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formulation": "Validation PSNR",
+            "max_definition": null,
+            "image_domain": null,
+            "simulation_vs_real": "Simulation (training/validation pairs)",
+            "frequency": null,
+            "array": "DSA-2000 (simulated)"
+          },
+          "evidence": "Network minimizes pixel-wise ℓ1 loss; model checkpoints are selected by validation PSNR."
+        }
+      ]
+    },
+    "2025arXiv250309559C": {
+      "cohort": "r2d2",
+      "title": "Interlaced R2D2 DNN Series for Scalable Non-Cartesian MRI with Sensitivity Self-calibration",
+      "psnr_details": [
+        {
+          "category": "absolute_psnr",
+          "submetric": "ten_log10_psnr",
+          "value": 40.21,
+          "unit": "dB (mean ± std)",
+          "scope": "iR2D2(U-WDSR) non-Cartesian MRI magnitude reconstructions",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formulation": "10·log₁₀(NM² / ‖|x⋆|−|x̂|‖₂²)",
+            "max_definition": "M = max pixel value; N = image size",
+            "image_domain": "Magnitude images |x⋆| vs |x̂|",
+            "simulation_vs_real": "Simulation / MRI benchmark (non-Cartesian)",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "iR2D2(U-WDSR) achieves 40.21±6.67 dB; other reported means include R2D2 35.08±4.67, R2D2-Net 36.46±5.23, U-WDSR 34.38±4.19, NC-PDNet 34.11±5.01, DDS 33.73±6.80, iR2D2(U-Net) 38.01±6.57 dB."
+        },
+        {
+          "category": "comparative_psnr",
+          "submetric": "psnr_gain_db",
+          "value": 5.13,
+          "unit": "dB",
+          "scope": "iR2D2(U-WDSR) vs R2D2(U-WDSR) from interlaced self-calibration",
+          "baseline": "R2D2(U-WDSR)",
+          "empirical": true,
+          "execution_context": {
+            "formulation": "10·log₁₀(NM² / ‖|x⋆|−|x̂|‖₂²)",
+            "max_definition": "M = max pixel; N = image size",
+            "image_domain": "Magnitude images",
+            "simulation_vs_real": "Simulation / MRI benchmark",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "+5.13 dB mean gain over R2D2(U-WDSR); advantage largest (~6 dB) in the high dynamic-range regime. Also ~6 dB over NC-PDNet and ~6.5 dB over DDS."
+        },
+        {
+          "category": "comparative_psnr",
+          "submetric": "higher_lower_than_baseline",
+          "value": 40.21,
+          "unit": "dB vs R2D2 / NC-PDNet / DDS",
+          "scope": "Non-Cartesian MRI benchmark table",
+          "baseline": "R2D2(U-WDSR), NC-PDNet, DDS, U-WDSR",
+          "empirical": true,
+          "execution_context": {
+            "formulation": "10·log₁₀ magnitude PSNR",
+            "max_definition": null,
+            "image_domain": "Magnitude images",
+            "simulation_vs_real": "Simulation / MRI benchmark",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "iR2D2(U-WDSR) reports the highest mean PSNR among listed baselines (R2D2, R2D2-Net, U-WDSR, NC-PDNet, DDS)."
+        }
+      ]
+    },
+    "2026A&A...706A..77M": {
+      "cohort": "r2d2",
+      "title": "Accelerating the CLEAN algorithm of radio interferometry with convex optimization",
+      "psnr_details": [
+        {
+          "category": "absolute_psnr",
+          "submetric": "twenty_log10_linear_psnr",
+          "value": null,
+          "unit": "dB (formula; no single scalar headline)",
+          "scope": "Synthetic Cygnus A and ENZO simulation reconstructions",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formulation": "PSNR = 20·log₁₀(max(I) / ‖θ−I‖)",
+            "max_definition": "max(I) from ground-truth image",
+            "image_domain": "Linear image intensity vs reconstruction θ",
+            "simulation_vs_real": "Simulation (synthetic Cygnus A; ENZO)",
+            "frequency": null,
+            "array": "Interferometric simulations (CLEAN-family tests)"
+          },
+          "evidence": "Linear PSNR defined as 20 log₁₀(max(I)/‖θ−I‖). CG-CLEAN and Momentum-CLEAN score highest on synthetic Cygnus A and ENZO; CG-CLEAN leads overall vs standard CLEAN."
+        },
+        {
+          "category": "absolute_psnr",
+          "submetric": "log_domain_psnr",
+          "value": null,
+          "unit": "dB (PSNR_log)",
+          "scope": "Synthetic Cygnus A and ENZO (faint/diffuse emphasis)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formulation": "PSNR_log = 20·log₁₀(max(log I) / ‖log θ − log I‖)",
+            "max_definition": "max(log I)",
+            "image_domain": "Log-scaled image intensities",
+            "simulation_vs_real": "Simulation (synthetic Cygnus A; ENZO)",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Log-domain PSNR emphasises diffuse/faint emission fidelity. CG-CLEAN and Momentum-CLEAN score highest on both PSNR variants; not classified under the separate logSNR column."
+        },
+        {
+          "category": "comparative_psnr",
+          "submetric": "higher_lower_than_baseline",
+          "value": null,
+          "unit": "highest among CLEAN / Momentum-CLEAN / CG-CLEAN",
+          "scope": "Synthetic Cygnus A and ENZO PSNR / PSNR_log",
+          "baseline": "Standard Cotton–Schwab CLEAN; Momentum-CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "formulation": "20·log₁₀ linear and log-domain PSNR",
+            "max_definition": null,
+            "image_domain": null,
+            "simulation_vs_real": "Simulation (synthetic Cygnus A; ENZO)",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "CG-CLEAN outperforms Momentum-CLEAN and standard CLEAN overall on both linear PSNR and PSNR_log."
+        }
+      ]
+    },
+    "2026arXiv260115844M": {
+      "cohort": "r2d2",
+      "title": "Radio-Interferometric Image Reconstruction with Denoising Diffusion Restoration Models",
+      "psnr_details": [
+        {
+          "category": "absolute_psnr",
+          "submetric": "ten_log10_psnr",
+          "value": 62.9,
+          "unit": "dB",
+          "scope": "DDRM VLA config at K=1000 sampling steps (flux-normalised)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formulation": "PSNR = 10·log₁₀(MAX / MSE)",
+            "max_definition": "MAX = 1 (flux-normalised images)",
+            "image_domain": "Flux-normalised reconstructed images",
+            "simulation_vs_real": "Simulation (VLA / EHT / ALMA sampling configs)",
+            "frequency": null,
+            "array": "VLA (primary sweep); EHT; ALMA"
+          },
+          "evidence": "VLA K-sweep: PSNR 45.0 (K=10) → 49.9 → 51.8 → 59.8 → 62.9 (K=1000). EHT K=1000: 61.7 dB; ALMA K=1000: 62.8 dB. Reported alongside MSE/SNR/SRE."
+        },
+        {
+          "category": "parameter_sweep_psnr",
+          "submetric": "vs_hyperparameter",
+          "value": 62.9,
+          "unit": "dB at K=1000 (VLA)",
+          "scope": "PSNR vs diffusion sampling steps K on VLA config",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formulation": "10·log₁₀(MAX/MSE), MAX=1",
+            "max_definition": "MAX = 1",
+            "image_domain": "Flux-normalised",
+            "simulation_vs_real": "Simulation (VLA sampling)",
+            "frequency": null,
+            "array": "VLA"
+          },
+          "evidence": "PSNR rises monotonically with sampling steps K from 45.0 dB at K=10 to 62.9 dB at K=1000; K=1000 used for subsequent telescope configs."
+        }
+      ]
+    },
+    "2026arXiv260309162W": {
+      "cohort": "r2d2",
+      "title": "POLISH'ing the Sky: Wide-Field and High-Dynamic Range Interferometric Image Reconstruction with Application to Strong Lens Discovery",
+      "psnr_details": [
+        {
+          "category": "parameter_sweep_psnr",
+          "submetric": "vs_hyperparameter",
+          "value": null,
+          "unit": "dB vs PSF-warp γ ∈ [0, 30]",
+          "scope": "POLISH++ model-mismatch / robustness experiment (Fig. 8)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "formulation": "PSNR in dB (pixel-level fidelity under PSF warp)",
+            "max_definition": null,
+            "image_domain": "Reconstructed images under synthetic PSF warping",
+            "simulation_vs_real": "Simulation (PSF-mismatch; train γ=0, test γ∈[0,30])",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "PSNR degrades predictably as PSF warp γ increases outside training (γ=0 only). Authors note PSNR is more sensitive to model mismatch than visual quality, which remains comparatively stable even at γ=30."
+        },
+        {
+          "category": "parameter_sweep_psnr",
+          "submetric": "checkpoint_selection",
+          "value": 11,
+          "unit": "epochs to peak PSNR (fine-tune)",
+          "scope": "Fine-tuning under PSF mismatch vs train-from-scratch",
+          "baseline": "Train from scratch (57 epochs to peak PSNR)",
+          "empirical": true,
+          "execution_context": {
+            "formulation": "Peak validation / reconstruction PSNR epoch",
+            "max_definition": null,
+            "image_domain": null,
+            "simulation_vs_real": "Simulation (PSF-mismatch fine-tuning)",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Fine-tuning an existing POLISH++ model reaches peak PSNR in 11 epochs vs 57 epochs training from scratch (>5× speedup); both beat the unadapted mismatched baseline. No head-to-head PSNR vs R2D2 on shared data."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schema_note": "text_details live primarily on each paper in papers-data.json. This mirror is bibcode -> entries for inspection/tools. Top-level metrics.text_metrics binary flags are unchanged.",
+  "papers": {
+    "2025MLS&T...6d5005Z": {
+      "cohort": "r2d2",
+      "title": "Unveiling the power of multimodal large language models for radio astronomical image understanding and question answering",
+      "text_details": [
+        {
+          "category": "semantic_similarity",
+          "submetric": "bleu",
+          "value": null,
+          "unit": null,
+          "scope": "Open-ended VQA / free-text tasks on RadioAstroVQA",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "task": "VQA / free-text (RadioAstroVQA)",
+            "dataset": "RadioAstroVQA (FAST, HTRU Medlat, Spectrumcls, Radio Galaxy)",
+            "models": "DeepSeek-VL-7B, InternVL2-40B (LoRA fine-tuned); vs ML/DL and general MLLM baselines",
+            "reference_type": "Reference answers in VQA-format examples",
+            "domain": "Radio astronomical image understanding / question answering"
+          },
+          "evidence": "VQA / free-text tasks report BLEU as a semantic-similarity score between generated and reference answers. Classification metrics on discrete tasks are scored under Class, not Text."
+        },
+        {
+          "category": "semantic_similarity",
+          "submetric": "rouge",
+          "value": null,
+          "unit": null,
+          "scope": "Open-ended VQA / free-text tasks on RadioAstroVQA",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "task": "VQA / free-text (RadioAstroVQA)",
+            "dataset": "RadioAstroVQA (FAST, HTRU Medlat, Spectrumcls, Radio Galaxy)",
+            "models": "DeepSeek-VL-7B, InternVL2-40B (LoRA fine-tuned); vs ML/DL and general MLLM baselines",
+            "reference_type": "Reference answers in VQA-format examples",
+            "domain": "Radio astronomical image understanding / question answering"
+          },
+          "evidence": "VQA / free-text tasks report ROUGE as a recall-oriented n-gram / sequence overlap score between generated and reference answers."
+        },
+        {
+          "category": "semantic_similarity",
+          "submetric": "chrf",
+          "value": null,
+          "unit": null,
+          "scope": "Open-ended VQA / free-text tasks on RadioAstroVQA",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "task": "VQA / free-text (RadioAstroVQA)",
+            "dataset": "RadioAstroVQA (FAST, HTRU Medlat, Spectrumcls, Radio Galaxy)",
+            "models": "DeepSeek-VL-7B, InternVL2-40B (LoRA fine-tuned); vs ML/DL and general MLLM baselines",
+            "reference_type": "Reference answers in VQA-format examples",
+            "domain": "Radio astronomical image understanding / question answering"
+          },
+          "evidence": "VQA / free-text tasks report chrF (character n-gram F-score) as a semantic-similarity score between generated and reference answers."
+        }
+      ]
+    }
+  }
+}

@@ -863,11 +863,25 @@
         </div>
         <div class="metric-summary" id="metricSummary"></div>
         <div class="metric-drilldown" id="metricDrilldown">
-          <a href="site/detail/runtime.html" id="runtimeDrilldownLink" hidden>Explore Runtime Details</a>
-          <a href="site/detail/compute.html" id="computeDrilldownLink" hidden>Explore Compute Details</a>
-          <a href="site/detail/iterations.html" id="iterationsDrilldownLink" hidden>Explore Iterations Details</a>
+          <a href="site/detail/snr.html" id="snrDrilldownLink" hidden>Explore SNR Details</a>
+          <a href="site/detail/logsnr.html" id="logsnrDrilldownLink" hidden>Explore logSNR Details</a>
+          <a href="site/detail/psnr.html" id="psnrDrilldownLink" hidden>Explore PSNR Details</a>
+          <a href="site/detail/ssim.html" id="ssimDrilldownLink" hidden>Explore SSIM Details</a>
           <a href="site/detail/dr.html" id="drDrilldownLink" hidden>Explore DR Details</a>
           <a href="site/detail/rms.html" id="rmsDrilldownLink" hidden>Explore RMS Details</a>
+          <a href="site/detail/rdr.html" id="rdrDrilldownLink" hidden>Explore RDR Details</a>
+          <a href="site/detail/nmse.html" id="nmseDrilldownLink" hidden>Explore NMSE Details</a>
+          <a href="site/detail/mae.html" id="maeDrilldownLink" hidden>Explore MAE Details</a>
+          <a href="site/detail/flux-recovery.html" id="fluxRecoveryDrilldownLink" hidden>Explore Flux Details</a>
+          <a href="site/detail/astrometric-accuracy.html" id="astrometricAccuracyDrilldownLink" hidden>Explore Astrometry Details</a>
+          <a href="site/detail/runtime.html" id="runtimeDrilldownLink" hidden>Explore Runtime Details</a>
+          <a href="site/detail/iterations.html" id="iterationsDrilldownLink" hidden>Explore Iterations Details</a>
+          <a href="site/detail/credint.html" id="credintDrilldownLink" hidden>Explore CredInt Details</a>
+          <a href="site/detail/unccorr.html" id="unccorrDrilldownLink" hidden>Explore UncCorr Details</a>
+          <a href="site/detail/wasser.html" id="wasserDrilldownLink" hidden>Explore Wasser Details</a>
+          <a href="site/detail/class.html" id="classDrilldownLink" hidden>Explore Class Details</a>
+          <a href="site/detail/text.html" id="textDrilldownLink" hidden>Explore Text Details</a>
+          <a href="site/detail/compute.html" id="computeDrilldownLink" hidden>Explore Compute Details</a>
         </div>
         <div class="metric-variants" id="metricVariants"></div>
         <ul class="paper-list" id="paperList"></ul>
@@ -1331,29 +1345,43 @@
       detailTitle.append(main, full, tag);
     }
 
+    // binary_key → Explore link id (site/detail/*.html). Metric-exclusive via [hidden].
+    const METRIC_DRILLDOWNS = {
+      snr: "snrDrilldownLink",
+      logsnr: "logsnrDrilldownLink",
+      psnr: "psnrDrilldownLink",
+      ssim: "ssimDrilldownLink",
+      dynamic_range: "drDrilldownLink",
+      rms: "rmsDrilldownLink",
+      rdr: "rdrDrilldownLink",
+      nmse_nrmse: "nmseDrilldownLink",
+      mae: "maeDrilldownLink",
+      flux_recovery: "fluxRecoveryDrilldownLink",
+      astrometric_accuracy: "astrometricAccuracyDrilldownLink",
+      runtime: "runtimeDrilldownLink",
+      iterations: "iterationsDrilldownLink",
+      credible_interval: "credintDrilldownLink",
+      uncertainty_correlation: "unccorrDrilldownLink",
+      wasserstein: "wasserDrilldownLink",
+      classification_metrics: "classDrilldownLink",
+      text_metrics: "textDrilldownLink",
+      compute_cost: "computeDrilldownLink",
+    };
+
     function updateMetricDrilldown(metricIndex) {
       // Detail pages live under site/detail/*.html
       // Mutually exclusive: only the link for the selected metric is shown (a[hidden]{display:none}).
       const key = metricIndex === null || metricIndex === undefined ? null : metricKeys[metricIndex];
-      const runtimeLink = document.getElementById("runtimeDrilldownLink");
-      const computeLink = document.getElementById("computeDrilldownLink");
-      const iterationsLink = document.getElementById("iterationsDrilldownLink");
-      const drLink = document.getElementById("drDrilldownLink");
-      const rmsLink = document.getElementById("rmsDrilldownLink");
-      const showRuntime = key === "runtime";
-      const showCompute = key === "compute_cost";
-      const showIterations = key === "iterations";
-      const showDr = key === "dynamic_range";
-      const showRms = key === "rms";
-      runtimeLink.hidden = !showRuntime;
-      computeLink.hidden = !showCompute;
-      iterationsLink.hidden = !showIterations;
-      drLink.hidden = !showDr;
-      rmsLink.hidden = !showRms;
-      metricDrilldown.classList.toggle(
-        "open",
-        showRuntime || showCompute || showIterations || showDr || showRms
-      );
+      const activeId = key ? METRIC_DRILLDOWNS[key] : null;
+      let anyShown = false;
+      for (const linkId of Object.values(METRIC_DRILLDOWNS)) {
+        const link = document.getElementById(linkId);
+        if (!link) continue;
+        const show = linkId === activeId;
+        link.hidden = !show;
+        if (show) anyShown = true;
+      }
+      metricDrilldown.classList.toggle("open", anyShown);
     }
 
     function showAllPapers() {

@@ -1,0 +1,371 @@
+{
+  "schema_note": "flux_recovery_details live primarily on each paper in papers-data.json. This mirror is bibcode -> entries for inspection/tools. Top-level metrics.flux_recovery binary flags are unchanged.",
+  "papers": {
+    "1988A&A...200..312W": {
+      "cohort": "classic",
+      "title": "The Multi-Resolution Clean and its application to the short-spacing problem in interferometry",
+      "flux_recovery_details": [
+        {
+          "category": "truth_based_flux",
+          "submetric": "integrated_vs_true",
+          "value": 962,
+          "unit": "arbitrary flux units (of 1002 true)",
+          "scope": "5′ circular Gaussian, peak-to-noise 20 (Table 1)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "Arbitrary model flux units",
+            "aperture_region": "Source-dependent ring radii (Table 1)",
+            "reference_type": "Known Gaussian model flux",
+            "simulation_vs_real": "Simulation (WSRT dirty beam)",
+            "frequency": null,
+            "array": "WSRT (simulated full-synthesis beam)"
+          },
+          "evidence": "At peak-to-noise 20, the 5′ circular model has true flux 1002; MRC recovers 962 with a flat cumulative profile, while CLEAN recovers 563 with a strongly changing profile."
+        },
+        {
+          "category": "truth_based_flux",
+          "submetric": "recovery_fraction",
+          "value": 93.6,
+          "unit": "%",
+          "scope": "Realistic clean-map model reused as truth (≈30′ / 90 beams)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "% of true integrated flux",
+            "aperture_region": "Full model extent in dirty-map experiment",
+            "reference_type": "Known model flux (10,000 arb. units)",
+            "simulation_vs_real": "Simulation (real-source map as model)",
+            "frequency": null,
+            "array": "WSRT (simulated)"
+          },
+          "evidence": "From a true flux of 10,000 arbitrary units, MRC recovers 9358 (93.6%); CLEAN recovers 6910 (69.1%) and leaves the negative bowl present."
+        },
+        {
+          "category": "cross_method_flux",
+          "submetric": "comparative_recovered_flux",
+          "value": null,
+          "unit": null,
+          "scope": "MRC vs conventional CLEAN recovered integrated flux (Table 1)",
+          "baseline": "Högbom / conventional CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "units": "Arbitrary model flux units",
+            "aperture_region": "Source-dependent radii",
+            "reference_type": "Known model + cross-method comparison",
+            "simulation_vs_real": "Simulation",
+            "frequency": null,
+            "array": "WSRT (simulated)"
+          },
+          "evidence": "Across Table 1 models MRC recovers substantially more integrated flux than CLEAN (e.g. 962 vs 563 of 1002 at 5′; 2788 vs 653 of 4010 at 10′). At low SNR MRC can over-recover."
+        }
+      ]
+    },
+    "2008ISTSP...2..793C": {
+      "cohort": "classic",
+      "title": "Multiscale CLEAN Deconvolution of Radio Synthesis Images",
+      "flux_recovery_details": [
+        {
+          "category": "truth_based_flux",
+          "submetric": "integrated_vs_true",
+          "value": 1495,
+          "unit": "Jy",
+          "scope": "M31 VLA C-config simulation (Table II total recovered flux)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "Jy",
+            "aperture_region": "Full simulated M31 model",
+            "reference_type": "Known model reference flux 1,495 Jy",
+            "simulation_vs_real": "Simulation (VLA C-configuration)",
+            "frequency": "X-band context in related sweeps; M31 table is continuum sim",
+            "array": "VLA C-configuration"
+          },
+          "evidence": "Table II: Multiscale CLEAN recovers 1,495 Jy (exact match to the table reference), vs Högbom 1,474 Jy, Clark 1,326 Jy, MRC 1,546 Jy, MEM 1,486 Jy."
+        },
+        {
+          "category": "truth_based_flux",
+          "submetric": "recovery_fraction",
+          "value": null,
+          "unit": "recovered-flux fraction (parameter sweeps)",
+          "scope": "Source-size and visibility-noise sweeps (M31/M51 models)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "Fraction of true flux",
+            "aperture_region": "Simulated source extent / masks",
+            "reference_type": "Known model flux",
+            "simulation_vs_real": "Simulation (VLA C-array)",
+            "frequency": "X band (size/noise sweeps)",
+            "array": "VLA C-array"
+          },
+          "evidence": "Source-size and noise sweeps report recovered-flux fraction vs maximum scale and SNR; Multiscale CLEAN retains accurate flux estimates down to SNR ~4, while MEM overestimates from SNR as high as 100."
+        },
+        {
+          "category": "cross_method_flux",
+          "submetric": "comparative_recovered_flux",
+          "value": 3.08,
+          "unit": "Jy (vs 0.32 Jy Högbom)",
+          "scope": "Real VLA D-config H I channel of NGC 1058",
+          "baseline": "Högbom CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "units": "Jy",
+            "aperture_region": "Source region (multiscale flux stable when enlarged)",
+            "reference_type": "Cross-method (no known sky truth)",
+            "simulation_vs_real": "Real VLA observation",
+            "frequency": null,
+            "array": "VLA D-configuration"
+          },
+          "evidence": "On real NGC 1058 H I data, Multiscale CLEAN recovered 3.08 Jy integrated flux vs 0.32 Jy for Högbom CLEAN; Högbom flux was strongly region-dependent due to the negative bowl."
+        }
+      ]
+    },
+    "2011A&A...532A..71R": {
+      "cohort": "classic",
+      "title": "A multi-scale multi-frequency deconvolution algorithm for synthesis imaging in radio interferometry",
+      "flux_recovery_details": [
+        {
+          "category": "truth_based_flux",
+          "submetric": "peak_flux_bias",
+          "value": 0.001,
+          "unit": "fractional peak-flux error (~1 part in 10³)",
+          "scope": "Noise-free EVLA Taylor-order test, 2:1 band, four Taylor terms (Figure 4)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "Fractional error on reference-frequency peak",
+            "aperture_region": "1 Jy point-source peak",
+            "reference_type": "Known 1 Jy point-source model",
+            "simulation_vs_real": "Simulation (noise-free EVLA)",
+            "frequency": "~2 GHz centre; bandwidth ratios 1.1:1–3:1",
+            "array": "EVLA"
+          },
+          "evidence": "Noise-free Taylor-order test: for a 2:1 band and four Taylor terms, reference-frequency peak-flux error is about 1 part in 1,000 (with DR ~100,000 and spectral-index error ~0.01)."
+        }
+      ]
+    },
+    "2014MNRAS.444..606O": {
+      "cohort": "classic",
+      "title": "WSClean: an implementation of a fast, generic wide-field imager for radio astronomy",
+      "flux_recovery_details": [
+        {
+          "category": "truth_based_flux",
+          "submetric": "catalogue_flux_error",
+          "value": 1.31,
+          "unit": "% AEGEAN source-flux standard error",
+          "scope": "100×1 Jy MWA simulation, zenith, 12 w-layers (vs CASA 1.34%)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "% source-flux standard error (AEGEAN)",
+            "aperture_region": "AEGEAN catalogue on 100 simulated 1 Jy sources",
+            "reference_type": "Known injected 1 Jy sources",
+            "simulation_vs_real": "Simulation (MWA, no system noise)",
+            "frequency": "MWA band",
+            "array": "MWA"
+          },
+          "evidence": "At zenith with 12 w-layers, WSClean reports 1.31% AEGEAN source-flux standard error (and 0.94 mJy/beam residual RMS) versus CASA 1.34% and 1.90 mJy/beam."
+        },
+        {
+          "category": "cross_method_flux",
+          "submetric": "comparative_recovered_flux",
+          "value": null,
+          "unit": "2–33% lower source-flux errors than CASA",
+          "scope": "MWA simulation grid (zenith and 10° zenith angle)",
+          "baseline": "CASA w-projection",
+          "empirical": true,
+          "execution_context": {
+            "units": "% source-flux standard error",
+            "aperture_region": "AEGEAN catalogue",
+            "reference_type": "Known injected sources + cross-method",
+            "simulation_vs_real": "Simulation (MWA)",
+            "frequency": "MWA band",
+            "array": "MWA"
+          },
+          "evidence": "Across controlled tests the paper summarizes WSClean as having 2–33% lower source-flux errors (and 0–49% lower residual RMS) than CASA."
+        }
+      ]
+    },
+    "2018A&A...611A..87T": {
+      "cohort": "classic",
+      "title": "Faceting for direction-dependent spectral deconvolution",
+      "flux_recovery_details": [
+        {
+          "category": "truth_based_flux",
+          "submetric": "relative_flux_density_error",
+          "value": null,
+          "unit": "(Ŝ₅₀−S₅₀)/S₅₀",
+          "scope": "LOFAR LBA semi-realistic simulation vs beam radius (Figure 9)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "Relative flux-density error at 50 MHz",
+            "aperture_region": "Point sources vs distance from beam centre / HPBW",
+            "reference_type": "Known simulated S₅₀",
+            "simulation_vs_real": "Simulation (LOFAR LBA, DD Jones)",
+            "frequency": "30–70 MHz (S₅₀ at 50 MHz)",
+            "array": "LOFAR LBA (36 stations)"
+          },
+          "evidence": "Simulation measures (estimated S₅₀ − true S₅₀)/true S₅₀ versus beam-radius distance. Direction-independent narrowband imaging shows strong negative radial bias; DD HMP-WB and SSD-WB cluster much closer to zero (SSD visually tighter)."
+        }
+      ]
+    },
+    "2022A&A...664A.134S": {
+      "cohort": "emerging",
+      "title": "Deep learning-based imaging in radio interferometry",
+      "flux_recovery_details": [
+        {
+          "category": "truth_based_flux",
+          "submetric": "peak_flux_bias",
+          "value": -4.354,
+          "unit": "% mean relative core specific-intensity deviation",
+          "scope": "10,000 synthetic radio-galaxy tests, noiseless radionets model",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "% relative deviation (arbitrary intensity units)",
+            "aperture_region": "Brightest Gaussian core pixels averaged",
+            "reference_type": "Synthetic Gaussian truth",
+            "simulation_vs_real": "Simulation (gridded VLBA-like masks)",
+            "frequency": null,
+            "array": "Simulated ten-antenna VLBA-like coverage"
+          },
+          "evidence": "Core specific-intensity mean relative deviations: noiseless network −4.354% ± 6.662%; image-noise-trained 0.613% ± 12.402%; WSClean −13.645% ± 24.312%."
+        },
+        {
+          "category": "cross_method_flux",
+          "submetric": "comparative_recovered_flux",
+          "value": null,
+          "unit": null,
+          "scope": "Radionets vs fixed WSClean config on synthetic cores",
+          "baseline": "WSClean (one fixed configuration)",
+          "empirical": true,
+          "execution_context": {
+            "units": "% relative core intensity deviation",
+            "aperture_region": "Core Gaussian component",
+            "reference_type": "Synthetic truth + cross-method",
+            "simulation_vs_real": "Simulation",
+            "frequency": null,
+            "array": "Simulated VLBA-like"
+          },
+          "evidence": "Network core-intensity bias/scatter is smaller than the reported WSClean mean deviation (−13.6% ± 24.3%), though large dispersions show near-zero mean bias ≠ accurate per-source flux."
+        }
+      ]
+    },
+    "2022ApJ...939L...4D": {
+      "cohort": "emerging",
+      "title": "First AI for Deep Super-resolution Wide-field Imaging in Radio Astronomy: Unveiling Structure in ESO 137-006",
+      "flux_recovery_details": [
+        {
+          "category": "cross_method_flux",
+          "submetric": "cross_method_integrated",
+          "value": 143,
+          "unit": "mJy (uSARA/AIRI at 1053 MHz; CLEAN 146 mJy)",
+          "scope": "ESO 137-006 AGN photometry, MeerKAT continuum bands",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "mJy",
+            "aperture_region": "AGN region (CLEAN within dirty-beam main lobe; ML over active pixels)",
+            "reference_type": "Cross-method (no known sky truth)",
+            "simulation_vs_real": "Real MeerKAT observation",
+            "frequency": "1053 and 1399 MHz",
+            "array": "MeerKAT"
+          },
+          "evidence": "At 1053 MHz, uSARA, AIRI, and CLEAN recover 143, 143, and 146 mJy; at 1399 MHz 124, 125, and 123 mJy. Agreement is a real-data consistency check, not truth error."
+        }
+      ]
+    },
+    "2023MNRAS.522.5558W": {
+      "cohort": "emerging",
+      "title": "Scalable precision wide-field imaging in radio interferometry: I. uSARA validated on ASKAP data",
+      "flux_recovery_details": [
+        {
+          "category": "cross_method_flux",
+          "submetric": "cross_method_integrated",
+          "value": 117.2,
+          "unit": "mJy (uSARA full-band; WSClean 115.5 mJy)",
+          "scope": "ASKAP fields: Abell 3395, PKS 2014-55, SPT2023, PKS 2130-538",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "mJy",
+            "aperture_region": "Manually drawn regions (~2σ WSClean contour; shared per source/sub-band)",
+            "reference_type": "Cross-method (no catalogue validation)",
+            "simulation_vs_real": "Real ASKAP Early Science / Pilot",
+            "frequency": "~817–1139 MHz sub-bands; 943 MHz full-band",
+            "array": "ASKAP"
+          },
+          "evidence": "Tabulated integrated diffuse fluxes across sub-bands for multiple sources (e.g. Abell 3395 phoenix Table 3; PKS 2014-55 Table 4; SPT2023 relic Table 5). Closest agreement on PKS 2130-538: 117.2 mJy uSARA vs 115.5 mJy WSClean restored/smoothed at 943 MHz."
+        }
+      ]
+    },
+    "2023MNRAS.522.5576W": {
+      "cohort": "emerging",
+      "title": "Scalable precision wide-field imaging in radio interferometry: II. AIRI validated on ASKAP data",
+      "flux_recovery_details": [
+        {
+          "category": "cross_method_flux",
+          "submetric": "cross_method_integrated",
+          "value": 116.7,
+          "unit": "mJy (AIRI full-band Dancing Ghosts)",
+          "scope": "ASKAP AIRI vs uSARA / WSClean integrated fluxes (Tables 1–4)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "mJy",
+            "aperture_region": "Hand-drawn regions adjusted to AIRI morphology",
+            "reference_type": "Cross-method (no known sky truth)",
+            "simulation_vs_real": "Real ASKAP Early Science / Pilot",
+            "frequency": "~817–1139 MHz; 943 MHz full-band",
+            "array": "ASKAP"
+          },
+          "evidence": "AIRI integrated fluxes tabulated per field/sub-band (e.g. Abell phoenix Table 1; PKS 2014-55 Table 2; SPT2023 relic Table 3). PKS 2130-538 full-band AIRI 116.7 mJy agrees closely with companion uSARA/WSClean; apertures differ from the uSARA paper."
+        }
+      ]
+    },
+    "2026arXiv260309162W": {
+      "cohort": "r2d2",
+      "title": "POLISH'ing the Sky: Wide-Field and High-Dynamic Range Interferometric Image Reconstruction with Application to Strong Lens Discovery",
+      "flux_recovery_details": [
+        {
+          "category": "truth_based_flux",
+          "submetric": "catalogue_flux_error",
+          "value": 0.00032625,
+          "unit": "Jy/pixel flux RMSE (CLEAN; best)",
+          "scope": "SEP flux RMSE on true-positive detections (Table 3)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "units": "Jy/pixel RMSE",
+            "aperture_region": "SEP-extracted true-positive sources",
+            "reference_type": "Simulated ground-truth flux",
+            "simulation_vs_real": "Simulation (strong-lens discovery setup)",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Table 3 flux RMSE: CLEAN 3.2625×10⁻⁴ Jy/px (best), POLISH 1.9504×10⁻³, POLISH+ 3.8411×10⁻³, POLISH++ 3.1703×10⁻³ — CLEAN superior for flux fidelity."
+        },
+        {
+          "category": "cross_method_flux",
+          "submetric": "comparative_recovered_flux",
+          "value": null,
+          "unit": null,
+          "scope": "CLEAN vs POLISH / POLISH+ / POLISH++ flux RMSE",
+          "baseline": "CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "units": "Jy/pixel RMSE",
+            "aperture_region": "SEP true positives",
+            "reference_type": "Ground truth + cross-method",
+            "simulation_vs_real": "Simulation",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Learned POLISH variants have higher flux RMSE than CLEAN; attributed to nonlinear learned reconstruction lacking explicit flux calibration."
+        }
+      ]
+    }
+  }
+}

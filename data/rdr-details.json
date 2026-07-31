@@ -1,0 +1,497 @@
+{
+  "schema_note": "rdr_details live primarily on each paper in papers-data.json. This mirror is bibcode -> entries for inspection/tools. Top-level metrics.rdr binary flags are unchanged.",
+  "papers": {
+    "2024ApJS..273....3A": {
+      "cohort": "emerging",
+      "title": "The R2D2 Deep Neural Network Series Paradigm for Fast Precision Imaging in Radio Astronomy",
+      "rdr_details": [
+        {
+          "category": "reported_rdr",
+          "submetric": "planar_l2_rdr",
+          "value": 13.5,
+          "unit": "×10⁻⁴ (mean ± std)",
+          "scope": "Generic VLA 512×512 sims — R2D2 mean residual-to-dirty ratio (Table 2)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": "×10⁻⁴",
+            "simulation_vs_real": "Simulation (VLA)",
+            "frequency": "Monochromatic (sim)",
+            "array": "VLA"
+          },
+          "evidence": "Image-domain data fidelity ‖r̂‖₂/‖x_dirty‖₂; Table 2 means (×10⁻⁴): CLEAN 5.1±5.2, uSARA 6.5±8.2, AIRI 6.4±8.0, R2D2 13.5±46.9, R3D3-3L 7.6±7.6, R3D3-6L 7.9±7.8."
+        },
+        {
+          "category": "comparative_rdr",
+          "submetric": "lower_higher_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "Generic + high-DR targeted VLA experiments vs CLEAN / uSARA / AIRI / R3D3",
+          "baseline": "CLEAN, uSARA, AIRI, R3D3",
+          "empirical": true,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": "×10⁻⁴",
+            "simulation_vs_real": "Simulation (VLA)",
+            "frequency": null,
+            "array": "VLA"
+          },
+          "evidence": "CLEAN lowest mean RDR in generic tests; at DR≈10⁵ AIRI/uSARA beat R2D2 on RDR despite comparable morphology — truth fidelity distinguished from data-residual fidelity."
+        },
+        {
+          "category": "framework_operational",
+          "submetric": "named_data_fidelity_metric",
+          "value": null,
+          "unit": null,
+          "scope": null,
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": "×10⁻⁴",
+            "simulation_vs_real": null,
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Residual-to-dirty-image ratio introduced as the R2D2-family image-domain data-fidelity metric alongside SNR / logSNR."
+        }
+      ]
+    },
+    "2025ApJS..280...63A": {
+      "cohort": "r2d2",
+      "title": "Toward a Robust R2D2 Paradigm for Radio-interferometric Imaging: Revisiting Deep Neural Network Training and Architecture",
+      "rdr_details": [
+        {
+          "category": "reported_rdr",
+          "submetric": "planar_l2_rdr",
+          "value": 0.00222,
+          "unit": "(R2D2_A2,T2; Table 4)",
+          "scope": "Simulated VLA monochromatic 512×512 — RDR(r̂, x_d)=‖r̂‖₂/‖x_d‖₂",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": "×10⁻³",
+            "simulation_vs_real": "Simulation (VLA)",
+            "frequency": "Monochromatic",
+            "array": "VLA"
+          },
+          "evidence": "Table 4: R2D2_A2,T2 2.22×10⁻³, AIRI 2.24×10⁻³, uSARA 2.15×10⁻³; CLEAN 3.29×10⁻³; older R2D2_A1,T2 4.07×10⁻³."
+        },
+        {
+          "category": "reported_rdr",
+          "submetric": "planar_l2_rdr",
+          "value": 0.00246,
+          "unit": "(R2D2_A2,T2 Cygnus A)",
+          "scope": "Real Cygnus A data — converged RDR (Section 5 / Fig. 6)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": "×10⁻³",
+            "simulation_vs_real": "Real (Cygnus A)",
+            "frequency": null,
+            "array": "VLA"
+          },
+          "evidence": "Real-data RDR: R2D2_A1,T1 2.85×10⁻³, R2D2_A1,T2 2.68×10⁻³, R2D2_A2,T2 2.46×10⁻³ (best / lowest)."
+        },
+        {
+          "category": "comparative_rdr",
+          "submetric": "lower_higher_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "R2D2_A2,T2 vs CLEAN / AIRI / uSARA / older architecture",
+          "baseline": "CLEAN, AIRI, uSARA, R2D2_A1",
+          "empirical": true,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": "×10⁻³",
+            "simulation_vs_real": "Simulation (and real Cygnus A)",
+            "frequency": null,
+            "array": "VLA"
+          },
+          "evidence": "R2D2_A2,T2 RDR comparable to AIRI/uSARA; CLEAN ~50% higher; old architecture ~2× worse."
+        },
+        {
+          "category": "framework_operational",
+          "submetric": "named_data_fidelity_metric",
+          "value": null,
+          "unit": null,
+          "scope": null,
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": "×10⁻³",
+            "simulation_vs_real": null,
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "RDR formalized as primary image-domain data-fidelity metric; also used in data-fidelity-based series convergence criterion."
+        },
+        {
+          "category": "framework_operational",
+          "submetric": "adaptive_stopping_criterion",
+          "value": null,
+          "unit": null,
+          "scope": null,
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": null,
+            "simulation_vs_real": "Simulation and real Cygnus A",
+            "frequency": null,
+            "array": "VLA"
+          },
+          "evidence": "Data-fidelity-based series convergence criterion; Cygnus A iteration counts to convergence 12–16 depending on architecture/training."
+        }
+      ]
+    },
+    "2025MNRAS.542..426T": {
+      "cohort": "r2d2",
+      "title": "S-R2D2: a spherical extension of the R2D2 deep neural network series paradigm for wide-field radio-interferometric imaging",
+      "rdr_details": [
+        {
+          "category": "reported_rdr",
+          "submetric": "spherical_rdr",
+          "value": 0.012,
+          "unit": "(S-R2D2 best mean at Np=600²)",
+          "scope": "S-R2D2 sphere RDR across Np=400²–800²",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "Sphere",
+            "norm": "ℓ₂ (sphere via Γ†)",
+            "reporting_scale": "×10⁻²",
+            "simulation_vs_real": "Simulation (wide-field)",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "RDR(r,x^d)=‖r‖₂/‖x^d‖₂ on the sphere. S-R2D2: 1.5×10⁻² → 1.2×10⁻² (best) → 2.1×10⁻² as Np increases 400²→800²."
+        },
+        {
+          "category": "reported_rdr",
+          "submetric": "planar_l2_rdr",
+          "value": 0.14,
+          "unit": "(planar R2D2 at Np=800²)",
+          "scope": "Planar R2D2 RDR degradation with resolution",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": "×10⁻²",
+            "simulation_vs_real": "Simulation (wide-field)",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Planar R2D2 RDR worsens from 0.8×10⁻² (Np=400²) to 14×10⁻² (Np=800²) while S-R2D2 stays ≈1–2×10⁻²."
+        },
+        {
+          "category": "comparative_rdr",
+          "submetric": "lower_higher_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "S-R2D2 vs planar R2D2 across Np / sources",
+          "baseline": "Planar R2D2",
+          "empirical": true,
+          "execution_context": {
+            "domain": "Sphere vs planar",
+            "norm": "ℓ₂",
+            "reporting_scale": "×10⁻²",
+            "simulation_vs_real": "Simulation",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "S-R2D2 maintains low RDR as Np/SR increases; planar R2D2 data fidelity degrades sharply (super-resolving limitation)."
+        },
+        {
+          "category": "framework_operational",
+          "submetric": "named_data_fidelity_metric",
+          "value": null,
+          "unit": null,
+          "scope": null,
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "domain": "Sphere",
+            "norm": "ℓ₂ (sphere via Γ†)",
+            "reporting_scale": null,
+            "simulation_vs_real": null,
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "RDR defined as core data-fidelity metric for spherical R2D2 evaluation alongside SNR / logSNR."
+        }
+      ]
+    },
+    "2025arXiv250309559C": {
+      "cohort": "r2d2",
+      "title": "Interlaced R2D2 DNN Series for Scalable Non-Cartesian MRI with Sensitivity Self-calibration",
+      "rdr_details": [
+        {
+          "category": "reported_rdr",
+          "submetric": "backprojected_mri_rdr",
+          "value": null,
+          "unit": null,
+          "scope": "iR2D2 RDR=‖r‖₂/‖x_b‖₂ tracked over series on simulated FastMRI + real 3T knee",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "MRI (non-Cartesian multi-coil)",
+            "norm": "ℓ₂ (back-projected residual / dirty-like image)",
+            "reporting_scale": "Ratio (unitless)",
+            "simulation_vs_real": "Simulation (FastMRI) and real 15-coil 3T knee",
+            "frequency": "MRI (bSSFP knee)",
+            "array": "15-coil 3T"
+          },
+          "evidence": "RDR used as data-fidelity/convergence metric on simulated and real knee data; real-data iR2D2 achieves best (lowest) RDR among benchmarks."
+        },
+        {
+          "category": "comparative_rdr",
+          "submetric": "rdr_factor_vs_baseline",
+          "value": 10,
+          "unit": "× (approx. order-of-magnitude lower)",
+          "scope": "Real 15-coil 3T knee (AF=4 and AF=8) vs benchmark methods",
+          "baseline": "Benchmark MRI reconstruction methods",
+          "empirical": true,
+          "execution_context": {
+            "domain": "MRI (non-Cartesian multi-coil)",
+            "norm": "ℓ₂",
+            "reporting_scale": null,
+            "simulation_vs_real": "Real 15-coil 3T knee",
+            "frequency": null,
+            "array": "15-coil 3T"
+          },
+          "evidence": "iR2D2 RDR roughly an order of magnitude lower than benchmarks; residual maps appear unstructured noise vs anatomy-correlated residuals for baselines."
+        },
+        {
+          "category": "framework_operational",
+          "submetric": "named_data_fidelity_metric",
+          "value": null,
+          "unit": null,
+          "scope": null,
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "domain": "MRI",
+            "norm": "ℓ₂",
+            "reporting_scale": null,
+            "simulation_vs_real": null,
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "RDR (Residual Data Ratio) and RDR-bar (sensitivity residual) named as primary residual/convergence metrics."
+        },
+        {
+          "category": "framework_operational",
+          "submetric": "adaptive_stopping_criterion",
+          "value": null,
+          "unit": null,
+          "scope": null,
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "MRI",
+            "norm": "ℓ₂",
+            "reporting_scale": null,
+            "simulation_vs_real": "Simulation and real",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Adaptive error-controlled stopping driven by sufficient residual-energy descent (UC/UC-bar); ablation without update condition shows erratic residual spikes."
+        }
+      ]
+    },
+    "2026AJ....171...44Y": {
+      "cohort": "r2d2",
+      "title": "A Radio-interferometric Imaging Method Based on Adaptively Learned Sparsifying Basis",
+      "rdr_details": [
+        {
+          "category": "reported_rdr",
+          "submetric": "planar_l2_rdr",
+          "value": 0.0067,
+          "unit": "(ALSB; VLA/W28 Table 1)",
+          "scope": "Image-domain data fidelity σ=‖r̂‖₂/‖x_dirty‖₂ — VLA/W28, SKA/3C353, DART/Sun",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": "Raw ratio",
+            "simulation_vs_real": "Simulation (VLA/SKA) and DART real solar",
+            "frequency": "425 MHz (DART); sim otherwise",
+            "array": "VLA / SKA-like / DART (294 ant.)"
+          },
+          "evidence": "Following Aghabiglou et al. R2D2 fidelity metric. ALSB best σ: VLA/W28 0.0067 (vs AIRI 0.0106, SARA 0.0182); SKA/3C353 0.0103; DART/Sun 0.00281."
+        },
+        {
+          "category": "comparative_rdr",
+          "submetric": "lower_higher_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "ALSB vs SARA / AIRI / WTF / MS-CLEAN across three experiments",
+          "baseline": "SARA, AIRI, WTF, MS-CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": "Raw ratio",
+            "simulation_vs_real": "Simulation and real DART",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "ALSB reports lowest σ on all three tables; on DART ≈2.4× lower than WTF and ~11× lower than SARA."
+        },
+        {
+          "category": "framework_operational",
+          "submetric": "named_data_fidelity_metric",
+          "value": null,
+          "unit": null,
+          "scope": null,
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": null,
+            "simulation_vs_real": null,
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Image-domain data fidelity σ explicitly adopted from R2D2 convention as a primary evaluation metric with SNR and runtime."
+        }
+      ]
+    },
+    "2026AJ....171..220Y": {
+      "cohort": "r2d2",
+      "title": "An Imaging Algorithm Based on Generalized Minimax-concave Penalty in Radio Interferometry",
+      "rdr_details": [
+        {
+          "category": "reported_rdr",
+          "submetric": "planar_l2_rdr",
+          "value": 0.03054,
+          "unit": "(GMCP; VLA/3C353 Table 1)",
+          "scope": "Image-domain data fidelity σ — VLA/3C353 and DART/Sun (avg. of 100 sims)",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": "Raw / ×10⁻²",
+            "simulation_vs_real": "Simulation (VLA and DART)",
+            "frequency": null,
+            "array": "VLA / DART"
+          },
+          "evidence": "σ=‖r̂‖₂/‖x_dirty‖₂. VLA/3C353: GMCP 3.054e-2 (best) vs R2D2 3.919e-2, AIRI 4.740e-2, SARA 4.858e-2. DART/Sun: GMCP 1.756e-2 (best)."
+        },
+        {
+          "category": "comparative_rdr",
+          "submetric": "lower_higher_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "GMCP vs SARA / AIRI / LPG / R2D2 / MS-CLEAN",
+          "baseline": "SARA, AIRI, LPG, R2D2, MS-CLEAN",
+          "empirical": true,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": null,
+            "simulation_vs_real": "Simulation",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "GMCP lowest σ on both tables; adaptive-λ ablation also lowers σ vs fixed λ=1e-5."
+        },
+        {
+          "category": "framework_operational",
+          "submetric": "named_data_fidelity_metric",
+          "value": null,
+          "unit": null,
+          "scope": null,
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "domain": "Planar image",
+            "norm": "ℓ₂",
+            "reporting_scale": null,
+            "simulation_vs_real": null,
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "Image-domain data fidelity σ listed with SNR/SNRlog as a primary R2D2-convention evaluation metric."
+        }
+      ]
+    },
+    "2026ApJS..283....9T": {
+      "cohort": "r2d2",
+      "title": "HyperAIRI: A Plug-and-play Algorithm for Precise Hyperspectral Image Reconstruction in Radio Interferometry",
+      "rdr_details": [
+        {
+          "category": "reported_rdr",
+          "submetric": "frobenius_cube_rdr",
+          "value": 0.0023,
+          "unit": "≈2.3–2.6×10⁻³ (all methods)",
+          "scope": "Hyperspectral cube RDR=‖X^res‖_F/‖X^dirty‖_F vs truth reference 2.46×10⁻³",
+          "baseline": null,
+          "empirical": true,
+          "execution_context": {
+            "domain": "Hyperspectral cube",
+            "norm": "Frobenius",
+            "reporting_scale": "×10⁻³",
+            "simulation_vs_real": "Simulation",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "All methods achieve broadly comparable RDR (~2.3–2.6×10⁻³), close to ground-truth reference (2.46±1.37)×10⁻³, despite large SNR spreads."
+        },
+        {
+          "category": "comparative_rdr",
+          "submetric": "lower_higher_than_baseline",
+          "value": null,
+          "unit": null,
+          "scope": "HyperAIRI vs WSClean / optimization baselines — RDR comparable, SNR not",
+          "baseline": "WSClean and optimization-based methods",
+          "empirical": true,
+          "execution_context": {
+            "domain": "Hyperspectral cube",
+            "norm": "Frobenius",
+            "reporting_scale": "×10⁻³",
+            "simulation_vs_real": "Simulation",
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "WSClean matches RDR/data-fidelity of other methods yet has far lower SNR (11.27 dB vs HyperAIRI 30.53 dB) — RDR ≠ truth fidelity."
+        },
+        {
+          "category": "framework_operational",
+          "submetric": "named_data_fidelity_metric",
+          "value": null,
+          "unit": null,
+          "scope": null,
+          "baseline": null,
+          "empirical": false,
+          "execution_context": {
+            "domain": "Hyperspectral cube",
+            "norm": "Frobenius",
+            "reporting_scale": "×10⁻³",
+            "simulation_vs_real": null,
+            "frequency": null,
+            "array": null
+          },
+          "evidence": "RDR defined as primary image-domain data-fidelity metric for hyperspectral evaluation alongside SNR, logSNR, and sSNR."
+        }
+      ]
+    }
+  }
+}
