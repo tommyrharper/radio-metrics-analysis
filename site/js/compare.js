@@ -30,12 +30,18 @@
     return "overview";
   }
 
-  function saveView(view) {
+  function loadFocusMetric() {
+    return new URLSearchParams(location.search).get("metric") || null;
+  }
+
+  function saveView(view, metricKey) {
     try {
       localStorage.setItem(VIEW_KEY, view);
     } catch { /* ignore */ }
     const url = new URL(location.href);
     url.searchParams.set("view", view);
+    if (view === "detailed" && metricKey) url.searchParams.set("metric", metricKey);
+    else url.searchParams.delete("metric");
     history.replaceState(null, "", url);
   }
 
@@ -185,7 +191,7 @@
     return th;
   }
 
-  function renderOverview(papers) {
+  function renderOverview(papers, onMetricClick) {
     const wrap = document.createElement("div");
     wrap.className = "overview-wrap";
 
@@ -266,7 +272,7 @@
     const mNote = document.createElement("p");
     mNote.className = "full-name";
     mNote.textContent =
-      "✓ = reported on the main chart · — = not reported. Grouped by category.";
+      "✓ = reported · — = not reported. Click a metric name to open its detailed comparison.";
     matrixSection.append(mH, mNote);
 
     const matrix = document.createElement("table");
@@ -303,15 +309,24 @@
 
       used.forEach((m) => {
         const tr = document.createElement("tr");
+        tr.className = "metric-row";
         const label = document.createElement("th");
         label.scope = "row";
+        const link = document.createElement("button");
+        link.type = "button";
+        link.className = "metric-jump";
+        link.title = `Open detailed comparison for ${m.fullName}`;
         const short = document.createElement("div");
         short.className = "metric-short";
         short.textContent = m.shortLabel;
         const full = document.createElement("div");
         full.className = "metric-full";
         full.textContent = m.fullName;
-        label.append(short, full);
+        link.append(short, full);
+        link.addEventListener("click", () => {
+          if (typeof onMetricClick === "function") onMetricClick(m.binaryKey);
+        });
+        label.append(link);
         tr.append(label);
         papers.forEach((p) => {
           const td = document.createElement("td");
@@ -344,7 +359,7 @@
     return wrap;
   }
 
-  function renderDetailed(papers) {
+  function renderDetailed(papers, initialMetric) {
     const wrap = document.createElement("div");
     wrap.className = "detailed-wrap";
 
@@ -356,7 +371,10 @@
     });
     const metrics = (window.METRIC_REGISTRY || []).filter((m) => unionKeys.has(m.binaryKey));
 
-    let selectedMetric = null;
+    let selectedMetric =
+      initialMetric && metrics.some((m) => m.binaryKey === initialMetric)
+        ? initialMetric
+        : null;
     const sectionsHost = document.createElement("div");
     const nav = document.createElement("nav");
     nav.className = "metric-nav";
@@ -401,6 +419,7 @@
         return;
       }
       show.forEach((m) => sectionsHost.append(renderMetricSection(papers, m)));
+      saveView("detailed", selectedMetric);
     }
 
     nav.addEventListener("click", (evt) => {
@@ -497,6 +516,7 @@
     root.append(pills);
 
     let view = loadView();
+    let focusMetric = loadFocusMetric();
     const viewToggle = document.createElement("div");
     viewToggle.className = "view-toggle";
     viewToggle.setAttribute("role", "tablist");
@@ -528,16 +548,25 @@
       detailedBtn.setAttribute("aria-selected", String(view === "detailed"));
       lede.textContent =
         view === "overview"
-          ? `High-level metric coverage for ${papers.length} papers — category counts and which metrics each paper reports.`
+          ? `High-level metric coverage for ${papers.length} papers — click a metric name to open its detailed comparison.`
           : `Side-by-side structured metric details for ${papers.length} papers. Select a metric to focus, or All.`;
-      body.replaceChildren(
-        view === "overview" ? renderOverview(papers) : renderDetailed(papers)
-      );
-      saveView(view);
+      if (view === "overview") {
+        body.replaceChildren(
+          renderOverview(papers, (metricKey) => {
+            focusMetric = metricKey;
+            view = "detailed";
+            paint();
+          })
+        );
+        saveView(view, null);
+      } else {
+        body.replaceChildren(renderDetailed(papers, focusMetric));
+      }
     }
 
     overviewBtn.addEventListener("click", () => {
       view = "overview";
+      focusMetric = null;
       paint();
     });
     detailedBtn.addEventListener("click", () => {

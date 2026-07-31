@@ -256,6 +256,30 @@ h1 {
   color: var(--muted);
 }
 
+.presence-table .metric-jump {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  text-align: left;
+  color: inherit;
+  cursor: pointer;
+}
+
+.presence-table .metric-jump:hover .metric-short {
+  color: var(--r2d2);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.presence-table .metric-jump:focus-visible {
+  outline: 2px solid var(--r2d2);
+  outline-offset: 2px;
+}
+
 .metric-nav {
   display: flex;
   flex-wrap: wrap;
