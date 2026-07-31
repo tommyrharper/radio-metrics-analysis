@@ -1046,7 +1046,6 @@
         const legSwatch = document.createElement("span");
         legSwatch.className = `cat-swatch ${cid}`;
         legSwatch.setAttribute("aria-hidden", "true");
-        legSwatch.textContent = cat.short;
         leg.append(legSwatch, document.createTextNode(` ${cat.label}`));
         categoryLegendEl.append(leg);
       });
