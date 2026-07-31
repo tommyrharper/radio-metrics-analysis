@@ -318,20 +318,19 @@
       open.href = p.url;
       open.target = "_blank";
       open.rel = "noopener noreferrer";
-      open.textContent = "Open";
       open.title = "Open paper webpage";
+      open.setAttribute("aria-label", "Open paper webpage");
+      open.innerHTML =
+        '<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6.5 2.5a.75.75 0 0 0 0 1.5h4.19L3.22 11.47a.75.75 0 1 0 1.06 1.06L11.75 5.06v4.19a.75.75 0 0 0 1.5 0v-6a.75.75 0 0 0-.75-.75h-6Z"/><path fill="currentColor" d="M3.5 4.25a.75.75 0 0 0-1.5 0v8c0 .966.784 1.75 1.75 1.75h8a.75.75 0 0 0 0-1.5h-8a.25.25 0 0 1-.25-.25v-8Z"/></svg>';
 
       const paperDetails = document.createElement("a");
-      paperDetails.className = "open-link";
+      paperDetails.className = "paper-details-link";
       paperDetails.href = `../paper.html?bib=${encodeURIComponent(p.bibcode)}`;
-      paperDetails.textContent = "Paper";
-      paperDetails.title = "All structured metric details for this paper";
+      paperDetails.textContent = "Details";
+      paperDetails.title = "Structured metric details for this paper";
 
       const actions = document.createElement("div");
-      actions.style.display = "flex";
-      actions.style.flexDirection = "column";
-      actions.style.gap = "0.35rem";
-      actions.style.alignSelf = "center";
+      actions.className = "paper-actions";
       actions.append(paperDetails, open);
 
       const entriesWrap = document.createElement("div");

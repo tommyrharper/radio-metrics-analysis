@@ -561,11 +561,20 @@
       line-height: 1.35;
     }
 
-    .open-link {
+    .paper-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      align-self: start;
+      align-items: stretch;
+    }
+
+    .open-link,
+    .paper-details-link {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      align-self: center;
+      gap: 0.3rem;
       border: 1px solid var(--line);
       background: transparent;
       color: var(--ink);
@@ -577,7 +586,31 @@
       white-space: nowrap;
     }
 
-    .open-link:hover { border-color: var(--ink); }
+    .open-link:hover,
+    .paper-details-link:hover {
+      border-color: var(--ink);
+    }
+
+    .open-link {
+      min-width: 2.1rem;
+      padding: 0.35rem 0.45rem;
+    }
+
+    .open-link svg {
+      width: 0.95rem;
+      height: 0.95rem;
+      display: block;
+    }
+
+    .paper-details-link {
+      border-color: var(--r2d2);
+      color: var(--r2d2);
+      font-weight: 600;
+    }
+
+    .paper-details-link:hover {
+      border-color: var(--r2d2);
+    }
 
     .paper-entries {
       display: none;
