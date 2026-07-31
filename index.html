@@ -298,9 +298,42 @@
       color: inherit;
       cursor: pointer;
       text-align: left;
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.35rem 0.55rem;
+      max-width: 100%;
+    }
+
+    .detail-title-btn .title-main {
+      font: inherit;
+    }
+
+    .detail-title-btn .title-full {
+      font-family: "IBM Plex Sans", system-ui, sans-serif;
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .detail-title-btn .title-cat-tag {
+      font-family: "IBM Plex Sans", system-ui, sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      line-height: 1;
+      padding: 0.22rem 0.45rem;
+      border: 1.5px solid currentColor;
+      border-radius: 2px;
+      text-transform: none;
+      align-self: center;
     }
 
     .detail-title-btn:hover {
+      text-decoration: none;
+    }
+
+    .detail-title-btn:hover .title-main {
       text-decoration: underline;
       text-underline-offset: 3px;
     }
@@ -698,7 +731,7 @@
       text-decoration: none;
     }
 
-    .detail.browse-mode .detail-title-btn:hover {
+    .detail.browse-mode .detail-title-btn:hover .title-main {
       text-decoration: none;
     }
   </style>
@@ -800,6 +833,28 @@
       "uncertainty_correlation", "wasserstein", "classification_metrics",
       "text_metrics", "compute_cost",
     ];
+
+    const metricFullNames = {
+      snr: "Signal-to-noise ratio",
+      logsnr: "Logarithmic signal-to-noise ratio",
+      psnr: "Peak signal-to-noise ratio",
+      ssim: "Structural similarity index",
+      dynamic_range: "Dynamic range",
+      rms: "Root-mean-square residual",
+      rdr: "Residual-to-dirty ratio",
+      nmse_nrmse: "Normalised mean squared error",
+      mae: "Mean absolute error",
+      flux_recovery: "Flux recovery",
+      astrometric_accuracy: "Astrometric accuracy",
+      runtime: "Runtime",
+      iterations: "Iterations",
+      credible_interval: "Credible interval",
+      uncertainty_correlation: "Uncertainty correlation",
+      wasserstein: "Wasserstein distance",
+      classification_metrics: "Classification metrics",
+      text_metrics: "Text metrics",
+      compute_cost: "Compute cost",
+    };
 
     /*
      * Metric taxonomy — single source of truth for category membership and visuals.
@@ -1177,12 +1232,35 @@
       paperList.replaceChildren(...matches.map(createPaperListItem));
     }
 
+    function setDetailTitle(metricIndex) {
+      detailTitle.replaceChildren();
+      if (metricIndex === null || metricIndex === undefined) {
+        detailTitle.textContent = "All papers";
+        return;
+      }
+      const key = metricKeys[metricIndex];
+      const cat = categoryForIndex(metricIndex);
+      const main = document.createElement("span");
+      main.className = "title-main";
+      main.textContent = metrics[metricIndex];
+      const full = document.createElement("span");
+      full.className = "title-full";
+      full.textContent = `(${metricFullNames[key] || metrics[metricIndex]})`;
+      const tag = document.createElement("span");
+      tag.className = "title-cat-tag";
+      tag.style.color = cat.color;
+      tag.style.borderColor = cat.color;
+      tag.style.borderStyle = cat.borderStyle || "solid";
+      tag.textContent = cat.label;
+      detailTitle.append(main, full, tag);
+    }
+
     function showAllPapers() {
       selectedMetric = null;
       variantsOpen = false;
       listedPapers = visiblePapers();
       detail.classList.add("open", "browse-mode");
-      detailTitle.textContent = "All papers";
+      setDetailTitle(null);
       detailTitle.setAttribute("aria-expanded", "false");
       metricSummary.classList.remove("open");
       metricSummary.replaceChildren();
@@ -1404,11 +1482,10 @@
     function showPapers(metricIndex) {
       const metricChanged = selectedMetric !== metricIndex;
       selectedMetric = metricIndex;
-      const label = metrics[metricIndex];
       listedPapers = papersForMetric(metricIndex);
       detail.classList.add("open");
       detail.classList.remove("browse-mode");
-      detailTitle.textContent = label;
+      setDetailTitle(metricIndex);
       setMetricSummary(metricIndex);
       paperSearchWrap.classList.add("open");
       if (metricChanged) {
