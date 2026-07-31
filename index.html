@@ -23,6 +23,12 @@
       --classic: #0b6e6a;
       --emerging: #c45c26;
       --r2d2: #1f4e79;
+      /* Metric taxonomy (borders/ticks/badges; cohort fill colours stay separate) */
+      --cat-observational: #0f766e;
+      --cat-computational: #6d28d9;
+      --cat-fidelity: #a16207;
+      --cat-scientific: #be123c;
+      --cat-uncategorised: #475569;
     }
 
     * { box-sizing: border-box; }
@@ -65,13 +71,37 @@
       padding: 1.1rem 1.2rem 1.3rem;
     }
 
+    .filter-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.9rem;
+      border-bottom: 1px solid var(--line);
+    }
+
     .toggles {
       display: flex;
       flex-wrap: wrap;
       gap: 0.65rem 1.25rem;
-      margin-bottom: 1rem;
-      padding-bottom: 0.9rem;
-      border-bottom: 1px solid var(--line);
+      align-items: center;
+    }
+
+    .toggles-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-right: 0.15rem;
+      flex-basis: 100%;
+    }
+
+    @media (min-width: 640px) {
+      .toggles-label {
+        flex-basis: auto;
+        min-width: 4.5rem;
+      }
     }
 
     .toggles label {
@@ -82,6 +112,12 @@
       font-weight: 500;
       font-size: 0.95rem;
       user-select: none;
+      border-radius: 2px;
+    }
+
+    .toggles label:focus-within {
+      outline: 2px solid var(--r2d2);
+      outline-offset: 2px;
     }
 
     .toggles input {
@@ -89,6 +125,37 @@
       height: 1rem;
       accent-color: var(--ink);
       cursor: pointer;
+    }
+
+    .toggles input:focus {
+      outline: none;
+    }
+
+    .filter-actions {
+      display: inline-flex;
+      gap: 0.35rem;
+      margin-left: auto;
+    }
+
+    .filter-actions button {
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--muted);
+      font: inherit;
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 0.2rem 0.5rem;
+      cursor: pointer;
+    }
+
+    .filter-actions button:hover {
+      color: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .filter-actions button:focus-visible {
+      outline: 2px solid var(--r2d2);
+      outline-offset: 2px;
     }
 
     .swatch {
@@ -101,6 +168,75 @@
     .swatch.classic { background: var(--classic); }
     .swatch.emerging { background: var(--emerging); }
     .swatch.r2d2 { background: var(--r2d2); }
+
+    .cat-swatch {
+      width: 0.95rem;
+      height: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 0.55rem;
+      font-weight: 700;
+      line-height: 1;
+      color: #fff;
+      border: 2px solid transparent;
+    }
+
+    .cat-swatch.observational {
+      background: var(--cat-observational);
+      border-style: solid;
+      border-color: #0a5c56;
+    }
+    .cat-swatch.computational {
+      background: var(--cat-computational);
+      border-style: dashed;
+      border-color: #4c1d95;
+    }
+    .cat-swatch.fidelity {
+      background: var(--cat-fidelity);
+      border-style: dotted;
+      border-color: #713f12;
+    }
+    .cat-swatch.scientific {
+      background: var(--cat-scientific);
+      border-style: double;
+      border-color: #9f1239;
+      border-width: 3px;
+    }
+    .cat-swatch.uncategorised {
+      background: var(--cat-uncategorised);
+      border-style: dashed;
+      border-color: #334155;
+      background-image: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 2px,
+        rgba(255, 255, 255, 0.25) 2px,
+        rgba(255, 255, 255, 0.25) 4px
+      );
+    }
+
+    .category-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem 0.9rem;
+      align-items: center;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .category-legend .leg-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .category-legend .leg-note {
+      flex-basis: 100%;
+      font-size: 0.75rem;
+      margin-top: 0.1rem;
+    }
 
     .chart-wrap {
       position: relative;
@@ -557,29 +693,45 @@
       How papers evaluate the radio interferometry imaging pipeline — visibility data through
       gridding, inverse FFT, and deconvolution — using performance and fidelity metrics.
       Bars show papers reporting each metric, stacked by cohort (classic pipelines, emerging ML,
-      and R2D2-citing work), sorted highest to lowest for the cohorts currently shown.
-      Metrics with no papers in the visible cohorts are omitted from the chart.
+      and R2D2-citing work), grouped by taxonomy category (Observational, Computational, Fidelity,
+      Scientific). Metrics with no papers in the visible cohorts are omitted from the chart.
       Totals: classic 23, emerging-ml 7, r2d2-citing 33. Browse all papers below, or click a
       bar to focus one metric.
     </p>
 
     <div class="panel">
-      <div class="toggles" role="group" aria-label="Cohort visibility">
-        <label>
-          <input type="checkbox" id="toggle-classic" checked />
-          <span class="swatch classic" aria-hidden="true"></span>
-          Classic
-        </label>
-        <label>
-          <input type="checkbox" id="toggle-emerging" checked />
-          <span class="swatch emerging" aria-hidden="true"></span>
-          Emerging-ML
-        </label>
-        <label>
-          <input type="checkbox" id="toggle-r2d2" checked />
-          <span class="swatch r2d2" aria-hidden="true"></span>
-          R2D2-citing
-        </label>
+      <div class="filter-bar">
+        <div class="toggles" role="group" aria-label="Cohort visibility">
+          <span class="toggles-label" id="cohort-filters-label">Cohorts</span>
+          <label>
+            <input type="checkbox" id="toggle-classic" checked aria-describedby="cohort-filters-label" />
+            <span class="swatch classic" aria-hidden="true"></span>
+            Classic
+          </label>
+          <label>
+            <input type="checkbox" id="toggle-emerging" checked />
+            <span class="swatch emerging" aria-hidden="true"></span>
+            Emerging-ML
+          </label>
+          <label>
+            <input type="checkbox" id="toggle-r2d2" checked />
+            <span class="swatch r2d2" aria-hidden="true"></span>
+            R2D2-citing
+          </label>
+        </div>
+
+        <div class="toggles" role="group" aria-label="Metric category visibility" id="categoryToggles">
+          <span class="toggles-label" id="category-filters-label">Categories</span>
+          <!-- Category checkboxes filled by script -->
+          <div class="filter-actions" role="group" aria-label="Category selection shortcuts">
+            <button type="button" id="categoriesSelectAll">Select all</button>
+            <button type="button" id="categoriesClearAll">Clear all</button>
+          </div>
+        </div>
+
+        <div class="category-legend" id="categoryLegend" aria-label="Metric category legend">
+          <!-- Filled by script -->
+        </div>
       </div>
 
       <div class="chart-wrap">
@@ -629,6 +781,101 @@
       "uncertainty_correlation", "wasserstein", "classification_metrics",
       "text_metrics", "compute_cost",
     ];
+
+    /*
+     * Metric taxonomy — single source of truth for category membership and visuals.
+     * Visual treatment: cohort fill colours remain on stacked bar segments; category is
+     * shown via bar outline + x-tick colour + legend/filter badge (letter + border style).
+     * `unavailable` keys stay in the taxonomy for documentation but are not plotted.
+     * Metrics in metricKeys but not listed below land in Uncategorised.
+     */
+    const metricCategories = {
+      observational: {
+        id: "observational",
+        label: "Observational",
+        short: "Obs",
+        color: "#0f766e",
+        borderStyle: "solid",
+        metrics: ["snr", "dynamic_range", "rms", "rdr"],
+      },
+      computational: {
+        id: "computational",
+        label: "Computational",
+        short: "Cmp",
+        color: "#6d28d9",
+        borderStyle: "dashed",
+        metrics: ["runtime", "compute_cost", "iterations"],
+      },
+      fidelity: {
+        id: "fidelity",
+        label: "Fidelity",
+        short: "Fid",
+        color: "#a16207",
+        borderStyle: "dotted",
+        metrics: ["psnr", "ssim", "nmse_nrmse", "mae", "wasserstein"],
+      },
+      scientific: {
+        id: "scientific",
+        label: "Scientific",
+        short: "Sci",
+        color: "#be123c",
+        borderStyle: "double",
+        metrics: ["flux_recovery", "astrometric_accuracy", "spectral_accuracy", "classification_metrics"],
+        unavailable: ["spectral_accuracy"], // not in papers-data / metricKeys — omit from chart
+      },
+      uncategorised: {
+        id: "uncategorised",
+        label: "Uncategorised",
+        short: "Unc",
+        color: "#475569",
+        borderStyle: "dashed",
+        metrics: [], // filled from unmapped metricKeys below
+      },
+    };
+
+    const categoryOrder = [
+      "observational",
+      "computational",
+      "fidelity",
+      "scientific",
+      "uncategorised",
+    ];
+
+    const taxonomyAssigned = new Set();
+    categoryOrder.forEach((cid) => {
+      const cat = metricCategories[cid];
+      (cat.metrics || []).forEach((k) => taxonomyAssigned.add(k));
+      (cat.unavailable || []).forEach((k) => taxonomyAssigned.add(k));
+    });
+    metricCategories.uncategorised.metrics = metricKeys.filter((k) => !taxonomyAssigned.has(k));
+
+    const metricToCategory = {};
+    categoryOrder.forEach((cid) => {
+      const cat = metricCategories[cid];
+      const unavailable = new Set(cat.unavailable || []);
+      (cat.metrics || []).forEach((k) => {
+        if (!unavailable.has(k) && metricKeys.includes(k)) {
+          metricToCategory[k] = cid;
+        }
+      });
+    });
+
+    // Plottable metrics in stable taxonomy order (category groups, then within-category list).
+    const taxonomyPlotOrder = [];
+    categoryOrder.forEach((cid) => {
+      const cat = metricCategories[cid];
+      const unavailable = new Set(cat.unavailable || []);
+      (cat.metrics || []).forEach((k) => {
+        if (unavailable.has(k)) return;
+        const i = metricKeys.indexOf(k);
+        if (i >= 0) taxonomyPlotOrder.push(i);
+      });
+    });
+
+    const hasUncategorisedMetrics = metricCategories.uncategorised.metrics.length > 0;
+    const filterableCategories = categoryOrder.filter(
+      (cid) => cid !== "uncategorised" || hasUncategorisedMetrics
+    );
 
     const metricOverviewFiles = {
       snr: "snr.md",
@@ -702,6 +949,9 @@
       emerging: document.getElementById("toggle-emerging"),
       r2d2: document.getElementById("toggle-r2d2"),
     };
+    const categoryToggleEls = {};
+    const categoryTogglesEl = document.getElementById("categoryToggles");
+    const categoryLegendEl = document.getElementById("categoryLegend");
     const emptyState = document.getElementById("emptyState");
     const detail = document.getElementById("detail");
     const detailTitle = document.getElementById("detailTitle");
@@ -717,8 +967,48 @@
     let listedPapers = [];
     let currentOrder = [];
 
+    function buildCategoryControls() {
+      const actions = categoryTogglesEl.querySelector(".filter-actions");
+      filterableCategories.forEach((cid) => {
+        const cat = metricCategories[cid];
+        const label = document.createElement("label");
+        const input = document.createElement("input");
+        input.type = "checkbox";
+        input.id = `toggle-cat-${cid}`;
+        input.checked = true;
+        input.setAttribute("aria-describedby", "category-filters-label");
+        const swatch = document.createElement("span");
+        swatch.className = `cat-swatch ${cid}`;
+        swatch.setAttribute("aria-hidden", "true");
+        swatch.textContent = cat.short;
+        label.append(input, swatch, document.createTextNode(` ${cat.label}`));
+        categoryTogglesEl.insertBefore(label, actions);
+        categoryToggleEls[cid] = input;
+
+        const leg = document.createElement("span");
+        leg.className = "leg-item";
+        const legSwatch = document.createElement("span");
+        legSwatch.className = `cat-swatch ${cid}`;
+        legSwatch.setAttribute("aria-hidden", "true");
+        legSwatch.textContent = cat.short;
+        leg.append(legSwatch, document.createTextNode(` ${cat.label}`));
+        categoryLegendEl.append(leg);
+      });
+      const note = document.createElement("span");
+      note.className = "leg-note";
+      note.textContent =
+        "Bar fills = cohort; outline + tick colour + badge = metric category.";
+      categoryLegendEl.append(note);
+    }
+
+    buildCategoryControls();
+
     function activeKeys() {
       return Object.keys(toggles).filter((k) => toggles[k].checked);
+    }
+
+    function activeCategories() {
+      return filterableCategories.filter((cid) => categoryToggleEls[cid].checked);
     }
 
     function visiblePapers() {
@@ -903,22 +1193,25 @@
         .filter((m) => paper.metrics[m.key] === 1);
     }
 
-    function orderedIndices(keys) {
-      const scores = metrics.map((_, i) =>
-        keys.reduce((sum, k) => sum + cohorts[k].values[i], 0)
-      );
-      return scores
-        .map((score, i) => ({ i, score }))
-        .filter((x) => x.score > 0)
-        .sort((a, b) => b.score - a.score || a.i - b.i)
-        .map((x) => x.i);
+    function orderedIndices(keys, cats) {
+      const activeCats = new Set(cats);
+      return taxonomyPlotOrder.filter((i) => {
+        const catId = metricToCategory[metricKeys[i]];
+        if (!activeCats.has(catId)) return false;
+        const score = keys.reduce((sum, k) => sum + cohorts[k].values[i], 0);
+        return score > 0;
+      });
     }
 
-    currentOrder = orderedIndices(Object.keys(toggles));
+    currentOrder = orderedIndices(Object.keys(toggles), filterableCategories);
+
+    function categoryForIndex(i) {
+      return metricCategories[metricToCategory[metricKeys[i]]];
+    }
 
     function chartData() {
       const keys = activeKeys();
-      currentOrder = orderedIndices(keys);
+      currentOrder = orderedIndices(keys, activeCategories());
       return {
         labels: currentOrder.map((i) => metrics[i]),
         datasets: keys.map((k) => ({
@@ -1123,13 +1416,75 @@
       showAllPapers();
     }
 
+    const categoryBarPlugin = {
+      id: "categoryBarOutline",
+      afterDatasetsDraw(chartInstance) {
+        const { ctx, chartArea } = chartInstance;
+        if (!currentOrder.length) return;
+        const meta0 = chartInstance.getDatasetMeta(0);
+        if (!meta0 || !meta0.data.length) return;
+
+        currentOrder.forEach((metricIndex, barIndex) => {
+          const cat = categoryForIndex(metricIndex);
+          if (!cat) return;
+          let top = Infinity;
+          let bottom = -Infinity;
+          let left = Infinity;
+          let right = -Infinity;
+          chartInstance.data.datasets.forEach((_, di) => {
+            const meta = chartInstance.getDatasetMeta(di);
+            if (meta.hidden) return;
+            const el = meta.data[barIndex];
+            if (!el || el.skip) return;
+            const b = typeof el.getProps === "function"
+              ? el.getProps(["x", "y", "base", "width"], true)
+              : el;
+            const half = (b.width || el.width || 0) / 2;
+            const x = b.x ?? el.x;
+            const y = b.y ?? el.y;
+            const base = b.base ?? el.base;
+            left = Math.min(left, x - half);
+            right = Math.max(right, x + half);
+            top = Math.min(top, y, base);
+            bottom = Math.max(bottom, y, base);
+          });
+          if (!Number.isFinite(left) || right <= left) return;
+          ctx.save();
+          ctx.strokeStyle = cat.color;
+          ctx.lineWidth = cat.borderStyle === "double" ? 2.5 : 2;
+          if (cat.borderStyle === "dashed") ctx.setLineDash([5, 3]);
+          else if (cat.borderStyle === "dotted") ctx.setLineDash([1.5, 2.5]);
+          else ctx.setLineDash([]);
+          const pad = 1.5;
+          ctx.strokeRect(
+            left - pad,
+            Math.max(chartArea.top, top) - pad,
+            right - left + pad * 2,
+            Math.min(chartArea.bottom, bottom) - Math.max(chartArea.top, top) + pad * 2
+          );
+          if (cat.borderStyle === "double") {
+            ctx.lineWidth = 1;
+            ctx.strokeRect(
+              left + 1.5,
+              Math.max(chartArea.top, top) + 1.5,
+              right - left - 3,
+              Math.min(chartArea.bottom, bottom) - Math.max(chartArea.top, top) - 3
+            );
+          }
+          ctx.restore();
+        });
+      },
+    };
+
     const chart = new Chart(document.getElementById("metricsChart"), {
       type: "bar",
       data: chartData(),
+      plugins: [categoryBarPlugin],
       options: {
         responsive: true,
         maintainAspectRatio: false,
         animation: { duration: 280 },
+        layout: { padding: { bottom: 8 } },
         onClick(_evt, elements) {
           if (!elements.length) {
             showAllPapers();
@@ -1145,6 +1500,12 @@
           legend: { display: false },
           tooltip: {
             callbacks: {
+              title(items) {
+                if (!items.length) return "";
+                const metricIndex = currentOrder[items[0].dataIndex];
+                const cat = categoryForIndex(metricIndex);
+                return `${metrics[metricIndex]} · ${cat ? cat.label : "Uncategorised"}`;
+              },
               footer(items) {
                 const total = items.reduce((s, it) => s + it.parsed.y, 0);
                 return `Total: ${total} · click for paper list`;
@@ -1157,10 +1518,21 @@
             stacked: true,
             grid: { display: false },
             ticks: {
-              color: "#5a6670",
               maxRotation: 45,
               minRotation: 45,
               font: { family: "IBM Plex Sans", size: 11 },
+              color(ctx) {
+                const metricIndex = currentOrder[ctx.index];
+                if (metricIndex === undefined) return "#5a6670";
+                const cat = categoryForIndex(metricIndex);
+                return cat ? cat.color : "#5a6670";
+              },
+              callback(value, index) {
+                const label = this.getLabelForValue(value);
+                const metricIndex = currentOrder[index];
+                const cat = metricIndex !== undefined ? categoryForIndex(metricIndex) : null;
+                return cat ? `${label} [${cat.short}]` : label;
+              },
             },
           },
           y: {
@@ -1185,12 +1557,24 @@
 
     function refresh() {
       const keys = activeKeys();
-      emptyState.classList.toggle("show", keys.length === 0);
-      chart.canvas.style.opacity = keys.length ? "1" : "0";
+      const cats = activeCategories();
       chart.data = chartData();
+      const nothingToPlot = keys.length === 0 || cats.length === 0 || currentOrder.length === 0;
+      if (keys.length === 0 && cats.length === 0) {
+        emptyState.textContent =
+          "Turn on at least one cohort and one metric category to see the chart.";
+      } else if (keys.length === 0) {
+        emptyState.textContent = "Turn on at least one cohort to see the chart.";
+      } else if (cats.length === 0) {
+        emptyState.textContent = "No metric categories selected.";
+      } else {
+        emptyState.textContent = "No metrics to show for the current filters.";
+      }
+      emptyState.classList.toggle("show", nothingToPlot);
+      chart.canvas.style.opacity = nothingToPlot ? "0" : "1";
       chart.update();
       if (selectedMetric !== null) {
-        if (!keys.length || !currentOrder.includes(selectedMetric)) showAllPapers();
+        if (nothingToPlot || !currentOrder.includes(selectedMetric)) showAllPapers();
         else showPapers(selectedMetric);
       } else {
         showAllPapers();
@@ -1198,6 +1582,15 @@
     }
 
     Object.values(toggles).forEach((el) => el.addEventListener("change", refresh));
+    Object.values(categoryToggleEls).forEach((el) => el.addEventListener("change", refresh));
+    document.getElementById("categoriesSelectAll").addEventListener("click", () => {
+      Object.values(categoryToggleEls).forEach((el) => { el.checked = true; });
+      refresh();
+    });
+    document.getElementById("categoriesClearAll").addEventListener("click", () => {
+      Object.values(categoryToggleEls).forEach((el) => { el.checked = false; });
+      refresh();
+    });
     document.getElementById("detailClose").addEventListener("click", hidePapers);
     detailTitle.addEventListener("click", () => {
       if (selectedMetric === null) return;

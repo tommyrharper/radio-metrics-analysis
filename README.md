@@ -34,6 +34,20 @@ Each cohort has its own `METRICS_TABLE.md`, plus one root aggregate:
 
 Interactive stacked bar chart of metric usage by cohort (`index.html` + `papers-data.json`).
 
+Metrics are grouped by a four-category taxonomy (plus **Uncategorised** when schema keys fall outside it):
+
+| Category | Metrics |
+|---|---|
+| Observational | SNR, DR, RMS, RDR |
+| Computational | Runtime, Compute, Iters |
+| Fidelity | PSNR, SSIM, NMSE, MAE, Wasser |
+| Scientific | Flux, Astrometry, Class (`spectral_accuracy` reserved but not in schema yet — omitted from the chart, not shown as zero) |
+| Uncategorised | logSNR, CredInt, UncCorr, Text (only if present in `metricKeys`) |
+
+**Visuals:** cohort colours fill the stacked bar segments; category is shown with a coloured outline, x-tick colour, and short badge (`Obs` / `Cmp` / `Fid` / `Sci` / `Unc`). Category membership lives in `metricCategories` inside `index.html`.
+
+**Filters:** cohort and category toggles combine. Metrics with zero total for the visible cohorts stay hidden. Clearing all categories shows “No metric categories selected.” Chart order is category groups (then taxonomy order within each group), not descending paper count.
+
 **Start** (from the repo root):
 
 ```bash
