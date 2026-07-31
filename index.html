@@ -1018,6 +1018,7 @@
 
   <script src="site/js/comparison-store.js"></script>
   <script src="site/js/comparison-bar.js"></script>
+  <script src="site/js/cohort-prefs.js"></script>
   <script>
     const metrics = [
       "SNR", "logSNR", "PSNR", "SSIM", "DR", "RMS", "RDR", "NMSE", "MAE",
@@ -1949,7 +1950,11 @@
       }
     }
 
-    Object.values(toggles).forEach((el) => el.addEventListener("change", refresh));
+    if (window.CohortPrefs) {
+      window.CohortPrefs.bind(toggles, refresh);
+    } else {
+      Object.values(toggles).forEach((el) => el.addEventListener("change", refresh));
+    }
     categorySelect.addEventListener("change", refresh);
     document.getElementById("detailClose").addEventListener("click", hidePapers);
     detailTitle.addEventListener("click", () => {
@@ -1969,7 +1974,7 @@
       })
       .then((data) => {
         papers = data.papers || [];
-        showAllPapers();
+        refresh();
       })
       .catch((err) => {
         detail.classList.add("open");

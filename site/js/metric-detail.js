@@ -793,7 +793,11 @@
       }
     }
 
-    Object.values(toggles).forEach((el) => el.addEventListener("change", refresh));
+    if (window.CohortPrefs) {
+      window.CohortPrefs.bind(toggles, refresh);
+    } else {
+      Object.values(toggles).forEach((el) => el.addEventListener("change", refresh));
+    }
     categorySelect.addEventListener("change", refresh);
     document.getElementById("detailClose").addEventListener("click", hidePapers);
     detailTitle.addEventListener("click", () => {
