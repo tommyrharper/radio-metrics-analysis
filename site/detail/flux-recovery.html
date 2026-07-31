@@ -109,6 +109,13 @@
       overviewCaveat: "Do not count observational flux quoted only as context; peak brightness alone, DR/RMS, or qualitative morphology are not Flux Recovery.",
     };
   </script>
+  <script src="../js/comparison-store.js"></script>
+  <script src="../js/comparison-bar.js"></script>
   <script src="../js/metric-detail.js"></script>
+  <script>
+    if (window.ComparisonBar) {
+      window.ComparisonBar.mount({ compareHref: "../compare.html" });
+    }
+  </script>
 </body>
 </html>

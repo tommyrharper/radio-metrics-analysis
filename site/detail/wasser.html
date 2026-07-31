@@ -109,6 +109,13 @@
       overviewCaveat: "Do not count Wasserstein-GAN adversarial losses alone; pixel-wise ground-truth metrics (SNR/PSNR) are not Wasserstein.",
     };
   </script>
+  <script src="../js/comparison-store.js"></script>
+  <script src="../js/comparison-bar.js"></script>
   <script src="../js/metric-detail.js"></script>
+  <script>
+    if (window.ComparisonBar) {
+      window.ComparisonBar.mount({ compareHref: "../compare.html" });
+    }
+  </script>
 </body>
 </html>

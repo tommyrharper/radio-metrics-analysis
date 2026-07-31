@@ -202,6 +202,14 @@
     back.textContent = "← Back to all metrics";
     actions.append(back);
 
+    const compareBtn = document.createElement("button");
+    compareBtn.type = "button";
+    compareBtn.className = "compare-toggle";
+    actions.append(compareBtn);
+    if (window.ComparisonBar) {
+      window.ComparisonBar.syncToggleButton(compareBtn, paper.bibcode);
+    }
+
     if (paper.url) {
       const open = document.createElement("a");
       open.className = "external";

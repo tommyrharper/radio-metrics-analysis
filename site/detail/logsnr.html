@@ -109,6 +109,13 @@
       overviewCaveat: "Do not count linear SNR alone as logSNR; transform parameter a/ε choices differ across papers, so dB values are not directly comparable without the definition.",
     };
   </script>
+  <script src="../js/comparison-store.js"></script>
+  <script src="../js/comparison-bar.js"></script>
   <script src="../js/metric-detail.js"></script>
+  <script>
+    if (window.ComparisonBar) {
+      window.ComparisonBar.mount({ compareHref: "../compare.html" });
+    }
+  </script>
 </body>
 </html>

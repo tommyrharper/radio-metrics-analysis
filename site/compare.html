@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Paper metric details — radio interferometry imaging metrics</title>
+  <title>Compare papers — radio interferometry imaging metrics</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/paper-detail.css" />
+  <link rel="stylesheet" href="css/compare.css" />
   <script src="js/taxonomies/snr-taxonomy.js"></script>
   <script src="js/taxonomies/logsnr-taxonomy.js"></script>
   <script src="js/taxonomies/psnr-taxonomy.js"></script>
@@ -33,13 +33,8 @@
 </head>
 <body>
   <main>
-    <div id="paperRoot"></div>
+    <div id="compareRoot"></div>
   </main>
-  <script src="js/paper-detail.js"></script>
-  <script>
-    if (window.ComparisonBar) {
-      window.ComparisonBar.mount({ compareHref: "compare.html" });
-    }
-  </script>
+  <script src="js/compare.js"></script>
 </body>
 </html>

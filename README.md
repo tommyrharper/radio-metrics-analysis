@@ -40,6 +40,8 @@ Interactive stacked bar chart of metric usage by cohort (`index.html` + `data/pa
 
 **Paper detail page:** From the main paper list, **Details** opens [`site/paper.html?bib=…`](site/paper.html) — one page with every flagged metric for that paper and its structured subtype entries (same cards as the metric pages). Metric chips at the top filter which metric is shown (`?metric=`). Jump links and “Explore … Details (all papers)” connect back to the corpus-wide metric views. Registry: `site/js/metric-registry.js`.
 
+**Compare papers:** Each paper row has **Compare** (toggle; max 5). A sticky tray shows the selection; **Compare papers** opens [`site/compare.html`](site/compare.html) for side-by-side structured metric details (metric filter + per-paper columns). Selection is stored in `localStorage` via `site/js/comparison-store.js`.
+
 Interaction on every detail page mirrors the main graph: all positive papers by default, bar click focuses a sub-metric, title opens Overview / By paper, **All papers** / empty chart returns to browse. Papers may count in more than one sub-metric.
 
 Metrics are grouped by a five-category taxonomy:

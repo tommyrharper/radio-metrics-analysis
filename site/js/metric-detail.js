@@ -329,9 +329,19 @@
       paperDetails.textContent = "Details";
       paperDetails.title = "Structured metric details for this paper";
 
+      const compareBtn = document.createElement("button");
+      compareBtn.type = "button";
+      compareBtn.className = "compare-toggle";
+      if (window.ComparisonBar) {
+        window.ComparisonBar.syncToggleButton(compareBtn, p.bibcode);
+      } else {
+        compareBtn.textContent = "Compare";
+        compareBtn.disabled = true;
+      }
+
       const actions = document.createElement("div");
       actions.className = "paper-actions";
-      actions.append(paperDetails, open);
+      actions.append(paperDetails, compareBtn, open);
 
       const entriesWrap = document.createElement("div");
       entriesWrap.className = "paper-entries";

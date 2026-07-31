@@ -21,6 +21,8 @@ All chart metrics have second-level pages under `site/detail/` (19 stubs). Share
 
 Paper-centric view: `site/paper.html?bib=<bibcode>` (registry `site/js/metric-registry.js`) lists every flagged metric for one paper with structured `*_details` cards. Linked from paper rows via **Details** (home and metric-detail pages); external source uses a link icon.
 
+Comparison: **Compare** toggles papers into a shared selection (`site/js/comparison-store.js`, max 5). Sticky tray → `site/compare.html` for side-by-side metric details.
+
 ## RMS / RDR schema
 
 Former combined column `RDR/Resid` (`rdr_residual`) is split into **RMS** (`rms`) and **RDR** (`rdr`). **All three cohorts and the root aggregate** use this schema (see each `METRICS_TABLE.md` and the website). Classification: RMS = absolute residual/dirty/off-source RMS as a reported score (not merely DR’s denominator); RDR = residual-to-dirty ratio only; qualitative residuals alone → both 0.

@@ -109,6 +109,13 @@
       overviewCaveat: "Class mixes source catalogs, lens finders, discrete physical labels, and LLM benchmarks — not one comparable score. Cited external rates are typed separately from primary measurements.",
     };
   </script>
+  <script src="../js/comparison-store.js"></script>
+  <script src="../js/comparison-bar.js"></script>
   <script src="../js/metric-detail.js"></script>
+  <script>
+    if (window.ComparisonBar) {
+      window.ComparisonBar.mount({ compareHref: "../compare.html" });
+    }
+  </script>
 </body>
 </html>

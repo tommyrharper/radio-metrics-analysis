@@ -109,6 +109,13 @@
       overviewCaveat: "Do not count unnormalised MSE, residual RMS, or parameter RMSE as NMSE unless the paper reports NMSE/NRMSE (or an equivalent normalised form) explicitly; visibility-domain and image-domain NMSE are not interchangeable.",
     };
   </script>
+  <script src="../js/comparison-store.js"></script>
+  <script src="../js/comparison-bar.js"></script>
   <script src="../js/metric-detail.js"></script>
+  <script>
+    if (window.ComparisonBar) {
+      window.ComparisonBar.mount({ compareHref: "../compare.html" });
+    }
+  </script>
 </body>
 </html>

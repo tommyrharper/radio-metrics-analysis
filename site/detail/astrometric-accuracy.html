@@ -109,6 +109,13 @@
       overviewCaveat: "Do not count resolution/beam alone, detection without position error, morphology/jet-angle, PSNR/SSIM, matching radius as setting only, or framework-named astrometric error without measured results.",
     };
   </script>
+  <script src="../js/comparison-store.js"></script>
+  <script src="../js/comparison-bar.js"></script>
   <script src="../js/metric-detail.js"></script>
+  <script>
+    if (window.ComparisonBar) {
+      window.ComparisonBar.mount({ compareHref: "../compare.html" });
+    }
+  </script>
 </body>
 </html>
