@@ -34,17 +34,21 @@ Each cohort has its own `METRICS_TABLE.md`, plus one root aggregate:
 
 Interactive stacked bar chart of metric usage by cohort (`index.html` + `papers-data.json`).
 
-Metrics are grouped by a four-category taxonomy (plus **Uncategorised** when schema keys fall outside it):
+Metrics are grouped by a five-category taxonomy:
 
 | Category | Metrics |
 |---|---|
-| Observational | SNR, DR, RMS, RDR |
+| Observational | SNR, logSNR, DR, RMS, RDR |
 | Computational | Runtime, Compute, Iters |
 | Fidelity | PSNR, SSIM, NMSE, MAE, Wasser |
-| Scientific | Flux, Astrometry, Class (`spectral_accuracy` reserved but not in schema yet — omitted from the chart, not shown as zero) |
-| Uncategorised | logSNR, CredInt, UncCorr, Text (only if present in `metricKeys`) |
+| Uncertainty | CredInt, UncCorr |
+| Scientific | Flux, Astrometry, Class, Text (`spectral_accuracy` reserved but not in schema yet — omitted from the chart, not shown as zero) |
 
-**Visuals:** cohort colours fill the stacked bar segments; category is shown with a coloured outline, x-tick colour, and short badge (`Obs` / `Cmp` / `Fid` / `Sci` / `Unc`). Category membership lives in `metricCategories` inside `index.html`.
+**Uncertainty** metrics assess the quality, calibration, or usefulness of uncertainty estimates rather than reconstructed-image fidelity alone: **CredInt** (`credible_interval`) is reported posterior or inferential uncertainty; **UncCorr** (`uncertainty_correlation`) checks whether estimated uncertainty tracks actual error or another reliability signal.
+
+Unknown schema keys would fall into an internal Uncategorised fallback (logged in the browser console) and only appear in the UI if any such keys exist.
+
+**Visuals:** cohort colours fill the stacked bar segments; category is shown with a coloured outline, x-tick colour, and legend swatch (border style differs by category — Uncertainty uses blue with a dashed border). Membership lives in `metricCategories` inside `index.html`.
 
 **Filters:** cohort checkboxes and a category dropdown (**All categories**, or one taxonomy at a time) combine. Metrics with zero total for the visible cohorts stay hidden. Chart order is descending paper count for the visible cohorts (taxonomy tags visuals/filters only).
 

@@ -6,11 +6,18 @@ Cross-paper syntheses of how each canonical performance/fidelity metric is used 
 
 Canonical keys are grouped on the metrics webpage (`index.html` → `metricCategories`):
 
-1. **Observational** — `snr`, `dynamic_range`, `rms`, `rdr`
+1. **Observational** — `snr`, `logsnr`, `dynamic_range`, `rms`, `rdr`
 2. **Computational** — `runtime`, `compute_cost`, `iterations`
 3. **Fidelity** — `psnr`, `ssim`, `nmse_nrmse`, `mae`, `wasserstein`
-4. **Scientific** — `flux_recovery`, `astrometric_accuracy`, `classification_metrics` (`spectral_accuracy` is listed in the taxonomy config for future use but is absent from the schema, so it is not plotted)
-5. **Uncategorised** (fallback, only when present) — `logsnr`, `credible_interval`, `uncertainty_correlation`, `text_metrics`
+4. **Uncertainty** — `credible_interval`, `uncertainty_correlation`
+5. **Scientific** — `flux_recovery`, `astrometric_accuracy`, `classification_metrics`, `text_metrics` (`spectral_accuracy` is listed in the taxonomy config for future use but is absent from the schema, so it is not plotted)
+
+**Uncertainty** metrics assess the quality, calibration, or usefulness of uncertainty estimates rather than reconstructed-image fidelity alone:
+
+- `credible_interval` — reported posterior or inferential uncertainty (e.g. HPD / local credible intervals);
+- `uncertainty_correlation` — whether estimated uncertainty corresponds to actual error or another reliability signal.
+
+An internal **Uncategorised** fallback exists for unknown keys; it is not shown unless at least one real metric is unmapped (and is logged to the console).
 
 Category dropdown (all, or one taxonomy) and cohort filters combine; zero-total metrics for visible cohorts remain hidden. Chart order is descending paper count (taxonomy is for visuals and filters only).
 

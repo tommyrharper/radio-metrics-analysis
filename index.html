@@ -27,6 +27,7 @@
       --cat-observational: #0f766e;
       --cat-computational: #6d28d9;
       --cat-fidelity: #a16207;
+      --cat-uncertainty: #2563eb;
       --cat-scientific: #be123c;
       --cat-uncategorised: #475569;
     }
@@ -202,6 +203,13 @@
       background: var(--cat-fidelity);
       border-style: dotted;
       border-color: #713f12;
+    }
+    .cat-swatch.uncertainty {
+      background: var(--cat-uncertainty);
+      border-style: dashed;
+      border-color: #1e40af;
+      border-width: 2px;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
     }
     .cat-swatch.scientific {
       background: var(--cat-scientific);
@@ -859,9 +867,9 @@
     /*
      * Metric taxonomy — single source of truth for category membership and visuals.
      * Visual treatment: cohort fill colours remain on stacked bar segments; category is
-     * shown via bar outline + x-tick colour + legend/filter badge (letter + border style).
+     * shown via bar outline + x-tick colour + legend swatch (border style differs by category).
      * `unavailable` keys stay in the taxonomy for documentation but are not plotted.
-     * Metrics in metricKeys but not listed below land in Uncategorised.
+     * Unknown metricKeys land in an internal Uncategorised fallback (shown only if non-empty).
      */
     const metricCategories = {
       observational: {
@@ -870,7 +878,7 @@
         short: "Obs",
         color: "#0f766e",
         borderStyle: "solid",
-        metrics: ["snr", "dynamic_range", "rms", "rdr"],
+        metrics: ["snr", "logsnr", "dynamic_range", "rms", "rdr"],
       },
       computational: {
         id: "computational",
@@ -888,22 +896,36 @@
         borderStyle: "dotted",
         metrics: ["psnr", "ssim", "nmse_nrmse", "mae", "wasserstein"],
       },
+      uncertainty: {
+        id: "uncertainty",
+        label: "Uncertainty",
+        short: "Unc",
+        color: "#2563eb",
+        borderStyle: "dashed",
+        metrics: ["credible_interval", "uncertainty_correlation"],
+      },
       scientific: {
         id: "scientific",
         label: "Scientific",
         short: "Sci",
         color: "#be123c",
         borderStyle: "double",
-        metrics: ["flux_recovery", "astrometric_accuracy", "spectral_accuracy", "classification_metrics"],
+        metrics: [
+          "flux_recovery",
+          "astrometric_accuracy",
+          "spectral_accuracy",
+          "classification_metrics",
+          "text_metrics",
+        ],
         unavailable: ["spectral_accuracy"], // not in papers-data / metricKeys — omit from chart
       },
       uncategorised: {
         id: "uncategorised",
         label: "Uncategorised",
-        short: "Unc",
+        short: "—",
         color: "#475569",
         borderStyle: "dashed",
-        metrics: [], // filled from unmapped metricKeys below
+        metrics: [], // filled from unmapped metricKeys below; hidden unless non-empty
       },
     };
 
@@ -911,17 +933,25 @@
       "observational",
       "computational",
       "fidelity",
+      "uncertainty",
       "scientific",
       "uncategorised",
     ];
 
     const taxonomyAssigned = new Set();
     categoryOrder.forEach((cid) => {
+      if (cid === "uncategorised") return;
       const cat = metricCategories[cid];
       (cat.metrics || []).forEach((k) => taxonomyAssigned.add(k));
       (cat.unavailable || []).forEach((k) => taxonomyAssigned.add(k));
     });
     metricCategories.uncategorised.metrics = metricKeys.filter((k) => !taxonomyAssigned.has(k));
+    if (metricCategories.uncategorised.metrics.length) {
+      console.warn(
+        "[metrics taxonomy] Unmapped metric keys (shown under Uncategorised):",
+        metricCategories.uncategorised.metrics
+      );
+    }
 
     const metricToCategory = {};
     categoryOrder.forEach((cid) => {
