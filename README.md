@@ -34,6 +34,8 @@ Each cohort has its own `METRICS_TABLE.md`, plus one root aggregate:
 
 Interactive stacked bar chart of metric usage by cohort (`index.html` + `data/papers-data.json`).
 
+**Live site:** [https://tommyrharper.github.io/radio-metrics-analysis/](https://tommyrharper.github.io/radio-metrics-analysis/) (GitHub Pages; updates on push to `main`).
+
 **Layout:** project docs and cohorts stay at the repo root; the browsable site assets live under `site/` (shared CSS/JS, taxonomies, detail pages); structured site data under `data/`; metric overview markdown under `metrics/`; injectors under `scripts/`.
 
 **Metric detail pages (shared shell):** Every chart metric has a bookmarkable second-level page under [`site/detail/`](site/detail/) (19 stubs: SNR, logSNR, PSNR, SSIM, DR, RMS, RDR, NMSE, MAE, Flux, Astrometry, Runtime, Iters, CredInt, UncCorr, Wasser, Class, Text, Compute). Those HTML files are thin configs; shared UI lives in `site/css/metric-detail.css` + `site/js/metric-detail.js`, driven by `window.METRIC_DETAIL`. Per-metric taxonomies live in `site/js/taxonomies/`; classified `*_details` live on papers in `data/papers-data.json` (mirrors under `data/*-details.json`). Selecting a metric on the main chart shows its **Explore … Details** link (`METRIC_DRILLDOWNS` in `index.html`). To add another metric later: taxonomy JS + `*_details` + stub + Explore link.
