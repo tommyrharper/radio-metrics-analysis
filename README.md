@@ -37,14 +37,14 @@ Interactive stacked bar chart of metric usage by cohort (`index.html` + `papers-
 **Start** (from the repo root):
 
 ```bash
-python3 -m http.server 8765
+python3 -m http.server
 ```
 
-**Open:** [http://127.0.0.1:8765/](http://127.0.0.1:8765/) or [http://127.0.0.1:8765/index.html](http://127.0.0.1:8765/index.html)
+**Open:** [http://127.0.0.1:8000/](http://127.0.0.1:8000/) (default port is **8000** — include it in the URL).
 
 **Stop:** press `Ctrl+C` in the terminal running the server.
 
-Needs a local HTTP server (not `file://`) so the page can load `papers-data.json` and `metrics/*.md`. If port 8765 is taken, use another port and change the URL accordingly, e.g. `python3 -m http.server 8766` → `http://127.0.0.1:8766/`.
+Needs a local HTTP server (not `file://`) so the page can load `papers-data.json` and `metrics/*.md`. If port 8000 is taken, pick another and match the URL, e.g. `python3 -m http.server 8765` → `http://127.0.0.1:8765/`.
 
 ### Metric overviews
 
