@@ -592,8 +592,8 @@
       display: grid;
       grid-template-columns: 5.5rem 1fr auto;
       gap: 0.55rem 0.85rem;
-      padding: 0.55rem 0.15rem;
-      align-items: start;
+      padding: 0.45rem 0.15rem;
+      align-items: center;
     }
 
     .paper-content {
@@ -604,10 +604,11 @@
 
     .paper-actions {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
+      flex-wrap: wrap;
       gap: 0.35rem;
-      align-self: start;
-      align-items: stretch;
+      align-items: center;
+      justify-content: flex-end;
     }
 
     .paper-main {
