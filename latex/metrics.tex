@@ -59,18 +59,18 @@ Summary of the key metrics involved in analysing radio interferometric
 
 \subsection{Internal Model}
 
-\begin{equation}
-    \residual{i-1} = \boldsymbol{x}_\text{d} - \D\x{i-1}
-\end{equation}
+\begin{gather}
+    \residual{i} = \boldsymbol{x}_\text{d} - \D\x{i}\\
+    \x{i} = \x{i-1} + \dnnlayer(\residual{i-1}, \x{i-1})
+\end{gather}
 
 \begin{itemize}
-    \item $\residual$ is the difference between the original noisy dirty image and the one derived from our estimation of the night sky
+    \item $\residual{i}$ is a residual dirty image. It is the difference between the original noisy dirty image $\x_d$ and the one derived from the $i^\text{th}$ estimation of the night sky $\D\x{i}$
+    \item $\x{i}$ is the $i^\text{th}$ estimate of the night sky produced by R2D2
+    \item $\dnnlayer$ is the $i^\text{th}$ deep neural network layer in R2D2
+    \item $\boldsymbol{\hat\theta}^{(i)}\in\mathbb R^Q$ are the learned parameters for a given DNN layer.
 \end{itemize}
 
-
-\begin{equation}
-    \x{i} = \x{i-1} + \dnnlayer(\residual{i-1}, \x{i-1})
-\end{equation}
 
 \begin{equation}
 \estimate \triangleq \x{I} = \sum_{i=1}^I\dnnlayer(\residual{i-1}, \x{i-1})
@@ -78,24 +78,8 @@ Summary of the key metrics involved in analysing radio interferometric
 
 \begin{itemize}
     \item $\estimate$ is R2D2s final reconstruction
+    \item $I$ is the total number of DNN layers
 \end{itemize}
-
-\begin{equation}
-(
-    \dnnlayer
-)
-_{1\le i\le I}
-\end{equation}
-
-\begin{itemize}
-    \item $\dnn$ is a deep neural network (DNN)
-    \item $\boldsymbol{\hat\theta}^{(i)}\in\mathbb R^Q$ are the learned parameters for a given DNN layer
-    \item $I$ is the number of layers
-\end{itemize}
-
-
-
-\section{R2D2 metrics}
 
 \subsection{Scientific Metrics}
 
