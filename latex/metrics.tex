@@ -6,9 +6,10 @@
 \usepackage{hyperref}
 \usepackage{parskip}
 \usepackage{amsmath}
+\usepackage{amssymb}
 
-\title{Title}
-\author{Author Name}
+\title{Radio Interferometry Metric}
+\author{Thomas Harper}
 \date{\today}
 
 \begin{document}
@@ -16,8 +17,36 @@
 \maketitle
 
 \begin{abstract}
-Briefly state the problem, approach, key findings, and implications.
+An overview of the key metrics involved in analysing radio interferometric
 \end{abstract}
+
+\section{Data model}
+
+\begin{equation}
+\boldsymbol{y = \Phi x^{*} + n}
+\end{equation}
+\begin{itemize}
+    \item $\boldsymbol y\in \mathbb C^M$ is the measured visibilities
+    \item $\boldsymbol\Phi: \mathbb R^N \to \mathbb C^M$  is the measurement operator
+    \item $\boldsymbol{x^*}\in\mathbb R_+^N$ is the true sky image
+    \item $\boldsymbol n\in\mathbb C^M$ is Gaussian noise with s.d. $\tau>0$ and mean $0$
+\end{itemize}
+
+
+\section{R2D2 metrics}
+
+\subsection{Scientific Metrics}
+
+\subsubsection{Image domain data-fidelity}
+
+$$
+\bar\sigma_{\text{res.}}(\hat{r},x_d)=\frac{\|\hat{r}\|_2}{\|x_d\|_2}
+$$
+
+\begin{itemize}
+\item $\hat r$ - final dirty image residual
+\item $x_d$ - true dirty image
+\end{itemize}
 
 \section{Introduction}
 Introduce the problem context, motivation, research question, and contributions.
@@ -31,15 +60,6 @@ Present the key theories, concepts, and prior work that support this study.
 \section{Method}
 \label{sec:method}
 Describe design, data, materials, and analysis procedures.
-
-\section{Results}
-Report the main findings clearly and objectively.
-
-\section{Discussion}
-Interpret findings, compare with prior work, and note limitations.
-
-\section{Conclusions}
-Summarize the main conclusions and suggest future work.
 
 \nocite{*}
 \bibliographystyle{plain}
