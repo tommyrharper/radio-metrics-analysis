@@ -22,16 +22,20 @@
 \newcommand{\true}{\boldsymbol{x^{*}}}
 \makeatother
 
-\title{Radio Interferometry Metrics}
+\title{Radio Interferometry Metrics and Parameters}
 \author{Thomas Harper}
 \date{\today}
 
 \begin{document}
 
 \maketitle
-% \vspace{-1.25em}
+\newpage
+\tableofcontents
+\newpage
 
-\section{Data model}
+\section{Overview}
+
+\section{Data Model}
 \label{sec:data-model}
 
 \begin{equation}
@@ -57,9 +61,9 @@
     \item $\boldsymbol{b} = \kappa\operatorname{Re}\{\boldsymbol\Phi^\dagger\boldsymbol n\}\in\mathbf R^N$ is the normalised back projected noise
 \end{itemize}
 
-\section{R2D2}
+\section{Reconstruction Algorithms}
 
-\subsection{Internal Model}
+\subsection{R2D2}
 
 \begin{gather}
     \residual{i} = \dirty - \D\x{i}\\
@@ -73,7 +77,6 @@
     \item $\boldsymbol{\hat\theta}^{(i)}\in\mathbb R^Q$ are the learned parameters for a given DNN layer.
 \end{itemize}
 
-
 \begin{equation}
 \estimate \triangleq \x{I} = \sum_{i=1}^I\dnnlayer(\residual{i-1}, \x{i-1})
 \end{equation}
@@ -83,48 +86,7 @@
     \item $I$ is the total number of DNN layers
 \end{itemize}
 
-\subsection{Scientific Metrics}
-
-\subsubsection{Image domain data-fidelity}
-
-$$
-\bar\sigma_{\text{res.}}(\hat{\residual},\dirty)=\frac{\|\hat{\residual}\|_2}{\|\dirty\|_2}
-$$
-
-\begin{itemize}
-\item $\hat\residual$ - final dirty image residual
-\item $\dirty$ - true dirty image
-\end{itemize}
-
-As $\hat\x\to\true$, $\hat\residual\to0$, thus lower is better.
-
-Essentially this says, normalised by the true dirty image $\dirty$, how much is left in the dirty image residual $\hat\residual$.
-Ideally nothing is left because applying the forward pass $\D$ to the predicted image $\estimate$ reproduces the dirty image $\dirty$, so $\D\estimate\approx\dirty$ and thus $\hat\residual=\dirty-\D\estimate\approx0$.
-
-\subsubsection{Signal to noise ratio}
-
-\begin{gather}
-    \mathrm{SNR}(\estimate, \true)
-    =
-    20\log_{10}
-    \left(
-    \frac{\|\true\|_2}
-    {\|\true - \estimate\|_2}
-    \right)\\
-    \operatorname{rlog}(\x)=x_{\max} \log _a\left(\frac{a}{x_{\max}} \x+\mathbf{1}\right)\\
-    \operatorname{logSNR}(\estimate, \true)=\operatorname{SNR}(\operatorname{rlog}(\estimate), \operatorname{rlog}(\true))
-\end{gather}
-
-\begin{itemize}
-    \item $a$ is a parameter set to $\rho_\text{DR}$, the dynamic range of the ground truth image (in the R2D2 paper at least)
-    \item $x_\text{max}$ is the peak pixel value of the image $\x$
-    \item $\mathbf 1\in\mathbb R^N$ is a vector of values equal to 1
-    \item $\estimate$ is the predicted image and $\true$ is the true image
-\end{itemize}
-
-\section{CLEAN}
-
-\subsection{Internal Model}
+\subsection{Högbom CLEAN}
 
 \begin{gather}
     \residual{i} = \dirty - \D\x{i}\\
@@ -133,7 +95,7 @@ Ideally nothing is left because applying the forward pass $\D$ to the predicted 
 
 \begin{itemize}
     \item $\residual{i}$ is a residual dirty image. It is the difference between the original noisy dirty image $\dirty$ and the one derived from the $i^\text{th}$ CLEAN component model $\D\x{i}$
-    \item $\x{i}$ is the $i^\text{th}$ CLEAN component model of the night sky, initialised at $\x{0}=\boldsymbol 0$
+    \item $\x{i}$ is the $i^\text{th}$ CLEAN component model of the sky image, initialised at $\x{0}=\boldsymbol 0$
     \item $p^{(i)}=\arg\max_{n}\lvert\residual{i-1}_{n}\rvert$ is the pixel of the peak residual
     \item $\boldsymbol{\delta}_{p^{(i)}}$ is a discrete Dirac delta at pixel $p^{(i)}$
     \item $\gamma\in(0,1]$ is the loop gain
@@ -154,17 +116,109 @@ Ideally nothing is left because applying the forward pass $\D$ to the predicted 
     \item $I$ is the number of CLEAN iterations
 \end{itemize}
 
-\section{Citing and reference example}
-For example, prior work can be cited like this \cite{example2026}.
-See Section~\ref{sec:data-model} for the data-model.
+\section{Evaluation Metrics}
+
+\subsection{Reconstruction Fidelity}
+
+\subsubsection{Signal-to-Noise Ratio}
+
+\begin{equation}
+    \mathrm{SNR}(\estimate, \true)
+    =
+    20\log_{10}
+    \left(
+    \frac{\|\true\|_2}
+    {\|\true - \estimate\|_2}
+    \right)
+\end{equation}
+
+\subsubsection{Logarithmic Signal-to-Noise Ratio}
+
+\paragraph{R2D2 definition}
+
+\begin{gather}
+    \operatorname{rlog}(\x)=x_{\max} \log _a\left(\frac{a}{x_{\max}} \x+\mathbf{1}\right)\\
+    \operatorname{logSNR}(\estimate, \true)=\operatorname{SNR}(\operatorname{rlog}(\estimate), \operatorname{rlog}(\true))
+\end{gather}
+
+\begin{itemize}
+    \item $a$ is a parameter set to $\rho_\text{DR}$, the dynamic range of the ground truth image
+    \item $x_\text{max}$ is the peak pixel value of the image $\x$
+    \item $\mathbf 1\in\mathbb R^N$ is a vector of values equal to 1
+\end{itemize}
+
+\paragraph{Standard definition}
+
+\subsubsection{Normalized Mean Squared Error}
+
+\subsubsection{Structural Similarity Index}
+
+\subsection{Image-Domain Data Fidelity}
+
+\subsubsection{Normalized Residual}
+
+$$
+\bar\sigma_{\text{res.}}(\hat{\residual},\dirty)=\frac{\|\hat{\residual}\|_2}{\|\dirty\|_2}
+$$
+
+\begin{itemize}
+\item $\hat\residual$ - final dirty image residual
+\item $\dirty$ - true dirty image
+\end{itemize}
+
+As $\hat\x\to\true$, $\hat\residual\to0$, thus lower is better.
+
+Essentially this says, normalised by the true dirty image $\dirty$, how much is left in the dirty image residual $\hat\residual$.
+Ideally nothing is left because applying the dirty-image operator $\D$ to the predicted image $\estimate$ reproduces the dirty image $\dirty$, so $\D\estimate\approx\dirty$ and thus $\hat\residual=\dirty-\D\estimate\approx0$.
+
+\subsection{Scientific Fidelity}
+
+\subsubsection{Flux Recovery}
+
+\subsubsection{Astrometric Error}
+
+\subsubsection{Source Detection and Completeness}
+
+\section{Search Parameter Space}
+
+\subsection{Sky and Image Parameters}
+
+\subsubsection{Dynamic Range}
+
+\subsubsection{Source Morphology}
+
+\subsubsection{Source Position}
+
+\subsection{Observation and Fourier-Sampling Parameters}
+
+\subsubsection{VLA Configuration}
+
+\subsubsection{Declination}
+
+\subsubsection{Observation Duration}
+
+\subsubsection{Observation Start Time and Hour-Angle Coverage}
+
+\subsubsection{Number of Frequency Channels}
+
+\subsubsection{Frequency Range and Bandwidth}
+
+\subsubsection{Flagging Fraction}
+
+\subsubsection{Visibility Weighting}
+
+\section{Proposed Search}
+
+\subsection{Search Variables}
+
+\subsection{Parameter Ranges}
+
+\subsection{Objective Metrics}
+
+\subsection{Failure Criteria}
 
 \nocite{*}
 \bibliographystyle{plain}
 \bibliography{references}
-
-\appendix
-\section{Appendices}
-Include supplementary material, extended methods, or additional results.
-% Remove appendix section if not needed.
 
 \end{document}

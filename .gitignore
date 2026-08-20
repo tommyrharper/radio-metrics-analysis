@@ -10,6 +10,7 @@ latex/*.fls
 latex/*.log
 latex/*.bbl
 latex/*.blg
+latex/*.toc
 
 # misc
 .DS_Store
