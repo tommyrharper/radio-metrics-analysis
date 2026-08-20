@@ -8,7 +8,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 
-\title{Radio Interferometry Metric}
+\title{Radio Interferometry Metrics}
 \author{Thomas Harper}
 \date{\today}
 
@@ -16,9 +16,8 @@
 
 \maketitle
 
-\begin{abstract}
-An overview of the key metrics involved in analysing radio interferometric
-\end{abstract}
+\section*{Overview}
+Summary of the key metrics involved in analysing radio interferometric
 
 \section{Data model}
 
@@ -30,6 +29,19 @@ An overview of the key metrics involved in analysing radio interferometric
     \item $\boldsymbol\Phi: \mathbb R^N \to \mathbb C^M$  is the measurement operator
     \item $\boldsymbol{x^*}\in\mathbb R_+^N$ is the true sky image
     \item $\boldsymbol n\in\mathbb C^M$ is Gaussian noise with s.d. $\tau>0$ and mean $0$
+\end{itemize}
+
+\begin{equation}
+\boldsymbol x_\text{d} = \kappa\operatorname{Re}\{\boldsymbol\Phi^\dagger \boldsymbol y\} = \boldsymbol{\mathsf Dx^* + b}
+\end{equation}
+
+\begin{itemize}
+    \item $\boldsymbol x_\text{d}$ is the true dirty image from DFT on the measured visibilities
+    \item $\kappa=\max(\operatorname{Re}{\boldsymbol\Phi^\dagger\boldsymbol\Phi\boldsymbol\delta})^{-1}>0$ is the normalisation factor ensuring the PSF has peak value 1, where $\boldsymbol{\mathbf\delta} \in \mathbb R^N$ a discrete Dirac delta centred in the image (1 at the centre, 0 elsewhere)
+    \item $\boldsymbol\Phi^\dagger$ is the adjoint of the measurement operator
+    \item $\boldsymbol{\mathsf D}:\mathbb R^N\to\mathbb R^N,\quad \boldsymbol{\mathsf{D}} \triangleq \kappa\operatorname{Re}\{\boldsymbol{\Phi}^{\dagger}\boldsymbol{\Phi}\}$ is a normalised map for the true image to the noise free dirty image, encoding the non-uniform Fourier sampling, gridding, de-gridding and Fourier transform operations
+    \item $\boldsymbol{\mathsf D x^*}$ is the noise-free dirty image
+    \item $\boldsymbol{b} = \kappa\operatorname{Re}\{\boldsymbol\Phi^\dagger\boldsymbol n\}\in\mathbf R^N$ is the normalised back projected noise
 \end{itemize}
 
 
