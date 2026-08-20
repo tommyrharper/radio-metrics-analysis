@@ -96,13 +96,10 @@ $$
 \item $\dirty$ - true dirty image
 \end{itemize}
 
-As $\hat\x\to\true$, $\hat\residual\to0$, thus lower is better.f
+As $\hat\x\to\true$, $\hat\residual\to0$, thus lower is better.
 
-Essentially this says, normalised by the true dirty image $\dirty$, 
-how much is left in the dirty image residual $\residual$.
-Ideally nothing is left because applying the forward pass $\D$ to the predicted image perfectly 
-reproduces the dirty image, so $\D\x=\dirty$ 
-and thus $\residual=\dirty-\D\x=0$.
+Essentially this says, normalised by the true dirty image $\dirty$, how much is left in the dirty image residual $\hat\residual$.
+Ideally nothing is left because applying the forward pass $\D$ to the predicted image $\estimate$ reproduces the dirty image $\dirty$, so $\D\estimate\approx\dirty$ and thus $\hat\residual=\dirty-\D\estimate\approx0$.
 
 \section{Introduction}
 Introduce the problem context, motivation, research question, and contributions.
