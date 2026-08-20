@@ -36,13 +36,43 @@ Summary of the key metrics involved in analysing radio interferometric
 \end{equation}
 
 \begin{itemize}
-    \item $\boldsymbol x_\text{d}$ is the true dirty image from DFT on the measured visibilities
+    \item $\boldsymbol x_\text{d}$ is the dirty image including noise
     \item $\kappa=\max(\operatorname{Re}{\boldsymbol\Phi^\dagger\boldsymbol\Phi\boldsymbol\delta})^{-1}>0$ is the normalisation factor ensuring the PSF has peak value 1, where $\boldsymbol{\mathbf\delta} \in \mathbb R^N$ a discrete Dirac delta centred in the image (1 at the centre, 0 elsewhere)
     \item $\boldsymbol\Phi^\dagger$ is the adjoint of the measurement operator
     \item $\boldsymbol{\mathsf D}:\mathbb R^N\to\mathbb R^N,\quad \boldsymbol{\mathsf{D}} \triangleq \kappa\operatorname{Re}\{\boldsymbol{\Phi}^{\dagger}\boldsymbol{\Phi}\}$ is a normalised map for the true image to the noise free dirty image, encoding the non-uniform Fourier sampling, gridding, de-gridding and Fourier transform operations
     \item $\boldsymbol{\mathsf D x^*}$ is the noise-free dirty image
     \item $\boldsymbol{b} = \kappa\operatorname{Re}\{\boldsymbol\Phi^\dagger\boldsymbol n\}\in\mathbf R^N$ is the normalised back projected noise
 \end{itemize}
+
+\section{R2D2}
+
+\subsection{Internal Model}
+
+\begin{equation}
+    \boldsymbol x^{(i)} = \boldsymbol x^{(i-1)} + \boldsymbol{\mathsf N}
+\end{equation}
+
+\begin{equation}
+\boldsymbol{\hat x} \triangleq \boldsymbol x^{(I)} = \sum_{i=1}^I\boldsymbol{\mathsf N}_{\boldsymbol{\hat\theta}^{(i)}}(\boldsymbol r^{(i-1)}, \boldsymbol x^{(i-1)})
+\end{equation}
+
+\begin{itemize}
+    \item $\boldsymbol{\hat x}$ is R2D2s final reconstruction
+\end{itemize}
+
+\begin{equation}
+(
+    \boldsymbol{\mathsf N}_{\boldsymbol{\hat\theta}^{(i)}}
+)
+_{1\le i\le I}
+\end{equation}
+
+\begin{itemize}
+    \item $\boldsymbol{\mathsf N}$ is a deep neural network (DNN)
+    \item $\boldsymbol{\hat\theta}^{(i)}\in\mathbb R^Q$ are the learned parameters for a given DNN layer
+    \item $I$ is the number of layers
+\end{itemize}
+
 
 
 \section{R2D2 metrics}
