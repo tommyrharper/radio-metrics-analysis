@@ -95,7 +95,13 @@ $$
 \item $\dirty$ - true dirty image
 \end{itemize}
 
-% Essentially this says, normalised by the true dirty image $\dirty$, how much is left in the dirty image residual $\residual$. Ideally nothing is left because applying the forward pass $\D$ to the predicted image perfectly reproduces the dirty image, so $\D\x=\dirty$ and thus $\residual$=\dirty-\D\x=0$.
+As $\hat\x\to\x^*$, $\hat\residual\to0$, thus lower is better.f
+
+Essentially this says, normalised by the true dirty image $\dirty$, 
+how much is left in the dirty image residual $\residual$.
+Ideally nothing is left because applying the forward pass $\D$ to the predicted image perfectly 
+reproduces the dirty image, so $\D\x=\dirty$ 
+and thus $\residual=\dirty-\D\x=0$.
 
 \section{Introduction}
 Introduce the problem context, motivation, research question, and contributions.
