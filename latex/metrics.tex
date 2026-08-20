@@ -104,16 +104,23 @@ Ideally nothing is left because applying the forward pass $\D$ to the predicted 
 \subsubsection{Signal to noise ratio}
 
 \begin{gather}
-    \mathrm{SNR}(\widehat{\boldsymbol{x}}, \boldsymbol{x}^{\star})
+    \mathrm{SNR}(\estimate, \true)
     =
     20\log_{10}
     \left(
-    \frac{\|\boldsymbol{x}^{\star}\|_2}
-    {\|\boldsymbol{x}^{\star} - \widehat{\boldsymbol{x}}\|_2}
+    \frac{\|\true\|_2}
+    {\|\true - \estimate\|_2}
     \right)\\
-    \operatorname{rlog}(\boldsymbol{x})=x_{\max } \log _a\left(\frac{a}{x_{\max }} \boldsymbol{x}+\mathbf{1}\right)\\
-    \operatorname{logSNR}\left(\widehat{\boldsymbol{x}}, \boldsymbol{x}^{\star}\right)=\operatorname{SNR}\left(\operatorname{rlog}(\widehat{\boldsymbol{x}}), \operatorname{rlog}\left(\boldsymbol{x}^{\star}\right)\right) .
+    \operatorname{rlog}(\x)=x_{\max} \log _a\left(\frac{a}{x_{\max}} \x+\mathbf{1}\right)\\
+    \operatorname{logSNR}(\estimate, \true)=\operatorname{SNR}(\operatorname{rlog}(\estimate), \operatorname{rlog}(\true))
 \end{gather}
+
+\begin{itemize}
+    \item $a$ is 
+\end{itemize}
+
+
+% TODO: add \boldsymbol{h} to the data model definitions as the PSF.
 
 
 \section{Introduction}
