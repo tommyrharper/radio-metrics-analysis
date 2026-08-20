@@ -8,6 +8,9 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 
+\newcommand{\dnn}{\boldsymbol{\mathsf N}}
+\newcommand{\dnnlayer}[1][i]{\dnn_{\boldsymbol{\hat\theta}^{(#1)}}}
+
 \title{Radio Interferometry Metrics}
 \author{Thomas Harper}
 \date{\today}
@@ -49,11 +52,11 @@ Summary of the key metrics involved in analysing radio interferometric
 \subsection{Internal Model}
 
 \begin{equation}
-    \boldsymbol x^{(i)} = \boldsymbol x^{(i-1)} + \boldsymbol{\mathsf N}
+    \boldsymbol x^{(i)} = \boldsymbol x^{(i-1)} + \dnnlayer(\boldsymbol r^{(i-1)}, \boldsymbol x^{(i-1)})
 \end{equation}
 
 \begin{equation}
-\boldsymbol{\hat x} \triangleq \boldsymbol x^{(I)} = \sum_{i=1}^I\boldsymbol{\mathsf N}_{\boldsymbol{\hat\theta}^{(i)}}(\boldsymbol r^{(i-1)}, \boldsymbol x^{(i-1)})
+\boldsymbol{\hat x} \triangleq \boldsymbol x^{(I)} = \sum_{i=1}^I\dnnlayer(\boldsymbol r^{(i-1)}, \boldsymbol x^{(i-1)})
 \end{equation}
 
 \begin{itemize}
@@ -62,13 +65,13 @@ Summary of the key metrics involved in analysing radio interferometric
 
 \begin{equation}
 (
-    \boldsymbol{\mathsf N}_{\boldsymbol{\hat\theta}^{(i)}}
+    \dnnlayer
 )
 _{1\le i\le I}
 \end{equation}
 
 \begin{itemize}
-    \item $\boldsymbol{\mathsf N}$ is a deep neural network (DNN)
+    \item $\dnn$ is a deep neural network (DNN)
     \item $\boldsymbol{\hat\theta}^{(i)}\in\mathbb R^Q$ are the learned parameters for a given DNN layer
     \item $I$ is the number of layers
 \end{itemize}
