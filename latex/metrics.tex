@@ -122,6 +122,38 @@ Ideally nothing is left because applying the forward pass $\D$ to the predicted 
     \item $\estimate$ is the predicted image and $\true$ is the true image
 \end{itemize}
 
+\section{CLEAN}
+
+\subsection{Internal Model}
+
+\begin{gather}
+    \residual{i} = \dirty - \D\x{i}\\
+    \x{i} = \x{i-1} + \gamma\,\residual{i-1}_{p^{(i)}}\,\boldsymbol{\delta}_{p^{(i)}}
+\end{gather}
+
+\begin{itemize}
+    \item $\residual{i}$ is a residual dirty image. It is the difference between the original noisy dirty image $\dirty$ and the one derived from the $i^\text{th}$ CLEAN component model $\D\x{i}$
+    \item $\x{i}$ is the $i^\text{th}$ CLEAN component model of the night sky, initialised at $\x{0}=\boldsymbol 0$
+    \item $p^{(i)}=\arg\max_{n}\lvert\residual{i-1}_{n}\rvert$ is the pixel of the peak residual
+    \item $\boldsymbol{\delta}_{p^{(i)}}$ is a discrete Dirac delta at pixel $p^{(i)}$
+    \item $\gamma\in(0,1]$ is the loop gain
+\end{itemize}
+
+\begin{equation}
+\x{I} = \sum_{i=1}^{I}\gamma\,\residual{i-1}_{p^{(i)}}\,\boldsymbol{\delta}_{p^{(i)}}
+\end{equation}
+
+\begin{equation}
+\estimate \triangleq \boldsymbol g \ast \x{I} + \residual{I}
+\end{equation}
+
+\begin{itemize}
+    \item $\x{I}$ is the CLEAN component model after $I$ iterations
+    \item $\boldsymbol g$ is the restoring beam, typically a Gaussian fit to the main lobe of the PSF
+    \item $\estimate$ is the restored CLEAN image
+    \item $I$ is the number of CLEAN iterations
+\end{itemize}
+
 \section{Citing and reference example}
 For example, prior work can be cited like this \cite{example2026}.
 See Section~\ref{sec:data-model} for the data-model.
