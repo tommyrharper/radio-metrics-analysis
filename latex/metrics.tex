@@ -101,6 +101,21 @@ As $\hat\x\to\true$, $\hat\residual\to0$, thus lower is better.
 Essentially this says, normalised by the true dirty image $\dirty$, how much is left in the dirty image residual $\hat\residual$.
 Ideally nothing is left because applying the forward pass $\D$ to the predicted image $\estimate$ reproduces the dirty image $\dirty$, so $\D\estimate\approx\dirty$ and thus $\hat\residual=\dirty-\D\estimate\approx0$.
 
+\subsubsection{Signal to noise ratio}
+
+\begin{gather}
+    \mathrm{SNR}(\widehat{\boldsymbol{x}}, \boldsymbol{x}^{\star})
+    =
+    20\log_{10}
+    \left(
+    \frac{\|\boldsymbol{x}^{\star}\|_2}
+    {\|\boldsymbol{x}^{\star} - \widehat{\boldsymbol{x}}\|_2}
+    \right)\\
+    \operatorname{rlog}(\boldsymbol{x})=x_{\max } \log _a\left(\frac{a}{x_{\max }} \boldsymbol{x}+\mathbf{1}\right)\\
+    \operatorname{logSNR}\left(\widehat{\boldsymbol{x}}, \boldsymbol{x}^{\star}\right)=\operatorname{SNR}\left(\operatorname{rlog}(\widehat{\boldsymbol{x}}), \operatorname{rlog}\left(\boldsymbol{x}^{\star}\right)\right) .
+\end{gather}
+
+
 \section{Introduction}
 Introduce the problem context, motivation, research question, and contributions.
 For example, prior work can be cited like this \cite{example2026}.
