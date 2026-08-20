@@ -18,6 +18,7 @@
 \newcommand{\x}{\@varsup{\boldsymbol x}}
 \newcommand{\estimate}{\@varsup{\boldsymbol{\hat x}}}
 \newcommand{\dirty}{\boldsymbol x_{\text{d}}}
+\newcommand{\true}{\boldsymbol{x^{*}}}
 \makeatother
 
 \title{Radio Interferometry Metrics}
@@ -34,17 +35,17 @@ Summary of the key metrics involved in analysing radio interferometric
 \section{Data model}
 
 \begin{equation}
-\boldsymbol{y = \Phi x^{*} + n}
+\boldsymbol y = \boldsymbol\Phi \true + \boldsymbol n
 \end{equation}
 \begin{itemize}
     \item $\boldsymbol y\in \mathbb C^M$ is the measured visibilities
     \item $\boldsymbol\Phi: \mathbb R^N \to \mathbb C^M$  is the measurement operator
-    \item $\boldsymbol{x^*}\in\mathbb R_+^N$ is the true sky image
+    \item $\true\in\mathbb R_+^N$ is the true sky image
     \item $\boldsymbol n\in\mathbb C^M$ is Gaussian noise with s.d. $\tau>0$ and mean $0$
 \end{itemize}
 
 \begin{equation}
-\dirty = \kappa\operatorname{Re}\{\boldsymbol\Phi^\dagger \boldsymbol y\} = \D\boldsymbol{x^*} + \boldsymbol{b}
+\dirty = \kappa\operatorname{Re}\{\boldsymbol\Phi^\dagger \boldsymbol y\} = \D\true + \boldsymbol{b}
 \end{equation}
 
 \begin{itemize}
@@ -52,7 +53,7 @@ Summary of the key metrics involved in analysing radio interferometric
     \item $\kappa=\max(\operatorname{Re}{\boldsymbol\Phi^\dagger\boldsymbol\Phi\boldsymbol\delta})^{-1}>0$ is the normalisation factor ensuring the PSF has peak value 1, where $\boldsymbol{\mathbf\delta} \in \mathbb R^N$ a discrete Dirac delta centred in the image (1 at the centre, 0 elsewhere)
     \item $\boldsymbol\Phi^\dagger$ is the adjoint of the measurement operator
     \item $\D:\mathbb R^N\to\mathbb R^N,\quad \D \triangleq \kappa\operatorname{Re}\{\boldsymbol{\Phi}^{\dagger}\boldsymbol{\Phi}\}$ is a normalised map for the true image to the noise free dirty image, encoding the non-uniform Fourier sampling, gridding, de-gridding and Fourier transform operations
-    \item $\D\boldsymbol{x^*}$ is the noise-free dirty image
+    \item $\D\true$ is the noise-free dirty image
     \item $\boldsymbol{b} = \kappa\operatorname{Re}\{\boldsymbol\Phi^\dagger\boldsymbol n\}\in\mathbf R^N$ is the normalised back projected noise
 \end{itemize}
 
@@ -95,7 +96,7 @@ $$
 \item $\dirty$ - true dirty image
 \end{itemize}
 
-As $\hat\x\to\x^*$, $\hat\residual\to0$, thus lower is better.f
+As $\hat\x\to\true$, $\hat\residual\to0$, thus lower is better.f
 
 Essentially this says, normalised by the true dirty image $\dirty$, 
 how much is left in the dirty image residual $\residual$.
