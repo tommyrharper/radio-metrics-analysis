@@ -12,8 +12,11 @@
 \newcommand{\dnnlayer}[1][i]{\dnn_{\boldsymbol{\hat\theta}^{(#1)}}}
 \newcommand{\D}{\boldsymbol{\mathsf D}}
 \makeatletter
-\newcommand{\residual}{\@ifnextchar\bgroup{\residual@sup}{\boldsymbol r}}
-\newcommand{\residual@sup}[1]{\boldsymbol r^{(#1)}}
+\newcommand{\@varsup}[1]{\@ifnextchar\bgroup{\@varsup@arg{#1}}{#1}}
+\newcommand{\@varsup@arg}[2]{#1^{(#2)}}
+\newcommand{\residual}{\@varsup{\boldsymbol r}}
+\newcommand{\x}{\@varsup{\boldsymbol x}}
+\newcommand{\estimate}{\@varsup{\boldsymbol{\hat x}}}
 \makeatother
 
 \title{Radio Interferometry Metrics}
@@ -57,7 +60,7 @@ Summary of the key metrics involved in analysing radio interferometric
 \subsection{Internal Model}
 
 \begin{equation}
-    \residual{i-1} = \boldsymbol{x}_\text{d} - \D\boldsymbol x^{(i-1)}
+    \residual{i-1} = \boldsymbol{x}_\text{d} - \D\x{i-1}
 \end{equation}
 
 \begin{itemize}
@@ -66,15 +69,15 @@ Summary of the key metrics involved in analysing radio interferometric
 
 
 \begin{equation}
-    \boldsymbol x^{(i)} = \boldsymbol x^{(i-1)} + \dnnlayer(\residual{i-1}, \boldsymbol x^{(i-1)})
+    \x{i} = \x{i-1} + \dnnlayer(\residual{i-1}, \x{i-1})
 \end{equation}
 
 \begin{equation}
-\boldsymbol{\hat x} \triangleq \boldsymbol x^{(I)} = \sum_{i=1}^I\dnnlayer(\residual{i-1}, \boldsymbol x^{(i-1)})
+\estimate \triangleq \x{I} = \sum_{i=1}^I\dnnlayer(\residual{i-1}, \x{i-1})
 \end{equation}
 
 \begin{itemize}
-    \item $\boldsymbol{\hat x}$ is R2D2s final reconstruction
+    \item $\estimate$ is R2D2s final reconstruction
 \end{itemize}
 
 \begin{equation}
