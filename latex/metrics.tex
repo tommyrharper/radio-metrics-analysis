@@ -8,6 +8,7 @@
 \usepackage{parskip}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{float}
 
 \newcommand{\dnn}{\boldsymbol{\mathsf N}}
 \newcommand{\dnnlayer}[1][i]{\dnn_{\boldsymbol{\hat\theta}^{(#1)}}}
@@ -213,8 +214,8 @@ Suggested search range: 20~s--20~min.
 
 \subsubsection{Frequency Range and Bandwidth}
 
-VLA receiver bands, and recommended calibrator cycle times by configuration, from Table~3.1 \cite{nrao-vla-obsguide}:
-\begin{center}
+\begin{table}[H]
+\centering
 \begin{tabular}{ll}
 4  & 54--86~MHz \\
 P  & 224--480~MHz \\
@@ -227,7 +228,9 @@ K  & 18--26.5~GHz \\
 Ka & 26.5--40~GHz \\
 Q  & 40--50~GHz \\
 \end{tabular}
-\end{center}
+\caption{VLA receiver bands. Recommended calibrator cycle times by configuration are in Table~3.1 \cite{nrao-vla-obsguide}.}
+\label{tab:vla-bands}
+\end{table}
 
 \subsubsection{Flagging Fraction}
 
