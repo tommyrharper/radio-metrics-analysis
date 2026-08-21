@@ -12,5 +12,8 @@ latex/*.bbl
 latex/*.blg
 latex/*.toc
 
+# graphify
+graphify-out/*
+
 # misc
 .DS_Store
